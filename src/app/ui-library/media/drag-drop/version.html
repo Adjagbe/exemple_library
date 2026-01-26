@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag & Drop - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* DRAG & DROP COMPONENT - Premium UI Library                      */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .dragdrop-showcase {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 1rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       KANBAN BOARD
+       ───────────────────────────────────────────────────────────────── */
+    .kanban-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      min-height: 400px;
+    }
+
+    .kanban-column {
+      background: #f3f4f6;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      transition: all 0.2s;
+    }
+
+    .kanban-column.dragover {
+      background: #eef2ff;
+      box-shadow: inset 0 0 0 2px #c7d2fe;
+    }
+
+    .column-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding: 0 0.25rem;
+    }
+
+    .column-header h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .item-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      background: #e5e7eb;
+      border-radius: 11px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .column-add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      border: none;
+      border-radius: 0.375rem;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .column-add:hover {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .column-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-height: 300px;
+    }
+
+    .kanban-card {
+      position: relative;
+      background: white;
+      border-radius: 0.5rem;
+      padding: 0.875rem;
+      cursor: grab;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    .kanban-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .kanban-card:hover .card-actions {
+      opacity: 1;
+    }
+
+    .kanban-card.dragging {
+      opacity: 0.5;
+      transform: rotate(2deg);
+      cursor: grabbing;
+    }
+
+    .kanban-card:active {
+      cursor: grabbing;
+    }
+
+    .card-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      border-radius: 0.5rem 0 0 0.5rem;
+    }
+
+    .card-content {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9fafb;
+      border-radius: 0.375rem;
+      flex-shrink: 0;
+    }
+
+    .card-icon i {
+      font-size: 0.9375rem;
+    }
+
+    .card-info {
+      flex: 1;
+    }
+
+    .card-info h4 {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .card-info p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .card-actions {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      border-radius: 0.25rem;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .card-action:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .empty-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.8125rem;
+    }
+
+    .empty-column i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SORTABLE LIST
+       ───────────────────────────────────────────────────────────────── */
+    .sortable-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .sortable-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sortable-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      cursor: grab;
+      transition: all 0.2s;
+    }
+
+    .sortable-item:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .sortable-item.dragging {
+      opacity: 0.5;
+      background: #eef2ff;
+    }
+
+    .sortable-item:active {
+      cursor: grabbing;
+    }
+
+    .item-handle {
+      color: #d1d5db;
+      cursor: grab;
+    }
+
+    .item-handle:active {
+      cursor: grabbing;
+    }
+
+    .item-icon {
+      color: #4f46e5;
+    }
+
+    .item-title {
+      flex: 1;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .item-position {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      padding: 0.25rem 0.5rem;
+      background: #f3f4f6;
+      border-radius: 0.25rem;
+    }
+
+    .sortable-result {
+      padding: 1rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+    }
+
+    .sortable-result h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .sortable-result p {
+      margin: 0;
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: #6b7280;
+      word-break: break-all;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       DROP ZONES
+       ───────────────────────────────────────────────────────────────── */
+    .dropzone-demo {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1.5rem;
+    }
+
+    .dropzone-source h4 {
+      margin: 0 0 1rem 0;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .draggable-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .draggable-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: grab;
+      transition: all 0.2s;
+    }
+
+    .draggable-chip:hover {
+      border-color: #4f46e5;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .draggable-chip:active {
+      cursor: grabbing;
+    }
+
+    .draggable-chip i {
+      color: #6b7280;
+    }
+
+    .dropzone-targets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .dropzone-target {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background: #f9fafb;
+      border: 2px dashed #d1d5db;
+      border-radius: 0.75rem;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .dropzone-target:hover,
+    .dropzone-target.dragover {
+      border-color: #4f46e5;
+      background: #eef2ff;
+    }
+
+    .dropzone-target i {
+      font-size: 2rem;
+      color: #4f46e5;
+      margin-bottom: 0.5rem;
+    }
+
+    .dropzone-target span {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    .dropzone-target small {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .dropzone-target--secondary i {
+      color: #f59e0b;
+    }
+
+    .dropzone-target--secondary:hover,
+    .dropzone-target--secondary.dragover {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .dropzone-target--danger i {
+      color: #ef4444;
+    }
+
+    .dropzone-target--danger:hover,
+    .dropzone-target--danger.dragover {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       INSTRUCTIONS
+       ───────────────────────────────────────────────────────────────── */
+    .instructions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .instruction-card {
+      padding: 1.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      text-align: center;
+    }
+
+    .instruction-card i {
+      font-size: 2rem;
+      color: #4f46e5;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .instruction-card h4 {
+      margin: 0 0 0.375rem 0;
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    .instruction-card p {
+      margin: 0;
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .kanban-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dragdrop-showcase {
+        padding: 1rem;
+      }
+
+      .kanban-board {
+        grid-template-columns: 1fr;
+      }
+
+      .sortable-container,
+      .dropzone-demo {
+        grid-template-columns: 1fr;
+      }
+
+      .dropzone-targets {
+        grid-template-columns: 1fr;
+      }
+
+      .instructions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Drag & Drop</h1>
+  <p class="page-subtitle">Interface de glisser-déposer interactive</p>
+
+  <!-- Kanban Board -->
+  <section class="section">
+    <h2 class="section-title">Tableau Kanban</h2>
+    <div class="kanban-board" id="kanbanBoard">
+      <!-- Todo Column -->
+      <div class="kanban-column" data-column="todo">
+        <div class="column-header">
+          <h3>
+            À faire
+            <span class="item-count">3</span>
+          </h3>
+          <button class="column-add">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card" draggable="true" data-id="1">
+            <div class="card-indicator" style="background-color: #8b5cf6;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #8b5cf6;">
+                <i class="bi bi-palette"></i>
+              </div>
+              <div class="card-info">
+                <h4>Conception maquettes</h4>
+                <p>Créer les wireframes</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+          <div class="kanban-card" draggable="true" data-id="2">
+            <div class="card-indicator" style="background-color: #3b82f6;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #3b82f6;">
+                <i class="bi bi-people"></i>
+              </div>
+              <div class="card-info">
+                <h4>Recherche utilisateur</h4>
+                <p>Interviews clients</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+          <div class="kanban-card" draggable="true" data-id="3">
+            <div class="card-indicator" style="background-color: #10b981;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #10b981;">
+                <i class="bi bi-file-earmark-code"></i>
+              </div>
+              <div class="card-info">
+                <h4>Documentation API</h4>
+                <p>Swagger specs</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Progress Column -->
+      <div class="kanban-column" data-column="inprogress">
+        <div class="column-header">
+          <h3>
+            En cours
+            <span class="item-count">2</span>
+          </h3>
+          <button class="column-add">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card" draggable="true" data-id="4">
+            <div class="card-indicator" style="background-color: #ef4444;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #ef4444;">
+                <i class="bi bi-code-slash"></i>
+              </div>
+              <div class="card-info">
+                <h4>Développement frontend</h4>
+                <p>Composants Angular</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+          <div class="kanban-card" draggable="true" data-id="5">
+            <div class="card-indicator" style="background-color: #f59e0b;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #f59e0b;">
+                <i class="bi bi-check2-circle"></i>
+              </div>
+              <div class="card-info">
+                <h4>Tests unitaires</h4>
+                <p>Coverage 80%</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Column -->
+      <div class="kanban-column" data-column="review">
+        <div class="column-header">
+          <h3>
+            En revue
+            <span class="item-count">1</span>
+          </h3>
+          <button class="column-add">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card" draggable="true" data-id="6">
+            <div class="card-indicator" style="background-color: #ec4899;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #ec4899;">
+                <i class="bi bi-git"></i>
+              </div>
+              <div class="card-info">
+                <h4>Code review</h4>
+                <p>PR #142</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Done Column -->
+      <div class="kanban-column" data-column="done">
+        <div class="column-header">
+          <h3>
+            Terminé
+            <span class="item-count">1</span>
+          </h3>
+          <button class="column-add">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+        <div class="column-content">
+          <div class="kanban-card" draggable="true" data-id="7">
+            <div class="card-indicator" style="background-color: #06b6d4;"></div>
+            <div class="card-content">
+              <div class="card-icon" style="color: #06b6d4;">
+                <i class="bi bi-gear"></i>
+              </div>
+              <div class="card-info">
+                <h4>Setup projet</h4>
+                <p>Configuration initiale</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sortable List -->
+  <section class="section">
+    <h2 class="section-title">Liste triable</h2>
+    <div class="sortable-container">
+      <div class="sortable-list" id="sortableList">
+        <div class="sortable-item" draggable="true" data-id="s1">
+          <div class="item-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </div>
+          <div class="item-icon">
+            <i class="bi bi-1-circle"></i>
+          </div>
+          <span class="item-title">Premier élément</span>
+          <span class="item-position">Position: 1</span>
+        </div>
+        <div class="sortable-item" draggable="true" data-id="s2">
+          <div class="item-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </div>
+          <div class="item-icon">
+            <i class="bi bi-2-circle"></i>
+          </div>
+          <span class="item-title">Deuxième élément</span>
+          <span class="item-position">Position: 2</span>
+        </div>
+        <div class="sortable-item" draggable="true" data-id="s3">
+          <div class="item-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </div>
+          <div class="item-icon">
+            <i class="bi bi-3-circle"></i>
+          </div>
+          <span class="item-title">Troisième élément</span>
+          <span class="item-position">Position: 3</span>
+        </div>
+        <div class="sortable-item" draggable="true" data-id="s4">
+          <div class="item-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </div>
+          <div class="item-icon">
+            <i class="bi bi-4-circle"></i>
+          </div>
+          <span class="item-title">Quatrième élément</span>
+          <span class="item-position">Position: 4</span>
+        </div>
+        <div class="sortable-item" draggable="true" data-id="s5">
+          <div class="item-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </div>
+          <div class="item-icon">
+            <i class="bi bi-5-circle"></i>
+          </div>
+          <span class="item-title">Cinquième élément</span>
+          <span class="item-position">Position: 5</span>
+        </div>
+      </div>
+      <div class="sortable-result">
+        <h4>Ordre actuel :</h4>
+        <p id="sortableResult">[{"id":"s1","title":"Premier élément"},{"id":"s2","title":"Deuxième élément"},{"id":"s3","title":"Troisième élément"},{"id":"s4","title":"Quatrième élément"},{"id":"s5","title":"Cinquième élément"}]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drop Zones -->
+  <section class="section">
+    <h2 class="section-title">Zones de dépôt</h2>
+    <div class="dropzone-demo">
+      <div class="dropzone-source">
+        <h4>Éléments disponibles</h4>
+        <div class="draggable-items">
+          <div class="draggable-chip" draggable="true">
+            <i class="bi bi-file-earmark-image"></i>
+            Image.png
+          </div>
+          <div class="draggable-chip" draggable="true">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Document.pdf
+          </div>
+          <div class="draggable-chip" draggable="true">
+            <i class="bi bi-file-earmark-music"></i>
+            Audio.mp3
+          </div>
+        </div>
+      </div>
+      <div class="dropzone-targets">
+        <div class="dropzone-target" id="dropzoneMain">
+          <i class="bi bi-folder"></i>
+          <span>Dossier Principal</span>
+          <small>Déposez vos fichiers ici</small>
+        </div>
+        <div class="dropzone-target dropzone-target--secondary" id="dropzoneArchive">
+          <i class="bi bi-archive"></i>
+          <span>Archives</span>
+          <small>Fichiers archivés</small>
+        </div>
+        <div class="dropzone-target dropzone-target--danger" id="dropzoneTrash">
+          <i class="bi bi-trash"></i>
+          <span>Corbeille</span>
+          <small>Supprimer définitivement</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <div class="instruction-card">
+      <i class="bi bi-hand-index-thumb"></i>
+      <h4>Glisser</h4>
+      <p>Maintenez le clic sur un élément</p>
+    </div>
+    <div class="instruction-card">
+      <i class="bi bi-arrows-move"></i>
+      <h4>Déplacer</h4>
+      <p>Déplacez vers la zone cible</p>
+    </div>
+    <div class="instruction-card">
+      <i class="bi bi-box-arrow-in-down"></i>
+      <h4>Déposer</h4>
+      <p>Relâchez pour confirmer</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ═══════════════════════════════════════════════════════════════
+  // DRAG & DROP - JavaScript
+  // ═══════════════════════════════════════════════════════════════
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // ─────────────────────────────────────────────────────────────
+    // KANBAN BOARD
+    // ─────────────────────────────────────────────────────────────
+    const kanbanBoard = document.getElementById('kanbanBoard');
+    let draggedCard = null;
+    let sourceColumn = null;
+
+    // Setup kanban cards
+    const kanbanCards = kanbanBoard.querySelectorAll('.kanban-card');
+    kanbanCards.forEach(card => {
+      card.addEventListener('dragstart', function(e) {
+        draggedCard = this;
+        sourceColumn = this.closest('.kanban-column');
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      card.addEventListener('dragend', function() {
+        this.classList.remove('dragging');
+        draggedCard = null;
+        sourceColumn = null;
+        
+        // Remove dragover from all columns
+        document.querySelectorAll('.kanban-column').forEach(col => {
+          col.classList.remove('dragover');
+        });
+        
+        updateColumnCounts();
+      });
+    });
+
+    // Setup kanban columns
+    const kanbanColumns = kanbanBoard.querySelectorAll('.kanban-column');
+    kanbanColumns.forEach(column => {
+      column.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (draggedCard && sourceColumn !== this) {
+          this.classList.add('dragover');
+        }
+      });
+
+      column.addEventListener('dragleave', function() {
+        this.classList.remove('dragover');
+      });
+
+      column.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        
+        if (draggedCard && sourceColumn !== this) {
+          const content = this.querySelector('.column-content');
+          content.appendChild(draggedCard);
+        }
+      });
+    });
+
+    function updateColumnCounts() {
+      kanbanColumns.forEach(column => {
+        const count = column.querySelectorAll('.kanban-card').length;
+        column.querySelector('.item-count').textContent = count;
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // SORTABLE LIST
+    // ─────────────────────────────────────────────────────────────
+    const sortableList = document.getElementById('sortableList');
+    let draggedItem = null;
+    let draggedIndex = null;
+
+    const sortableItems = sortableList.querySelectorAll('.sortable-item');
+    sortableItems.forEach((item, index) => {
+      item.addEventListener('dragstart', function(e) {
+        draggedItem = this;
+        draggedIndex = index;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      item.addEventListener('dragend', function() {
+        this.classList.remove('dragging');
+        draggedItem = null;
+        draggedIndex = null;
+        updatePositions();
+        updateSortableResult();
+      });
+
+      item.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        if (draggedItem && draggedItem !== this) {
+          const rect = this.getBoundingClientRect();
+          const midY = rect.top + rect.height / 2;
+          
+          if (e.clientY < midY) {
+            this.parentNode.insertBefore(draggedItem, this);
+          } else {
+            this.parentNode.insertBefore(draggedItem, this.nextSibling);
+          }
+        }
+      });
+    });
+
+    function updatePositions() {
+      const items = sortableList.querySelectorAll('.sortable-item');
+      items.forEach((item, index) => {
+        item.querySelector('.item-position').textContent = 'Position: ' + (index + 1);
+      });
+    }
+
+    function updateSortableResult() {
+      const items = sortableList.querySelectorAll('.sortable-item');
+      const result = Array.from(items).map(item => ({
+        id: item.dataset.id,
+        title: item.querySelector('.item-title').textContent
+      }));
+      document.getElementById('sortableResult').textContent = JSON.stringify(result);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // DROP ZONES
+    // ─────────────────────────────────────────────────────────────
+    const draggableChips = document.querySelectorAll('.draggable-chip');
+    const dropzones = document.querySelectorAll('.dropzone-target');
+
+    draggableChips.forEach(chip => {
+      chip.addEventListener('dragstart', function(e) {
+        e.dataTransfer.setData('text/plain', this.textContent.trim());
+        e.dataTransfer.effectAllowed = 'move';
+      });
+    });
+
+    dropzones.forEach(zone => {
+      zone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+      });
+
+      zone.addEventListener('dragleave', function() {
+        this.classList.remove('dragover');
+      });
+
+      zone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        const data = e.dataTransfer.getData('text/plain');
+        console.log('Dropped:', data, 'to', this.querySelector('span').textContent);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

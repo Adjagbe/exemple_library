@@ -1,0 +1,202 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- INVOICE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="invoice-page">
+  <!-- Actions Bar (hidden in print) -->
+  <div class="invoice-actions no-print">
+    <div class="actions-left">
+      <button class="btn btn--secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Invoices
+      </button>
+    </div>
+    <div class="actions-right">
+      <button class="btn btn--secondary" (click)="duplicateInvoice()">
+        <i class="bi bi-files"></i>
+        Duplicate
+      </button>
+      <button class="btn btn--secondary" (click)="sendInvoice()">
+        <i class="bi bi-envelope"></i>
+        Send
+      </button>
+      <button class="btn btn--secondary" (click)="downloadPDF()">
+        <i class="bi bi-download"></i>
+        Download PDF
+      </button>
+      <button class="btn btn--primary" (click)="printInvoice()">
+        <i class="bi bi-printer"></i>
+        Print
+      </button>
+    </div>
+  </div>
+
+  <!-- Invoice Document -->
+  <div class="invoice-document">
+    <!-- Header -->
+    <header class="invoice-header">
+      <div class="header-left">
+        <img [src]="invoice.company.logo" [alt]="invoice.company.name" class="company-logo">
+        <div class="company-details">
+          <h2>{{ invoice.company.name }}</h2>
+          <p>{{ invoice.company.address }}</p>
+          <p>{{ invoice.company.city }}</p>
+          <p>{{ invoice.company.country }}</p>
+          <p>Tax ID: {{ invoice.company.taxId }}</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <h1 class="invoice-title">INVOICE</h1>
+        <div class="invoice-meta">
+          <div class="meta-item">
+            <span class="label">Invoice Number</span>
+            <span class="value">{{ invoice.number }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Issue Date</span>
+            <span class="value">{{ invoice.date | date:'mediumDate' }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Due Date</span>
+            <span class="value">{{ invoice.dueDate | date:'mediumDate' }}</span>
+          </div>
+        </div>
+        <div class="invoice-status" [ngClass]="getStatusClass(invoice.status)">
+          {{ getStatusLabel(invoice.status) }}
+        </div>
+      </div>
+    </header>
+
+    <!-- Billing Info -->
+    <section class="billing-section">
+      <div class="billing-box">
+        <h3>Bill To</h3>
+        <div class="billing-details">
+          <p class="name">{{ invoice.customer.name }}</p>
+          <p *ngIf="invoice.customer.company">{{ invoice.customer.company }}</p>
+          <p>{{ invoice.customer.address }}</p>
+          <p>{{ invoice.customer.city }}</p>
+          <p>{{ invoice.customer.country }}</p>
+          <p class="contact">{{ invoice.customer.email }}</p>
+          <p *ngIf="invoice.customer.phone">{{ invoice.customer.phone }}</p>
+        </div>
+      </div>
+      <div class="billing-box">
+        <h3>Payment Details</h3>
+        <div class="billing-details">
+          <p><strong>Method:</strong> {{ invoice.paymentMethod }}</p>
+          <p><strong>Terms:</strong> {{ invoice.paymentTerms }}</p>
+          <div class="due-info" *ngIf="invoice.status === 'pending'">
+            <i class="bi bi-clock"></i>
+            <span *ngIf="getDaysUntilDue() > 0">Due in {{ getDaysUntilDue() }} days</span>
+            <span *ngIf="getDaysUntilDue() === 0">Due today</span>
+            <span *ngIf="getDaysUntilDue() < 0" class="overdue">{{ Math.abs(getDaysUntilDue()) }} days overdue</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Items Table -->
+    <section class="items-section">
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th class="col-desc">Description</th>
+            <th class="col-qty">Qty</th>
+            <th class="col-price">Unit Price</th>
+            <th class="col-tax">Tax</th>
+            <th class="col-total">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of invoice.items">
+            <td class="col-desc">{{ item.description }}</td>
+            <td class="col-qty">{{ item.quantity }}</td>
+            <td class="col-price">{{ item.unitPrice | currency }}</td>
+            <td class="col-tax">{{ item.tax | currency }}</td>
+            <td class="col-total">{{ item.total | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Totals -->
+    <section class="totals-section">
+      <div class="notes-column">
+        <div class="notes-box" *ngIf="invoice.notes">
+          <h4>Notes</h4>
+          <p>{{ invoice.notes }}</p>
+        </div>
+      </div>
+      <div class="totals-column">
+        <div class="totals-box">
+          <div class="total-line">
+            <span>Subtotal</span>
+            <span>{{ invoice.subtotal | currency }}</span>
+          </div>
+          <div class="total-line" *ngIf="invoice.discount > 0">
+            <span>Discount {{ invoice.discountType === 'percentage' ? '(' + invoice.discount + '%)' : '' }}</span>
+            <span class="discount">-{{ invoice.discount | currency }}</span>
+          </div>
+          <div class="total-line">
+            <span>Tax ({{ invoice.taxRate }}%)</span>
+            <span>{{ invoice.taxAmount | currency }}</span>
+          </div>
+          <div class="total-line" *ngIf="invoice.shipping > 0">
+            <span>Shipping</span>
+            <span>{{ invoice.shipping | currency }}</span>
+          </div>
+          <div class="total-line grand-total">
+            <span>Total Due</span>
+            <span>{{ invoice.total | currency }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="invoice-footer">
+      <div class="footer-content">
+        <div class="company-contact">
+          <p><i class="bi bi-telephone"></i> {{ invoice.company.phone }}</p>
+          <p><i class="bi bi-envelope"></i> {{ invoice.company.email }}</p>
+          <p><i class="bi bi-globe"></i> {{ invoice.company.website }}</p>
+        </div>
+        <div class="thank-you">
+          <p>Thank you for your business!</p>
+        </div>
+      </div>
+      <div class="footer-border"></div>
+    </footer>
+
+    <!-- Watermark for status -->
+    <div class="watermark" *ngIf="invoice.status === 'paid'">
+      <span>PAID</span>
+    </div>
+    <div class="watermark cancelled" *ngIf="invoice.status === 'cancelled'">
+      <span>CANCELLED</span>
+    </div>
+  </div>
+
+  <!-- Payment Instructions (visible for pending invoices) -->
+  <div class="payment-instructions no-print" *ngIf="invoice.status === 'pending'">
+    <h3><i class="bi bi-info-circle"></i> Payment Instructions</h3>
+    <div class="instructions-content">
+      <div class="instruction-item">
+        <h4>Bank Transfer</h4>
+        <p>Bank: First National Bank</p>
+        <p>Account: 1234567890</p>
+        <p>Routing: 021000021</p>
+        <p>SWIFT: FNBAUS33</p>
+      </div>
+      <div class="instruction-item">
+        <h4>Online Payment</h4>
+        <p>Pay securely online using credit card or PayPal</p>
+        <button class="btn btn--primary btn--lg">
+          <i class="bi bi-credit-card"></i>
+          Pay Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

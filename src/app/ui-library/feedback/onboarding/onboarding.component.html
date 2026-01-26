@@ -1,0 +1,169 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ONBOARDING COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="onboarding-container">
+  <div class="onboarding-card">
+    <!-- Progress -->
+    <div class="onboarding-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress"></div>
+      </div>
+      <div class="progress-steps">
+        <button 
+          *ngFor="let step of steps; let i = index"
+          class="step-dot"
+          [class.active]="i === currentStep"
+          [class.completed]="i < currentStep"
+          (click)="goToStep(i)">
+          <i *ngIf="i < currentStep" class="bi bi-check"></i>
+          <span *ngIf="i >= currentStep">{{ i + 1 }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Skip Button -->
+    <button class="skip-btn" (click)="skip()" *ngIf="currentStep < steps.length - 1">
+      Passer
+    </button>
+
+    <!-- Content -->
+    <div class="onboarding-content">
+      <!-- Step 1: Welcome -->
+      <div class="step-content" *ngIf="currentStep === 0">
+        <div class="step-icon">
+          <i class="bi" [ngClass]="steps[0].icon"></i>
+        </div>
+        <h1 class="step-title">{{ steps[0].title }}</h1>
+        <p class="step-description">{{ steps[0].description }}</p>
+        
+        <div class="features-list">
+          <div *ngFor="let feature of steps[0].features" class="feature-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ feature }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Profile -->
+      <div class="step-content" *ngIf="currentStep === 1">
+        <div class="step-icon">
+          <i class="bi" [ngClass]="steps[1].icon"></i>
+        </div>
+        <h1 class="step-title">{{ steps[1].title }}</h1>
+        <p class="step-description">{{ steps[1].description }}</p>
+        
+        <div class="profile-form">
+          <div class="avatar-upload">
+            <div class="avatar-preview">
+              <i class="bi bi-person"></i>
+            </div>
+            <button class="upload-btn">
+              <i class="bi bi-camera"></i>
+              Ajouter une photo
+            </button>
+          </div>
+          <div class="form-group">
+            <label>Comment devons-nous vous appeler ?</label>
+            <input type="text" [(ngModel)]="userName" placeholder="Votre prénom">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Interests -->
+      <div class="step-content" *ngIf="currentStep === 2">
+        <div class="step-icon">
+          <i class="bi" [ngClass]="steps[2].icon"></i>
+        </div>
+        <h1 class="step-title">{{ steps[2].title }}</h1>
+        <p class="step-description">{{ steps[2].description }}</p>
+        
+        <div class="interests-grid">
+          <button 
+            *ngFor="let interest of interests"
+            class="interest-btn"
+            [class.selected]="isInterestSelected(interest.id)"
+            (click)="toggleInterest(interest.id)">
+            <i class="bi" [ngClass]="interest.icon"></i>
+            <span>{{ interest.label }}</span>
+            <i class="bi bi-check-lg check-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Plan Selection -->
+      <div class="step-content" *ngIf="currentStep === 3">
+        <div class="step-icon">
+          <i class="bi" [ngClass]="steps[3].icon"></i>
+        </div>
+        <h1 class="step-title">{{ steps[3].title }}</h1>
+        <p class="step-description">{{ steps[3].description }}</p>
+        
+        <div class="plans-grid">
+          <div 
+            *ngFor="let plan of plans"
+            class="plan-card"
+            [class.selected]="selectedPlan === plan.id"
+            [class.popular]="plan.popular"
+            (click)="selectPlan(plan.id)">
+            <span class="popular-badge" *ngIf="plan.popular">Populaire</span>
+            <h3 class="plan-name">{{ plan.name }}</h3>
+            <div class="plan-price">
+              <span class="price">{{ plan.price }}</span>
+              <span class="period">/mois</span>
+            </div>
+            <ul class="plan-features">
+              <li *ngFor="let feature of plan.features">
+                <i class="bi bi-check"></i>
+                {{ feature }}
+              </li>
+            </ul>
+            <div class="plan-check">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Complete -->
+      <div class="step-content" *ngIf="currentStep === 4">
+        <div class="step-icon success">
+          <i class="bi" [ngClass]="steps[4].icon"></i>
+        </div>
+        <h1 class="step-title">{{ steps[4].title }}</h1>
+        <p class="step-description">{{ steps[4].description }}</p>
+        
+        <div class="completion-summary">
+          <div class="summary-item" *ngIf="userName">
+            <i class="bi bi-person-check"></i>
+            <span>Bienvenue, {{ userName }} !</span>
+          </div>
+          <div class="summary-item" *ngIf="selectedInterests.length">
+            <i class="bi bi-heart-fill"></i>
+            <span>{{ selectedInterests.length }} centres d'intérêt sélectionnés</span>
+          </div>
+          <div class="summary-item" *ngIf="selectedPlan">
+            <i class="bi bi-credit-card-2-front"></i>
+            <span>Plan {{ selectedPlan | titlecase }} activé</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="onboarding-actions">
+      <button class="btn btn--secondary" *ngIf="currentStep > 0" (click)="prevStep()">
+        <i class="bi bi-arrow-left"></i>
+        Précédent
+      </button>
+      <button class="btn btn--primary" *ngIf="currentStep < steps.length - 1" (click)="nextStep()">
+        Suivant
+        <i class="bi bi-arrow-right"></i>
+      </button>
+      <button class="btn btn--success" *ngIf="currentStep === steps.length - 1" (click)="complete()">
+        <i class="bi bi-check-lg"></i>
+        Commencer
+      </button>
+    </div>
+  </div>
+</div>

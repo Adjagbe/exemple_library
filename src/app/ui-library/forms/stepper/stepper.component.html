@@ -1,0 +1,303 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEPPER (WIZARD) COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="stepper-container">
+  <!-- Completion State -->
+  <div class="completion-state" *ngIf="isCompleted">
+    <div class="completion-icon">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <h2>Successfully Completed!</h2>
+    <p>Your account has been created and you're all set to get started.</p>
+    <button class="btn btn--primary">
+      <i class="bi bi-house"></i>
+      Go to Dashboard
+    </button>
+  </div>
+
+  <!-- Stepper -->
+  <div class="stepper" *ngIf="!isCompleted">
+    <!-- Progress Header -->
+    <div class="stepper-header">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getProgress()"></div>
+      </div>
+      
+      <div class="steps-indicator">
+        <div 
+          *ngFor="let step of steps" 
+          class="step-indicator"
+          [class.completed]="step.completed"
+          [class.active]="step.active"
+          (click)="goToStep(step.id)">
+          <div class="step-circle">
+            <i *ngIf="step.completed" class="bi bi-check"></i>
+            <i *ngIf="!step.completed" class="bi" [ngClass]="step.icon"></i>
+          </div>
+          <div class="step-info">
+            <span class="step-title">{{ step.title }}</span>
+            <span class="step-subtitle">{{ step.subtitle }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step Content -->
+    <div class="stepper-content">
+      <!-- Step 1: Account -->
+      <div class="step-panel" *ngIf="currentStep === 1">
+        <h2 class="panel-title">Create Your Account</h2>
+        <p class="panel-subtitle">Enter your email and choose a secure password</p>
+
+        <form class="step-form">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <div class="input-wrapper">
+              <i class="bi bi-envelope"></i>
+              <input 
+                type="email" 
+                class="form-input" 
+                [(ngModel)]="accountData.email" 
+                name="email"
+                placeholder="you@example.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrapper">
+              <i class="bi bi-lock"></i>
+              <input 
+                type="password" 
+                class="form-input" 
+                [(ngModel)]="accountData.password" 
+                name="password"
+                placeholder="Create a strong password">
+            </div>
+            <span class="form-hint">Minimum 8 characters with uppercase and numbers</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <div class="input-wrapper">
+              <i class="bi bi-lock-fill"></i>
+              <input 
+                type="password" 
+                class="form-input" 
+                [(ngModel)]="accountData.confirmPassword" 
+                name="confirmPassword"
+                placeholder="Confirm your password">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 2: Personal Info -->
+      <div class="step-panel" *ngIf="currentStep === 2">
+        <h2 class="panel-title">Personal Information</h2>
+        <p class="panel-subtitle">Tell us a bit about yourself</p>
+
+        <form class="step-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input 
+                type="text" 
+                class="form-input" 
+                [(ngModel)]="personalData.firstName" 
+                name="firstName"
+                placeholder="John">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input 
+                type="text" 
+                class="form-input" 
+                [(ngModel)]="personalData.lastName" 
+                name="lastName"
+                placeholder="Doe">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number (Optional)</label>
+            <div class="input-wrapper">
+              <i class="bi bi-phone"></i>
+              <input 
+                type="tel" 
+                class="form-input" 
+                [(ngModel)]="personalData.phone" 
+                name="phone"
+                placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Date of Birth (Optional)</label>
+            <div class="input-wrapper">
+              <i class="bi bi-calendar"></i>
+              <input 
+                type="date" 
+                class="form-input" 
+                [(ngModel)]="personalData.dateOfBirth" 
+                name="dateOfBirth">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 3: Preferences -->
+      <div class="step-panel" *ngIf="currentStep === 3">
+        <h2 class="panel-title">Preferences</h2>
+        <p class="panel-subtitle">Customize your experience</p>
+
+        <form class="step-form">
+          <div class="form-group">
+            <label class="form-label">Theme</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="theme" value="light" [(ngModel)]="preferencesData.theme">
+                <span class="radio-mark"></span>
+                <i class="bi bi-sun"></i>
+                <span>Light Mode</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="theme" value="dark" [(ngModel)]="preferencesData.theme">
+                <span class="radio-mark"></span>
+                <i class="bi bi-moon"></i>
+                <span>Dark Mode</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="theme" value="system" [(ngModel)]="preferencesData.theme">
+                <span class="radio-mark"></span>
+                <i class="bi bi-display"></i>
+                <span>System Default</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Language</label>
+            <select class="form-select" [(ngModel)]="preferencesData.language" name="language">
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </div>
+
+          <div class="toggle-options">
+            <label class="toggle-option">
+              <div class="toggle-info">
+                <span class="toggle-title">Email Newsletter</span>
+                <span class="toggle-desc">Receive updates and news via email</span>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="preferencesData.newsletter" name="newsletter">
+                <span class="toggle-slider"></span>
+              </div>
+            </label>
+
+            <label class="toggle-option">
+              <div class="toggle-info">
+                <span class="toggle-title">Push Notifications</span>
+                <span class="toggle-desc">Get notified about important updates</span>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="preferencesData.notifications" name="notifications">
+                <span class="toggle-slider"></span>
+              </div>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 4: Confirmation -->
+      <div class="step-panel" *ngIf="currentStep === 4">
+        <h2 class="panel-title">Review & Confirm</h2>
+        <p class="panel-subtitle">Please review your information before submitting</p>
+
+        <div class="review-sections">
+          <div class="review-section">
+            <div class="section-header">
+              <h4><i class="bi bi-person"></i> Account</h4>
+              <button class="edit-btn" (click)="goToStep(1)">Edit</button>
+            </div>
+            <div class="section-content">
+              <p><strong>Email:</strong> {{ accountData.email }}</p>
+              <p><strong>Password:</strong> ••••••••</p>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <div class="section-header">
+              <h4><i class="bi bi-card-text"></i> Personal Info</h4>
+              <button class="edit-btn" (click)="goToStep(2)">Edit</button>
+            </div>
+            <div class="section-content">
+              <p><strong>Name:</strong> {{ personalData.firstName }} {{ personalData.lastName }}</p>
+              <p *ngIf="personalData.phone"><strong>Phone:</strong> {{ personalData.phone }}</p>
+              <p *ngIf="personalData.dateOfBirth"><strong>Date of Birth:</strong> {{ personalData.dateOfBirth }}</p>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <div class="section-header">
+              <h4><i class="bi bi-gear"></i> Preferences</h4>
+              <button class="edit-btn" (click)="goToStep(3)">Edit</button>
+            </div>
+            <div class="section-content">
+              <p><strong>Theme:</strong> {{ preferencesData.theme | titlecase }}</p>
+              <p><strong>Newsletter:</strong> {{ preferencesData.newsletter ? 'Subscribed' : 'Not subscribed' }}</p>
+              <p><strong>Notifications:</strong> {{ preferencesData.notifications ? 'Enabled' : 'Disabled' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="terms-agreement">
+          <label class="checkbox-label">
+            <input type="checkbox">
+            <span class="checkbox-mark"></span>
+            <span>I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="stepper-actions">
+      <button 
+        class="btn btn--secondary" 
+        (click)="prevStep()"
+        [disabled]="currentStep === 1">
+        <i class="bi bi-arrow-left"></i>
+        Back
+      </button>
+
+      <button 
+        *ngIf="currentStep < steps.length"
+        class="btn btn--primary" 
+        (click)="nextStep()"
+        [disabled]="!isStepValid()">
+        Continue
+        <i class="bi bi-arrow-right"></i>
+      </button>
+
+      <button 
+        *ngIf="currentStep === steps.length"
+        class="btn btn--primary btn--success" 
+        (click)="submit()"
+        [disabled]="isProcessing">
+        <span *ngIf="!isProcessing">
+          <i class="bi bi-check-circle"></i>
+          Complete Setup
+        </span>
+        <span *ngIf="isProcessing" class="loading">
+          <i class="bi bi-arrow-repeat spin"></i>
+          Processing...
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

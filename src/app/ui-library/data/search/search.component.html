@@ -1,0 +1,149 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SEARCH COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="search-showcase">
+  <h1 class="page-title">Recherche</h1>
+  <p class="page-subtitle">Composant de recherche avancée avec suggestions</p>
+
+  <!-- Main Search -->
+  <section class="showcase-section">
+    <h2 class="section-title">Recherche avec suggestions</h2>
+    
+    <div class="search-container">
+      <div class="search-box" [class.active]="isSearchOpen">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()"
+          (input)="onSearch()"
+          (keyup.enter)="onSearch()"
+          placeholder="Rechercher des produits, catégories..."
+          class="search-input"
+        >
+        <div class="search-actions">
+          <button *ngIf="searchQuery" class="clear-btn" (click)="clearSearch()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+          <span class="search-shortcut">⌘K</span>
+        </div>
+      </div>
+
+      <!-- Dropdown -->
+      <div class="search-dropdown" *ngIf="isSearchOpen">
+        <!-- Empty state with recent & popular -->
+        <div *ngIf="!searchQuery" class="dropdown-content">
+          <!-- Recent Searches -->
+          <div class="suggestion-section" *ngIf="recentSearches.length">
+            <div class="section-header">
+              <span>Recherches récentes</span>
+              <button class="clear-all-btn" (click)="clearRecentSearches()">Effacer</button>
+            </div>
+            <div class="suggestion-list">
+              <div 
+                *ngFor="let item of recentSearches" 
+                class="suggestion-item"
+                (click)="selectSuggestion(item)"
+              >
+                <i class="bi" [ngClass]="item.icon || 'bi-search'"></i>
+                <span>{{ item.text }}</span>
+                <button class="remove-btn" (click)="removeRecentSearch(item.id); $event.stopPropagation()">
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Popular Searches -->
+          <div class="suggestion-section">
+            <div class="section-header">
+              <span>Tendances</span>
+            </div>
+            <div class="suggestion-list">
+              <div 
+                *ngFor="let item of popularSearches" 
+                class="suggestion-item"
+                (click)="selectSuggestion(item)"
+              >
+                <i class="bi" [ngClass]="item.icon || 'bi-search'"></i>
+                <span>{{ item.text }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search suggestions -->
+        <div *ngIf="searchQuery" class="dropdown-content">
+          <div class="suggestion-list" *ngIf="getFilteredSuggestions().length">
+            <div 
+              *ngFor="let suggestion of getFilteredSuggestions()" 
+              class="suggestion-item"
+              (click)="selectSuggestion(suggestion)"
+            >
+              <i class="bi" [ngClass]="suggestion.icon || 'bi-search'"></i>
+              <div class="suggestion-content">
+                <span class="suggestion-text">{{ suggestion.text }}</span>
+                <span class="suggestion-meta" *ngIf="suggestion.meta">{{ suggestion.meta }}</span>
+              </div>
+              <i class="bi bi-arrow-up-left suggestion-action"></i>
+            </div>
+          </div>
+
+          <!-- No results -->
+          <div *ngIf="!getFilteredSuggestions().length && !isLoading" class="no-suggestions">
+            <i class="bi bi-search"></i>
+            <p>Aucune suggestion pour "{{ searchQuery }}"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results -->
+  <section class="showcase-section">
+    <h2 class="section-title">Résultats de recherche</h2>
+    
+    <div class="results-container">
+      <!-- Results Header -->
+      <div class="results-header">
+        <div class="results-info">
+          <span class="results-count">{{ totalResults }} résultats</span>
+          <span class="results-query">pour "MacBook"</span>
+        </div>
+        <div class="results-tabs">
+          <button 
+            *ngFor="let tab of ['all', 'products', 'categories', 'users']"
+            class="tab-btn"
+            [class.active]="activeTab === tab"
+            (click)="setActiveTab($any(tab))"
+          >
+            {{ tab === 'all' ? 'Tous' : tab === 'products' ? 'Produits' : tab === 'categories' ? 'Catégories' : 'Utilisateurs' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Grid -->
+      <div class="results-grid">
+        <div *ngFor="let result of searchResults" class="result-card">
+          <div class="result-image">
+            <i class="bi bi-laptop"></i>
+          </div>
+          <div class="result-content">
+            <span class="result-category">{{ result.category }}</span>
+            <h3 class="result-title">{{ result.title }}</h3>
+            <p class="result-description">{{ result.description }}</p>
+            <div class="result-footer">
+              <span class="result-price">{{ formatPrice(result.price!) }}</span>
+              <div class="result-rating" *ngIf="result.rating">
+                <i class="bi bi-star-fill"></i>
+                <span>{{ result.rating }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

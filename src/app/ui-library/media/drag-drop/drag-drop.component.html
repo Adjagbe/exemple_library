@@ -1,0 +1,153 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DRAG & DROP COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Drag & Drop</h1>
+  <p class="page-subtitle">Interface de glisser-déposer interactive</p>
+
+  <!-- Kanban Board -->
+  <section class="section">
+    <h2 class="section-title">Tableau Kanban</h2>
+    <div class="kanban-board">
+      <div
+        *ngFor="let column of columns"
+        class="kanban-column"
+        [class.dragover]="draggedItem && draggedFromZone !== column.id"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop(column.id)"
+      >
+        <div class="column-header">
+          <h3>
+            {{ column.title }}
+            <span class="item-count">{{ column.items.length }}</span>
+          </h3>
+          <button class="column-add">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+        <div class="column-content">
+          <div
+            *ngFor="let item of column.items"
+            class="kanban-card"
+            [class.dragging]="draggedItem?.id === item.id"
+            draggable="true"
+            (dragstart)="onDragStart(item, column.id)"
+            (dragend)="onDragEnd()"
+          >
+            <div class="card-indicator" [style.background-color]="item.color"></div>
+            <div class="card-content">
+              <div class="card-icon" [style.color]="item.color">
+                <i class="bi" [ngClass]="item.icon"></i>
+              </div>
+              <div class="card-info">
+                <h4>{{ item.title }}</h4>
+                <p *ngIf="item.description">{{ item.description }}</p>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="card-action">
+                <i class="bi bi-three-dots"></i>
+              </button>
+            </div>
+          </div>
+          <div class="empty-column" *ngIf="column.items.length === 0">
+            <i class="bi bi-inbox"></i>
+            <span>Aucune tâche</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sortable List -->
+  <section class="section">
+    <h2 class="section-title">Liste triable</h2>
+    <div class="sortable-container">
+      <div class="sortable-list">
+        <div
+          *ngFor="let item of sortableItems; let i = index"
+          class="sortable-item"
+          [class.dragging]="draggedSortableIndex === i"
+          draggable="true"
+          (dragstart)="onSortableDragStart(i)"
+          (dragover)="onSortableDragOver($event, i)"
+          (dragend)="onSortableDragEnd()"
+        >
+          <div class="item-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </div>
+          <div class="item-icon">
+            <i class="bi" [ngClass]="item.icon"></i>
+          </div>
+          <span class="item-title">{{ item.title }}</span>
+          <span class="item-position">Position: {{ i + 1 }}</span>
+        </div>
+      </div>
+      <div class="sortable-result">
+        <h4>Ordre actuel :</h4>
+        <p>{{ sortableItems | json }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drop Zones -->
+  <section class="section">
+    <h2 class="section-title">Zones de dépôt</h2>
+    <div class="dropzone-demo">
+      <div class="dropzone-source">
+        <h4>Éléments disponibles</h4>
+        <div class="draggable-items">
+          <div class="draggable-chip" draggable="true">
+            <i class="bi bi-file-earmark-image"></i>
+            Image.png
+          </div>
+          <div class="draggable-chip" draggable="true">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Document.pdf
+          </div>
+          <div class="draggable-chip" draggable="true">
+            <i class="bi bi-file-earmark-music"></i>
+            Audio.mp3
+          </div>
+        </div>
+      </div>
+      <div class="dropzone-targets">
+        <div class="dropzone-target" (dragover)="onDragOver($event)">
+          <i class="bi bi-folder"></i>
+          <span>Dossier Principal</span>
+          <small>Déposez vos fichiers ici</small>
+        </div>
+        <div class="dropzone-target dropzone-target--secondary" (dragover)="onDragOver($event)">
+          <i class="bi bi-archive"></i>
+          <span>Archives</span>
+          <small>Fichiers archivés</small>
+        </div>
+        <div class="dropzone-target dropzone-target--danger" (dragover)="onDragOver($event)">
+          <i class="bi bi-trash"></i>
+          <span>Corbeille</span>
+          <small>Supprimer définitivement</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <div class="instruction-card">
+      <i class="bi bi-hand-index-thumb"></i>
+      <h4>Glisser</h4>
+      <p>Maintenez le clic sur un élément</p>
+    </div>
+    <div class="instruction-card">
+      <i class="bi bi-arrows-move"></i>
+      <h4>Déplacer</h4>
+      <p>Déplacez vers la zone cible</p>
+    </div>
+    <div class="instruction-card">
+      <i class="bi bi-box-arrow-in-down"></i>
+      <h4>Déposer</h4>
+      <p>Relâchez pour confirmer</p>
+    </div>
+  </div>
+</div>

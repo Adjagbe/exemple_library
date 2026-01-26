@@ -1,0 +1,169 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FILTERS COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="filters-showcase">
+  <h1 class="page-title">Filtres</h1>
+  <p class="page-subtitle">Système de filtrage avancé pour vos données</p>
+
+  <div class="filters-layout">
+    <!-- Sidebar Filters -->
+    <aside class="filters-sidebar">
+      <div class="sidebar-header">
+        <h2>Filtres</h2>
+        <button 
+          *ngIf="activeFilters.length" 
+          class="clear-all-btn"
+          (click)="clearAllFilters()"
+        >
+          Tout effacer
+        </button>
+      </div>
+
+      <!-- Active Filters -->
+      <div class="active-filters" *ngIf="activeFilters.length">
+        <div *ngFor="let filter of activeFilters" class="active-filter-tag">
+          <span>{{ filter.label }}</span>
+          <button (click)="removeFilter(filter)">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Groups -->
+      <div class="filter-groups">
+        <div *ngFor="let group of filterGroups" class="filter-group">
+          <button class="group-header" (click)="toggleGroup(group)">
+            <span>{{ group.label }}</span>
+            <i class="bi" [ngClass]="group.expanded ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+          </button>
+
+          <div class="group-content" *ngIf="group.expanded">
+            <!-- Checkbox Filter -->
+            <div *ngIf="group.type === 'checkbox'" class="checkbox-list">
+              <label *ngFor="let option of group.options" class="checkbox-item">
+                <input 
+                  type="checkbox" 
+                  [checked]="option.checked"
+                  (change)="onCheckboxChange(group, option)"
+                >
+                <span class="checkbox-label">{{ option.label }}</span>
+                <span class="checkbox-count" *ngIf="option.count">({{ option.count }})</span>
+              </label>
+            </div>
+
+            <!-- Radio Filter -->
+            <div *ngIf="group.type === 'radio'" class="radio-list">
+              <label *ngFor="let option of group.options" class="radio-item">
+                <input 
+                  type="radio" 
+                  [name]="group.id"
+                  [checked]="option.checked"
+                  (change)="onRadioChange(group, option)"
+                >
+                <span class="radio-label">{{ option.label }}</span>
+                <span class="radio-count" *ngIf="option.count">({{ option.count }})</span>
+              </label>
+            </div>
+
+            <!-- Range Filter -->
+            <div *ngIf="group.type === 'range' && group.range" class="range-filter">
+              <div class="range-values">
+                <span>{{ group.range.current[0] }}{{ group.range.unit }}</span>
+                <span>{{ group.range.current[1] }}{{ group.range.unit }}</span>
+              </div>
+              <div class="range-inputs">
+                <input 
+                  type="range" 
+                  [min]="group.range.min" 
+                  [max]="group.range.max"
+                  [(ngModel)]="group.range.current[0]"
+                  (input)="updateActiveFilters()"
+                  class="range-slider"
+                >
+                <input 
+                  type="range" 
+                  [min]="group.range.min" 
+                  [max]="group.range.max"
+                  [(ngModel)]="group.range.current[1]"
+                  (input)="updateActiveFilters()"
+                  class="range-slider"
+                >
+              </div>
+            </div>
+
+            <!-- Color Filter -->
+            <div *ngIf="group.type === 'color'" class="color-filter">
+              <button 
+                *ngFor="let color of group.colors"
+                class="color-btn"
+                [class.selected]="color.checked"
+                [style.background]="color.hex"
+                [style.border-color]="color.hex === '#ffffff' ? '#e5e7eb' : color.hex"
+                [title]="color.value"
+                (click)="onColorChange(group, color)"
+              >
+                <i *ngIf="color.checked" class="bi bi-check" [style.color]="color.hex === '#ffffff' || color.hex === '#fbbf24' ? '#111827' : '#ffffff'"></i>
+              </button>
+            </div>
+
+            <!-- Rating Filter -->
+            <div *ngIf="group.type === 'rating'" class="rating-filter">
+              <button 
+                *ngFor="let star of [4, 3, 2, 1]"
+                class="rating-btn"
+                [class.selected]="group.rating === star"
+                (click)="onRatingChange(group, star)"
+              >
+                <span class="stars">
+                  <i *ngFor="let s of [1,2,3,4,5]" 
+                     class="bi" 
+                     [ngClass]="s <= star ? 'bi-star-fill' : 'bi-star'"
+                  ></i>
+                </span>
+                <span class="rating-label">{{ star }}+ étoiles</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Results Area -->
+    <main class="filters-content">
+      <div class="content-header">
+        <span class="results-count">{{ 456 - activeFilters.length * 50 }} résultats</span>
+        <div class="sort-dropdown">
+          <select>
+            <option>Pertinence</option>
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+            <option>Nouveautés</option>
+            <option>Meilleures notes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div *ngFor="let i of [1,2,3,4,5,6]" class="product-card">
+          <div class="product-image">
+            <i class="bi bi-box"></i>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Catégorie</span>
+            <h3 class="product-name">Produit exemple {{ i }}</h3>
+            <div class="product-rating">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star"></i>
+              <span>(128)</span>
+            </div>
+            <span class="product-price">{{ 49.99 + i * 50 | number:'1.2-2' }} €</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

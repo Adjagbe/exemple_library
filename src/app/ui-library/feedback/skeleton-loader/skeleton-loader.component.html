@@ -1,0 +1,183 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SKELETON LOADER COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="skeleton-showcase">
+  <h1 class="page-title">Skeleton Loaders</h1>
+  <p class="page-subtitle">Placeholders de chargement animés</p>
+
+  <div class="toggle-control">
+    <button class="btn" (click)="toggleLoading()">
+      {{ isLoading ? 'Afficher le contenu' : 'Afficher les skeletons' }}
+    </button>
+  </div>
+
+  <!-- Text Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Texte</h2>
+    <div class="skeleton-demo">
+      <div class="skeleton-text" *ngIf="isLoading">
+        <div class="skeleton skeleton--title"></div>
+        <div class="skeleton skeleton--text"></div>
+        <div class="skeleton skeleton--text"></div>
+        <div class="skeleton skeleton--text skeleton--short"></div>
+      </div>
+      <div class="real-content" *ngIf="!isLoading">
+        <h3>Titre de l'article</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Cards</h2>
+    <div class="cards-grid">
+      <ng-container *ngIf="isLoading">
+        <div class="skeleton-card" *ngFor="let i of [1, 2, 3]">
+          <div class="skeleton skeleton--image"></div>
+          <div class="skeleton-card-content">
+            <div class="skeleton skeleton--title-sm"></div>
+            <div class="skeleton skeleton--text"></div>
+            <div class="skeleton skeleton--text skeleton--short"></div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+        <div class="real-card" *ngFor="let i of [1, 2, 3]">
+          <div class="card-image">
+            <i class="bi bi-image"></i>
+          </div>
+          <div class="card-content">
+            <h4>Titre du produit</h4>
+            <p>Description courte du produit avec quelques détails.</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+
+  <!-- User List Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Liste d'utilisateurs</h2>
+    <div class="user-list">
+      <ng-container *ngIf="isLoading">
+        <div class="skeleton-user" *ngFor="let i of [1, 2, 3, 4]">
+          <div class="skeleton skeleton--avatar"></div>
+          <div class="skeleton-user-info">
+            <div class="skeleton skeleton--name"></div>
+            <div class="skeleton skeleton--email"></div>
+          </div>
+          <div class="skeleton skeleton--button"></div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+        <div class="real-user" *ngFor="let i of [1, 2, 3, 4]">
+          <div class="user-avatar">JD</div>
+          <div class="user-info">
+            <span class="user-name">Jean Dupont</span>
+            <span class="user-email">jean&#64;example.com</span>
+          </div>
+          <button class="user-btn">Voir profil</button>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+
+  <!-- Table Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Tableau</h2>
+    <div class="skeleton-table" *ngIf="isLoading">
+      <div class="table-header">
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell skeleton--short"></div>
+      </div>
+      <div class="table-row" *ngFor="let i of [1, 2, 3, 4, 5]">
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell skeleton--short"></div>
+      </div>
+    </div>
+    <table class="real-table" *ngIf="!isLoading">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+          <td>Utilisateur {{ i }}</td>
+          <td>user{{ i }}&#64;example.com</td>
+          <td>Admin</td>
+          <td><button>Modifier</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Profile Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Profil</h2>
+    <div class="profile-skeleton" *ngIf="isLoading">
+      <div class="profile-header">
+        <div class="skeleton skeleton--avatar-lg"></div>
+        <div class="profile-info">
+          <div class="skeleton skeleton--title"></div>
+          <div class="skeleton skeleton--text skeleton--short"></div>
+          <div class="profile-stats">
+            <div class="skeleton skeleton--stat"></div>
+            <div class="skeleton skeleton--stat"></div>
+            <div class="skeleton skeleton--stat"></div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <div class="skeleton skeleton--btn"></div>
+        <div class="skeleton skeleton--btn"></div>
+      </div>
+    </div>
+    <div class="profile-real" *ngIf="!isLoading">
+      <div class="profile-header">
+        <div class="avatar-lg">JD</div>
+        <div class="profile-info">
+          <h3>Jean Dupont</h3>
+          <p>Développeur Full Stack</p>
+          <div class="profile-stats">
+            <span>42 Projets</span>
+            <span>128 Followers</span>
+            <span>56 Following</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn btn--primary">Suivre</button>
+        <button class="btn btn--secondary">Message</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Different Animation Styles -->
+  <section class="showcase-section">
+    <h2 class="section-title">Styles d'animation</h2>
+    <div class="animation-demos">
+      <div class="animation-demo">
+        <h4>Pulse</h4>
+        <div class="skeleton skeleton--box animation--pulse"></div>
+      </div>
+      <div class="animation-demo">
+        <h4>Wave</h4>
+        <div class="skeleton skeleton--box animation--wave"></div>
+      </div>
+      <div class="animation-demo">
+        <h4>Shimmer</h4>
+        <div class="skeleton skeleton--box animation--shimmer"></div>
+      </div>
+    </div>
+  </section>
+</div>

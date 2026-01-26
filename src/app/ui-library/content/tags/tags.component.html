@@ -1,0 +1,190 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAGS COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="tags-showcase">
+  <h1 class="page-title">Tags</h1>
+  <p class="page-subtitle">Gestion et affichage des tags</p>
+
+  <!-- Add New Tag -->
+  <section class="tags-section">
+    <h2 class="section-title">Ajouter un tag</h2>
+    <div class="tag-creator">
+      <div class="tag-form">
+        <input
+          type="text"
+          class="tag-input"
+          placeholder="Nom du tag..."
+          [(ngModel)]="newTagInput"
+          (keyup.enter)="addTag()"
+        />
+        <div class="color-preview" [style.background-color]="selectedColor"></div>
+        <button class="btn btn--primary" (click)="addTag()">
+          <i class="bi bi-plus-lg"></i>
+          Ajouter
+        </button>
+      </div>
+      <div class="color-presets">
+        <span class="color-label">Couleur:</span>
+        <button
+          *ngFor="let color of colorPresets"
+          class="color-btn"
+          [class.active]="selectedColor === color"
+          [style.background-color]="color"
+          (click)="selectColor(color)"
+        ></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tag Cloud -->
+  <section class="tags-section">
+    <h2 class="section-title">Cloud de tags</h2>
+    <div class="tag-cloud">
+      <span
+        *ngFor="let tag of tags"
+        class="tag tag--cloud"
+        [class.selected]="isSelected(tag.id)"
+        [style.background-color]="tag.color"
+        [style.color]="getTextColor(tag.color)"
+        (click)="toggleTag(tag.id)"
+      >
+        {{ tag.label }}
+        <span class="tag-count" *ngIf="tag.count">{{ tag.count }}</span>
+        <button
+          *ngIf="tag.removable"
+          class="tag-remove"
+          [style.color]="getTextColor(tag.color)"
+          (click)="removeTag(tag.id); $event.stopPropagation()"
+        >
+          <i class="bi bi-x"></i>
+        </button>
+      </span>
+    </div>
+    <div class="selected-info" *ngIf="selectedTags.length > 0">
+      <strong>{{ selectedTags.length }}</strong> tag(s) sélectionné(s)
+    </div>
+  </section>
+
+  <!-- Status Tags -->
+  <section class="tags-section">
+    <h2 class="section-title">Tags de statut</h2>
+    <div class="tags-row">
+      <span
+        *ngFor="let tag of statusTags"
+        class="tag tag--status"
+        [style.background-color]="tag.color + '20'"
+        [style.color]="tag.color"
+        [style.border-color]="tag.color"
+      >
+        <span class="tag-dot" [style.background-color]="tag.color"></span>
+        {{ tag.label }}
+      </span>
+    </div>
+  </section>
+
+  <!-- Priority Tags -->
+  <section class="tags-section">
+    <h2 class="section-title">Tags de priorité</h2>
+    <div class="tags-row">
+      <span
+        *ngFor="let tag of priorityTags"
+        class="tag tag--priority"
+        [style.background-color]="tag.color"
+        [style.color]="getTextColor(tag.color)"
+      >
+        <i class="bi bi-flag-fill"></i>
+        {{ tag.label }}
+      </span>
+    </div>
+  </section>
+
+  <!-- Tag Sizes -->
+  <section class="tags-section">
+    <h2 class="section-title">Tailles de tags</h2>
+    <div class="tags-row tags-row--sizes">
+      <span class="tag tag--xs">Extra Small</span>
+      <span class="tag tag--sm">Small</span>
+      <span class="tag tag--md">Medium</span>
+      <span class="tag tag--lg">Large</span>
+      <span class="tag tag--xl">Extra Large</span>
+    </div>
+  </section>
+
+  <!-- Tag Variants -->
+  <section class="tags-section">
+    <h2 class="section-title">Variantes</h2>
+    <div class="tags-variants">
+      <div class="variant-group">
+        <h4>Filled</h4>
+        <div class="tags-row">
+          <span class="tag tag--filled tag--primary">Primary</span>
+          <span class="tag tag--filled tag--success">Success</span>
+          <span class="tag tag--filled tag--warning">Warning</span>
+          <span class="tag tag--filled tag--danger">Danger</span>
+          <span class="tag tag--filled tag--info">Info</span>
+        </div>
+      </div>
+      <div class="variant-group">
+        <h4>Outlined</h4>
+        <div class="tags-row">
+          <span class="tag tag--outlined tag--primary">Primary</span>
+          <span class="tag tag--outlined tag--success">Success</span>
+          <span class="tag tag--outlined tag--warning">Warning</span>
+          <span class="tag tag--outlined tag--danger">Danger</span>
+          <span class="tag tag--outlined tag--info">Info</span>
+        </div>
+      </div>
+      <div class="variant-group">
+        <h4>Soft</h4>
+        <div class="tags-row">
+          <span class="tag tag--soft tag--primary">Primary</span>
+          <span class="tag tag--soft tag--success">Success</span>
+          <span class="tag tag--soft tag--warning">Warning</span>
+          <span class="tag tag--soft tag--danger">Danger</span>
+          <span class="tag tag--soft tag--info">Info</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tags with Icons -->
+  <section class="tags-section">
+    <h2 class="section-title">Tags avec icônes</h2>
+    <div class="tags-row">
+      <span class="tag tag--filled tag--primary">
+        <i class="bi bi-star-fill"></i> Featured
+      </span>
+      <span class="tag tag--filled tag--success">
+        <i class="bi bi-check-circle-fill"></i> Verified
+      </span>
+      <span class="tag tag--filled tag--warning">
+        <i class="bi bi-clock-fill"></i> Pending
+      </span>
+      <span class="tag tag--filled tag--danger">
+        <i class="bi bi-exclamation-circle-fill"></i> Error
+      </span>
+      <span class="tag tag--filled tag--info">
+        <i class="bi bi-info-circle-fill"></i> Info
+      </span>
+    </div>
+  </section>
+
+  <!-- Interactive Tags -->
+  <section class="tags-section">
+    <h2 class="section-title">Tags interactifs</h2>
+    <div class="tags-row">
+      <span class="tag tag--interactive">
+        JavaScript
+        <button class="tag-action"><i class="bi bi-pencil"></i></button>
+      </span>
+      <span class="tag tag--interactive">
+        TypeScript
+        <button class="tag-action"><i class="bi bi-x-lg"></i></button>
+      </span>
+      <span class="tag tag--interactive tag--add">
+        <i class="bi bi-plus-lg"></i> Ajouter
+      </span>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,58 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HERO SECTION COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<section class="hero">
+  <div class="hero-container">
+    <!-- Content -->
+    <div class="hero-content">
+      <span class="hero-badge" *ngIf="hero.badge">
+        {{ hero.badge }}
+      </span>
+      
+      <h1 class="hero-title">
+        {{ hero.title }}
+        <span class="highlight" *ngIf="hero.highlightedText">{{ hero.highlightedText }}</span>
+      </h1>
+      
+      <p class="hero-subtitle">{{ hero.subtitle }}</p>
+      
+      <div class="hero-actions">
+        <a [href]="hero.primaryCta.link" class="btn btn--primary btn--lg">
+          {{ hero.primaryCta.text }}
+          <i class="bi bi-arrow-right"></i>
+        </a>
+        <a *ngIf="hero.secondaryCta" [href]="hero.secondaryCta.link" class="btn btn--secondary btn--lg">
+          <i class="bi bi-play-circle"></i>
+          {{ hero.secondaryCta.text }}
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats" *ngIf="hero.stats">
+        <div class="stat-item" *ngFor="let stat of hero.stats">
+          <span class="stat-value">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="hero-visual" *ngIf="hero.image">
+      <div class="visual-wrapper">
+        <img [src]="hero.image" alt="Hero illustration" class="hero-image">
+        <div class="visual-decoration decoration-1"></div>
+        <div class="visual-decoration decoration-2"></div>
+        <div class="visual-decoration decoration-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Elements -->
+  <div class="hero-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-pattern"></div>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+  </div>
+</section>

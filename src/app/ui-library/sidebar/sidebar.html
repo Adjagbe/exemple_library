@@ -1,0 +1,139 @@
+<aside class="sidebar" [class.sidebar--collapsed]="isCollapsed()">
+  <!-- Header -->
+  <div class="sidebar__header">
+    <div class="sidebar__logo">
+      <span class="sidebar__logo-icon">
+        <i class="bi bi-hexagon-fill"></i>
+      </span>
+      @if (!isCollapsed()) {
+        <span class="sidebar__logo-text">Dashboard</span>
+      }
+    </div>
+    <button class="sidebar__toggle" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+      <i class="bi" [class.bi-chevron-left]="!isCollapsed()" [class.bi-chevron-right]="isCollapsed()"></i>
+    </button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar__nav">
+    @for (section of menuSections; track section.title) {
+      <div class="sidebar__section">
+        @if (!isCollapsed()) {
+          <span class="sidebar__section-title">{{ section.title }}</span>
+        }
+
+        <ul class="sidebar__menu">
+          @for (item of section.items; track item.id) {
+            <li class="sidebar__menu-item">
+              @if (item.children) {
+                <!-- Item avec sous-menu -->
+                <button 
+                  class="sidebar__link"
+                  [class.sidebar__link--active]="isActive(item.id)"
+                  [class.sidebar__link--open]="isMenuOpen(item.id)"
+                  (click)="toggleMenu(item.id)"
+                  [attr.aria-expanded]="isMenuOpen(item.id)">
+                  <i class="bi sidebar__link-icon" [ngClass]="item.icon"></i>
+                  @if (!isCollapsed()) {
+                    <span class="sidebar__link-text">{{ item.label }}</span>
+                    @if (item.badge) {
+                      <span class="sidebar__badge">{{ item.badge }}</span>
+                    }
+                    <i class="bi bi-chevron-down sidebar__link-arrow"></i>
+                  }
+                </button>
+
+                <!-- Sous-menu -->
+                @if (!isCollapsed() && isMenuOpen(item.id)) {
+                  <ul class="sidebar__submenu">
+                    @for (child of item.children; track child.id) {
+                      <li>
+                        <a 
+                          class="sidebar__sublink"
+                          [class.sidebar__sublink--active]="isActive(child.id)"
+                          (click)="selectItem(child.id)">
+                          <i class="bi sidebar__sublink-icon" [ngClass]="child.icon"></i>
+                          <span>{{ child.label }}</span>
+                        </a>
+                      </li>
+                    }
+                  </ul>
+                }
+              } @else {
+                <!-- Item simple -->
+                <a 
+                  class="sidebar__link"
+                  [class.sidebar__link--active]="isActive(item.id)"
+                  (click)="selectItem(item.id)">
+                  <i class="bi sidebar__link-icon" [ngClass]="item.icon"></i>
+                  @if (!isCollapsed()) {
+                    <span class="sidebar__link-text">{{ item.label }}</span>
+                    @if (item.badge) {
+                      <span class="sidebar__badge">{{ item.badge }}</span>
+                    }
+                  } @else {
+                    @if (item.badge) {
+                      <span class="sidebar__badge sidebar__badge--dot"></span>
+                    }
+                  }
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </nav>
+
+  <!-- User Profile -->
+  <div class="sidebar__footer">
+    <div class="sidebar__user">
+      <div class="sidebar__user-avatar">
+        @if (user.avatar) {
+          <img [src]="user.avatar" [alt]="user.name">
+        } @else {
+          <span>{{ userInitials() }}</span>
+        }
+      </div>
+      @if (!isCollapsed()) {
+        <div class="sidebar__user-info">
+          <span class="sidebar__user-name">{{ user.name }}</span>
+          <span class="sidebar__user-role">{{ user.role }}</span>
+        </div>
+        <div class="sidebar__user-menu-wrapper">
+          <button 
+            class="sidebar__user-action" 
+            aria-label="User menu"
+            (click)="toggleUserMenu()">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          
+          <!-- Dropdown Menu -->
+          @if (isUserMenuOpen()) {
+            <div class="sidebar__user-dropdown">
+              <a class="sidebar__user-dropdown-item" (click)="goToProfile()">
+                <i class="bi bi-person-circle"></i>
+                <span>Mon profil</span>
+              </a>
+              <a class="sidebar__user-dropdown-item" (click)="goToProfile()">
+                <i class="bi bi-gear"></i>
+                <span>Paramètres</span>
+              </a>
+              <div class="sidebar__user-dropdown-divider"></div>
+              <a class="sidebar__user-dropdown-item sidebar__user-dropdown-item--danger" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Déconnexion</span>
+              </a>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+  <h1>Bienvenue sur le Dashboard</h1>
+  <p>Cliquez sur les éléments de la sidebar pour interagir. Utilisez le bouton chevron pour réduire/agrandir la sidebar.</p>
+</main>

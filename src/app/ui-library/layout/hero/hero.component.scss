@@ -1,0 +1,336 @@
+// ═══════════════════════════════════════════════════════════════
+// HERO SECTION COMPONENT - Premium UI Library
+// ═══════════════════════════════════════════════════════════════
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.hero-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// CONTENT
+// ─────────────────────────────────────────────────────────────────
+.hero-content {
+  @media (max-width: 1024px) {
+    order: 2;
+  }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4f46e5;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.6s ease;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0f172a;
+  margin: 0 0 1.5rem 0;
+  animation: fadeInUp 0.6s ease 0.1s backwards;
+
+  .highlight {
+    display: block;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #64748b;
+  margin: 0 0 2rem 0;
+  max-width: 540px;
+  animation: fadeInUp 0.6s ease 0.2s backwards;
+
+  @media (max-width: 1024px) {
+    margin: 0 auto 2rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  animation: fadeInUp 0.6s ease 0.3s backwards;
+
+  @media (max-width: 1024px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  &--lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+    }
+  }
+
+  &--secondary {
+    background: white;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+
+    &:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────────────────────────
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+  animation: fadeInUp 0.6s ease 0.4s backwards;
+
+  @media (max-width: 1024px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+
+  @media (max-width: 640px) {
+    font-size: 1.5rem;
+  }
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// VISUAL
+// ─────────────────────────────────────────────────────────────────
+.hero-visual {
+  position: relative;
+  animation: fadeInRight 0.8s ease 0.3s backwards;
+
+  @media (max-width: 1024px) {
+    order: 1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+.visual-wrapper {
+  position: relative;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.visual-decoration {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+
+  &.decoration-1 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    opacity: 0.1;
+    top: -50px;
+    right: -50px;
+  }
+
+  &.decoration-2 {
+    width: 200px;
+    height: 200px;
+    background: #f59e0b;
+    opacity: 0.1;
+    bottom: -30px;
+    left: -30px;
+  }
+
+  &.decoration-3 {
+    width: 100px;
+    height: 100px;
+    background: #10b981;
+    opacity: 0.2;
+    top: 50%;
+    left: -50px;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// BACKGROUND
+// ─────────────────────────────────────────────────────────────────
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(79, 70, 229, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+}
+
+.bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+  background-size: 40px 40px;
+  opacity: 0.5;
+}
+
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+
+  &.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    opacity: 0.05;
+    top: -200px;
+    left: -100px;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  &.blob-2 {
+    width: 400px;
+    height: 400px;
+    background: #f59e0b;
+    opacity: 0.05;
+    bottom: -100px;
+    right: -100px;
+    animation: float 25s ease-in-out infinite reverse;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ANIMATIONS
+// ─────────────────────────────────────────────────────────────────
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, 30px);
+  }
+}

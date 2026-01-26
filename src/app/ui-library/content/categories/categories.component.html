@@ -1,0 +1,173 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CATEGORIES COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="categories-showcase">
+  <h1 class="page-title">Catégories</h1>
+  <p class="page-subtitle">Affichage et sélection de catégories</p>
+
+  <!-- Controls -->
+  <div class="categories-controls">
+    <div class="search-wrapper">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Rechercher une catégorie..."
+        [(ngModel)]="searchQuery"
+      />
+    </div>
+    <div class="view-toggle">
+      <button
+        class="view-btn"
+        [class.active]="viewMode === 'grid'"
+        (click)="setViewMode('grid')"
+      >
+        <i class="bi bi-grid-3x3-gap"></i>
+      </button>
+      <button
+        class="view-btn"
+        [class.active]="viewMode === 'list'"
+        (click)="setViewMode('list')"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+      <button
+        class="view-btn"
+        [class.active]="viewMode === 'tree'"
+        (click)="setViewMode('tree')"
+      >
+        <i class="bi bi-diagram-3"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Selection Info -->
+  <div class="selection-bar" *ngIf="selectedCount > 0">
+    <span><strong>{{ selectedCount }}</strong> catégorie(s) sélectionnée(s)</span>
+    <button class="clear-btn" (click)="clearSelection()">
+      <i class="bi bi-x-lg"></i> Effacer
+    </button>
+  </div>
+
+  <!-- GRID VIEW -->
+  <div class="categories-grid" *ngIf="viewMode === 'grid'">
+    <div
+      *ngFor="let category of filteredCategories"
+      class="category-card"
+      [class.selected]="isSelected(category.id)"
+      (click)="toggleSelection(category.id)"
+    >
+      <div class="category-icon" [style.background-color]="category.color + '15'" [style.color]="category.color">
+        <i class="bi" [ngClass]="category.icon"></i>
+      </div>
+      <div class="category-info">
+        <h3 class="category-name">{{ category.name }}</h3>
+        <p class="category-description">{{ category.description }}</p>
+        <span class="category-count">{{ category.count }} éléments</span>
+      </div>
+      <div class="category-check" *ngIf="isSelected(category.id)">
+        <i class="bi bi-check-lg"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div class="categories-list" *ngIf="viewMode === 'list'">
+    <div
+      *ngFor="let category of filteredCategories"
+      class="category-list-item"
+      [class.selected]="isSelected(category.id)"
+      (click)="toggleSelection(category.id)"
+    >
+      <div class="list-icon" [style.background-color]="category.color + '15'" [style.color]="category.color">
+        <i class="bi" [ngClass]="category.icon"></i>
+      </div>
+      <div class="list-content">
+        <h4 class="list-name">{{ category.name }}</h4>
+        <span class="list-description">{{ category.description }}</span>
+      </div>
+      <span class="list-count">{{ category.count }}</span>
+      <div class="list-check">
+        <i class="bi" [ngClass]="isSelected(category.id) ? 'bi-check-circle-fill' : 'bi-circle'"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- TREE VIEW -->
+  <div class="categories-tree" *ngIf="viewMode === 'tree'">
+    <div *ngFor="let category of filteredCategories" class="tree-category">
+      <div
+        class="tree-parent"
+        [class.expanded]="category.expanded"
+        (click)="toggleCategory(category)"
+      >
+        <button class="expand-btn" *ngIf="category.children?.length">
+          <i class="bi" [ngClass]="category.expanded ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+        </button>
+        <div class="tree-icon" [style.background-color]="category.color + '15'" [style.color]="category.color">
+          <i class="bi" [ngClass]="category.icon"></i>
+        </div>
+        <span class="tree-name">{{ category.name }}</span>
+        <span class="tree-count">{{ category.count }}</span>
+        <button
+          class="tree-select"
+          [class.selected]="isSelected(category.id)"
+          (click)="toggleSelection(category.id); $event.stopPropagation()"
+        >
+          <i class="bi" [ngClass]="isSelected(category.id) ? 'bi-check-square-fill' : 'bi-square'"></i>
+        </button>
+      </div>
+      <div class="tree-children" *ngIf="category.expanded && category.children?.length">
+        <div
+          *ngFor="let child of category.children"
+          class="tree-child"
+          [class.selected]="isSelected(child.id)"
+        >
+          <div class="tree-icon tree-icon--sm" [style.background-color]="child.color + '15'" [style.color]="child.color">
+            <i class="bi" [ngClass]="child.icon"></i>
+          </div>
+          <span class="tree-name">{{ child.name }}</span>
+          <span class="tree-count">{{ child.count }}</span>
+          <button
+            class="tree-select"
+            [class.selected]="isSelected(child.id)"
+            (click)="toggleSelection(child.id)"
+          >
+            <i class="bi" [ngClass]="isSelected(child.id) ? 'bi-check-square-fill' : 'bi-square'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compact Categories -->
+  <section class="section">
+    <h2 class="section-title">Catégories compactes</h2>
+    <div class="compact-categories">
+      <button
+        *ngFor="let category of categories"
+        class="compact-category"
+        [style.--cat-color]="category.color"
+      >
+        <i class="bi" [ngClass]="category.icon"></i>
+        <span>{{ category.name }}</span>
+        <span class="compact-count">{{ category.count }}</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Pills Categories -->
+  <section class="section">
+    <h2 class="section-title">Catégories en pilules</h2>
+    <div class="pill-categories">
+      <button
+        *ngFor="let category of categories"
+        class="pill-category"
+        [style.background-color]="category.color"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+  </section>
+</div>

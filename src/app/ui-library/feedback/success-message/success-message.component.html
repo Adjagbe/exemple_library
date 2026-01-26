@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SUCCESS MESSAGE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="success-showcase">
+  <h1 class="page-title">Messages de Succès</h1>
+
+  <!-- Toast Notifications -->
+  <section class="showcase-section">
+    <h2 class="section-title">Toast Notifications</h2>
+    <div class="toast-container">
+      <div *ngFor="let toast of toasts" class="toast toast--success">
+        <div class="toast-icon">
+          <i class="bi" [ngClass]="toast.icon || 'bi-check-circle-fill'"></i>
+        </div>
+        <div class="toast-content">
+          <strong class="toast-title">{{ toast.title }}</strong>
+          <p class="toast-message">{{ toast.message }}</p>
+        </div>
+        <button *ngIf="toast.dismissible" class="toast-close" (click)="dismissToast(toast.id)">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner -->
+  <section class="showcase-section">
+    <h2 class="section-title">Banner de Succès</h2>
+    <div class="success-banner">
+      <div class="banner-icon">
+        <i class="bi" [ngClass]="banner.icon || 'bi-check-circle-fill'"></i>
+      </div>
+      <div class="banner-content">
+        <strong class="banner-title">{{ banner.title }}</strong>
+        <p class="banner-message">{{ banner.message }}</p>
+      </div>
+      <button *ngIf="banner.action" class="banner-action" (click)="banner.action.callback()">
+        {{ banner.action.label }}
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- Inline Messages -->
+  <section class="showcase-section">
+    <h2 class="section-title">Messages Inline</h2>
+    <div class="inline-messages">
+      <div *ngFor="let msg of inlineMessages" class="inline-success">
+        <i class="bi" [ngClass]="msg.icon || 'bi-check-circle'"></i>
+        <span *ngIf="msg.title" class="inline-title">{{ msg.title }}</span>
+        <span class="inline-text">{{ msg.message }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Card -->
+  <section class="showcase-section">
+    <h2 class="section-title">Success Card</h2>
+    <div class="success-card">
+      <div class="card-icon">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <h3 class="card-title">Commande confirmée</h3>
+      <p class="card-message">Merci pour votre achat ! Votre commande sera expédiée dans les 24 heures.</p>
+      <div class="card-details">
+        <div class="detail">
+          <span class="detail-label">Numéro de commande</span>
+          <span class="detail-value">#ORD-2024-12345</span>
+        </div>
+        <div class="detail">
+          <span class="detail-label">Montant</span>
+          <span class="detail-value">149,99 €</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn--primary">Suivre la commande</button>
+        <button class="btn btn--outline">Télécharger le reçu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <section class="showcase-section">
+    <h2 class="section-title">Modal de Succès</h2>
+    <button class="btn btn--primary" (click)="openModal()">Afficher le modal</button>
+
+    <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+      <div class="success-modal" (click)="$event.stopPropagation()">
+        <div class="modal-icon">
+          <i class="bi" [ngClass]="modalData.icon || 'bi-check-circle-fill'"></i>
+          <div class="icon-rings">
+            <span class="ring ring-1"></span>
+            <span class="ring ring-2"></span>
+          </div>
+        </div>
+        <h3 class="modal-title">{{ modalData.title }}</h3>
+        <p class="modal-message">{{ modalData.message }}</p>
+        <button class="btn btn--primary btn--lg" (click)="modalData.action?.callback()">
+          {{ modalData.action?.label }}
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

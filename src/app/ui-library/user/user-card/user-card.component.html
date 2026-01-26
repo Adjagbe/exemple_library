@@ -1,0 +1,213 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- USER CARD COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="user-cards-showcase">
+  <h2 class="section-title">User Cards - Différents Styles</h2>
+
+  <div class="cards-grid">
+    <!-- Full Card -->
+    <div class="user-card user-card--full">
+      <div class="card-cover">
+        <div class="cover-gradient"></div>
+      </div>
+      <div class="card-body">
+        <div class="avatar-section">
+          <div class="avatar avatar--lg">
+            <span class="avatar-text">{{ user.avatar }}</span>
+            <span class="status-indicator" [ngClass]="getStatusClass(user.status)"></span>
+          </div>
+        </div>
+        <div class="user-info">
+          <h3 class="user-name">{{ user.firstName }} {{ user.lastName }}</h3>
+          <p class="user-role">{{ user.role }}</p>
+          <p class="user-location">
+            <i class="bi bi-geo-alt"></i>
+            {{ user.location }}
+          </p>
+        </div>
+
+        <p class="user-bio" *ngIf="user.bio">{{ user.bio }}</p>
+
+        <div class="user-stats" *ngIf="user.stats">
+          <div class="stat">
+            <span class="stat-value">{{ user.stats.projects }}</span>
+            <span class="stat-label">Projets</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ user.stats.tasks }}</span>
+            <span class="stat-label">Tâches</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ user.stats.reviews }}</span>
+            <span class="stat-label">Avis</span>
+          </div>
+        </div>
+
+        <div class="user-skills" *ngIf="user.skills">
+          <span class="skill-tag" *ngFor="let skill of user.skills">{{ skill }}</span>
+        </div>
+
+        <div class="social-links" *ngIf="user.social">
+          <a *ngIf="user.social.linkedin" class="social-link" href="#">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a *ngIf="user.social.twitter" class="social-link" href="#">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+          <a *ngIf="user.social.github" class="social-link" href="#">
+            <i class="bi bi-github"></i>
+          </a>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn btn--primary" (click)="onMessage(user)">
+            <i class="bi bi-chat-dots"></i>
+            Message
+          </button>
+          <button class="btn btn--outline" (click)="onFollow(user)">
+            <i class="bi bi-person-plus"></i>
+            Suivre
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simple Card -->
+    <div class="user-card user-card--simple">
+      <div class="card-header">
+        <div class="avatar avatar--md">
+          <span class="avatar-text">{{ simpleUser.avatar }}</span>
+          <span class="status-indicator" [ngClass]="getStatusClass(simpleUser.status)"></span>
+        </div>
+        <div class="dropdown-trigger">
+          <i class="bi bi-three-dots-vertical"></i>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="user-name">{{ simpleUser.firstName }} {{ simpleUser.lastName }}</h3>
+        <p class="user-role">{{ simpleUser.role }}</p>
+        <p class="user-email">
+          <i class="bi bi-envelope"></i>
+          {{ simpleUser.email }}
+        </p>
+        <p class="user-department">
+          <i class="bi bi-building"></i>
+          {{ simpleUser.department }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn--icon" (click)="onMessage(simpleUser)" title="Message">
+          <i class="bi bi-chat"></i>
+        </button>
+        <button class="btn btn--icon" (click)="onCall(simpleUser)" title="Appeler">
+          <i class="bi bi-telephone"></i>
+        </button>
+        <button class="btn btn--icon" (click)="onViewProfile(simpleUser)" title="Profil">
+          <i class="bi bi-person"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Minimal Card -->
+    <div class="user-card user-card--minimal">
+      <div class="avatar avatar--sm">
+        <span class="avatar-text">{{ minimalUser.avatar }}</span>
+        <span class="status-indicator" [ngClass]="getStatusClass(minimalUser.status)"></span>
+      </div>
+      <div class="card-content">
+        <h3 class="user-name">{{ minimalUser.firstName }} {{ minimalUser.lastName }}</h3>
+        <p class="user-role">{{ minimalUser.role }}</p>
+      </div>
+      <button class="btn btn--sm btn--outline" (click)="onViewProfile(minimalUser)">
+        Voir
+      </button>
+    </div>
+
+    <!-- Minimal Card Alt -->
+    <div class="user-card user-card--minimal">
+      <div class="avatar avatar--sm" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+        <span class="avatar-text">JD</span>
+        <span class="status-indicator status--online"></span>
+      </div>
+      <div class="card-content">
+        <h3 class="user-name">Jean Dupont</h3>
+        <p class="user-role">CEO</p>
+      </div>
+      <button class="btn btn--sm btn--primary">
+        Contact
+      </button>
+    </div>
+  </div>
+
+  <!-- Horizontal Cards -->
+  <h2 class="section-title">Cards Horizontales</h2>
+
+  <div class="horizontal-grid">
+    <!-- Horizontal Card -->
+    <div class="user-card user-card--horizontal">
+      <div class="avatar avatar--lg">
+        <span class="avatar-text">{{ horizontalUser.avatar }}</span>
+        <span class="status-indicator" [ngClass]="getStatusClass(horizontalUser.status)"></span>
+      </div>
+      <div class="card-main">
+        <div class="card-info">
+          <h3 class="user-name">{{ horizontalUser.firstName }} {{ horizontalUser.lastName }}</h3>
+          <p class="user-role">{{ horizontalUser.role }} • {{ horizontalUser.department }}</p>
+          <p class="user-location">
+            <i class="bi bi-geo-alt"></i>
+            {{ horizontalUser.location }}
+          </p>
+        </div>
+        <div class="card-stats" *ngIf="horizontalUser.stats">
+          <div class="stat">
+            <span class="stat-value">{{ horizontalUser.stats.projects }}</span>
+            <span class="stat-label">Projets</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ horizontalUser.stats.tasks }}</span>
+            <span class="stat-label">Tâches</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ horizontalUser.stats.reviews }}</span>
+            <span class="stat-label">Avis</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn--primary btn--sm" (click)="onViewProfile(horizontalUser)">
+          <i class="bi bi-eye"></i>
+          Profil
+        </button>
+        <button class="btn btn--outline btn--sm" (click)="onMessage(horizontalUser)">
+          <i class="bi bi-chat"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Team Member Card -->
+    <div class="user-card user-card--team">
+      <div class="team-badge">
+        <i class="bi bi-star-fill"></i>
+        Team Lead
+      </div>
+      <div class="avatar avatar--md">
+        <span class="avatar-text">EP</span>
+        <span class="status-indicator status--online"></span>
+      </div>
+      <div class="card-content">
+        <h3 class="user-name">Emma Petit</h3>
+        <p class="user-role">Lead UX Designer</p>
+        <div class="contact-info">
+          <span><i class="bi bi-envelope"></i> emma.petit&#64;email.com</span>
+          <span><i class="bi bi-telephone"></i> +33 6 00 00 00 00</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn--icon btn--primary" (click)="onMessage(user)">
+          <i class="bi bi-chat-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

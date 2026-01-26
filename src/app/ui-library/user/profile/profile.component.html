@@ -1,0 +1,232 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PROFILE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="profile-page">
+  <!-- Header -->
+  <div class="profile-header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <div class="avatar-section">
+        <div class="avatar">
+          <span>{{ user.avatar }}</span>
+          <button class="avatar-edit" (click)="uploadAvatar()">
+            <i class="bi bi-camera"></i>
+          </button>
+        </div>
+        <div class="user-info">
+          <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+          <p class="role">{{ user.role }} • {{ user.department }}</p>
+          <p class="location"><i class="bi bi-geo-alt"></i> {{ user.location }}</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="social-links">
+          <a *ngFor="let link of user.socialLinks" [href]="link.url" class="social-link" [title]="link.platform">
+            <i class="bi" [ngClass]="link.icon"></i>
+          </a>
+        </div>
+        <button class="btn btn--primary" *ngIf="!editMode" (click)="toggleEditMode()">
+          <i class="bi bi-pencil"></i>
+          Modifier
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="profile-stats">
+      <div *ngFor="let stat of user.stats" class="stat-item">
+        <span class="stat-value">{{ stat.value }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="profile-tabs">
+    <button 
+      *ngFor="let tab of tabs"
+      class="tab-btn"
+      [class.active]="activeTab === tab.id"
+      (click)="setActiveTab(tab)"
+    >
+      <i class="bi" [ngClass]="tab.icon"></i>
+      {{ tab.label }}
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="profile-content">
+    <!-- Overview Tab -->
+    <div *ngIf="activeTab === 'overview'" class="tab-content">
+      <div class="content-grid">
+        <div class="info-card">
+          <h3>À propos</h3>
+          <p class="bio">{{ user.bio }}</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Informations</h3>
+          <div class="info-list">
+            <div class="info-item">
+              <i class="bi bi-envelope"></i>
+              <div>
+                <span class="info-label">Email</span>
+                <span class="info-value">{{ user.email }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-telephone"></i>
+              <div>
+                <span class="info-label">Téléphone</span>
+                <span class="info-value">{{ user.phone }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-calendar"></i>
+              <div>
+                <span class="info-label">Membre depuis</span>
+                <span class="info-value">{{ formatDate(user.joinDate) }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-clock"></i>
+              <div>
+                <span class="info-label">Dernière activité</span>
+                <span class="info-value">{{ formatDateTime(user.lastActive) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div *ngIf="activeTab === 'settings'" class="tab-content">
+      <div class="settings-card">
+        <h3>Informations personnelles</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" [(ngModel)]="editedUser.firstName" [disabled]="!editMode">
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" [(ngModel)]="editedUser.lastName" [disabled]="!editMode">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="editedUser.email" [disabled]="!editMode">
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" [(ngModel)]="editedUser.phone" [disabled]="!editMode">
+          </div>
+          <div class="form-group full-width">
+            <label>Bio</label>
+            <textarea [(ngModel)]="editedUser.bio" [disabled]="!editMode" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="form-actions" *ngIf="editMode">
+          <button class="btn btn--outline" (click)="toggleEditMode()">Annuler</button>
+          <button class="btn btn--primary" (click)="saveProfile()">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div *ngIf="activeTab === 'security'" class="tab-content">
+      <div class="security-card">
+        <h3>Mot de passe</h3>
+        <p>Dernière modification il y a 3 mois</p>
+        <button class="btn btn--outline" (click)="changePassword()">
+          <i class="bi bi-key"></i>
+          Changer le mot de passe
+        </button>
+      </div>
+
+      <div class="security-card">
+        <h3>Authentification à deux facteurs</h3>
+        <p>Ajoutez une couche de sécurité supplémentaire</p>
+        <div class="two-factor">
+          <span class="status status--inactive">Non activé</span>
+          <button class="btn btn--primary" (click)="enable2FA()">
+            <i class="bi bi-shield-check"></i>
+            Activer 2FA
+          </button>
+        </div>
+      </div>
+
+      <div class="security-card">
+        <h3>Sessions actives</h3>
+        <div class="sessions-list">
+          <div class="session-item">
+            <i class="bi bi-laptop"></i>
+            <div class="session-info">
+              <span class="session-device">MacBook Pro • Chrome</span>
+              <span class="session-location">Paris, France • Actif maintenant</span>
+            </div>
+            <span class="session-current">Session actuelle</span>
+          </div>
+          <div class="session-item">
+            <i class="bi bi-phone"></i>
+            <div class="session-info">
+              <span class="session-device">iPhone 15 • Safari</span>
+              <span class="session-location">Paris, France • Il y a 2h</span>
+            </div>
+            <button class="btn btn--danger btn--sm">Déconnecter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Tab -->
+    <div *ngIf="activeTab === 'notifications'" class="tab-content">
+      <div class="notifications-card">
+        <h3>Préférences de notification</h3>
+        <div class="notification-options">
+          <div class="notification-item">
+            <div class="notification-info">
+              <span class="notification-label">Notifications par email</span>
+              <span class="notification-desc">Recevez les mises à jour par email</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.email">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="notification-item">
+            <div class="notification-info">
+              <span class="notification-label">Notifications push</span>
+              <span class="notification-desc">Notifications en temps réel sur votre navigateur</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.push">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="notification-item">
+            <div class="notification-info">
+              <span class="notification-label">SMS</span>
+              <span class="notification-desc">Alertes importantes par SMS</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.sms">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="notification-item">
+            <div class="notification-info">
+              <span class="notification-label">Newsletter</span>
+              <span class="notification-desc">Actualités et conseils hebdomadaires</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="notifications.newsletter">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton Loaders - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* SKELETON LOADER COMPONENT - Premium UI Library                  */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .skeleton-showcase { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .page-title { font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0; }
+    .page-subtitle { color: #6b7280; margin: 0 0 1.5rem 0; }
+    .toggle-control { margin-bottom: 2rem; }
+    .btn { padding: 0.75rem 1.5rem; background: #4f46e5; border: none; border-radius: 0.5rem; color: white; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background: #4338ca; }
+    .btn--primary { background: #4f46e5; color: white; }
+    .btn--secondary { background: #f3f4f6; color: #374151; }
+    .showcase-section { margin-bottom: 3rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BASE SKELETON
+       ───────────────────────────────────────────────────────────────── */
+    .skeleton {
+      background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 0.375rem;
+    }
+    .skeleton--title { height: 24px; width: 60%; margin-bottom: 1rem; }
+    .skeleton--title-sm { height: 18px; width: 70%; margin-bottom: 0.75rem; }
+    .skeleton--text { height: 14px; width: 100%; margin-bottom: 0.5rem; }
+    .skeleton--short { width: 40%; }
+    .skeleton--image { height: 180px; width: 100%; border-radius: 0.75rem 0.75rem 0 0; }
+    .skeleton--avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; }
+    .skeleton--avatar-lg { width: 100px; height: 100px; border-radius: 50%; flex-shrink: 0; }
+    .skeleton--name { height: 16px; width: 120px; margin-bottom: 0.375rem; }
+    .skeleton--email { height: 12px; width: 160px; }
+    .skeleton--button { height: 36px; width: 80px; border-radius: 0.375rem; }
+    .skeleton--cell { height: 16px; flex: 1; }
+    .skeleton--stat { height: 14px; width: 80px; margin-right: 1rem; }
+    .skeleton--btn { height: 40px; width: 100px; border-radius: 0.5rem; }
+    .skeleton--box { height: 80px; width: 100%; border-radius: 0.5rem; }
+
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TEXT SKELETON
+       ───────────────────────────────────────────────────────────────── */
+    .skeleton-demo { padding: 1.5rem; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+    .real-content h3 { margin: 0 0 0.75rem 0; color: #111827; }
+    .real-content p { margin: 0; color: #6b7280; line-height: 1.6; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CARDS
+       ───────────────────────────────────────────────────────────────── */
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .skeleton-card { background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); overflow: hidden; }
+    .skeleton-card-content { padding: 1rem; }
+    .real-card { background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); overflow: hidden; }
+    .real-card .card-image { height: 180px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; }
+    .real-card .card-image i { font-size: 3rem; color: #d1d5db; }
+    .real-card .card-content { padding: 1rem; }
+    .real-card .card-content h4 { margin: 0 0 0.5rem 0; color: #111827; }
+    .real-card .card-content p { margin: 0; font-size: 0.875rem; color: #6b7280; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       USER LIST
+       ───────────────────────────────────────────────────────────────── */
+    .user-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .skeleton-user { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+    .skeleton-user-info { flex: 1; }
+    .real-user { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+    .user-avatar { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #4f46e5; border-radius: 50%; color: white; font-weight: 600; }
+    .user-info { flex: 1; display: flex; flex-direction: column; }
+    .user-info .user-name { font-weight: 600; color: #111827; }
+    .user-info .user-email { font-size: 0.875rem; color: #6b7280; }
+    .user-btn { padding: 0.5rem 1rem; background: #f3f4f6; border: none; border-radius: 0.375rem; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; }
+    .user-btn:hover { background: #e5e7eb; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TABLE
+       ───────────────────────────────────────────────────────────────── */
+    .skeleton-table { background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); overflow: hidden; }
+    .table-header { display: flex; gap: 1rem; padding: 1rem; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+    .table-row { display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f3f4f6; }
+    .table-row:last-child { border-bottom: none; }
+    .real-table { width: 100%; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border-collapse: collapse; overflow: hidden; }
+    .real-table th, .real-table td { padding: 1rem; text-align: left; }
+    .real-table thead { background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+    .real-table thead th { font-weight: 600; color: #374151; font-size: 0.875rem; }
+    .real-table tbody tr { border-bottom: 1px solid #f3f4f6; }
+    .real-table tbody tr:last-child { border-bottom: none; }
+    .real-table td { color: #6b7280; font-size: 0.875rem; }
+    .real-table td button { padding: 0.375rem 0.75rem; background: #4f46e5; border: none; border-radius: 0.25rem; color: white; font-size: 0.75rem; cursor: pointer; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PROFILE
+       ───────────────────────────────────────────────────────────────── */
+    .profile-skeleton, .profile-real { padding: 2rem; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+    .profile-header { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .profile-info { flex: 1; }
+    .profile-info h3 { margin: 0 0 0.25rem 0; color: #111827; }
+    .profile-info p { margin: 0 0 1rem 0; color: #6b7280; }
+    .profile-stats { display: flex; gap: 1.5rem; }
+    .profile-stats span { font-size: 0.875rem; color: #6b7280; }
+    .avatar-lg { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; background: #4f46e5; border-radius: 50%; color: white; font-size: 2rem; font-weight: 600; }
+    .profile-actions { display: flex; gap: 0.75rem; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ANIMATION STYLES
+       ───────────────────────────────────────────────────────────────── */
+    .animation-demos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .animation-demo h4 { margin: 0 0 0.75rem 0; color: #374151; font-size: 0.9rem; }
+    .animation--pulse { animation: pulse 1.5s ease-in-out infinite; background: #e5e7eb; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .animation--wave { position: relative; overflow: hidden; background: #e5e7eb; }
+    .animation--wave::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent); animation: wave 1.5s infinite; }
+    @keyframes wave { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    .animation--shimmer { background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+
+    /* Hidden state */
+    .hidden { display: none; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .animation-demos { grid-template-columns: 1fr; }
+      .profile-header { flex-direction: column; align-items: center; text-align: center; }
+      .profile-stats { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="skeleton-showcase">
+  <h1 class="page-title">Skeleton Loaders</h1>
+  <p class="page-subtitle">Placeholders de chargement animés</p>
+
+  <div class="toggle-control">
+    <button class="btn" id="toggleBtn">Afficher le contenu</button>
+  </div>
+
+  <!-- Text Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Texte</h2>
+    <div class="skeleton-demo">
+      <div class="skeleton-text" id="textSkeleton">
+        <div class="skeleton skeleton--title"></div>
+        <div class="skeleton skeleton--text"></div>
+        <div class="skeleton skeleton--text"></div>
+        <div class="skeleton skeleton--text skeleton--short"></div>
+      </div>
+      <div class="real-content hidden" id="textReal">
+        <h3>Titre de l'article</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Cards</h2>
+    <div class="cards-grid">
+      <div class="skeleton-card skeleton-mode" id="cardSkeleton1">
+        <div class="skeleton skeleton--image"></div>
+        <div class="skeleton-card-content">
+          <div class="skeleton skeleton--title-sm"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton skeleton--text skeleton--short"></div>
+        </div>
+      </div>
+      <div class="skeleton-card skeleton-mode" id="cardSkeleton2">
+        <div class="skeleton skeleton--image"></div>
+        <div class="skeleton-card-content">
+          <div class="skeleton skeleton--title-sm"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton skeleton--text skeleton--short"></div>
+        </div>
+      </div>
+      <div class="skeleton-card skeleton-mode" id="cardSkeleton3">
+        <div class="skeleton skeleton--image"></div>
+        <div class="skeleton-card-content">
+          <div class="skeleton skeleton--title-sm"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton skeleton--text skeleton--short"></div>
+        </div>
+      </div>
+      <div class="real-card hidden real-mode" id="cardReal1">
+        <div class="card-image"><i class="bi bi-image"></i></div>
+        <div class="card-content"><h4>Titre du produit</h4><p>Description courte du produit avec quelques détails.</p></div>
+      </div>
+      <div class="real-card hidden real-mode" id="cardReal2">
+        <div class="card-image"><i class="bi bi-image"></i></div>
+        <div class="card-content"><h4>Titre du produit</h4><p>Description courte du produit avec quelques détails.</p></div>
+      </div>
+      <div class="real-card hidden real-mode" id="cardReal3">
+        <div class="card-image"><i class="bi bi-image"></i></div>
+        <div class="card-content"><h4>Titre du produit</h4><p>Description courte du produit avec quelques détails.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- User List Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Liste d'utilisateurs</h2>
+    <div class="user-list">
+      <div class="skeleton-user skeleton-mode" id="userSkeleton1">
+        <div class="skeleton skeleton--avatar"></div>
+        <div class="skeleton-user-info">
+          <div class="skeleton skeleton--name"></div>
+          <div class="skeleton skeleton--email"></div>
+        </div>
+        <div class="skeleton skeleton--button"></div>
+      </div>
+      <div class="skeleton-user skeleton-mode" id="userSkeleton2">
+        <div class="skeleton skeleton--avatar"></div>
+        <div class="skeleton-user-info">
+          <div class="skeleton skeleton--name"></div>
+          <div class="skeleton skeleton--email"></div>
+        </div>
+        <div class="skeleton skeleton--button"></div>
+      </div>
+      <div class="skeleton-user skeleton-mode" id="userSkeleton3">
+        <div class="skeleton skeleton--avatar"></div>
+        <div class="skeleton-user-info">
+          <div class="skeleton skeleton--name"></div>
+          <div class="skeleton skeleton--email"></div>
+        </div>
+        <div class="skeleton skeleton--button"></div>
+      </div>
+      <div class="skeleton-user skeleton-mode" id="userSkeleton4">
+        <div class="skeleton skeleton--avatar"></div>
+        <div class="skeleton-user-info">
+          <div class="skeleton skeleton--name"></div>
+          <div class="skeleton skeleton--email"></div>
+        </div>
+        <div class="skeleton skeleton--button"></div>
+      </div>
+      <div class="real-user hidden real-mode" id="userReal1">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><span class="user-name">Jean Dupont</span><span class="user-email">jean@example.com</span></div>
+        <button class="user-btn">Voir profil</button>
+      </div>
+      <div class="real-user hidden real-mode" id="userReal2">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><span class="user-name">Jean Dupont</span><span class="user-email">jean@example.com</span></div>
+        <button class="user-btn">Voir profil</button>
+      </div>
+      <div class="real-user hidden real-mode" id="userReal3">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><span class="user-name">Jean Dupont</span><span class="user-email">jean@example.com</span></div>
+        <button class="user-btn">Voir profil</button>
+      </div>
+      <div class="real-user hidden real-mode" id="userReal4">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><span class="user-name">Jean Dupont</span><span class="user-email">jean@example.com</span></div>
+        <button class="user-btn">Voir profil</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Table Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Tableau</h2>
+    <div class="skeleton-table skeleton-mode" id="tableSkeleton">
+      <div class="table-header">
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell"></div>
+        <div class="skeleton skeleton--cell skeleton--short"></div>
+      </div>
+      <div class="table-row"><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell skeleton--short"></div></div>
+      <div class="table-row"><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell skeleton--short"></div></div>
+      <div class="table-row"><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell skeleton--short"></div></div>
+      <div class="table-row"><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell skeleton--short"></div></div>
+      <div class="table-row"><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell"></div><div class="skeleton skeleton--cell skeleton--short"></div></div>
+    </div>
+    <table class="real-table hidden real-mode" id="tableReal">
+      <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td>Utilisateur 1</td><td>user1@example.com</td><td>Admin</td><td><button>Modifier</button></td></tr>
+        <tr><td>Utilisateur 2</td><td>user2@example.com</td><td>Admin</td><td><button>Modifier</button></td></tr>
+        <tr><td>Utilisateur 3</td><td>user3@example.com</td><td>Admin</td><td><button>Modifier</button></td></tr>
+        <tr><td>Utilisateur 4</td><td>user4@example.com</td><td>Admin</td><td><button>Modifier</button></td></tr>
+        <tr><td>Utilisateur 5</td><td>user5@example.com</td><td>Admin</td><td><button>Modifier</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Profile Skeleton -->
+  <section class="showcase-section">
+    <h2 class="section-title">Profil</h2>
+    <div class="profile-skeleton skeleton-mode" id="profileSkeleton">
+      <div class="profile-header">
+        <div class="skeleton skeleton--avatar-lg"></div>
+        <div class="profile-info">
+          <div class="skeleton skeleton--title"></div>
+          <div class="skeleton skeleton--text skeleton--short"></div>
+          <div class="profile-stats">
+            <div class="skeleton skeleton--stat"></div>
+            <div class="skeleton skeleton--stat"></div>
+            <div class="skeleton skeleton--stat"></div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <div class="skeleton skeleton--btn"></div>
+        <div class="skeleton skeleton--btn"></div>
+      </div>
+    </div>
+    <div class="profile-real hidden real-mode" id="profileReal">
+      <div class="profile-header">
+        <div class="avatar-lg">JD</div>
+        <div class="profile-info">
+          <h3>Jean Dupont</h3>
+          <p>Développeur Full Stack</p>
+          <div class="profile-stats">
+            <span>42 Projets</span>
+            <span>128 Followers</span>
+            <span>56 Following</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn btn--primary">Suivre</button>
+        <button class="btn btn--secondary">Message</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Different Animation Styles -->
+  <section class="showcase-section">
+    <h2 class="section-title">Styles d'animation</h2>
+    <div class="animation-demos">
+      <div class="animation-demo">
+        <h4>Pulse</h4>
+        <div class="skeleton skeleton--box animation--pulse"></div>
+      </div>
+      <div class="animation-demo">
+        <h4>Wave</h4>
+        <div class="skeleton skeleton--box animation--wave"></div>
+      </div>
+      <div class="animation-demo">
+        <h4>Shimmer</h4>
+        <div class="skeleton skeleton--box animation--shimmer"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  let isLoading = true;
+  const toggleBtn = document.getElementById('toggleBtn');
+
+  function toggleLoading() {
+    isLoading = !isLoading;
+    toggleBtn.textContent = isLoading ? 'Afficher le contenu' : 'Afficher les skeletons';
+
+    // Toggle skeleton elements
+    document.querySelectorAll('.skeleton-mode').forEach(el => el.classList.toggle('hidden', !isLoading));
+    document.getElementById('textSkeleton').classList.toggle('hidden', !isLoading);
+
+    // Toggle real content elements
+    document.querySelectorAll('.real-mode').forEach(el => el.classList.toggle('hidden', isLoading));
+    document.getElementById('textReal').classList.toggle('hidden', isLoading);
+  }
+
+  toggleBtn.addEventListener('click', toggleLoading);
+</script>
+
+</body>
+</html>

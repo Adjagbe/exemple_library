@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KPI Cards - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* KPI CARDS COMPONENT - Premium UI Library                        */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .kpi-showcase {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SECTIONS
+       ───────────────────────────────────────────────────────────────── */
+    .showcase-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 1.5rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       KPI GRID
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .kpi-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       KPI CARD BASE
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BASIC KPI CARD
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-card--basic {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .kpi-card__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 0.75rem;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .kpi-card__icon--primary {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      color: #4f46e5;
+    }
+
+    .kpi-card__icon--success {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      color: #10b981;
+    }
+
+    .kpi-card__icon--warning {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      color: #f59e0b;
+    }
+
+    .kpi-card__icon--danger {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #ef4444;
+    }
+
+    .kpi-card__icon--info {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: #0ea5e9;
+    }
+
+    .kpi-card__icon--small {
+      width: 44px;
+      height: 44px;
+      font-size: 1.25rem;
+    }
+
+    .kpi-card__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-card__title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-card__value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.2;
+      margin: 0.25rem 0;
+    }
+
+    .kpi-card__change {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .kpi-card__change i {
+      font-size: 1rem;
+    }
+
+    .change-period {
+      font-weight: 400;
+      color: #9ca3af;
+      margin-left: 0.25rem;
+    }
+
+    .change--increase {
+      color: #10b981;
+    }
+
+    .change--decrease {
+      color: #ef4444;
+    }
+
+    .change--neutral {
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SPARKLINE KPI CARD
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-card--sparkline {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-card__sparkline {
+      height: 50px;
+      margin: 1rem 0 0.75rem;
+    }
+
+    .kpi-card__sparkline svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .kpi-card__period {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PROGRESS KPI CARD
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-card--progress {
+      padding: 1.5rem;
+    }
+
+    .kpi-card__row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .kpi-card__info {
+      flex: 1;
+    }
+
+    .kpi-card__info .kpi-card__title {
+      display: block;
+      margin-bottom: 0.125rem;
+    }
+
+    .kpi-card__info .kpi-card__value {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .kpi-card__progress-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #f3f4f6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-fill--primary {
+      background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+    }
+
+    .progress-fill--success {
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    }
+
+    .progress-fill--warning {
+      background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+    }
+
+    .progress-fill--info {
+      background: linear-gradient(90deg, #0ea5e9 0%, #38bdf8 100%);
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       COMPACT KPI CARD
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-card--compact {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+    }
+
+    .kpi-card__mini-icon {
+      font-size: 1.25rem;
+    }
+
+    .kpi-card__mini-icon.icon--primary { color: #4f46e5; }
+    .kpi-card__mini-icon.icon--success { color: #10b981; }
+    .kpi-card__mini-icon.icon--warning { color: #f59e0b; }
+    .kpi-card__mini-icon.icon--danger { color: #ef4444; }
+    .kpi-card__mini-icon.icon--info { color: #0ea5e9; }
+
+    .kpi-card__compact-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-card__compact-content .kpi-card__value {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .kpi-card__compact-content .kpi-card__title {
+      font-size: 0.7rem;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .kpi-card__change--badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+    }
+
+    .kpi-card__change--badge i {
+      font-size: 0.75rem;
+    }
+
+    .kpi-card__change--badge.change--increase {
+      background: #ecfdf5;
+    }
+
+    .kpi-card__change--badge.change--decrease {
+      background: #fee2e2;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .kpi-showcase {
+        padding: 1rem;
+      }
+
+      .kpi-grid,
+      .kpi-compact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-card__value {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="kpi-showcase">
+    <h1 class="page-title">KPI Cards</h1>
+    <p class="page-subtitle">Différents styles de cartes pour afficher vos indicateurs clés</p>
+
+    <!-- Basic KPIs -->
+    <section class="showcase-section">
+      <h2 class="section-title">Cartes basiques avec icônes</h2>
+      <div class="kpi-grid" id="basicKPIsGrid"></div>
+    </section>
+
+    <!-- Sparkline KPIs -->
+    <section class="showcase-section">
+      <h2 class="section-title">Cartes avec mini graphiques</h2>
+      <div class="kpi-grid" id="sparklineKPIsGrid"></div>
+    </section>
+
+    <!-- Progress KPIs -->
+    <section class="showcase-section">
+      <h2 class="section-title">Cartes avec progression</h2>
+      <div class="kpi-grid" id="progressKPIsGrid"></div>
+    </section>
+
+    <!-- Compact KPIs -->
+    <section class="showcase-section">
+      <h2 class="section-title">Cartes compactes</h2>
+      <div class="kpi-compact-grid" id="compactKPIsGrid"></div>
+    </section>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // KPI CARDS COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // BASIC KPIs DATA
+    // ─────────────────────────────────────────────────────────────────
+    const basicKPIs = [
+      {
+        id: 'revenue',
+        title: 'Chiffre d\'affaires',
+        value: 284750,
+        format: 'currency',
+        change: { value: 12.5, type: 'increase', period: 'vs mois dernier' },
+        icon: 'bi-currency-euro',
+        iconColor: 'primary'
+      },
+      {
+        id: 'orders',
+        title: 'Commandes',
+        value: 2845,
+        format: 'number',
+        change: { value: 8.2, type: 'increase', period: 'vs mois dernier' },
+        icon: 'bi-bag-check',
+        iconColor: 'success'
+      },
+      {
+        id: 'customers',
+        title: 'Nouveaux clients',
+        value: 456,
+        format: 'number',
+        change: { value: -3.1, type: 'decrease', period: 'vs mois dernier' },
+        icon: 'bi-people',
+        iconColor: 'warning'
+      },
+      {
+        id: 'conversion',
+        title: 'Taux de conversion',
+        value: 4.28,
+        format: 'percentage',
+        change: { value: 0.5, type: 'increase', period: 'vs mois dernier' },
+        icon: 'bi-graph-up-arrow',
+        iconColor: 'info'
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // SPARKLINE KPIs DATA
+    // ─────────────────────────────────────────────────────────────────
+    const sparklineKPIs = [
+      {
+        id: 'visitors',
+        title: 'Visiteurs',
+        value: 45280,
+        format: 'number',
+        change: { value: 15.3, type: 'increase', period: '7 derniers jours' },
+        sparkline: [25, 35, 28, 45, 38, 52, 65]
+      },
+      {
+        id: 'pageviews',
+        title: 'Pages vues',
+        value: 128450,
+        format: 'number',
+        change: { value: 7.8, type: 'increase', period: '7 derniers jours' },
+        sparkline: [40, 55, 48, 62, 58, 72, 85]
+      },
+      {
+        id: 'bounce',
+        title: 'Taux de rebond',
+        value: 32.5,
+        format: 'percentage',
+        change: { value: -5.2, type: 'decrease', period: '7 derniers jours' },
+        sparkline: [45, 42, 38, 35, 38, 34, 32]
+      },
+      {
+        id: 'duration',
+        title: 'Durée moyenne',
+        value: '3:42',
+        format: 'duration',
+        change: { value: 12, type: 'increase', period: '7 derniers jours' },
+        sparkline: [180, 195, 210, 205, 218, 225, 222]
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // PROGRESS KPIs DATA
+    // ─────────────────────────────────────────────────────────────────
+    const progressKPIs = [
+      {
+        id: 'goal-revenue',
+        title: 'Objectif revenus',
+        value: 284750,
+        format: 'currency',
+        progress: { value: 284750, max: 350000, label: '81% atteint' },
+        icon: 'bi-bullseye',
+        iconColor: 'primary'
+      },
+      {
+        id: 'goal-customers',
+        title: 'Objectif clients',
+        value: 456,
+        format: 'number',
+        progress: { value: 456, max: 500, label: '91% atteint' },
+        icon: 'bi-person-check',
+        iconColor: 'success'
+      },
+      {
+        id: 'tickets',
+        title: 'Tickets résolus',
+        value: 89,
+        format: 'number',
+        progress: { value: 89, max: 120, label: '74% terminé' },
+        icon: 'bi-ticket-perforated',
+        iconColor: 'warning'
+      },
+      {
+        id: 'tasks',
+        title: 'Tâches complétées',
+        value: 42,
+        format: 'number',
+        progress: { value: 42, max: 50, label: '84% fait' },
+        icon: 'bi-check2-square',
+        iconColor: 'info'
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────────────────────────────────────
+    function formatValue(kpi) {
+      if (typeof kpi.value === 'string') return kpi.value;
+      
+      switch (kpi.format) {
+        case 'currency':
+          return new Intl.NumberFormat('fr-FR', { 
+            style: 'currency', 
+            currency: 'EUR',
+            maximumFractionDigits: 0 
+          }).format(kpi.value);
+        case 'percentage':
+          return `${kpi.value}%`;
+        default:
+          return new Intl.NumberFormat('fr-FR').format(kpi.value);
+      }
+    }
+
+    function getChangeIcon(type) {
+      if (type === 'increase') return 'bi-arrow-up-short';
+      if (type === 'decrease') return 'bi-arrow-down-short';
+      return 'bi-dash';
+    }
+
+    function getProgressPercentage(progress) {
+      return (progress.value / progress.max) * 100;
+    }
+
+    function getSparklinePoints(values) {
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const width = 100;
+      const height = 40;
+      
+      return values.map((val, i) => {
+        const x = (i / (values.length - 1)) * width;
+        const y = height - ((val - min) / range) * height;
+        return `${x},${y}`;
+      }).join(' ');
+    }
+
+    function getSparklineColor(kpi) {
+      if (kpi.change?.type === 'decrease') {
+        return kpi.id === 'bounce' ? '#10b981' : '#ef4444';
+      }
+      return '#4f46e5';
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER BASIC KPIs
+    // ─────────────────────────────────────────────────────────────────
+    function renderBasicKPIs() {
+      const container = document.getElementById('basicKPIsGrid');
+      container.innerHTML = basicKPIs.map(kpi => `
+        <div class="kpi-card kpi-card--basic">
+          <div class="kpi-card__icon kpi-card__icon--${kpi.iconColor}">
+            <i class="bi ${kpi.icon}"></i>
+          </div>
+          <div class="kpi-card__content">
+            <span class="kpi-card__title">${kpi.title}</span>
+            <span class="kpi-card__value">${formatValue(kpi)}</span>
+            ${kpi.change ? `
+              <div class="kpi-card__change change--${kpi.change.type}">
+                <i class="bi ${getChangeIcon(kpi.change.type)}"></i>
+                <span>${kpi.change.value > 0 ? '+' : ''}${kpi.change.value}%</span>
+                <span class="change-period">${kpi.change.period}</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER SPARKLINE KPIs
+    // ─────────────────────────────────────────────────────────────────
+    function renderSparklineKPIs() {
+      const container = document.getElementById('sparklineKPIsGrid');
+      container.innerHTML = sparklineKPIs.map(kpi => `
+        <div class="kpi-card kpi-card--sparkline">
+          <div class="kpi-card__header">
+            <span class="kpi-card__title">${kpi.title}</span>
+            ${kpi.change ? `
+              <div class="kpi-card__change change--${kpi.change.type}">
+                <i class="bi ${getChangeIcon(kpi.change.type)}"></i>
+                <span>${kpi.change.value > 0 ? '+' : ''}${kpi.change.value}%</span>
+              </div>
+            ` : ''}
+          </div>
+          <span class="kpi-card__value">${formatValue(kpi)}</span>
+          ${kpi.sparkline ? `
+            <div class="kpi-card__sparkline">
+              <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+                <polyline
+                  points="${getSparklinePoints(kpi.sparkline)}"
+                  fill="none"
+                  stroke="${getSparklineColor(kpi)}"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          ` : ''}
+          ${kpi.change ? `<span class="kpi-card__period">${kpi.change.period}</span>` : ''}
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER PROGRESS KPIs
+    // ─────────────────────────────────────────────────────────────────
+    function renderProgressKPIs() {
+      const container = document.getElementById('progressKPIsGrid');
+      container.innerHTML = progressKPIs.map(kpi => `
+        <div class="kpi-card kpi-card--progress">
+          <div class="kpi-card__row">
+            <div class="kpi-card__icon kpi-card__icon--small kpi-card__icon--${kpi.iconColor}">
+              <i class="bi ${kpi.icon}"></i>
+            </div>
+            <div class="kpi-card__info">
+              <span class="kpi-card__title">${kpi.title}</span>
+              <span class="kpi-card__value">${formatValue(kpi)}</span>
+            </div>
+          </div>
+          ${kpi.progress ? `
+            <div class="kpi-card__progress-container">
+              <div class="progress-bar">
+                <div 
+                  class="progress-fill progress-fill--${kpi.iconColor}" 
+                  style="width: ${getProgressPercentage(kpi.progress)}%"
+                ></div>
+              </div>
+              <span class="progress-label">${kpi.progress.label}</span>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER COMPACT KPIs
+    // ─────────────────────────────────────────────────────────────────
+    function renderCompactKPIs() {
+      const container = document.getElementById('compactKPIsGrid');
+      container.innerHTML = basicKPIs.map(kpi => `
+        <div class="kpi-card kpi-card--compact">
+          <i class="bi kpi-card__mini-icon ${kpi.icon} icon--${kpi.iconColor}"></i>
+          <div class="kpi-card__compact-content">
+            <span class="kpi-card__value">${formatValue(kpi)}</span>
+            <span class="kpi-card__title">${kpi.title}</span>
+          </div>
+          ${kpi.change ? `
+            <div class="kpi-card__change kpi-card__change--badge change--${kpi.change.type}">
+              <i class="bi ${getChangeIcon(kpi.change.type)}"></i>
+              ${kpi.change.value > 0 ? '+' : ''}${kpi.change.value}%
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderBasicKPIs();
+      renderSparklineKPIs();
+      renderProgressKPIs();
+      renderCompactKPIs();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<div class="product-list-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="page-header__left">
+      <h1 class="page-header__title">Nos Produits</h1>
+      <p class="page-header__count">{{ filteredProducts.length }} produits trouvés</p>
+    </div>
+    <div class="page-header__actions">
+      <button class="filter-toggle" (click)="toggleFilters()">
+        <i class="bi bi-funnel"></i>
+        Filtres
+        @if (selectedCategory || searchQuery) {
+          <span class="filter-badge">●</span>
+        }
+      </button>
+      <div class="view-toggle">
+        <button 
+          class="view-btn"
+          [class.active]="viewMode === 'grid'"
+          (click)="toggleView('grid')">
+          <i class="bi bi-grid-3x3-gap"></i>
+        </button>
+        <button 
+          class="view-btn"
+          [class.active]="viewMode === 'list'"
+          (click)="toggleView('list')">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content" [class.filters-open]="showFilters">
+    <!-- Filters Sidebar -->
+    <aside class="filters-sidebar" [class.open]="showFilters">
+      <div class="filters-header">
+        <h3>Filtres</h3>
+        <button class="close-filters" (click)="showFilters = false">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <!-- Search -->
+      <div class="filter-section">
+        <label class="filter-label">Rechercher</label>
+        <div class="search-input">
+          <i class="bi bi-search"></i>
+          <input 
+            type="text" 
+            placeholder="Nom du produit..."
+            [(ngModel)]="searchQuery">
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="filter-section">
+        <label class="filter-label">Catégorie</label>
+        <div class="category-list">
+          @for (cat of categories; track cat.id) {
+            <button 
+              class="category-btn"
+              [class.active]="selectedCategory === cat.id"
+              (click)="selectedCategory = cat.id">
+              {{ cat.name }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Price Range -->
+      <div class="filter-section">
+        <label class="filter-label">Prix</label>
+        <div class="price-inputs">
+          <input 
+            type="number" 
+            placeholder="Min"
+            [(ngModel)]="priceRange.min">
+          <span>—</span>
+          <input 
+            type="number" 
+            placeholder="Max"
+            [(ngModel)]="priceRange.max">
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="filter-section">
+        <label class="filter-label">Trier par</label>
+        <select class="sort-select" [(ngModel)]="sortBy">
+          @for (option of sortOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+    </aside>
+
+    <!-- Products Grid/List -->
+    <main class="products-container">
+      @if (filteredProducts.length === 0) {
+        <div class="empty-state">
+          <i class="bi bi-search"></i>
+          <h3>Aucun produit trouvé</h3>
+          <p>Essayez de modifier vos filtres de recherche</p>
+        </div>
+      } @else {
+        <div class="products" [class.products--grid]="viewMode === 'grid'" [class.products--list]="viewMode === 'list'">
+          @for (product of filteredProducts; track product.id) {
+            <article class="product-card" [class.out-of-stock]="!product.inStock">
+              <!-- Image -->
+              <div class="product-card__image">
+                <img [src]="product.image" [alt]="product.name">
+                
+                <!-- Badges -->
+                <div class="product-card__badges">
+                  @if (product.isNew) {
+                    <span class="badge badge--new">Nouveau</span>
+                  }
+                  @if (product.isBestSeller) {
+                    <span class="badge badge--bestseller">Best-seller</span>
+                  }
+                  @if (product.discount) {
+                    <span class="badge badge--discount">-{{ product.discount }}%</span>
+                  }
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="product-card__actions">
+                  <button class="action-btn" (click)="addToWishlist(product)">
+                    <i class="bi bi-heart"></i>
+                  </button>
+                  <button class="action-btn">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+
+                @if (!product.inStock) {
+                  <div class="out-of-stock-overlay">
+                    <span>Rupture de stock</span>
+                  </div>
+                }
+              </div>
+
+              <!-- Info -->
+              <div class="product-card__info">
+                <span class="product-card__category">{{ product.category }}</span>
+                <h3 class="product-card__name">{{ product.name }}</h3>
+                <p class="product-card__description">{{ product.description }}</p>
+
+                <!-- Rating -->
+                <div class="product-card__rating">
+                  <div class="stars">
+                    @for (star of getStars(product.rating); track $index) {
+                      <i class="bi" [ngClass]="star === 1 ? 'bi-star-fill' : (star === 0.5 ? 'bi-star-half' : 'bi-star')"></i>
+                    }
+                  </div>
+                  <span class="rating-text">{{ product.rating }} ({{ product.reviewsCount }})</span>
+                </div>
+
+                <!-- Price -->
+                <div class="product-card__price">
+                  <span class="price-current">{{ formatPrice(product.price) }}</span>
+                  @if (product.originalPrice) {
+                    <span class="price-original">{{ formatPrice(product.originalPrice) }}</span>
+                  }
+                </div>
+
+                <!-- Add to Cart -->
+                <button 
+                  class="add-to-cart-btn"
+                  [disabled]="!product.inStock"
+                  (click)="addToCart(product)">
+                  <i class="bi bi-cart-plus"></i>
+                  <span>Ajouter au panier</span>
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div>

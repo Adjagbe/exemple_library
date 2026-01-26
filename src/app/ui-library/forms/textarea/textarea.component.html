@@ -1,0 +1,131 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TEXTAREA COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="textarea-container">
+  <!-- Comment Form -->
+  <div class="comment-form">
+    <div class="form-header">
+      <img src="https://placehold.co/40x40/f59e0b/ffffff?text=YO" alt="Your avatar" class="user-avatar">
+      <span class="form-title">Add a comment</span>
+    </div>
+
+    <div 
+      class="textarea-wrapper"
+      [class.focused]="isFocused"
+      [class.error]="(isOverLimit || isUnderMinimum || (required && isTouched && !value)) && isTouched"
+      [class.disabled]="disabled">
+      
+      <label *ngIf="label" class="textarea-label" [class.required]="required">
+        {{ label }}
+      </label>
+
+      <textarea
+        class="textarea-input"
+        [placeholder]="placeholder"
+        [rows]="rows"
+        [disabled]="disabled"
+        [style.resize]="resize"
+        [(ngModel)]="value"
+        (input)="onInput()"
+        (focus)="onFocus()"
+        (blur)="onBlur()">
+      </textarea>
+
+      <div class="textarea-footer">
+        <div class="footer-left">
+          <button class="format-btn" title="Bold">
+            <i class="bi bi-type-bold"></i>
+          </button>
+          <button class="format-btn" title="Italic">
+            <i class="bi bi-type-italic"></i>
+          </button>
+          <button class="format-btn" title="Add Link">
+            <i class="bi bi-link-45deg"></i>
+          </button>
+          <button class="format-btn" title="Add Image">
+            <i class="bi bi-image"></i>
+          </button>
+          <button class="format-btn" title="Add Emoji">
+            <i class="bi bi-emoji-smile"></i>
+          </button>
+        </div>
+
+        <div class="footer-right">
+          <span 
+            *ngIf="showCharCount" 
+            class="char-count"
+            [class.warning]="characterCount > maxLength * 0.8"
+            [class.error]="isOverLimit">
+            {{ characterCount }} / {{ maxLength }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-messages">
+      <span *ngIf="hint && !isTouched" class="hint">
+        <i class="bi bi-info-circle"></i>
+        {{ hint }}
+      </span>
+      <span *ngIf="isOverLimit" class="error-message">
+        <i class="bi bi-exclamation-circle"></i>
+        Character limit exceeded
+      </span>
+      <span *ngIf="isUnderMinimum" class="error-message">
+        <i class="bi bi-exclamation-circle"></i>
+        Minimum {{ minLength }} characters required
+      </span>
+      <span *ngIf="required && isTouched && !value" class="error-message">
+        <i class="bi bi-exclamation-circle"></i>
+        This field is required
+      </span>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn--secondary" (click)="value = ''">
+        Cancel
+      </button>
+      <button 
+        class="btn btn--primary" 
+        (click)="submitComment()"
+        [disabled]="!isValid || !value.trim()">
+        <i class="bi bi-send"></i>
+        Post Comment
+      </button>
+    </div>
+  </div>
+
+  <!-- Comments List -->
+  <div class="comments-list">
+    <h3 class="comments-title">
+      <i class="bi bi-chat-left-text"></i>
+      Comments ({{ comments.length }})
+    </h3>
+
+    <div class="comment" *ngFor="let comment of comments">
+      <img [src]="comment.avatar" [alt]="comment.author" class="comment-avatar">
+      <div class="comment-content">
+        <div class="comment-header">
+          <span class="comment-author">{{ comment.author }}</span>
+          <span class="comment-date">{{ comment.date }}</span>
+        </div>
+        <p class="comment-text">{{ comment.content }}</p>
+        <div class="comment-actions">
+          <button class="action-btn" (click)="likeComment(comment)">
+            <i class="bi bi-heart"></i>
+            {{ comment.likes }}
+          </button>
+          <button class="action-btn">
+            <i class="bi bi-reply"></i>
+            Reply
+          </button>
+          <button class="action-btn">
+            <i class="bi bi-flag"></i>
+            Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

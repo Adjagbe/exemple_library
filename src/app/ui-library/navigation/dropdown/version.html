@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Menu - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* DROPDOWN MENU COMPONENT - Premium UI Library                    */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+      padding: 2rem;
+    }
+
+    .demo-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .demo-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-subtitle {
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+
+    .demo-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TRIGGERS
+       ───────────────────────────────────────────────────────────────── */
+    .dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-trigger--button {
+      padding: 0.625rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .dropdown-trigger--button:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+
+    .dropdown-trigger--button .bi-chevron-down {
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown-trigger--icon {
+      padding: 0.5rem;
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-size: 1.25rem;
+      border-radius: 0.375rem;
+    }
+
+    .dropdown-trigger--icon:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .dropdown-trigger--avatar {
+      padding: 0.25rem;
+      background: none;
+      border: none;
+      gap: 0.375rem;
+    }
+
+    .trigger-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e5e7eb;
+      transition: border-color 0.2s ease;
+    }
+
+    .dropdown-trigger--avatar .bi-chevron-down {
+      font-size: 0.625rem;
+      color: #9ca3af;
+    }
+
+    .dropdown-trigger--avatar:hover .trigger-avatar {
+      border-color: #4f46e5;
+    }
+
+    .dropdown--open .dropdown-trigger--button .bi-chevron-down,
+    .dropdown--open .dropdown-trigger--avatar .bi-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MENU
+       ───────────────────────────────────────────────────────────────── */
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      min-width: 200px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+
+    .dropdown-menu--left {
+      left: 0;
+    }
+
+    .dropdown-menu--right {
+      right: 0;
+    }
+
+    .dropdown--open .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-list {
+      list-style: none;
+      margin: 0;
+      padding: 0.5rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ITEMS
+       ───────────────────────────────────────────────────────────────── */
+    .dropdown-divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 0.5rem 0;
+    }
+
+    .dropdown-item {
+      margin: 0;
+    }
+
+    .dropdown-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      background: none;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      text-decoration: none;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .dropdown-link i {
+      font-size: 1rem;
+      color: #9ca3af;
+    }
+
+    .dropdown-link:hover {
+      background: #f3f4f6;
+    }
+
+    .dropdown-link:hover i {
+      color: #4f46e5;
+    }
+
+    .dropdown-item--disabled .dropdown-link {
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .dropdown-item--disabled .dropdown-link:hover {
+      background: transparent;
+    }
+
+    .dropdown-item--disabled .dropdown-link:hover i {
+      color: #9ca3af;
+    }
+
+    .dropdown-item--danger .dropdown-link {
+      color: #dc2626;
+    }
+
+    .dropdown-item--danger .dropdown-link i {
+      color: #dc2626;
+    }
+
+    .dropdown-item--danger .dropdown-link:hover {
+      background: #fef2f2;
+    }
+
+    .dropdown-item--danger .dropdown-link:hover i {
+      color: #dc2626;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SIZES
+       ───────────────────────────────────────────────────────────────── */
+    .dropdown--sm .dropdown-menu {
+      min-width: 160px;
+    }
+
+    .dropdown--sm .dropdown-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+
+    .dropdown--lg .dropdown-menu {
+      min-width: 260px;
+    }
+
+    .dropdown--lg .dropdown-link {
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title">Dropdown Menu</h1>
+    <p class="demo-subtitle">Menu déroulant avec différents types de déclencheurs</p>
+
+    <!-- Button Trigger -->
+    <div class="demo-section">
+      <h2 class="section-title">Déclencheur bouton</h2>
+      <div class="demo-row">
+        <div class="dropdown" id="dropdown1">
+          <button class="dropdown-trigger dropdown-trigger--button" onclick="toggleDropdown('dropdown1')">
+            <span>Options</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--left">
+            <ul class="dropdown-list" id="menuList1"></ul>
+          </div>
+        </div>
+
+        <div class="dropdown dropdown--sm" id="dropdown2">
+          <button class="dropdown-trigger dropdown-trigger--button" onclick="toggleDropdown('dropdown2')">
+            <span>Small</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--left">
+            <ul class="dropdown-list" id="menuList2"></ul>
+          </div>
+        </div>
+
+        <div class="dropdown dropdown--lg" id="dropdown3">
+          <button class="dropdown-trigger dropdown-trigger--button" onclick="toggleDropdown('dropdown3')">
+            <span>Large</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--left">
+            <ul class="dropdown-list" id="menuList3"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon Trigger -->
+    <div class="demo-section">
+      <h2 class="section-title">Déclencheur icône</h2>
+      <div class="demo-row">
+        <div class="dropdown" id="dropdown4">
+          <button class="dropdown-trigger dropdown-trigger--icon" onclick="toggleDropdown('dropdown4')">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--left">
+            <ul class="dropdown-list" id="menuList4"></ul>
+          </div>
+        </div>
+
+        <div class="dropdown" id="dropdown5">
+          <button class="dropdown-trigger dropdown-trigger--icon" onclick="toggleDropdown('dropdown5')">
+            <i class="bi bi-gear"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--left">
+            <ul class="dropdown-list" id="menuList5"></ul>
+          </div>
+        </div>
+
+        <div class="dropdown" id="dropdown6">
+          <button class="dropdown-trigger dropdown-trigger--icon" onclick="toggleDropdown('dropdown6')">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--left">
+            <ul class="dropdown-list" id="menuList6"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatar Trigger -->
+    <div class="demo-section">
+      <h2 class="section-title">Déclencheur avatar</h2>
+      <div class="demo-row">
+        <div class="dropdown" id="dropdown7">
+          <button class="dropdown-trigger dropdown-trigger--avatar" onclick="toggleDropdown('dropdown7')">
+            <img src="https://i.pravatar.cc/150?img=1" alt="User avatar" class="trigger-avatar">
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu--right">
+            <ul class="dropdown-list" id="menuList7"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // DROPDOWN MENU COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // MENU ITEMS
+    // ─────────────────────────────────────────────────────────────────
+    const items = [
+      { id: 'profile', label: 'View Profile', icon: 'bi-person' },
+      { id: 'settings', label: 'Settings', icon: 'bi-gear' },
+      { id: 'notifications', label: 'Notifications', icon: 'bi-bell' },
+      { id: 'divider1', label: '', divider: true },
+      { id: 'help', label: 'Help Center', icon: 'bi-question-circle' },
+      { id: 'docs', label: 'Documentation', icon: 'bi-book' },
+      { id: 'divider2', label: '', divider: true },
+      { id: 'logout', label: 'Sign Out', icon: 'bi-box-arrow-right', danger: true }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER MENU
+    // ─────────────────────────────────────────────────────────────────
+    function renderMenu(containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = items.map(item => {
+        if (item.divider) {
+          return '<li class="dropdown-divider"></li>';
+        }
+
+        const dangerClass = item.danger ? 'dropdown-item--danger' : '';
+        const disabledClass = item.disabled ? 'dropdown-item--disabled' : '';
+
+        return `
+          <li class="dropdown-item ${dangerClass} ${disabledClass}">
+            <button class="dropdown-link" onclick="handleItemClick('${item.id}')">
+              ${item.icon ? `<i class="bi ${item.icon}"></i>` : ''}
+              <span>${item.label}</span>
+            </button>
+          </li>
+        `;
+      }).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // TOGGLE DROPDOWN
+    // ─────────────────────────────────────────────────────────────────
+    function toggleDropdown(dropdownId) {
+      const dropdown = document.getElementById(dropdownId);
+      const isCurrentlyOpen = dropdown.classList.contains('dropdown--open');
+
+      // Close all dropdowns
+      document.querySelectorAll('.dropdown').forEach(d => {
+        d.classList.remove('dropdown--open');
+      });
+
+      // Toggle current dropdown
+      if (!isCurrentlyOpen) {
+        dropdown.classList.add('dropdown--open');
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // HANDLE ITEM CLICK
+    // ─────────────────────────────────────────────────────────────────
+    function handleItemClick(itemId) {
+      console.log('Clicked:', itemId);
+      // Close all dropdowns
+      document.querySelectorAll('.dropdown').forEach(d => {
+        d.classList.remove('dropdown--open');
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // CLOSE ON OUTSIDE CLICK
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown').forEach(d => {
+          d.classList.remove('dropdown--open');
+        });
+      }
+    });
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      for (let i = 1; i <= 7; i++) {
+        renderMenu('menuList' + i);
+      }
+    });
+  </script>
+</body>
+</html>

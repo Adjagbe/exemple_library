@@ -1,0 +1,110 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TABLE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="table-showcase">
+  <!-- Header -->
+  <div class="showcase-header">
+    <div class="header-content">
+      <h1>Table</h1>
+      <p>Tableau de données avec tri et sélection</p>
+    </div>
+
+    <div class="header-actions" *ngIf="getSelectedCount() > 0">
+      <span class="selected-count">{{ getSelectedCount() }} sélectionné(s)</span>
+      <button class="btn btn--danger btn--sm">
+        <i class="bi bi-trash"></i>
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <!-- Table Container -->
+  <div class="table-container">
+    <table class="ui-table">
+      <thead>
+        <tr>
+          <th class="checkbox-cell">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="selectAll"
+              (change)="toggleSelectAll()"
+              class="row-checkbox"
+            >
+          </th>
+          <th 
+            *ngFor="let column of columns"
+            [class.sortable]="column.sortable"
+            [style.width]="column.width"
+            [style.text-align]="column.align || 'left'"
+            (click)="sortBy(column)"
+          >
+            <div class="th-content">
+              <span>{{ column.label }}</span>
+              <i *ngIf="column.sortable" class="bi sort-icon" [ngClass]="getSortIcon(column)"></i>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr 
+          *ngFor="let row of data" 
+          [class.selected]="row.selected"
+        >
+          <td class="checkbox-cell">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="row.selected"
+              (change)="onRowSelect()"
+              class="row-checkbox"
+            >
+          </td>
+          <td 
+            *ngFor="let column of columns"
+            [style.text-align]="column.align || 'left'"
+          >
+            <!-- Text -->
+            <ng-container *ngIf="!column.type || column.type === 'text' || column.type === 'number'">
+              {{ row[column.key] }}
+            </ng-container>
+
+            <!-- Date -->
+            <ng-container *ngIf="column.type === 'date'">
+              {{ formatDate(row[column.key]) }}
+            </ng-container>
+
+            <!-- Badge -->
+            <ng-container *ngIf="column.type === 'badge'">
+              <span [class]="getBadgeClass(column, row[column.key])">
+                {{ row[column.key] }}
+              </span>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container *ngIf="column.type === 'actions'">
+              <div class="action-buttons">
+                <button class="action-btn" title="Voir" (click)="onView(row)">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button class="action-btn" title="Modifier" (click)="onEdit(row)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn action-btn--danger" title="Supprimer" (click)="onDelete(row)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Table Footer -->
+  <div class="table-footer">
+    <div class="footer-info">
+      Affichage de <strong>{{ data.length }}</strong> résultats
+    </div>
+  </div>
+</div>

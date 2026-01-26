@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload de fichiers - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* FILE UPLOAD COMPONENT - Premium UI Library                      */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .upload-showcase {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 2rem 0 1rem 0;
+    }
+
+    /* DROP ZONE */
+    .drop-zone {
+      padding: 3rem 2rem;
+      background: white;
+      border: 2px dashed #d1d5db;
+      border-radius: 1rem;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .drop-zone:hover {
+      border-color: #4f46e5;
+      background: #faf5ff;
+    }
+
+    .drop-zone.dragging {
+      border-color: #4f46e5;
+      background: #eef2ff;
+      transform: scale(1.02);
+    }
+
+    .drop-zone.dragging .drop-icon {
+      transform: translateY(-5px);
+      color: #4f46e5;
+    }
+
+    .drop-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .drop-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+
+    .drop-icon i {
+      font-size: 1.75rem;
+      color: #9ca3af;
+    }
+
+    .drop-content h3 {
+      margin: 0;
+      font-size: 1.125rem;
+      color: #374151;
+    }
+
+    .drop-content p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #9ca3af;
+    }
+
+    .browse-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      background: #4f46e5;
+      border-radius: 0.5rem;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .browse-btn input { display: none; }
+    .browse-btn:hover { background: #4338ca; }
+
+    .drop-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* UPLOAD STATS */
+    .upload-stats {
+      display: none;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem 1.5rem;
+      background: #f9fafb;
+      border-radius: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .upload-stats.visible { display: flex; }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .clear-btn {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.8125rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .clear-btn:hover {
+      background: #fee2e2;
+      border-color: #fecaca;
+      color: #ef4444;
+    }
+
+    /* FILE LIST */
+    .file-list {
+      display: none;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .file-list.visible { display: flex; }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+    }
+
+    .file-item:hover {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .file-item:hover .file-actions { opacity: 1; }
+
+    .file-item.completed {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .file-item.error {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
+    .file-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #f3f4f6;
+      border-radius: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .file-icon i { font-size: 1.25rem; }
+
+    .file-info { flex: 1; min-width: 0; }
+
+    .file-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .file-name {
+      font-weight: 600;
+      color: #111827;
+      font-size: 0.9375rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-size {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      flex-shrink: 0;
+    }
+
+    .file-progress {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    .progress-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4f46e5;
+      min-width: 36px;
+    }
+
+    .file-status {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: #10b981;
+    }
+
+    .file-status i { font-size: 0.875rem; }
+
+    .file-error {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: #ef4444;
+    }
+
+    .file-error i { font-size: 0.875rem; }
+
+    .file-actions {
+      display: flex;
+      gap: 0.25rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.375rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .action-btn--danger:hover {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    /* ALTERNATIVE STYLES */
+    .alt-styles { margin-top: 3rem; }
+
+    /* Compact Upload */
+    .compact-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #4f46e5;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .compact-upload input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .compact-upload:hover {
+      background: #eef2ff;
+      border-color: #c7d2fe;
+    }
+
+    /* Button Upload */
+    .button-upload {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .upload-btn:hover {
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    .upload-hint {
+      font-size: 0.8125rem;
+      color: #9ca3af;
+    }
+
+    /* Avatar Upload */
+    .avatar-upload {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+    }
+
+    .avatar-preview {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border-radius: 50%;
+    }
+
+    .avatar-preview i {
+      font-size: 2rem;
+      color: #9ca3af;
+    }
+
+    .avatar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .avatar-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .avatar-btn--primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .avatar-btn--primary:hover { background: #4338ca; }
+
+    .avatar-btn--danger {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .avatar-btn--danger:hover { background: #fecaca; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .upload-stats { flex-wrap: wrap; }
+      .file-actions { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="upload-showcase">
+  <h1 class="page-title">Upload de fichiers</h1>
+  <p class="page-subtitle">Zone de téléchargement avec suivi de progression</p>
+
+  <!-- Drop Zone -->
+  <div class="drop-zone" id="dropZone">
+    <div class="drop-content">
+      <div class="drop-icon">
+        <i class="bi bi-cloud-arrow-up"></i>
+      </div>
+      <h3>Glissez-déposez vos fichiers ici</h3>
+      <p>ou</p>
+      <label class="browse-btn">
+        <input type="file" multiple id="fileInput" />
+        Parcourir les fichiers
+      </label>
+      <span class="drop-hint">Formats acceptés: PDF, DOC, XLS, PPT, Images, ZIP (max 25 MB)</span>
+    </div>
+  </div>
+
+  <!-- Upload Stats -->
+  <div class="upload-stats" id="uploadStats">
+    <div class="stat">
+      <span class="stat-value" id="fileCount">0</span>
+      <span class="stat-label">Fichier(s)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value" id="completedCount">0</span>
+      <span class="stat-label">Terminé(s)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value" id="totalSize">0 B</span>
+      <span class="stat-label">Taille totale</span>
+    </div>
+    <button class="clear-btn" onclick="clearAll()">
+      <i class="bi bi-trash"></i>
+      Tout effacer
+    </button>
+  </div>
+
+  <!-- File List -->
+  <div class="file-list" id="fileList"></div>
+
+  <!-- Alternative Styles -->
+  <section class="alt-styles">
+    <h2 class="section-title">Styles alternatifs</h2>
+
+    <!-- Compact Upload -->
+    <div class="compact-upload">
+      <i class="bi bi-paperclip"></i>
+      <span>Ajouter une pièce jointe</span>
+      <input type="file" />
+    </div>
+
+    <!-- Button Upload -->
+    <div class="button-upload">
+      <button class="upload-btn">
+        <i class="bi bi-upload"></i>
+        Importer un fichier
+      </button>
+      <span class="upload-hint">PNG, JPG jusqu'à 10MB</span>
+    </div>
+
+    <!-- Avatar Upload -->
+    <div class="avatar-upload">
+      <div class="avatar-preview">
+        <i class="bi bi-person"></i>
+      </div>
+      <div class="avatar-actions">
+        <button class="avatar-btn avatar-btn--primary">
+          <i class="bi bi-camera"></i>
+          Changer la photo
+        </button>
+        <button class="avatar-btn avatar-btn--danger">
+          <i class="bi bi-trash"></i>
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Demo files
+  let files = [
+    { id: '1', name: 'rapport-annuel-2024.pdf', size: 2450000, type: 'application/pdf', progress: 100, status: 'completed' },
+    { id: '2', name: 'presentation.pptx', size: 5800000, type: 'presentation', progress: 75, status: 'uploading' },
+    { id: '3', name: 'data-export.xlsx', size: 1200000, type: 'spreadsheet', progress: 45, status: 'uploading' },
+    { id: '4', name: 'photo-equipe.jpg', size: 3500000, type: 'image/jpeg', progress: 0, status: 'error', error: 'Fichier trop volumineux' }
+  ];
+
+  // Utilities
+  function formatSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  function getFileIcon(type) {
+    if (type.includes('image')) return 'bi-file-earmark-image';
+    if (type.includes('pdf')) return 'bi-file-earmark-pdf';
+    if (type.includes('word') || type.includes('document')) return 'bi-file-earmark-word';
+    if (type.includes('excel') || type.includes('spreadsheet')) return 'bi-file-earmark-excel';
+    if (type.includes('powerpoint') || type.includes('presentation')) return 'bi-file-earmark-ppt';
+    if (type.includes('zip') || type.includes('archive')) return 'bi-file-earmark-zip';
+    if (type.includes('video')) return 'bi-file-earmark-play';
+    if (type.includes('audio')) return 'bi-file-earmark-music';
+    return 'bi-file-earmark';
+  }
+
+  function getFileColor(type) {
+    if (type.includes('image')) return '#8b5cf6';
+    if (type.includes('pdf')) return '#ef4444';
+    if (type.includes('word') || type.includes('document')) return '#3b82f6';
+    if (type.includes('excel') || type.includes('spreadsheet')) return '#10b981';
+    if (type.includes('powerpoint') || type.includes('presentation')) return '#f97316';
+    if (type.includes('zip')) return '#f59e0b';
+    if (type.includes('video')) return '#ec4899';
+    if (type.includes('audio')) return '#06b6d4';
+    return '#6b7280';
+  }
+
+  // Render file list
+  function renderFileList() {
+    const fileList = document.getElementById('fileList');
+    const uploadStats = document.getElementById('uploadStats');
+    
+    if (files.length === 0) {
+      fileList.classList.remove('visible');
+      uploadStats.classList.remove('visible');
+      return;
+    }
+
+    fileList.classList.add('visible');
+    uploadStats.classList.add('visible');
+
+    // Update stats
+    document.getElementById('fileCount').textContent = files.length;
+    document.getElementById('completedCount').textContent = files.filter(f => f.status === 'completed').length;
+    document.getElementById('totalSize').textContent = formatSize(files.reduce((acc, f) => acc + f.size, 0));
+
+    // Render files
+    fileList.innerHTML = files.map(file => `
+      <div class="file-item ${file.status === 'completed' ? 'completed' : ''} ${file.status === 'error' ? 'error' : ''}" data-id="${file.id}">
+        <div class="file-icon" style="color: ${getFileColor(file.type)}">
+          <i class="bi ${getFileIcon(file.type)}"></i>
+        </div>
+        <div class="file-info">
+          <div class="file-header">
+            <span class="file-name">${file.name}</span>
+            <span class="file-size">${formatSize(file.size)}</span>
+          </div>
+          ${file.status === 'uploading' || file.status === 'pending' ? `
+            <div class="file-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${file.progress}%"></div>
+              </div>
+              <span class="progress-text">${Math.round(file.progress)}%</span>
+            </div>
+          ` : ''}
+          ${file.status === 'completed' ? `
+            <div class="file-status">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Upload terminé</span>
+            </div>
+          ` : ''}
+          ${file.status === 'error' ? `
+            <div class="file-error">
+              <i class="bi bi-exclamation-circle-fill"></i>
+              <span>${file.error}</span>
+            </div>
+          ` : ''}
+        </div>
+        <div class="file-actions">
+          ${file.status === 'error' ? `
+            <button class="action-btn" title="Réessayer" onclick="retryUpload('${file.id}')">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          ` : ''}
+          <button class="action-btn action-btn--danger" title="Supprimer" onclick="removeFile('${file.id}')">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Simulate upload
+  function simulateUpload(file) {
+    file.status = 'uploading';
+    const interval = setInterval(() => {
+      if (file.progress >= 100) {
+        clearInterval(interval);
+        file.status = 'completed';
+        renderFileList();
+      } else {
+        file.progress += Math.random() * 15;
+        if (file.progress > 100) file.progress = 100;
+        renderFileList();
+      }
+    }, 300);
+  }
+
+  // Handle files
+  function handleFiles(fileList) {
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      const uploadFile = {
+        id: Date.now().toString() + i,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        progress: 0,
+        status: 'pending'
+      };
+      files.push(uploadFile);
+      simulateUpload(uploadFile);
+    }
+    renderFileList();
+  }
+
+  // Actions
+  function removeFile(id) {
+    files = files.filter(f => f.id !== id);
+    renderFileList();
+  }
+
+  function retryUpload(id) {
+    const file = files.find(f => f.id === id);
+    if (file) {
+      file.progress = 0;
+      file.error = undefined;
+      simulateUpload(file);
+    }
+  }
+
+  function clearAll() {
+    files = [];
+    renderFileList();
+  }
+
+  // Drop zone events
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.add('dragging');
+  });
+
+  dropZone.addEventListener('dragleave', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('dragging');
+  });
+
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('dragging');
+    if (e.dataTransfer.files) {
+      handleFiles(e.dataTransfer.files);
+    }
+  });
+
+  fileInput.addEventListener('change', e => {
+    if (e.target.files) {
+      handleFiles(e.target.files);
+    }
+  });
+
+  // Initialize
+  renderFileList();
+
+  // Simulate ongoing uploads
+  files.forEach(f => {
+    if (f.status === 'uploading') {
+      simulateUpload(f);
+    }
+  });
+</script>
+
+</body>
+</html>

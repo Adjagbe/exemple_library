@@ -1,0 +1,402 @@
+// ═══════════════════════════════════════════════════════════════
+// TAGS COMPONENT - Premium UI Library
+// ═══════════════════════════════════════════════════════════════
+
+.tags-showcase {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+}
+
+.page-subtitle {
+  color: #6b7280;
+  margin: 0 0 2rem 0;
+}
+
+.tags-section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1rem 0;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// TAG CREATOR
+// ─────────────────────────────────────────────────────────────────
+.tag-creator {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tag-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tag-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  }
+}
+
+.color-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.5rem;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+
+  &--primary {
+    background: #4f46e5;
+    color: white;
+
+    &:hover {
+      background: #4338ca;
+    }
+  }
+}
+
+.color-presets {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.color-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-right: 0.5rem;
+}
+
+.color-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &.active {
+    border-color: #1f2937;
+    box-shadow: 0 0 0 2px white;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// TAG CLOUD
+// ─────────────────────────────────────────────────────────────────
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tag--cloud {
+  padding: 0.5rem 0.875rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.tag-count {
+  padding: 0.125rem 0.5rem;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 1rem;
+  font-size: 0.75rem;
+}
+
+.tag-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.selected-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  color: #6b7280;
+
+  strong {
+    color: #4f46e5;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// TAGS ROW
+// ─────────────────────────────────────────────────────────────────
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+
+  &--sizes {
+    align-items: center;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// BASE TAG
+// ─────────────────────────────────────────────────────────────────
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// STATUS TAGS
+// ─────────────────────────────────────────────────────────────────
+.tag--status {
+  border: 1px solid;
+  padding: 0.375rem 0.875rem;
+  border-radius: 2rem;
+}
+
+.tag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// PRIORITY TAGS
+// ─────────────────────────────────────────────────────────────────
+.tag--priority {
+  padding: 0.375rem 0.875rem;
+  border-radius: 0.375rem;
+
+  i {
+    font-size: 0.7rem;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// SIZES
+// ─────────────────────────────────────────────────────────────────
+.tag--xs {
+  padding: 0.1875rem 0.5rem;
+  font-size: 0.6875rem;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.tag--sm {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.tag--md {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.tag--lg {
+  padding: 0.5rem 1rem;
+  font-size: 0.9375rem;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.tag--xl {
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// VARIANTS
+// ─────────────────────────────────────────────────────────────────
+.tags-variants {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.variant-group {
+  h4 {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+}
+
+// Filled
+.tag--filled {
+  &.tag--primary { background: #4f46e5; color: white; }
+  &.tag--success { background: #10b981; color: white; }
+  &.tag--warning { background: #f59e0b; color: white; }
+  &.tag--danger { background: #ef4444; color: white; }
+  &.tag--info { background: #06b6d4; color: white; }
+}
+
+// Outlined
+.tag--outlined {
+  background: transparent;
+  border: 1.5px solid;
+
+  &.tag--primary { border-color: #4f46e5; color: #4f46e5; }
+  &.tag--success { border-color: #10b981; color: #10b981; }
+  &.tag--warning { border-color: #f59e0b; color: #f59e0b; }
+  &.tag--danger { border-color: #ef4444; color: #ef4444; }
+  &.tag--info { border-color: #06b6d4; color: #06b6d4; }
+}
+
+// Soft
+.tag--soft {
+  &.tag--primary { background: rgba(79, 70, 229, 0.1); color: #4f46e5; }
+  &.tag--success { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+  &.tag--warning { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+  &.tag--danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+  &.tag--info { background: rgba(6, 182, 212, 0.1); color: #06b6d4; }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// INTERACTIVE TAGS
+// ─────────────────────────────────────────────────────────────────
+.tag--interactive {
+  background: #f3f4f6;
+  color: #374151;
+  cursor: pointer;
+
+  &:hover {
+    background: #e5e7eb;
+  }
+}
+
+.tag-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  i {
+    font-size: 0.7rem;
+  }
+}
+
+.tag--add {
+  border: 2px dashed #d1d5db;
+  background: transparent;
+  color: #6b7280;
+
+  &:hover {
+    border-color: #4f46e5;
+    color: #4f46e5;
+    background: rgba(79, 70, 229, 0.05);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RESPONSIVE
+// ─────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .tag-form {
+    flex-wrap: wrap;
+  }
+
+  .tag-input {
+    width: 100%;
+    flex: auto;
+  }
+}

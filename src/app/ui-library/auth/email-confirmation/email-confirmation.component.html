@@ -1,0 +1,130 @@
+<div class="confirmation-page">
+  <div class="confirmation-card">
+    <!-- Loading State -->
+    @if (status === 'loading') {
+      <div class="state-container">
+        <div class="loading-spinner">
+          <div class="spinner-ring"></div>
+          <i class="bi bi-envelope-check"></i>
+        </div>
+        <h2 class="state-title">Vérification en cours...</h2>
+        <p class="state-text">Nous vérifions votre adresse email, veuillez patienter.</p>
+      </div>
+    }
+
+    <!-- Success State -->
+    @if (status === 'success') {
+      <div class="state-container">
+        <div class="success-icon">
+          <div class="success-circle">
+            <i class="bi bi-check-lg"></i>
+          </div>
+          <div class="success-particles">
+            @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+              <div class="particle particle--{{ i }}"></div>
+            }
+          </div>
+        </div>
+        
+        <h2 class="state-title">Email confirmé !</h2>
+        <p class="state-text">
+          Votre adresse email <strong>{{ email }}</strong> a été vérifiée avec succès.
+        </p>
+        
+        <div class="success-features">
+          <div class="feature-item">
+            <i class="bi bi-shield-check"></i>
+            <span>Compte sécurisé</span>
+          </div>
+          <div class="feature-item">
+            <i class="bi bi-bell"></i>
+            <span>Notifications activées</span>
+          </div>
+          <div class="feature-item">
+            <i class="bi bi-unlock"></i>
+            <span>Accès complet</span>
+          </div>
+        </div>
+
+        <a href="#" class="btn btn--primary btn--full">
+          <span>Accéder à mon compte</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    }
+
+    <!-- Expired State -->
+    @if (status === 'expired') {
+      <div class="state-container">
+        <div class="expired-icon">
+          <i class="bi bi-clock-history"></i>
+        </div>
+        
+        <h2 class="state-title">Lien expiré</h2>
+        <p class="state-text">
+          Ce lien de confirmation a expiré. Demandez un nouveau lien pour confirmer votre adresse email.
+        </p>
+
+        @if (resendSuccess) {
+          <div class="alert alert--success">
+            <i class="bi bi-check-circle"></i>
+            <span>Un nouveau lien a été envoyé à {{ email }}</span>
+          </div>
+        }
+
+        <button 
+          class="btn btn--primary btn--full"
+          (click)="resendEmail()"
+          [disabled]="isResending">
+          @if (isResending) {
+            <span class="spinner"></span>
+            <span>Envoi en cours...</span>
+          } @else {
+            <i class="bi bi-envelope"></i>
+            <span>Renvoyer le lien</span>
+          }
+        </button>
+
+        <a href="#" class="back-link">
+          <i class="bi bi-arrow-left"></i>
+          Retour à la connexion
+        </a>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (status === 'error') {
+      <div class="state-container">
+        <div class="error-icon">
+          <i class="bi bi-x-circle"></i>
+        </div>
+        
+        <h2 class="state-title">Erreur de vérification</h2>
+        <p class="state-text">
+          Une erreur s'est produite lors de la vérification de votre email. Veuillez réessayer ou contacter le support.
+        </p>
+
+        <div class="error-actions">
+          <button class="btn btn--primary" (click)="retry()">
+            <i class="bi bi-arrow-clockwise"></i>
+            <span>Réessayer</span>
+          </button>
+          <a href="#" class="btn btn--secondary">
+            <i class="bi bi-headset"></i>
+            <span>Contacter le support</span>
+          </a>
+        </div>
+
+        <a href="#" class="back-link">
+          <i class="bi bi-arrow-left"></i>
+          Retour à la connexion
+        </a>
+      </div>
+    }
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p>
+  </div>
+</div>

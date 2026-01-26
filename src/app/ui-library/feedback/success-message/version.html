@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages de Succès - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* SUCCESS MESSAGE COMPONENT - Premium UI Library                  */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .success-showcase { max-width: 800px; margin: 0 auto; padding: 2rem; }
+    .page-title { font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 2rem 0; }
+    .showcase-section { margin-bottom: 3rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TOAST
+       ───────────────────────────────────────────────────────────────── */
+    .toast-container { display: flex; flex-direction: column; gap: 0.75rem; }
+    .toast { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: white; border-radius: 0.75rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); border-left: 4px solid transparent; animation: slideIn 0.3s ease; }
+    .toast--success { border-left-color: #10b981; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    .toast-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: #d1fae5; border-radius: 50%; color: #10b981; font-size: 1.1rem; flex-shrink: 0; }
+    .toast-content { flex: 1; }
+    .toast-title { display: block; font-size: 0.95rem; color: #111827; margin-bottom: 0.125rem; font-weight: 600; }
+    .toast-message { font-size: 0.875rem; color: #6b7280; margin: 0; }
+    .toast-close { padding: 0.25rem; background: none; border: none; color: #9ca3af; cursor: pointer; border-radius: 0.25rem; transition: all 0.2s; }
+    .toast-close:hover { background: #f3f4f6; color: #6b7280; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BANNER
+       ───────────────────────────────────────────────────────────────── */
+    .success-banner { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-radius: 1rem; border: 1px solid #6ee7b7; }
+    .banner-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #10b981; border-radius: 50%; color: white; font-size: 1.5rem; flex-shrink: 0; }
+    .banner-content { flex: 1; }
+    .banner-title { display: block; font-size: 1rem; color: #065f46; margin-bottom: 0.25rem; font-weight: 600; }
+    .banner-message { font-size: 0.9rem; color: #047857; margin: 0; }
+    .banner-action { display: flex; align-items: center; gap: 0.375rem; padding: 0.625rem 1rem; background: #10b981; border: none; border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .banner-action:hover { background: #059669; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       INLINE
+       ───────────────────────────────────────────────────────────────── */
+    .inline-messages { display: flex; flex-direction: column; gap: 0.75rem; }
+    .inline-success { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.5rem; color: #16a34a; font-size: 0.9rem; }
+    .inline-success i { font-size: 1.1rem; }
+    .inline-success .inline-title { font-weight: 600; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SUCCESS CARD
+       ───────────────────────────────────────────────────────────────── */
+    .success-card { text-align: center; padding: 2.5rem 2rem; background: white; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+    .card-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; color: white; font-size: 2.5rem; }
+    .card-title { font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0; }
+    .card-message { font-size: 1rem; color: #6b7280; margin: 0 0 1.5rem 0; }
+    .card-details { display: flex; justify-content: center; gap: 2rem; padding: 1rem 0; margin-bottom: 1.5rem; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; }
+    .detail { display: flex; flex-direction: column; gap: 0.25rem; }
+    .detail-label { font-size: 0.75rem; color: #9ca3af; }
+    .detail-value { font-size: 0.95rem; font-weight: 600; color: #111827; }
+    .card-actions { display: flex; gap: 0.75rem; justify-content: center; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MODAL
+       ───────────────────────────────────────────────────────────────── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; padding: 1rem; z-index: 1000; animation: fadeIn 0.2s ease; }
+    .modal-overlay.hidden { display: none; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .success-modal { text-align: center; padding: 3rem 2.5rem; background: white; border-radius: 1.5rem; max-width: 420px; width: 100%; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    .modal-icon { position: relative; width: 100px; height: 100px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; color: white; font-size: 3rem; }
+    .icon-rings { position: absolute; inset: 0; }
+    .ring { position: absolute; inset: 0; border: 2px solid #10b981; border-radius: 50%; animation: ring-pulse 2s ease-out infinite; }
+    .ring.ring-2 { animation-delay: 0.5s; }
+    @keyframes ring-pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.5); opacity: 0; } }
+    .modal-title { font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0 0 0.75rem 0; }
+    .modal-message { font-size: 1rem; color: #6b7280; line-height: 1.6; margin: 0 0 2rem 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn--lg { padding: 1rem 2rem; font-size: 1rem; }
+    .btn--primary { background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; color: white; }
+    .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
+    .btn--outline { background: white; border: 2px solid #e5e7eb; color: #374151; }
+    .btn--outline:hover { border-color: #10b981; color: #10b981; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .success-banner { flex-direction: column; text-align: center; }
+      .card-details { flex-direction: column; gap: 1rem; }
+      .card-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="success-showcase">
+  <h1 class="page-title">Messages de Succès</h1>
+
+  <!-- Toast Notifications -->
+  <section class="showcase-section">
+    <h2 class="section-title">Toast Notifications</h2>
+    <div class="toast-container" id="toastContainer">
+      <div class="toast toast--success" id="toast1">
+        <div class="toast-icon"><i class="bi bi-check-circle-fill"></i></div>
+        <div class="toast-content">
+          <strong class="toast-title">Succès !</strong>
+          <p class="toast-message">Votre fichier a été uploadé avec succès.</p>
+        </div>
+        <button class="toast-close" onclick="dismissToast('toast1')"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="toast toast--success" id="toast2">
+        <div class="toast-icon"><i class="bi bi-check-circle-fill"></i></div>
+        <div class="toast-content">
+          <strong class="toast-title">Enregistré</strong>
+          <p class="toast-message">Les modifications ont été sauvegardées.</p>
+        </div>
+        <button class="toast-close" onclick="dismissToast('toast2')"><i class="bi bi-x-lg"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner -->
+  <section class="showcase-section">
+    <h2 class="section-title">Banner de Succès</h2>
+    <div class="success-banner">
+      <div class="banner-icon"><i class="bi bi-bag-check-fill"></i></div>
+      <div class="banner-content">
+        <strong class="banner-title">Paiement confirmé</strong>
+        <p class="banner-message">Votre commande #12345 a été validée. Un email de confirmation vous a été envoyé.</p>
+      </div>
+      <button class="banner-action" onclick="alert('Voir la commande')">
+        Voir la commande
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- Inline Messages -->
+  <section class="showcase-section">
+    <h2 class="section-title">Messages Inline</h2>
+    <div class="inline-messages">
+      <div class="inline-success">
+        <i class="bi bi-check-lg"></i>
+        <span class="inline-text">Profil mis à jour avec succès</span>
+      </div>
+      <div class="inline-success">
+        <i class="bi bi-envelope-check"></i>
+        <span class="inline-title">Email vérifié</span>
+        <span class="inline-text">Votre adresse email a été confirmée.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Card -->
+  <section class="showcase-section">
+    <h2 class="section-title">Success Card</h2>
+    <div class="success-card">
+      <div class="card-icon">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <h3 class="card-title">Commande confirmée</h3>
+      <p class="card-message">Merci pour votre achat ! Votre commande sera expédiée dans les 24 heures.</p>
+      <div class="card-details">
+        <div class="detail">
+          <span class="detail-label">Numéro de commande</span>
+          <span class="detail-value">#ORD-2024-12345</span>
+        </div>
+        <div class="detail">
+          <span class="detail-label">Montant</span>
+          <span class="detail-value">149,99 €</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn--primary">Suivre la commande</button>
+        <button class="btn btn--outline">Télécharger le reçu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <section class="showcase-section">
+    <h2 class="section-title">Modal de Succès</h2>
+    <button class="btn btn--primary" onclick="openModal()">Afficher le modal</button>
+  </section>
+</div>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay hidden" id="modalOverlay" onclick="closeModal()">
+  <div class="success-modal" onclick="event.stopPropagation()">
+    <div class="modal-icon">
+      <i class="bi bi-person-check-fill"></i>
+      <div class="icon-rings">
+        <span class="ring ring-1"></span>
+        <span class="ring ring-2"></span>
+      </div>
+    </div>
+    <h3 class="modal-title">Inscription réussie !</h3>
+    <p class="modal-message">Bienvenue dans notre communauté ! Votre compte a été créé avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.</p>
+    <button class="btn btn--primary btn--lg" onclick="closeModal()">Commencer</button>
+  </div>
+</div>
+
+<script>
+  function dismissToast(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  function openModal() {
+    document.getElementById('modalOverlay').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.add('hidden');
+  }
+</script>
+
+</body>
+</html>

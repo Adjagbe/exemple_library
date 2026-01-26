@@ -1,0 +1,206 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SELECT / COMBOBOX COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="select-showcase">
+  <!-- Basic Select -->
+  <section class="showcase-section">
+    <h2 class="section-title">Basic Select</h2>
+    <div class="form-group">
+      <label class="form-label">Choose an option</label>
+      <select class="form-select" [(ngModel)]="basicValue">
+        <option value="" disabled>Select an option...</option>
+        <option 
+          *ngFor="let option of basicOptions" 
+          [value]="option.value"
+          [disabled]="option.disabled">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+    <p class="selected-value" *ngIf="basicValue">Selected: <strong>{{ basicValue }}</strong></p>
+  </section>
+
+  <!-- Searchable Select -->
+  <section class="showcase-section">
+    <h2 class="section-title">Searchable Select</h2>
+    <div class="form-group">
+      <label class="form-label">Select your country</label>
+      <div class="custom-select" [class.open]="searchOpen">
+        <button class="select-trigger" (click)="searchOpen = !searchOpen">
+          <span class="trigger-content" *ngIf="!searchValue">
+            <i class="bi bi-globe"></i>
+            <span class="placeholder">Select a country...</span>
+          </span>
+          <span class="trigger-content" *ngIf="searchValue">
+            <span class="option-icon">{{ getSelectedCountry()?.icon }}</span>
+            <span>{{ getSelectedCountry()?.label }}</span>
+          </span>
+          <i class="bi bi-chevron-down trigger-arrow"></i>
+        </button>
+        
+        <div class="select-dropdown">
+          <div class="dropdown-search">
+            <i class="bi bi-search"></i>
+            <input 
+              type="text" 
+              placeholder="Search countries..."
+              [(ngModel)]="searchQuery"
+              (click)="$event.stopPropagation()">
+          </div>
+          <div class="dropdown-options">
+            <div 
+              *ngFor="let country of getFilteredCountries()"
+              class="dropdown-option"
+              [class.selected]="searchValue === country.value"
+              (click)="selectCountry(country)">
+              <span class="option-icon">{{ country.icon }}</span>
+              <span>{{ country.label }}</span>
+              <i *ngIf="searchValue === country.value" class="bi bi-check"></i>
+            </div>
+            <div class="no-results" *ngIf="getFilteredCountries().length === 0">
+              No countries found
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Multi-Select -->
+  <section class="showcase-section">
+    <h2 class="section-title">Multi-Select</h2>
+    <div class="form-group">
+      <label class="form-label">Select technologies</label>
+      <div class="custom-select multi-select" [class.open]="multiOpen">
+        <button class="select-trigger" (click)="multiOpen = !multiOpen">
+          <div class="multi-values" *ngIf="multiValue.length > 0">
+            <span 
+              *ngFor="let item of getMultiSelectedLabels()" 
+              class="multi-tag">
+              {{ item.label }}
+              <i class="bi bi-x" (click)="removeMultiOption(item.value, $event)"></i>
+            </span>
+          </div>
+          <span class="placeholder" *ngIf="multiValue.length === 0">
+            Select technologies...
+          </span>
+          <i class="bi bi-chevron-down trigger-arrow"></i>
+        </button>
+        
+        <div class="select-dropdown">
+          <div class="dropdown-options">
+            <div 
+              *ngFor="let tech of technologies"
+              class="dropdown-option"
+              [class.selected]="isMultiSelected(tech.value)"
+              (click)="toggleMultiOption(tech.value); $event.stopPropagation()">
+              <span class="option-checkbox">
+                <i class="bi bi-check" *ngIf="isMultiSelected(tech.value)"></i>
+              </span>
+              <i class="bi" [ngClass]="tech.icon"></i>
+              <span>{{ tech.label }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="selected-value" *ngIf="multiValue.length > 0">
+      Selected: <strong>{{ multiValue.join(', ') }}</strong>
+    </p>
+  </section>
+
+  <!-- Grouped Select -->
+  <section class="showcase-section">
+    <h2 class="section-title">Grouped Select</h2>
+    <div class="form-group">
+      <label class="form-label">Select an application</label>
+      <div class="custom-select" [class.open]="groupedOpen">
+        <button class="select-trigger" (click)="groupedOpen = !groupedOpen">
+          <span class="trigger-content" *ngIf="!groupedValue">
+            <span class="placeholder">Select an application...</span>
+          </span>
+          <span class="trigger-content" *ngIf="groupedValue">
+            <span>{{ getSelectedGroupedOption()?.label }}</span>
+            <span class="option-group-badge">{{ getSelectedGroupedOption()?.group }}</span>
+          </span>
+          <i class="bi bi-chevron-down trigger-arrow"></i>
+        </button>
+        
+        <div class="select-dropdown">
+          <div class="dropdown-options grouped">
+            <div *ngFor="let group of getGroups()" class="option-group">
+              <div class="group-header">{{ group }}</div>
+              <div 
+                *ngFor="let option of getGroupOptions(group)"
+                class="dropdown-option"
+                [class.selected]="groupedValue === option.value"
+                (click)="selectGroupedOption(option)">
+                <span>{{ option.label }}</span>
+                <i *ngIf="groupedValue === option.value" class="bi bi-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Select Sizes -->
+  <section class="showcase-section">
+    <h2 class="section-title">Sizes</h2>
+    <div class="size-examples">
+      <div class="form-group">
+        <label class="form-label">Small</label>
+        <select class="form-select form-select--sm">
+          <option>Small select</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Medium (Default)</label>
+        <select class="form-select">
+          <option>Medium select</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Large</label>
+        <select class="form-select form-select--lg">
+          <option>Large select</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Select States -->
+  <section class="showcase-section">
+    <h2 class="section-title">States</h2>
+    <div class="state-examples">
+      <div class="form-group">
+        <label class="form-label">Normal</label>
+        <select class="form-select">
+          <option>Normal state</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Disabled</label>
+        <select class="form-select" disabled>
+          <option>Disabled state</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Error</label>
+        <select class="form-select form-select--error">
+          <option>Error state</option>
+        </select>
+        <span class="error-message"><i class="bi bi-exclamation-circle"></i> This field is required</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Success</label>
+        <select class="form-select form-select--success">
+          <option>Valid selection</option>
+        </select>
+        <span class="success-message"><i class="bi bi-check-circle"></i> Looks good!</span>
+      </div>
+    </div>
+  </section>
+</div>

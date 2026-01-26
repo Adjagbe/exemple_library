@@ -1,0 +1,151 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DASHBOARD COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="dashboard">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Dashboard</h1>
+      <p>Vue d'ensemble de votre activité</p>
+    </div>
+
+    <div class="header-actions">
+      <select [(ngModel)]="selectedTimeRange" (change)="onTimeRangeChange()" class="time-select">
+        <option *ngFor="let range of timeRanges" [value]="range.value">{{ range.label }}</option>
+      </select>
+      <button class="btn btn--outline">
+        <i class="bi bi-download"></i>
+        Exporter
+      </button>
+      <button class="btn btn--primary">
+        <i class="bi bi-plus-lg"></i>
+        Nouveau
+      </button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div *ngFor="let kpi of kpis" class="kpi-card">
+      <div class="kpi-icon" [class]="'kpi-icon--' + kpi.iconBg">
+        <i class="bi" [ngClass]="kpi.icon"></i>
+      </div>
+      <div class="kpi-content">
+        <span class="kpi-label">{{ kpi.label }}</span>
+        <span class="kpi-value">{{ formatKPIValue(kpi) }}</span>
+        <div class="kpi-change" [ngClass]="getChangeClass(kpi.changeType)" *ngIf="kpi.change !== undefined">
+          <i class="bi" [ngClass]="getChangeIcon(kpi.changeType)"></i>
+          <span>{{ kpi.change > 0 ? '+' : '' }}{{ kpi.change }}%</span>
+          <span class="change-period">vs mois dernier</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <!-- Chart Section -->
+    <div class="chart-section">
+      <div class="section-card">
+        <div class="card-header">
+          <h3>Revenus mensuels</h3>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="dot dot--primary"></span> Ce mois</span>
+            <span class="legend-item"><span class="dot dot--secondary"></span> Mois précédent</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <div class="bar-chart">
+            <div *ngFor="let label of revenueChart.labels; let i = index" class="bar-group">
+              <div class="bars">
+                <div 
+                  class="bar bar--secondary" 
+                  [style.height.%]="getChartBarHeight(revenueChart.previousValues![i])"
+                  [title]="revenueChart.previousValues![i] + ' €'"
+                ></div>
+                <div 
+                  class="bar bar--primary" 
+                  [style.height.%]="getChartBarHeight(revenueChart.values[i])"
+                  [title]="revenueChart.values[i] + ' €'"
+                ></div>
+              </div>
+              <span class="bar-label">{{ label }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="section-card categories-card">
+        <div class="card-header">
+          <h3>Ventes par catégorie</h3>
+        </div>
+        <div class="categories-content">
+          <div *ngFor="let cat of categoryData" class="category-item">
+            <div class="category-info">
+              <span class="category-dot" [style.background]="cat.color"></span>
+              <span class="category-name">{{ cat.name }}</span>
+            </div>
+            <div class="category-bar">
+              <div class="category-progress" [style.width.%]="cat.value" [style.background]="cat.color"></div>
+            </div>
+            <span class="category-value">{{ cat.value }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="dashboard-sidebar">
+      <!-- Activity -->
+      <div class="section-card">
+        <div class="card-header">
+          <h3>Activité récente</h3>
+          <a href="#" class="see-all">Tout voir</a>
+        </div>
+        <div class="activity-list">
+          <div *ngFor="let activity of activities" class="activity-item">
+            <div class="activity-icon" [ngClass]="getActivityIconClass(activity.type)">
+              <i class="bi" [ngClass]="getActivityIcon(activity.type)"></i>
+            </div>
+            <div class="activity-content">
+              <p>
+                <strong>{{ activity.user }}</strong>
+                {{ activity.action }}
+                <span class="activity-target">{{ activity.target }}</span>
+              </p>
+              <span class="activity-time">{{ activity.time }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks -->
+      <div class="section-card">
+        <div class="card-header">
+          <h3>Tâches</h3>
+          <button class="btn btn--sm btn--ghost">
+            <i class="bi bi-plus"></i>
+            Ajouter
+          </button>
+        </div>
+        <div class="task-list">
+          <div *ngFor="let task of tasks" class="task-item">
+            <div class="task-checkbox">
+              <input type="checkbox" [checked]="task.status === 'done'">
+            </div>
+            <div class="task-content">
+              <span class="task-title" [class.completed]="task.status === 'done'">{{ task.title }}</span>
+              <div class="task-meta">
+                <span class="task-priority" [ngClass]="getPriorityClass(task.priority)">{{ task.priority }}</span>
+                <span class="task-due"><i class="bi bi-calendar"></i> {{ task.dueDate }}</span>
+              </div>
+            </div>
+            <div class="task-assignee">{{ task.assignee }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

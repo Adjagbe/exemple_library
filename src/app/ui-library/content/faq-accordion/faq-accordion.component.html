@@ -1,0 +1,163 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FAQ ACCORDION COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="faq-page">
+  <!-- Header -->
+  <div class="faq-header">
+    <h1>Questions Fréquentes</h1>
+    <p>Trouvez rapidement des réponses à vos questions. {{ getTotalQuestions() }} questions dans notre base de connaissances.</p>
+
+    <!-- Search -->
+    <div class="faq-search">
+      <i class="bi bi-search"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery"
+        placeholder="Rechercher une question..."
+      >
+      <button class="clear-btn" *ngIf="searchQuery" (click)="searchQuery = ''">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="faq-content">
+    <!-- Categories Navigation -->
+    <nav class="faq-categories" *ngIf="!searchQuery">
+      <button 
+        *ngFor="let category of categories"
+        class="category-btn"
+        [class.active]="activeCategory === category.id"
+        (click)="selectCategory(category.id)"
+      >
+        <i class="bi" [ngClass]="category.icon"></i>
+        <span>{{ category.name }}</span>
+        <span class="count">{{ category.items.length }}</span>
+      </button>
+    </nav>
+
+    <!-- FAQ List -->
+    <div class="faq-list">
+      <!-- Actions -->
+      <div class="faq-actions">
+        <span class="results-count" *ngIf="searchQuery">
+          {{ getFilteredCategories().length > 0 
+            ? (getFilteredCategories()[0]?.items?.length || 0) + (getFilteredCategories()[1]?.items?.length || 0) + ' résultat(s) trouvé(s)'
+            : 'Aucun résultat trouvé' }}
+        </span>
+        <div class="action-btns">
+          <button class="text-btn" (click)="expandAll()">
+            <i class="bi bi-arrows-expand"></i>
+            Tout ouvrir
+          </button>
+          <button class="text-btn" (click)="collapseAll()">
+            <i class="bi bi-arrows-collapse"></i>
+            Tout fermer
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Results -->
+      <ng-container *ngIf="searchQuery">
+        <div *ngFor="let category of getFilteredCategories()" class="category-section">
+          <h2 class="category-title">
+            <i class="bi" [ngClass]="category.icon"></i>
+            {{ category.name }}
+          </h2>
+          <div class="accordion">
+            <div 
+              *ngFor="let item of category.items" 
+              class="accordion-item"
+              [class.is-open]="item.isOpen"
+            >
+              <button class="accordion-header" (click)="toggleItem(category, item)">
+                <span class="question">{{ item.question }}</span>
+                <i class="bi" [ngClass]="item.isOpen ? 'bi-dash-lg' : 'bi-plus-lg'"></i>
+              </button>
+              <div class="accordion-body" *ngIf="item.isOpen">
+                <p class="answer">{{ item.answer }}</p>
+                <div class="feedback" *ngIf="item.helpful">
+                  <span class="feedback-label">Cette réponse vous a-t-elle aidé ?</span>
+                  <div class="feedback-btns">
+                    <button class="feedback-btn" (click)="markHelpful(item, true)">
+                      <i class="bi bi-hand-thumbs-up"></i>
+                      Oui ({{ item.helpful.yes }})
+                    </button>
+                    <button class="feedback-btn" (click)="markHelpful(item, false)">
+                      <i class="bi bi-hand-thumbs-down"></i>
+                      Non ({{ item.helpful.no }})
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results -->
+        <div class="no-results" *ngIf="getFilteredCategories().length === 0">
+          <i class="bi bi-search"></i>
+          <h3>Aucun résultat trouvé</h3>
+          <p>Essayez avec d'autres termes de recherche ou parcourez les catégories.</p>
+          <button class="btn btn--primary" (click)="searchQuery = ''">
+            Voir toutes les questions
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Category View -->
+      <ng-container *ngIf="!searchQuery && getActiveCategory()">
+        <div class="category-section">
+          <h2 class="category-title">
+            <i class="bi" [ngClass]="getActiveCategory()!.icon"></i>
+            {{ getActiveCategory()!.name }}
+          </h2>
+          <div class="accordion">
+            <div 
+              *ngFor="let item of getActiveCategory()!.items" 
+              class="accordion-item"
+              [class.is-open]="item.isOpen"
+            >
+              <button class="accordion-header" (click)="toggleItem(getActiveCategory()!, item)">
+                <span class="question">{{ item.question }}</span>
+                <i class="bi" [ngClass]="item.isOpen ? 'bi-dash-lg' : 'bi-plus-lg'"></i>
+              </button>
+              <div class="accordion-body" *ngIf="item.isOpen">
+                <p class="answer">{{ item.answer }}</p>
+                <div class="feedback" *ngIf="item.helpful">
+                  <span class="feedback-label">Cette réponse vous a-t-elle aidé ?</span>
+                  <div class="feedback-btns">
+                    <button class="feedback-btn" (click)="markHelpful(item, true)">
+                      <i class="bi bi-hand-thumbs-up"></i>
+                      Oui ({{ item.helpful.yes }})
+                    </button>
+                    <button class="feedback-btn" (click)="markHelpful(item, false)">
+                      <i class="bi bi-hand-thumbs-down"></i>
+                      Non ({{ item.helpful.no }})
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Contact CTA -->
+  <div class="contact-cta">
+    <div class="cta-content">
+      <i class="bi bi-chat-dots-fill"></i>
+      <div class="cta-text">
+        <h3>Vous n'avez pas trouvé de réponse ?</h3>
+        <p>Notre équipe support est là pour vous aider</p>
+      </div>
+    </div>
+    <button class="btn btn--primary">
+      <i class="bi bi-headset"></i>
+      Contacter le support
+    </button>
+  </div>
+</div>

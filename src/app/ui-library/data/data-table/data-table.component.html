@@ -1,0 +1,246 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DATA TABLE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="datatable-showcase">
+  <!-- Header -->
+  <div class="showcase-header">
+    <div class="header-content">
+      <h1>Data Table</h1>
+      <p>Tableau avancé avec pagination, recherche et filtres</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn--outline" (click)="exportData()">
+        <i class="bi bi-download"></i>
+        Exporter
+      </button>
+      <button class="btn btn--primary">
+        <i class="bi bi-plus-lg"></i>
+        Ajouter
+      </button>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="datatable-toolbar">
+    <!-- Search -->
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        placeholder="Rechercher un produit..."
+        class="search-input"
+      >
+      <button *ngIf="searchQuery" class="clear-btn" (click)="searchQuery = ''; onSearch()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="filter-item" *ngFor="let filter of filters">
+        <select 
+          [(ngModel)]="filter.value" 
+          (change)="onFilterChange()"
+          class="filter-select"
+        >
+          <option *ngFor="let opt of filter.options" [value]="opt.value">
+            {{ opt.label }}
+          </option>
+        </select>
+      </div>
+
+      <button 
+        *ngIf="searchQuery || hasActiveFilters()"
+        class="clear-filters-btn"
+        (click)="clearFilters()"
+      >
+        <i class="bi bi-x-circle"></i>
+        Effacer
+      </button>
+    </div>
+
+    <!-- Selection info -->
+    <div class="selection-info" *ngIf="getSelectedCount() > 0">
+      <span>{{ getSelectedCount() }} élément(s) sélectionné(s)</span>
+      <button class="btn btn--danger btn--sm">
+        <i class="bi bi-trash"></i>
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="datatable-container">
+    <table class="ui-datatable">
+      <thead>
+        <tr>
+          <th class="checkbox-cell">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="selectAll"
+              (change)="toggleSelectAll()"
+              class="row-checkbox"
+            >
+          </th>
+          <th 
+            *ngFor="let column of columns"
+            [class.sortable]="column.sortable"
+            [style.width]="column.width"
+            [style.text-align]="column.align || 'left'"
+            (click)="sortBy(column)"
+          >
+            <div class="th-content">
+              <span>{{ column.label }}</span>
+              <i *ngIf="column.sortable" class="bi sort-icon" [ngClass]="getSortIcon(column)"></i>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr 
+          *ngFor="let row of displayedData" 
+          [class.selected]="row.selected"
+        >
+          <td class="checkbox-cell">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="row.selected"
+              (change)="onRowSelect()"
+              class="row-checkbox"
+            >
+          </td>
+          <td 
+            *ngFor="let column of columns"
+            [style.text-align]="column.align || 'left'"
+          >
+            <!-- Text -->
+            <ng-container *ngIf="!column.type || column.type === 'text' || column.type === 'number'">
+              {{ row[column.key] }}
+            </ng-container>
+
+            <!-- Currency -->
+            <ng-container *ngIf="column.type === 'currency'">
+              <span class="currency">{{ formatCurrency(row[column.key]) }}</span>
+            </ng-container>
+
+            <!-- Date -->
+            <ng-container *ngIf="column.type === 'date'">
+              {{ formatDate(row[column.key]) }}
+            </ng-container>
+
+            <!-- Badge -->
+            <ng-container *ngIf="column.type === 'badge'">
+              <span [class]="getBadgeClass(column, row[column.key])">
+                {{ row[column.key] }}
+              </span>
+            </ng-container>
+
+            <!-- Progress -->
+            <ng-container *ngIf="column.type === 'progress'">
+              <div class="stock-progress">
+                <div class="progress-bar">
+                  <div 
+                    class="progress-fill"
+                    [style.width.%]="getStockPercentage(row[column.key])"
+                    [style.background]="getStockColor(row[column.key])"
+                  ></div>
+                </div>
+                <span class="stock-value">{{ row[column.key] }}</span>
+              </div>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container *ngIf="column.type === 'actions'">
+              <div class="action-buttons">
+                <button class="action-btn" title="Voir" (click)="onView(row)">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button class="action-btn" title="Modifier" (click)="onEdit(row)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="action-btn action-btn--danger" title="Supprimer" (click)="onDelete(row)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </ng-container>
+          </td>
+        </tr>
+
+        <!-- Empty state -->
+        <tr *ngIf="displayedData.length === 0">
+          <td [attr.colspan]="columns.length + 1" class="empty-state">
+            <div class="empty-content">
+              <i class="bi bi-inbox"></i>
+              <p>Aucun résultat trouvé</p>
+              <button class="btn btn--outline btn--sm" (click)="clearFilters()">
+                Réinitialiser les filtres
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="datatable-pagination" *ngIf="filteredData.length > 0">
+    <div class="pagination-info">
+      Affichage de <strong>{{ getStartIndex() }}</strong> à <strong>{{ getEndIndex() }}</strong> sur <strong>{{ pagination.totalItems }}</strong> résultats
+    </div>
+
+    <div class="pagination-controls">
+      <div class="page-size">
+        <label>Lignes par page:</label>
+        <select [(ngModel)]="pagination.pageSize" (change)="onPageSizeChange()">
+          <option *ngFor="let size of pagination.pageSizeOptions" [value]="size">{{ size }}</option>
+        </select>
+      </div>
+
+      <div class="page-nav">
+        <button 
+          class="page-btn"
+          [disabled]="pagination.currentPage === 1"
+          (click)="goToPage(1)"
+        >
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+        <button 
+          class="page-btn"
+          [disabled]="pagination.currentPage === 1"
+          (click)="goToPage(pagination.currentPage - 1)"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
+
+        <button 
+          *ngFor="let page of getPageNumbers()"
+          class="page-btn"
+          [class.active]="page === pagination.currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button 
+          class="page-btn"
+          [disabled]="pagination.currentPage === getTotalPages()"
+          (click)="goToPage(pagination.currentPage + 1)"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </button>
+        <button 
+          class="page-btn"
+          [disabled]="pagination.currentPage === getTotalPages()"
+          (click)="goToPage(getTotalPages())"
+        >
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

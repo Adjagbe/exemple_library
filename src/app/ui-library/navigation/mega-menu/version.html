@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mega Menu - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* MEGA MENU COMPONENT - Premium UI Library                        */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .demo-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 2rem;
+    }
+
+    .mega-menu-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TRIGGER
+       ───────────────────────────────────────────────────────────────── */
+    .mega-menu-trigger {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mega-menu-trigger:hover,
+    .mega-menu-trigger.active {
+      background: #f9fafb;
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    .mega-menu-trigger .arrow {
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+
+    .mega-menu-trigger.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MEGA MENU PANEL
+       ───────────────────────────────────────────────────────────────── */
+    .mega-menu {
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      left: 0;
+      width: 900px;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .mega-menu--open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .mega-menu-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mega-menu-main {
+      display: flex;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SIDEBAR
+       ───────────────────────────────────────────────────────────────── */
+    .mega-menu-sidebar {
+      width: 200px;
+      background: #f8fafc;
+      border-radius: 1rem 0 0 0;
+      padding: 1rem 0;
+      flex-shrink: 0;
+    }
+
+    .category-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #4b5563;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-item i {
+      font-size: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .category-item:hover,
+    .category-item.active {
+      background: white;
+      color: #4f46e5;
+    }
+
+    .category-item:hover i,
+    .category-item.active i {
+      opacity: 1;
+    }
+
+    .category-item.active {
+      border-right: 2px solid #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CONTENT
+       ───────────────────────────────────────────────────────────────── */
+    .mega-menu-content {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 2rem;
+      flex: 1;
+    }
+
+    .content-section {
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+      margin: 0 0 1rem 0;
+    }
+
+    .item-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .item {
+      margin-bottom: 0.25rem;
+    }
+
+    .item-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.625rem 0.875rem;
+      color: #374151;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .item-link i {
+      font-size: 1rem;
+      color: #9ca3af;
+    }
+
+    .item-link:hover {
+      background: #f3f4f6;
+      color: #4f46e5;
+    }
+
+    .item-link:hover i {
+      color: #4f46e5;
+    }
+
+    .item-badge {
+      margin-left: auto;
+      padding: 0.125rem 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: #eff6ff;
+      color: #4f46e5;
+      border-radius: 50px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FEATURED
+       ───────────────────────────────────────────────────────────────── */
+    .featured-section {
+      width: 320px;
+      padding-left: 2rem;
+      border-left: 1px solid #e5e7eb;
+    }
+
+    .featured-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+      margin: 0 0 1rem 0;
+    }
+
+    .featured-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .featured-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .featured-card:hover .featured-image img {
+      transform: scale(1.05);
+    }
+
+    .featured-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-image img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.25rem 0.625rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: #4f46e5;
+      color: white;
+      border-radius: 50px;
+    }
+
+    .featured-content {
+      padding: 0.75rem;
+      background: #f8fafc;
+    }
+
+    .featured-content h5 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .featured-content p {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FOOTER
+       ───────────────────────────────────────────────────────────────── */
+    .mega-menu-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f8fafc;
+      border-top: 1px solid #e5e7eb;
+      border-radius: 0 0 1rem 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      color: #4f46e5;
+    }
+
+    .view-all-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #4f46e5;
+      text-decoration: none;
+    }
+
+    .view-all-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .mega-menu {
+        width: calc(100vw - 2rem);
+        left: -1rem;
+      }
+
+      .mega-menu-content {
+        flex-direction: column;
+      }
+
+      .featured-section {
+        width: 100%;
+        padding-left: 0;
+        padding-top: 1.5rem;
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .featured-grid {
+        flex-direction: row;
+      }
+
+      .featured-card {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title">Mega Menu</h1>
+
+    <div class="mega-menu-wrapper" id="megaMenuWrapper">
+      <!-- Trigger -->
+      <button class="mega-menu-trigger" id="megaMenuTrigger">
+        <i class="bi bi-grid-3x3-gap"></i>
+        <span>Browse</span>
+        <i class="bi bi-chevron-down arrow"></i>
+      </button>
+
+      <!-- Mega Menu Panel -->
+      <div class="mega-menu" id="megaMenu">
+        <div class="mega-menu-container">
+          <div class="mega-menu-main">
+            <!-- Categories Sidebar -->
+            <div class="mega-menu-sidebar">
+              <ul class="category-list" id="categoryList"></ul>
+            </div>
+
+            <!-- Content Area -->
+            <div class="mega-menu-content">
+              <!-- Category Items -->
+              <div class="content-section">
+                <h3 class="section-title" id="sectionTitle">Products</h3>
+                <ul class="item-list" id="itemList"></ul>
+              </div>
+
+              <!-- Featured Section -->
+              <div class="featured-section">
+                <h4 class="featured-title">Featured</h4>
+                <div class="featured-grid" id="featuredGrid"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="mega-menu-footer">
+            <div class="footer-links">
+              <a href="/help" class="footer-link">
+                <i class="bi bi-question-circle"></i>
+                Help Center
+              </a>
+              <a href="/contact" class="footer-link">
+                <i class="bi bi-headset"></i>
+                Contact Support
+              </a>
+            </div>
+            <a href="/all" class="view-all-link">
+              View All Products
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // MEGA MENU COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    let isOpen = false;
+    let activeCategory = 'products';
+
+    // ─────────────────────────────────────────────────────────────────
+    // DATA
+    // ─────────────────────────────────────────────────────────────────
+    const categories = [
+      {
+        id: 'products',
+        title: 'Products',
+        items: [
+          { label: 'All Products', link: '/products', icon: 'bi-grid' },
+          { label: 'New Arrivals', link: '/products/new', icon: 'bi-stars', badge: 'New' },
+          { label: 'Best Sellers', link: '/products/best', icon: 'bi-trophy' },
+          { label: 'On Sale', link: '/products/sale', icon: 'bi-tag', badge: '-30%' },
+          { label: 'Collections', link: '/collections', icon: 'bi-collection' }
+        ]
+      },
+      {
+        id: 'categories',
+        title: 'Categories',
+        items: [
+          { label: 'Electronics', link: '/category/electronics', icon: 'bi-cpu' },
+          { label: 'Clothing', link: '/category/clothing', icon: 'bi-handbag' },
+          { label: 'Home & Garden', link: '/category/home', icon: 'bi-house' },
+          { label: 'Sports', link: '/category/sports', icon: 'bi-bicycle' },
+          { label: 'Books', link: '/category/books', icon: 'bi-book' }
+        ]
+      },
+      {
+        id: 'resources',
+        title: 'Resources',
+        items: [
+          { label: 'Documentation', link: '/docs', icon: 'bi-file-text' },
+          { label: 'API Reference', link: '/api', icon: 'bi-code-slash' },
+          { label: 'Tutorials', link: '/tutorials', icon: 'bi-play-circle' },
+          { label: 'Blog', link: '/blog', icon: 'bi-journal-text' },
+          { label: 'Community', link: '/community', icon: 'bi-people' }
+        ]
+      },
+      {
+        id: 'company',
+        title: 'Company',
+        items: [
+          { label: 'About Us', link: '/about', icon: 'bi-building' },
+          { label: 'Careers', link: '/careers', icon: 'bi-briefcase', badge: 'Hiring' },
+          { label: 'Press', link: '/press', icon: 'bi-newspaper' },
+          { label: 'Contact', link: '/contact', icon: 'bi-envelope' },
+          { label: 'Partners', link: '/partners', icon: 'bi-handshake' }
+        ]
+      }
+    ];
+
+    const featuredItems = [
+      {
+        title: 'Summer Collection 2024',
+        description: 'Discover our latest arrivals for the season',
+        image: 'https://placehold.co/300x200/4f46e5/ffffff?text=Summer',
+        link: '/collections/summer',
+        badge: 'Featured'
+      },
+      {
+        title: 'Flash Sale - 50% Off',
+        description: 'Limited time offer on selected items',
+        image: 'https://placehold.co/300x200/dc2626/ffffff?text=Sale',
+        link: '/sale',
+        badge: 'Limited'
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER CATEGORIES
+    // ─────────────────────────────────────────────────────────────────
+    function renderCategories() {
+      const container = document.getElementById('categoryList');
+      container.innerHTML = categories.map(category => `
+        <li 
+          class="category-item ${activeCategory === category.id ? 'active' : ''}" 
+          data-id="${category.id}"
+          onmouseenter="setActiveCategory('${category.id}')"
+        >
+          <span class="category-title">${category.title}</span>
+          <i class="bi bi-chevron-right"></i>
+        </li>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER ITEMS
+    // ─────────────────────────────────────────────────────────────────
+    function renderItems() {
+      const category = categories.find(c => c.id === activeCategory);
+      if (!category) return;
+
+      document.getElementById('sectionTitle').textContent = category.title;
+      
+      const container = document.getElementById('itemList');
+      container.innerHTML = category.items.map(item => `
+        <li class="item">
+          <a href="${item.link}" class="item-link">
+            ${item.icon ? `<i class="bi ${item.icon}"></i>` : ''}
+            <span>${item.label}</span>
+            ${item.badge ? `<span class="item-badge">${item.badge}</span>` : ''}
+          </a>
+        </li>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER FEATURED
+    // ─────────────────────────────────────────────────────────────────
+    function renderFeatured() {
+      const container = document.getElementById('featuredGrid');
+      container.innerHTML = featuredItems.map(featured => `
+        <a href="${featured.link}" class="featured-card">
+          <div class="featured-image">
+            <img src="${featured.image}" alt="${featured.title}">
+            ${featured.badge ? `<span class="featured-badge">${featured.badge}</span>` : ''}
+          </div>
+          <div class="featured-content">
+            <h5>${featured.title}</h5>
+            <p>${featured.description}</p>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // SET ACTIVE CATEGORY
+    // ─────────────────────────────────────────────────────────────────
+    function setActiveCategory(categoryId) {
+      activeCategory = categoryId;
+      renderCategories();
+      renderItems();
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // TOGGLE MENU
+    // ─────────────────────────────────────────────────────────────────
+    function toggleMenu() {
+      isOpen = !isOpen;
+      updateMenuState();
+    }
+
+    function openMenu() {
+      isOpen = true;
+      updateMenuState();
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      updateMenuState();
+    }
+
+    function updateMenuState() {
+      const trigger = document.getElementById('megaMenuTrigger');
+      const menu = document.getElementById('megaMenu');
+      
+      if (isOpen) {
+        trigger.classList.add('active');
+        menu.classList.add('mega-menu--open');
+      } else {
+        trigger.classList.remove('active');
+        menu.classList.remove('mega-menu--open');
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // EVENT LISTENERS
+    // ─────────────────────────────────────────────────────────────────
+    const wrapper = document.getElementById('megaMenuWrapper');
+    
+    wrapper.addEventListener('mouseenter', openMenu);
+    wrapper.addEventListener('mouseleave', closeMenu);
+    
+    document.getElementById('megaMenuTrigger').addEventListener('click', toggleMenu);
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCategories();
+      renderItems();
+      renderFeatured();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* TABLE COMPONENT - Premium UI Library                            */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .table-showcase {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       HEADER
+       ───────────────────────────────────────────────────────────────── */
+    .showcase-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-content h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .header-content p {
+      color: #6b7280;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-actions.visible {
+      display: flex;
+    }
+
+    .selected-count {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn--sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .btn--danger {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .btn--danger:hover {
+      background: #fecaca;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TABLE CONTAINER
+       ───────────────────────────────────────────────────────────────── */
+    .table-container {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TABLE
+       ───────────────────────────────────────────────────────────────── */
+    .ui-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .ui-table thead {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+
+    .ui-table thead th {
+      padding: 1rem;
+      font-weight: 600;
+      color: #374151;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #e5e7eb;
+      white-space: nowrap;
+    }
+
+    .ui-table thead th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ui-table thead th.sortable:hover {
+      background: #e5e7eb;
+    }
+
+    .ui-table tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    .ui-table tbody tr:hover {
+      background: #f9fafb;
+    }
+
+    .ui-table tbody tr.selected {
+      background: #eff6ff;
+    }
+
+    .ui-table tbody tr.selected:hover {
+      background: #dbeafe;
+    }
+
+    .ui-table tbody tr:not(:last-child) td {
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .ui-table tbody td {
+      padding: 1rem;
+      color: #374151;
+      vertical-align: middle;
+    }
+
+    .th-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sort-icon {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CHECKBOX
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-cell {
+      width: 50px;
+      text-align: center !important;
+    }
+
+    .row-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BADGES
+       ───────────────────────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge--primary {
+      background: #eff6ff;
+      color: #3b82f6;
+    }
+
+    .badge--secondary {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .badge--success {
+      background: #ecfdf5;
+      color: #10b981;
+    }
+
+    .badge--warning {
+      background: #fffbeb;
+      color: #f59e0b;
+    }
+
+    .badge--danger {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ACTION BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      padding: 0.5rem;
+      background: none;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      border-radius: 0.375rem;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .action-btn--danger:hover {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FOOTER
+       ───────────────────────────────────────────────────────────────── */
+    .table-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      margin-top: 1rem;
+    }
+
+    .footer-info {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .table-showcase {
+        padding: 0 0.5rem;
+      }
+
+      .showcase-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ui-table {
+        font-size: 0.8rem;
+      }
+
+      .ui-table thead th,
+      .ui-table tbody td {
+        padding: 0.75rem 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="table-showcase">
+    <!-- Header -->
+    <div class="showcase-header">
+      <div class="header-content">
+        <h1>Table</h1>
+        <p>Tableau de données avec tri et sélection</p>
+      </div>
+
+      <div class="header-actions" id="headerActions">
+        <span class="selected-count" id="selectedCount">0 sélectionné(s)</span>
+        <button class="btn btn--danger btn--sm">
+          <i class="bi bi-trash"></i>
+          Supprimer
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <table class="ui-table">
+        <thead>
+          <tr>
+            <th class="checkbox-cell">
+              <input type="checkbox" id="selectAll" class="row-checkbox" onchange="toggleSelectAll()">
+            </th>
+            <th class="sortable" style="width: 80px; text-align: center" onclick="sortBy('id')">
+              <div class="th-content"><span>ID</span><i class="bi bi-chevron-expand sort-icon" id="sort-id"></i></div>
+            </th>
+            <th class="sortable" onclick="sortBy('name')">
+              <div class="th-content"><span>Nom</span><i class="bi bi-chevron-expand sort-icon" id="sort-name"></i></div>
+            </th>
+            <th class="sortable" onclick="sortBy('email')">
+              <div class="th-content"><span>Email</span><i class="bi bi-chevron-expand sort-icon" id="sort-email"></i></div>
+            </th>
+            <th class="sortable" onclick="sortBy('role')">
+              <div class="th-content"><span>Rôle</span><i class="bi bi-chevron-expand sort-icon" id="sort-role"></i></div>
+            </th>
+            <th class="sortable" onclick="sortBy('status')">
+              <div class="th-content"><span>Statut</span><i class="bi bi-chevron-expand sort-icon" id="sort-status"></i></div>
+            </th>
+            <th class="sortable" onclick="sortBy('createdAt')">
+              <div class="th-content"><span>Date création</span><i class="bi bi-chevron-expand sort-icon" id="sort-createdAt"></i></div>
+            </th>
+            <th style="width: 120px; text-align: center">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Table Footer -->
+    <div class="table-footer">
+      <div class="footer-info">
+        Affichage de <strong id="totalCount">8</strong> résultats
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // TABLE COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // DATA
+    // ─────────────────────────────────────────────────────────────────
+    const data = [
+      { id: 1, name: 'Jean Dupont', email: 'jean.dupont@email.com', role: 'Admin', status: 'Actif', createdAt: '2024-01-15', selected: false },
+      { id: 2, name: 'Marie Martin', email: 'marie.martin@email.com', role: 'Manager', status: 'Actif', createdAt: '2024-02-20', selected: false },
+      { id: 3, name: 'Pierre Bernard', email: 'pierre.bernard@email.com', role: 'User', status: 'En attente', createdAt: '2024-03-10', selected: false },
+      { id: 4, name: 'Sophie Dubois', email: 'sophie.dubois@email.com', role: 'User', status: 'Actif', createdAt: '2024-03-15', selected: false },
+      { id: 5, name: 'Lucas Moreau', email: 'lucas.moreau@email.com', role: 'Guest', status: 'Inactif', createdAt: '2024-04-01', selected: false },
+      { id: 6, name: 'Emma Petit', email: 'emma.petit@email.com', role: 'Manager', status: 'Actif', createdAt: '2024-04-10', selected: false },
+      { id: 7, name: 'Thomas Robert', email: 'thomas.robert@email.com', role: 'User', status: 'Actif', createdAt: '2024-04-15', selected: false },
+      { id: 8, name: 'Léa Richard', email: 'lea.richard@email.com', role: 'User', status: 'En attente', createdAt: '2024-04-20', selected: false }
+    ];
+
+    const roleColors = {
+      'Admin': 'danger',
+      'Manager': 'warning',
+      'User': 'primary',
+      'Guest': 'secondary'
+    };
+
+    const statusColors = {
+      'Actif': 'success',
+      'Inactif': 'secondary',
+      'En attente': 'warning'
+    };
+
+    let sortColumn = '';
+    let sortDirection = 'asc';
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER TABLE
+    // ─────────────────────────────────────────────────────────────────
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      
+      tbody.innerHTML = data.map(row => `
+        <tr class="${row.selected ? 'selected' : ''}">
+          <td class="checkbox-cell">
+            <input type="checkbox" class="row-checkbox" ${row.selected ? 'checked' : ''} onchange="toggleRowSelection(${row.id})">
+          </td>
+          <td style="text-align: center">${row.id}</td>
+          <td>${row.name}</td>
+          <td>${row.email}</td>
+          <td><span class="badge badge--${roleColors[row.role]}">${row.role}</span></td>
+          <td><span class="badge badge--${statusColors[row.status]}">${row.status}</span></td>
+          <td>${formatDate(row.createdAt)}</td>
+          <td style="text-align: center">
+            <div class="action-buttons">
+              <button class="action-btn" title="Voir"><i class="bi bi-eye"></i></button>
+              <button class="action-btn" title="Modifier"><i class="bi bi-pencil"></i></button>
+              <button class="action-btn action-btn--danger" title="Supprimer"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('totalCount').textContent = data.length;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // SORTING
+    // ─────────────────────────────────────────────────────────────────
+    function sortBy(column) {
+      if (sortColumn === column) {
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortColumn = column;
+        sortDirection = 'asc';
+      }
+
+      data.sort((a, b) => {
+        let valA = a[column];
+        let valB = b[column];
+        let comparison = 0;
+        if (valA < valB) comparison = -1;
+        if (valA > valB) comparison = 1;
+        return sortDirection === 'asc' ? comparison : -comparison;
+      });
+
+      updateSortIcons();
+      renderTable();
+    }
+
+    function updateSortIcons() {
+      const columns = ['id', 'name', 'email', 'role', 'status', 'createdAt'];
+      columns.forEach(col => {
+        const icon = document.getElementById(`sort-${col}`);
+        if (icon) {
+          if (col === sortColumn) {
+            icon.className = `bi ${sortDirection === 'asc' ? 'bi-chevron-up' : 'bi-chevron-down'} sort-icon`;
+          } else {
+            icon.className = 'bi bi-chevron-expand sort-icon';
+          }
+        }
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // SELECTION
+    // ─────────────────────────────────────────────────────────────────
+    function toggleSelectAll() {
+      const checked = document.getElementById('selectAll').checked;
+      data.forEach(row => row.selected = checked);
+      renderTable();
+      updateSelectionInfo();
+    }
+
+    function toggleRowSelection(id) {
+      const row = data.find(r => r.id === id);
+      if (row) row.selected = !row.selected;
+      updateSelectAllState();
+      renderTable();
+      updateSelectionInfo();
+    }
+
+    function updateSelectAllState() {
+      const allSelected = data.every(row => row.selected);
+      document.getElementById('selectAll').checked = allSelected;
+    }
+
+    function updateSelectionInfo() {
+      const count = data.filter(r => r.selected).length;
+      const headerActions = document.getElementById('headerActions');
+      headerActions.classList.toggle('visible', count > 0);
+      document.getElementById('selectedCount').textContent = `${count} sélectionné(s)`;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────────────────────────────────────
+    function formatDate(dateStr) {
+      return new Date(dateStr).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderTable();
+    });
+  </script>
+</body>
+</html>

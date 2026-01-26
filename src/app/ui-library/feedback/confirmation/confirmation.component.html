@@ -1,0 +1,106 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CONFIRMATION DIALOG COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="confirmation-showcase">
+  <h1 class="page-title">Dialogues de Confirmation</h1>
+  <p class="page-subtitle">Modales pour confirmer les actions importantes</p>
+
+  <!-- Trigger Buttons -->
+  <section class="showcase-section">
+    <h2 class="section-title">Types de Confirmation</h2>
+    <div class="button-grid">
+      <button *ngFor="let dialog of dialogs" 
+              class="trigger-btn"
+              [ngClass]="'trigger-btn--' + dialog.type"
+              (click)="openDialog(dialog.id)">
+        <i class="bi" [ngClass]="dialog.icon"></i>
+        {{ dialog.title }}
+      </button>
+    </div>
+  </section>
+
+  <!-- Active Dialog -->
+  <div class="dialog-overlay" *ngIf="activeDialog" (click)="closeDialog()">
+    <div class="dialog" 
+         [ngClass]="'dialog--' + getActiveDialog()?.type"
+         (click)="$event.stopPropagation()">
+      
+      <!-- Icon -->
+      <div class="dialog-icon">
+        <i class="bi" [ngClass]="getActiveDialog()?.icon || 'bi-question-circle'"></i>
+      </div>
+
+      <!-- Content -->
+      <div class="dialog-content">
+        <h3 class="dialog-title">{{ getActiveDialog()?.title }}</h3>
+        <p class="dialog-message">{{ getActiveDialog()?.message }}</p>
+
+        <!-- Input Confirmation -->
+        <div class="dialog-input" *ngIf="getActiveDialog()?.requireInput">
+          <input 
+            type="text" 
+            [placeholder]="getActiveDialog()?.inputPlaceholder || ''"
+            [(ngModel)]="inputValue"
+            (keyup.enter)="onConfirm()"
+          >
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="dialog-actions">
+        <button class="btn btn--cancel" (click)="onCancel()">
+          {{ getActiveDialog()?.cancelLabel }}
+        </button>
+        <button class="btn" 
+                [ngClass]="'btn--' + getActiveDialog()?.type"
+                [disabled]="!canConfirm()"
+                (click)="onConfirm()">
+          {{ getActiveDialog()?.confirmLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Confirmations -->
+  <section class="showcase-section">
+    <h2 class="section-title">Confirmation Inline</h2>
+    
+    <div class="inline-confirmations">
+      <!-- Simple Inline -->
+      <div class="inline-confirm">
+        <span>Supprimer ce fichier ?</span>
+        <div class="inline-actions">
+          <button class="btn-inline btn-inline--cancel">Non</button>
+          <button class="btn-inline btn-inline--danger">Oui, supprimer</button>
+        </div>
+      </div>
+
+      <!-- With Icon -->
+      <div class="inline-confirm inline-confirm--warning">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Cette action va modifier 12 éléments</span>
+        <div class="inline-actions">
+          <button class="btn-inline btn-inline--cancel">Annuler</button>
+          <button class="btn-inline btn-inline--warning">Continuer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast Confirmation -->
+  <section class="showcase-section">
+    <h2 class="section-title">Toast avec Annulation</h2>
+    
+    <div class="toast-confirm">
+      <div class="toast-icon">
+        <i class="bi bi-trash"></i>
+      </div>
+      <div class="toast-content">
+        <span class="toast-message">Élément supprimé</span>
+        <div class="toast-progress"></div>
+      </div>
+      <button class="toast-undo">Annuler</button>
+    </div>
+  </section>
+</div>

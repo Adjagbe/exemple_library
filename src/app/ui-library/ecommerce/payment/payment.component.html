@@ -1,0 +1,347 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAYMENT COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="payment-page">
+  <div class="payment-container">
+    <!-- Payment Success -->
+    <div class="payment-success" *ngIf="paymentSuccess">
+      <div class="success-card">
+        <div class="success-icon">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h1>Payment Successful!</h1>
+        <p class="amount-paid">{{ amount | currency }} paid</p>
+        <p class="success-message">
+          Your payment has been processed successfully. A confirmation email has been sent to your registered email address.
+        </p>
+        <div class="success-actions">
+          <button class="btn btn--primary">
+            <i class="bi bi-receipt"></i>
+            View Receipt
+          </button>
+          <button class="btn btn--secondary">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-content" *ngIf="!paymentSuccess">
+      <!-- Left: Payment Methods & Form -->
+      <div class="payment-main">
+        <h1 class="page-title">
+          <i class="bi bi-credit-card-2-front"></i>
+          Payment
+        </h1>
+
+        <!-- Error Message -->
+        <div class="error-alert" *ngIf="paymentError">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span>{{ paymentError }}</span>
+          <button class="close-btn" (click)="paymentError = ''">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="payment-methods">
+          <h2 class="section-title">Select Payment Method</h2>
+          <div class="methods-grid">
+            <div 
+              *ngFor="let method of paymentMethods" 
+              class="method-card"
+              [class.selected]="selectedMethod === method.id"
+              (click)="selectMethod(method.id)">
+              <div class="method-icon">
+                <i class="bi" [ngClass]="method.icon"></i>
+              </div>
+              <span class="method-name">{{ method.name }}</span>
+              <i *ngIf="selectedMethod === method.id" class="bi bi-check-circle-fill check-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credit Card Form -->
+        <div class="payment-form" *ngIf="selectedMethod === 'card'">
+          <!-- Saved Cards -->
+          <div class="saved-cards" *ngIf="savedCards.length > 0">
+            <h3 class="subsection-title">Your Saved Cards</h3>
+            <div class="cards-list">
+              <div 
+                *ngFor="let card of savedCards" 
+                class="saved-card"
+                [class.selected]="selectedSavedCard === card.id && !showNewCardForm"
+                (click)="selectSavedCard(card.id)">
+                <div class="card-visual" [ngClass]="card.brand.toLowerCase()">
+                  <div class="card-brand-logo">
+                    <i class="bi" [ngClass]="getSavedCardIcon(card.brand)"></i>
+                  </div>
+                  <div class="card-number-display">•••• •••• •••• {{ card.last4 }}</div>
+                  <div class="card-details">
+                    <div class="card-holder">{{ card.cardHolder }}</div>
+                    <div class="card-expiry">{{ card.expiry }}</div>
+                  </div>
+                  <span class="default-badge" *ngIf="card.isDefault">Default</span>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn" (click)="setDefaultCard(card.id, $event)" *ngIf="!card.isDefault" title="Set as default">
+                    <i class="bi bi-star"></i>
+                  </button>
+                  <button class="action-btn delete" (click)="deleteSavedCard(card.id, $event)" title="Delete card">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button class="add-card-btn" (click)="addNewCard()" [class.active]="showNewCardForm">
+              <i class="bi bi-plus-circle"></i>
+              Use a different card
+            </button>
+          </div>
+
+          <!-- New Card Form -->
+          <div class="new-card-form" *ngIf="showNewCardForm || savedCards.length === 0">
+            <h3 class="subsection-title" *ngIf="savedCards.length > 0">Enter New Card Details</h3>
+            
+            <div class="card-preview">
+              <div class="preview-card" [ngClass]="getCardBrand()">
+                <div class="preview-brand">
+                  <i class="bi" [ngClass]="getCardBrandIcon()"></i>
+                </div>
+                <div class="preview-number">{{ cardNumber || '•••• •••• •••• ••••' }}</div>
+                <div class="preview-details">
+                  <div class="preview-name">{{ cardName || 'CARDHOLDER NAME' }}</div>
+                  <div class="preview-expiry">{{ expiryDate || 'MM/YY' }}</div>
+                </div>
+                <div class="preview-chip">
+                  <i class="bi bi-sim"></i>
+                </div>
+              </div>
+            </div>
+
+            <form class="card-form">
+              <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <div class="input-wrapper">
+                  <i class="bi bi-credit-card input-icon"></i>
+                  <input 
+                    type="text" 
+                    class="form-input"
+                    [value]="cardNumber"
+                    (input)="formatCardNumber($event)"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="19">
+                  <div class="card-brand" *ngIf="getCardBrand()" [ngClass]="getCardBrand()">
+                    <i class="bi bi-credit-card-2-front"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Cardholder Name</label>
+                <div class="input-wrapper">
+                  <i class="bi bi-person input-icon"></i>
+                  <input 
+                    type="text" 
+                    class="form-input"
+                    [(ngModel)]="cardName"
+                    name="cardName"
+                    placeholder="John Doe">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Expiry Date</label>
+                  <div class="input-wrapper">
+                    <i class="bi bi-calendar3 input-icon"></i>
+                    <input 
+                      type="text" 
+                      class="form-input"
+                      [value]="expiryDate"
+                      (input)="formatExpiryDate($event)"
+                      placeholder="MM/YY"
+                      maxlength="5">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">
+                    CVV
+                    <i class="bi bi-question-circle-fill help-icon" title="3 or 4 digit security code on the back of your card"></i>
+                  </label>
+                  <div class="input-wrapper">
+                    <i class="bi bi-lock input-icon"></i>
+                    <input 
+                      type="password" 
+                      class="form-input"
+                      [(ngModel)]="cvv"
+                      name="cvv"
+                      placeholder="•••"
+                      maxlength="4">
+                  </div>
+                </div>
+              </div>
+
+              <label class="checkbox-label">
+                <input type="checkbox" [(ngModel)]="saveCard" name="saveCard">
+                <span class="checkmark"></span>
+                <span class="checkbox-text">Save this card for future purchases</span>
+              </label>
+            </form>
+          </div>
+        </div>
+
+        <!-- PayPal -->
+        <div class="payment-form" *ngIf="selectedMethod === 'paypal'">
+          <div class="wallet-info">
+            <div class="wallet-icon paypal">
+              <i class="bi bi-paypal"></i>
+            </div>
+            <h3>Pay with PayPal</h3>
+            <p>You will be redirected to PayPal to complete your payment securely.</p>
+          </div>
+        </div>
+
+        <!-- Apple Pay -->
+        <div class="payment-form" *ngIf="selectedMethod === 'apple'">
+          <div class="wallet-info">
+            <div class="wallet-icon apple">
+              <i class="bi bi-apple"></i>
+            </div>
+            <h3>Pay with Apple Pay</h3>
+            <p>Use Touch ID, Face ID, or your passcode to confirm payment on your device.</p>
+          </div>
+        </div>
+
+        <!-- Google Pay -->
+        <div class="payment-form" *ngIf="selectedMethod === 'google'">
+          <div class="wallet-info">
+            <div class="wallet-icon google">
+              <i class="bi bi-google"></i>
+            </div>
+            <h3>Pay with Google Pay</h3>
+            <p>A fast and simple way to pay using cards saved in your Google account.</p>
+          </div>
+        </div>
+
+        <!-- Bank Transfer -->
+        <div class="payment-form" *ngIf="selectedMethod === 'bank'">
+          <h3 class="subsection-title">Bank Account Details</h3>
+          <form class="bank-form">
+            <div class="form-group">
+              <label class="form-label">Bank Name</label>
+              <input type="text" class="form-input" [(ngModel)]="bankName" name="bankName" placeholder="Enter your bank name">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Account Type</label>
+              <div class="account-type-selector">
+                <label class="type-option" [class.selected]="accountType === 'checking'">
+                  <input type="radio" name="accountType" value="checking" [(ngModel)]="accountType">
+                  <span>Checking</span>
+                </label>
+                <label class="type-option" [class.selected]="accountType === 'savings'">
+                  <input type="radio" name="accountType" value="savings" [(ngModel)]="accountType">
+                  <span>Savings</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Routing Number</label>
+                <input type="text" class="form-input" [(ngModel)]="routingNumber" name="routingNumber" placeholder="9 digits" maxlength="9">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Number</label>
+                <input type="text" class="form-input" [(ngModel)]="accountNumber" name="accountNumber" placeholder="Enter account number">
+              </div>
+            </div>
+
+            <div class="bank-info">
+              <i class="bi bi-info-circle"></i>
+              <p>Bank transfers may take 1-3 business days to process.</p>
+            </div>
+          </form>
+        </div>
+
+        <!-- Security Info -->
+        <div class="security-info">
+          <div class="security-item">
+            <i class="bi bi-shield-lock-fill"></i>
+            <span>256-bit SSL encryption</span>
+          </div>
+          <div class="security-item">
+            <i class="bi bi-patch-check-fill"></i>
+            <span>PCI DSS compliant</span>
+          </div>
+          <div class="security-item">
+            <i class="bi bi-lock-fill"></i>
+            <span>Secure payment processing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="payment-sidebar">
+        <div class="order-summary">
+          <h2 class="summary-title">Order Summary</h2>
+          
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span>$499.97</span>
+          </div>
+          <div class="summary-line">
+            <span>Shipping</span>
+            <span class="free">FREE</span>
+          </div>
+          <div class="summary-line discount">
+            <span>Discount (SAVE10)</span>
+            <span>-$50.00</span>
+          </div>
+          <div class="summary-line">
+            <span>Tax</span>
+            <span>$10.00</span>
+          </div>
+          <div class="summary-total">
+            <span>Total</span>
+            <span>{{ amount | currency }}</span>
+          </div>
+
+          <button 
+            class="pay-btn" 
+            (click)="processPayment()" 
+            [disabled]="!isFormValid() || isProcessing">
+            <span *ngIf="!isProcessing">
+              <i class="bi bi-lock-fill"></i>
+              Pay {{ amount | currency }}
+            </span>
+            <span *ngIf="isProcessing" class="processing">
+              <i class="bi bi-arrow-repeat spin"></i>
+              Processing...
+            </span>
+          </button>
+
+          <p class="terms-text">
+            By completing this purchase you agree to our 
+            <a href="#">Terms of Service</a> and 
+            <a href="#">Privacy Policy</a>
+          </p>
+        </div>
+
+        <div class="accepted-cards">
+          <p>We accept</p>
+          <div class="card-icons">
+            <i class="bi bi-credit-card-2-front" title="Visa"></i>
+            <i class="bi bi-credit-card" title="Mastercard"></i>
+            <i class="bi bi-credit-card-2-back" title="Amex"></i>
+            <i class="bi bi-credit-card-fill" title="Discover"></i>
+            <i class="bi bi-paypal" title="PayPal"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

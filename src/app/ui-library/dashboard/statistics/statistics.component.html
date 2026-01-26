@@ -1,0 +1,156 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STATISTICS COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="statistics-page">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Statistiques</h1>
+      <p>Analyse détaillée de vos performances</p>
+    </div>
+    <div class="header-actions">
+      <select [(ngModel)]="selectedPeriod" (change)="onPeriodChange()" class="period-select">
+        <option *ngFor="let p of periods" [value]="p.value">{{ p.label }}</option>
+      </select>
+      <button class="btn btn--outline">
+        <i class="bi bi-download"></i>
+        Exporter
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <!-- Donut Chart -->
+    <div class="stat-card">
+      <div class="card-header">
+        <h3>Revenus par source</h3>
+      </div>
+      <div class="donut-container">
+        <div class="donut-chart" [style.background]="'conic-gradient(' + getDonutSegments() + ')'">
+          <div class="donut-center">
+            <span class="donut-value">{{ formatCurrency(getTotalRevenue()) }}</span>
+            <span class="donut-label">Total</span>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div *ngFor="let item of revenueBySource" class="legend-item">
+            <span class="legend-dot" [style.background]="item.color"></span>
+            <span class="legend-label">{{ item.label }}</span>
+            <span class="legend-value">{{ item.percentage }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="stat-card">
+      <div class="card-header">
+        <h3>Évolution mensuelle</h3>
+        <span class="card-subtitle">Chiffre d'affaires</span>
+      </div>
+      <div class="bar-chart-container">
+        <div class="bar-chart">
+          <div *ngFor="let item of monthlyTrend" class="bar-item">
+            <div class="bar-wrapper">
+              <div 
+                class="bar" 
+                [style.height.%]="getBarHeight(item.value)"
+                [title]="formatCurrency(item.value)"
+              >
+                <span class="bar-value">{{ (item.value / 1000) | number:'1.0-0' }}k</span>
+              </div>
+            </div>
+            <span class="bar-label">{{ item.period }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Stats -->
+    <div class="stat-card comparison-card">
+      <div class="card-header">
+        <h3>Comparaison période</h3>
+        <span class="card-subtitle">vs période précédente</span>
+      </div>
+      <div class="comparison-list">
+        <div *ngFor="let item of comparisons" class="comparison-item">
+          <div class="comparison-info">
+            <span class="comparison-label">{{ item.label }}</span>
+            <span class="comparison-current">{{ formatNumber(item.current) }}</span>
+          </div>
+          <div class="comparison-change" [ngClass]="getComparisonClass(item.change)">
+            <i class="bi" [ngClass]="getComparisonIcon(item.change)"></i>
+            <span>{{ item.change > 0 ? '+' : '' }}{{ item.change | number:'1.2-2' }}%</span>
+          </div>
+          <div class="comparison-bar">
+            <div class="progress-track">
+              <div 
+                class="progress-current" 
+                [style.width.%]="(item.current / (item.current + item.previous)) * 100"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="stat-card products-card">
+      <div class="card-header">
+        <h3>Top Produits</h3>
+        <a href="#" class="see-all">Voir tout</a>
+      </div>
+      <div class="products-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th class="text-right">Ventes</th>
+              <th class="text-right">Revenus</th>
+              <th class="text-right">Croissance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of topProducts; let i = index">
+              <td>
+                <div class="product-name">
+                  <span class="product-rank">#{{ i + 1 }}</span>
+                  {{ product.name }}
+                </div>
+              </td>
+              <td class="text-right">{{ product.sales }}</td>
+              <td class="text-right font-semibold">{{ formatCurrency(product.revenue) }}</td>
+              <td class="text-right">
+                <span class="growth-badge" [ngClass]="product.growth >= 0 ? 'positive' : 'negative'">
+                  <i class="bi" [ngClass]="product.growth >= 0 ? 'bi-arrow-up-short' : 'bi-arrow-down-short'"></i>
+                  {{ product.growth > 0 ? '+' : '' }}{{ product.growth }}%
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Geographic Distribution -->
+    <div class="stat-card geo-card">
+      <div class="card-header">
+        <h3>Distribution géographique</h3>
+      </div>
+      <div class="geo-list">
+        <div *ngFor="let region of regionData" class="geo-item">
+          <div class="geo-info">
+            <span class="geo-dot" [style.background]="region.color"></span>
+            <span class="geo-name">{{ region.name }}</span>
+          </div>
+          <div class="geo-bar">
+            <div class="geo-progress" [style.width.%]="region.value" [style.background]="region.color"></div>
+          </div>
+          <span class="geo-value">{{ region.value }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="auth-page">
+  <div class="auth-card">
+    @if (!success) {
+      <!-- OTP Form -->
+      
+      <h1 class="auth-card__title">Vérification</h1>
+      <p class="auth-card__subtitle">
+        Nous avons envoyé un code de vérification à 6 chiffres à<br>
+        <strong>{{ email }}</strong>
+      </p>
+
+      @if (error) {
+        <div class="alert alert--error">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>{{ error }}</span>
+        </div>
+      }
+
+      <div class="otp-container">
+        <div class="otp-inputs">
+          @for (i of [0, 1, 2, 3, 4, 5]; track i) {
+            <input
+              #otpInput
+              type="text"
+              maxlength="6"
+              class="otp-input"
+              [class.filled]="otpValues[i]"
+              [class.error]="error"
+              (input)="onInput($event, i)"
+              (keydown)="onKeydown($event, i)"
+              inputmode="numeric"
+              autocomplete="one-time-code">
+          }
+        </div>
+
+        @if (isLoading) {
+          <div class="otp-loading">
+            <span class="spinner"></span>
+            <span>Vérification...</span>
+          </div>
+        }
+      </div>
+
+      <div class="resend-section">
+        @if (canResend) {
+          <p class="resend-text">
+            Vous n'avez pas reçu le code ?
+          </p>
+          <button 
+            class="resend-btn" 
+            (click)="resendCode()"
+            [disabled]="isLoading">
+            <i class="bi bi-arrow-clockwise"></i>
+            Renvoyer le code
+          </button>
+        } @else {
+          <p class="resend-text">
+            Renvoyer le code dans <strong>{{ formatTime(resendTimer) }}</strong>
+          </p>
+        }
+      </div>
+
+      <div class="help-section">
+        <a href="#" class="help-link">
+          <i class="bi bi-question-circle"></i>
+          Besoin d'aide ?
+        </a>
+        <a href="#" class="help-link">
+          <i class="bi bi-arrow-left"></i>
+          Retour
+        </a>
+      </div>
+    } @else {
+      <!-- Success State -->
+      <div class="success-state">
+        <div class="success-state__icon">
+          <i class="bi bi-check-lg"></i>
+        </div>
+        
+        <h2 class="success-state__title">Vérification réussie !</h2>
+        <p class="success-state__text">
+          Votre identité a été vérifiée avec succès.<br>
+          Vous pouvez maintenant continuer.
+        </p>
+
+        <a href="#" class="btn btn--primary btn--full">
+          <span>Continuer</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    }
+  </div>
+</div>

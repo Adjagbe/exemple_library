@@ -1,0 +1,138 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- USER LIST COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="user-list-page">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Utilisateurs</h1>
+      <p>Gérez les utilisateurs de votre plateforme</p>
+    </div>
+    <button class="btn btn--primary" (click)="addUser()">
+      <i class="bi bi-plus-lg"></i>
+      Ajouter
+    </button>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        placeholder="Rechercher un utilisateur..."
+      >
+    </div>
+
+    <div class="filters">
+      <select [(ngModel)]="selectedRole" (change)="onFilterChange()">
+        <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+      </select>
+      <select [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+        <option *ngFor="let status of statuses" [value]="status.value">{{ status.label }}</option>
+      </select>
+    </div>
+
+    <div class="bulk-actions" *ngIf="getSelectedCount() > 0">
+      <span class="selected-count">{{ getSelectedCount() }} sélectionné(s)</span>
+      <button class="btn btn--outline btn--sm">
+        <i class="bi bi-envelope"></i>
+      </button>
+      <button class="btn btn--danger btn--sm">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- User List -->
+  <div class="user-list-container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th class="checkbox-cell">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="selectAll"
+              (change)="toggleSelectAll()"
+            >
+          </th>
+          <th>Utilisateur</th>
+          <th>Rôle</th>
+          <th>Département</th>
+          <th>Statut</th>
+          <th>Dernière activité</th>
+          <th class="actions-cell">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          *ngFor="let user of filteredUsers" 
+          [class.selected]="user.selected"
+        >
+          <td class="checkbox-cell">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="user.selected"
+              (change)="onUserSelect()"
+            >
+          </td>
+          <td>
+            <div class="user-cell">
+              <div class="user-avatar">{{ user.avatar }}</div>
+              <div class="user-info">
+                <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+                <span class="user-email">{{ user.email }}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="role-badge" [ngClass]="getRoleClass(user.role)">
+              {{ getRoleLabel(user.role) }}
+            </span>
+          </td>
+          <td>{{ user.department }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(user.status)">
+              <span class="status-dot"></span>
+              {{ getStatusLabel(user.status) }}
+            </span>
+          </td>
+          <td class="last-active">{{ formatLastActive(user.lastActive) }}</td>
+          <td class="actions-cell">
+            <div class="action-buttons">
+              <button class="action-btn" title="Voir" (click)="onView(user)">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="action-btn" title="Modifier" (click)="onEdit(user)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="action-btn action-btn--danger" title="Supprimer" (click)="onDelete(user)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredUsers.length === 0" class="empty-state">
+      <i class="bi bi-people"></i>
+      <h3>Aucun utilisateur trouvé</h3>
+      <p>Modifiez vos critères de recherche ou ajoutez un nouvel utilisateur</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <span class="pagination-info">Affichage de {{ filteredUsers.length }} sur {{ users.length }} utilisateurs</span>
+    <div class="pagination-controls">
+      <button class="page-btn" disabled><i class="bi bi-chevron-left"></i></button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn"><i class="bi bi-chevron-right"></i></button>
+    </div>
+  </div>
+</div>

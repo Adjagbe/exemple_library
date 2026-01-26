@@ -1,0 +1,228 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- COUPON COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="coupon-page">
+  <div class="coupon-container">
+    <!-- Header -->
+    <header class="coupon-header">
+      <h1 class="page-title">
+        
+        Coupons & Discounts
+      </h1>
+      <p class="page-subtitle">Apply coupons to save on your order</p>
+    </header>
+
+    <div class="coupon-content">
+      <!-- Left: Apply Coupon & Available Coupons -->
+      <div class="coupon-main">
+        <!-- Apply Coupon Form -->
+        <div class="apply-coupon-card">
+          <h2 class="card-title">Have a coupon code?</h2>
+          
+          <div class="coupon-form">
+            <div class="input-group">
+              <i class="bi bi-ticket-perforated"></i>
+              <input 
+                type="text" 
+                class="coupon-input"
+                [(ngModel)]="couponInput"
+                placeholder="Enter coupon code"
+                [disabled]="isApplying"
+                (keyup.enter)="applyCoupon()">
+            </div>
+            <button 
+              class="apply-btn" 
+              (click)="applyCoupon()" 
+              [disabled]="isApplying || !couponInput.trim()">
+              <span *ngIf="!isApplying">Apply</span>
+              <span *ngIf="isApplying" class="loading">
+                <i class="bi bi-arrow-repeat spin"></i>
+              </span>
+            </button>
+          </div>
+
+          <!-- Messages -->
+          <div class="message error" *ngIf="errorMessage">
+            <i class="bi bi-exclamation-circle"></i>
+            {{ errorMessage }}
+          </div>
+          <div class="message success" *ngIf="successMessage">
+            <i class="bi bi-check-circle"></i>
+            {{ successMessage }}
+          </div>
+        </div>
+
+        <!-- Applied Coupon -->
+        <div class="applied-coupon" *ngIf="appliedCoupon">
+          <div class="applied-header">
+            <h3>
+              <i class="bi bi-check-circle-fill"></i>
+              Applied Coupon
+            </h3>
+          </div>
+          <div class="applied-content">
+            <div class="coupon-visual">
+              <div class="coupon-badge" [ngClass]="appliedCoupon.type">
+                <i class="bi" [ngClass]="getCouponTypeIcon(appliedCoupon.type)"></i>
+              </div>
+              <div class="coupon-details">
+                <span class="coupon-code">{{ appliedCoupon.code }}</span>
+                <span class="coupon-desc">{{ appliedCoupon.description }}</span>
+              </div>
+              <div class="coupon-value">
+                <span class="discount-amount">-{{ getDiscountAmount() | currency }}</span>
+              </div>
+            </div>
+            <button class="remove-btn" (click)="removeCoupon()">
+              <i class="bi bi-x"></i>
+              Remove
+            </button>
+          </div>
+        </div>
+
+        <!-- Available Coupons -->
+        <div class="available-coupons">
+          <h2 class="section-title">
+            
+            Available Coupons
+          </h2>
+
+          <div class="coupons-grid">
+            <div 
+              *ngFor="let coupon of availableCoupons" 
+              class="coupon-card"
+              [class.disabled]="!isEligible(coupon)"
+              [class.applied]="appliedCoupon?.id === coupon.id">
+              
+              <!-- Coupon Visual (Ticket Style) -->
+              <div class="coupon-ticket">
+                <div class="ticket-left">
+                  <div class="coupon-type-badge" [ngClass]="coupon.type">
+                    <i class="bi" [ngClass]="getCouponTypeIcon(coupon.type)"></i>
+                    <span>{{ getCouponTypeLabel(coupon.type) }}</span>
+                  </div>
+                  <div class="coupon-value-display">
+                    <span class="value-number" *ngIf="coupon.type === 'percentage'">{{ coupon.value }}%</span>
+                    <span class="value-number" *ngIf="coupon.type === 'fixed'">${{ coupon.value }}</span>
+                    <span class="value-number" *ngIf="coupon.type === 'free_shipping'">FREE</span>
+                    <span class="value-number" *ngIf="coupon.type === 'bogo'">{{ coupon.value }}%</span>
+                    <span class="value-label" *ngIf="coupon.type === 'percentage' || coupon.type === 'fixed'">OFF</span>
+                    <span class="value-label" *ngIf="coupon.type === 'free_shipping'">SHIPPING</span>
+                    <span class="value-label" *ngIf="coupon.type === 'bogo'">OFF 2ND</span>
+                  </div>
+                </div>
+                <div class="ticket-divider">
+                  <div class="divider-circle top"></div>
+                  <div class="divider-line"></div>
+                  <div class="divider-circle bottom"></div>
+                </div>
+                <div class="ticket-right">
+                  <div class="coupon-code-display">
+                    <span class="code-label">CODE</span>
+                    <span class="code-value">{{ coupon.code }}</span>
+                    <button class="copy-btn" (click)="copyCouponCode(coupon.code); $event.stopPropagation()">
+                      <i class="bi bi-clipboard"></i>
+                    </button>
+                  </div>
+                  <p class="coupon-description">{{ coupon.description }}</p>
+                  <div class="coupon-meta">
+                    <span class="meta-item" *ngIf="coupon.minPurchase">
+                      <i class="bi bi-cart"></i> Min. ${{ coupon.minPurchase }}
+                    </span>
+                    <span class="meta-item expiry" [class.expiring]="isExpiringSoon(coupon.expiresAt)">
+                      <i class="bi bi-clock"></i>
+                      <span *ngIf="getDaysUntilExpiry(coupon.expiresAt) > 0">
+                        {{ getDaysUntilExpiry(coupon.expiresAt) }} days left
+                      </span>
+                      <span *ngIf="getDaysUntilExpiry(coupon.expiresAt) <= 0">Expired</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Button -->
+              <button 
+                class="use-coupon-btn" 
+                (click)="selectCoupon(coupon)"
+                [disabled]="!isEligible(coupon) || appliedCoupon?.id === coupon.id">
+                <span *ngIf="appliedCoupon?.id === coupon.id">
+                  <i class="bi bi-check-lg"></i> Applied
+                </span>
+                <span *ngIf="appliedCoupon?.id !== coupon.id && isEligible(coupon)">
+                  <i class="bi bi-tag"></i> Use Coupon
+                </span>
+                <span *ngIf="!coupon.isActive">Expired</span>
+                <span *ngIf="coupon.isActive && coupon.minPurchase && cartSubtotal < coupon.minPurchase">
+                  Add ${{ (coupon.minPurchase - cartSubtotal).toFixed(2) }} more
+                </span>
+                <span *ngIf="coupon.usageLimit && coupon.usedCount >= coupon.usageLimit">Already Used</span>
+              </button>
+
+              <!-- Applied Badge -->
+              <div class="applied-badge" *ngIf="appliedCoupon?.id === coupon.id">
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="coupon-sidebar">
+        <div class="order-summary">
+          <h3 class="summary-title">Order Summary</h3>
+
+          <div class="summary-lines">
+            <div class="summary-line">
+              <span>Subtotal</span>
+              <span>{{ cartSubtotal | currency }}</span>
+            </div>
+            <div class="summary-line">
+              <span>Shipping</span>
+              <span [class.strikethrough]="appliedCoupon?.type === 'free_shipping'">
+                {{ shippingCost | currency }}
+              </span>
+            </div>
+            <div class="summary-line discount" *ngIf="appliedCoupon">
+              <span>
+                <i class="bi bi-tag-fill"></i>
+                {{ appliedCoupon.code }}
+              </span>
+              <span>-{{ getDiscountAmount() | currency }}</span>
+            </div>
+          </div>
+
+          <div class="summary-total">
+            <span>Total</span>
+            <span>{{ getTotal() | currency }}</span>
+          </div>
+
+          <div class="savings-badge" *ngIf="appliedCoupon">
+            <i class="bi bi-piggy-bank"></i>
+            You're saving {{ getDiscountAmount() | currency }} on this order!
+          </div>
+
+          <button class="checkout-btn">
+            <i class="bi bi-lock"></i>
+            Proceed to Checkout
+          </button>
+        </div>
+
+        <!-- Help -->
+        <div class="coupon-help">
+          <h4>
+            <i class="bi bi-question-circle"></i>
+            How to use coupons
+          </h4>
+          <ul>
+            <li>Enter your code in the field above or click "Use Coupon" on any available coupon</li>
+            <li>Only one coupon can be applied per order</li>
+            <li>Some coupons have minimum purchase requirements</li>
+            <li>Coupons cannot be combined with other offers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

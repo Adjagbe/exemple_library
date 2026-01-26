@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- KPI CARDS COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="kpi-showcase">
+  <h1 class="page-title">KPI Cards</h1>
+  <p class="page-subtitle">Différents styles de cartes pour afficher vos indicateurs clés</p>
+
+  <!-- Basic KPIs -->
+  <section class="showcase-section">
+    <h2 class="section-title">Cartes basiques avec icônes</h2>
+    <div class="kpi-grid">
+      <div *ngFor="let kpi of basicKPIs" class="kpi-card kpi-card--basic">
+        <div class="kpi-card__icon" [class]="'kpi-card__icon--' + kpi.iconColor">
+          <i class="bi" [ngClass]="kpi.icon"></i>
+        </div>
+        <div class="kpi-card__content">
+          <span class="kpi-card__title">{{ kpi.title }}</span>
+          <span class="kpi-card__value">{{ formatValue(kpi) }}</span>
+          <div class="kpi-card__change" *ngIf="kpi.change" [ngClass]="getChangeClass(kpi.change.type)">
+            <i class="bi" [ngClass]="getChangeIcon(kpi.change.type)"></i>
+            <span>{{ kpi.change.value > 0 ? '+' : '' }}{{ kpi.change.value }}%</span>
+            <span class="change-period">{{ kpi.change.period }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sparkline KPIs -->
+  <section class="showcase-section">
+    <h2 class="section-title">Cartes avec mini graphiques</h2>
+    <div class="kpi-grid">
+      <div *ngFor="let kpi of sparklineKPIs" class="kpi-card kpi-card--sparkline">
+        <div class="kpi-card__header">
+          <span class="kpi-card__title">{{ kpi.title }}</span>
+          <div class="kpi-card__change" *ngIf="kpi.change" [ngClass]="getChangeClass(kpi.change.type)">
+            <i class="bi" [ngClass]="getChangeIcon(kpi.change.type)"></i>
+            <span>{{ kpi.change.value > 0 ? '+' : '' }}{{ kpi.change.value }}%</span>
+          </div>
+        </div>
+        <span class="kpi-card__value">{{ formatValue(kpi) }}</span>
+        <div class="kpi-card__sparkline" *ngIf="kpi.sparkline">
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+            <polyline
+              [attr.points]="getSparklinePoints(kpi.sparkline)"
+              fill="none"
+              [attr.stroke]="getSparklineColor(kpi)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <span class="kpi-card__period" *ngIf="kpi.change">{{ kpi.change.period }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Progress KPIs -->
+  <section class="showcase-section">
+    <h2 class="section-title">Cartes avec progression</h2>
+    <div class="kpi-grid">
+      <div *ngFor="let kpi of progressKPIs" class="kpi-card kpi-card--progress">
+        <div class="kpi-card__row">
+          <div class="kpi-card__icon kpi-card__icon--small" [class]="'kpi-card__icon--' + kpi.iconColor">
+            <i class="bi" [ngClass]="kpi.icon"></i>
+          </div>
+          <div class="kpi-card__info">
+            <span class="kpi-card__title">{{ kpi.title }}</span>
+            <span class="kpi-card__value">{{ formatValue(kpi) }}</span>
+          </div>
+        </div>
+        <div class="kpi-card__progress-container" *ngIf="kpi.progress">
+          <div class="progress-bar">
+            <div 
+              class="progress-fill" 
+              [style.width.%]="getProgressPercentage(kpi.progress)"
+              [class]="'progress-fill--' + kpi.iconColor"
+            ></div>
+          </div>
+          <span class="progress-label">{{ kpi.progress.label }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compact KPIs -->
+  <section class="showcase-section">
+    <h2 class="section-title">Cartes compactes</h2>
+    <div class="kpi-compact-grid">
+      <div *ngFor="let kpi of basicKPIs" class="kpi-card kpi-card--compact">
+        <i class="bi kpi-card__mini-icon" [ngClass]="kpi.icon" [class]="'icon--' + kpi.iconColor"></i>
+        <div class="kpi-card__compact-content">
+          <span class="kpi-card__value">{{ formatValue(kpi) }}</span>
+          <span class="kpi-card__title">{{ kpi.title }}</span>
+        </div>
+        <div class="kpi-card__change kpi-card__change--badge" *ngIf="kpi.change" [ngClass]="getChangeClass(kpi.change.type)">
+          <i class="bi" [ngClass]="getChangeIcon(kpi.change.type)"></i>
+          {{ kpi.change.value > 0 ? '+' : '' }}{{ kpi.change.value }}%
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

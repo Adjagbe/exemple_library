@@ -1,0 +1,249 @@
+<div class="product-detail-page">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="#">Accueil</a>
+    <i class="bi bi-chevron-right"></i>
+    <a href="#">Électronique</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>{{ product.name }}</span>
+  </nav>
+
+  <div class="product-container">
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="gallery-main">
+        <img [src]="selectedImage.url" [alt]="selectedImage.alt">
+        @if (product.discount) {
+          <span class="discount-badge">-{{ product.discount }}%</span>
+        }
+      </div>
+      <div class="gallery-thumbs">
+        @for (image of images; track image.id) {
+          <button 
+            class="thumb"
+            [class.active]="selectedImage.id === image.id"
+            (click)="selectImage(image)">
+            <img [src]="image.url" [alt]="image.alt">
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <span class="product-brand">{{ product.brand }}</span>
+      <h1 class="product-title">{{ product.name }}</h1>
+      
+      <!-- Rating -->
+      <div class="product-rating">
+        <div class="stars">
+          @for (star of getStars(product.rating); track $index) {
+            <i class="bi" [ngClass]="star === 1 ? 'bi-star-fill' : (star === 0.5 ? 'bi-star-half' : 'bi-star')"></i>
+          }
+        </div>
+        <span class="rating-value">{{ product.rating }}</span>
+        <a href="#reviews" class="reviews-link">({{ product.reviewsCount }} avis)</a>
+      </div>
+
+      <!-- Price -->
+      <div class="product-price">
+        <span class="price-current">{{ formatPrice(product.price) }}</span>
+        @if (product.originalPrice) {
+          <span class="price-original">{{ formatPrice(product.originalPrice) }}</span>
+          <span class="price-discount">-{{ product.discount }}%</span>
+        }
+      </div>
+
+      <p class="product-description">{{ product.description }}</p>
+
+      <!-- Stock Status -->
+      <div class="stock-status" [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
+        @if (product.inStock) {
+          <i class="bi bi-check-circle-fill"></i>
+          <span>En stock ({{ product.stockCount }} disponibles)</span>
+        } @else {
+          <i class="bi bi-x-circle-fill"></i>
+          <span>Rupture de stock</span>
+        }
+      </div>
+
+      <!-- Color Selection -->
+      <div class="variant-section">
+        <label class="variant-label">Couleur : <strong>{{ selectedColor.name }}</strong></label>
+        <div class="color-options">
+          @for (color of colors; track color.id) {
+            <button 
+              class="color-option"
+              [class.active]="selectedColor.id === color.id"
+              [class.disabled]="!color.available"
+              [style.background]="color.id === 'space-black' ? '#1d1d1f' : '#e5e5e5'"
+              (click)="selectColor(color)">
+              @if (selectedColor.id === color.id) {
+                <i class="bi bi-check"></i>
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Storage Selection -->
+      <div class="variant-section">
+        <label class="variant-label">Stockage</label>
+        <div class="storage-options">
+          @for (storage of storage; track storage.id) {
+            <button 
+              class="storage-option"
+              [class.active]="selectedStorage.id === storage.id"
+              [class.disabled]="!storage.available"
+              (click)="selectStorage(storage)">
+              {{ storage.name }}
+              @if (!storage.available) {
+                <span class="unavailable">(Indisponible)</span>
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="variant-section">
+        <label class="variant-label">Quantité</label>
+        <div class="quantity-selector">
+          <button class="qty-btn" (click)="decrementQuantity()" [disabled]="quantity <= 1">
+            <i class="bi bi-dash"></i>
+          </button>
+          <span class="qty-value">{{ quantity }}</span>
+          <button class="qty-btn" (click)="incrementQuantity()" [disabled]="quantity >= product.stockCount">
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="product-actions">
+        <button class="btn btn--primary btn--lg" (click)="addToCart()" [disabled]="!product.inStock">
+          <i class="bi bi-cart-plus"></i>
+          Ajouter au panier
+        </button>
+        <button class="btn btn--secondary btn--lg" (click)="buyNow()" [disabled]="!product.inStock">
+          Acheter maintenant
+        </button>
+        <button class="btn btn--icon" [class.wishlisted]="isWishlisted" (click)="toggleWishlist()">
+          <i class="bi" [ngClass]="isWishlisted ? 'bi-heart-fill' : 'bi-heart'"></i>
+        </button>
+      </div>
+
+      <!-- SKU -->
+      <p class="product-sku">SKU : {{ product.sku }}</p>
+
+      <!-- Features -->
+      <div class="product-features">
+        <h4>Points clés</h4>
+        <ul>
+          @for (feature of product.features; track feature) {
+            <li>
+              <i class="bi bi-check-lg"></i>
+              {{ feature }}
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="product-tabs">
+    <div class="tabs-header">
+      <button 
+        class="tab-btn"
+        [class.active]="activeTab === 'description'"
+        (click)="activeTab = 'description'">
+        Description
+      </button>
+      <button 
+        class="tab-btn"
+        [class.active]="activeTab === 'specs'"
+        (click)="activeTab = 'specs'">
+        Spécifications
+      </button>
+      <button 
+        class="tab-btn"
+        [class.active]="activeTab === 'reviews'"
+        (click)="activeTab = 'reviews'">
+        Avis ({{ product.reviewsCount }})
+      </button>
+    </div>
+
+    <div class="tabs-content">
+      @if (activeTab === 'description') {
+        <div class="tab-panel">
+          <h3>À propos de ce produit</h3>
+          <p>{{ product.description }}</p>
+          <p>Avec la puce Apple M3 Pro, ce MacBook Pro repousse les limites de ce qui est possible sur un ordinateur portable. La puce dispose d'un CPU 12 cœurs et d'un GPU 18 cœurs pour des performances graphiques exceptionnelles.</p>
+        </div>
+      }
+
+      @if (activeTab === 'specs') {
+        <div class="tab-panel">
+          <h3>Spécifications techniques</h3>
+          <table class="specs-table">
+            <tr><td>Processeur</td><td>Apple M3 Pro</td></tr>
+            <tr><td>Mémoire</td><td>18 Go unifiée</td></tr>
+            <tr><td>Stockage</td><td>512 Go SSD</td></tr>
+            <tr><td>Écran</td><td>16,2" Liquid Retina XDR</td></tr>
+            <tr><td>Résolution</td><td>3456 x 2234 pixels</td></tr>
+            <tr><td>Batterie</td><td>Jusqu'à 22 heures</td></tr>
+            <tr><td>Poids</td><td>2,14 kg</td></tr>
+          </table>
+        </div>
+      }
+
+      @if (activeTab === 'reviews') {
+        <div class="tab-panel" id="reviews">
+          <div class="reviews-header">
+            <div class="reviews-summary">
+              <div class="rating-big">{{ product.rating }}</div>
+              <div class="stars">
+                @for (star of getStars(product.rating); track $index) {
+                  <i class="bi" [ngClass]="star === 1 ? 'bi-star-fill' : (star === 0.5 ? 'bi-star-half' : 'bi-star')"></i>
+                }
+              </div>
+              <p>Basé sur {{ product.reviewsCount }} avis</p>
+            </div>
+            <button class="btn btn--primary">
+              <i class="bi bi-pencil"></i>
+              Écrire un avis
+            </button>
+          </div>
+
+          <div class="reviews-list">
+            @for (review of reviews; track review.id) {
+              <div class="review-card">
+                <div class="review-header">
+                  <img [src]="review.avatar" [alt]="review.author" class="review-avatar">
+                  <div class="review-meta">
+                    <strong>{{ review.author }}</strong>
+                    <div class="stars small">
+                      @for (star of getStars(review.rating); track $index) {
+                        <i class="bi" [ngClass]="star === 1 ? 'bi-star-fill' : 'bi-star'"></i>
+                      }
+                    </div>
+                  </div>
+                  <span class="review-date">{{ formatDate(review.date) }}</span>
+                </div>
+                <h4 class="review-title">{{ review.title }}</h4>
+                <p class="review-content">{{ review.content }}</p>
+                <div class="review-actions">
+                  <button class="helpful-btn">
+                    <i class="bi bi-hand-thumbs-up"></i>
+                    Utile ({{ review.helpful }})
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

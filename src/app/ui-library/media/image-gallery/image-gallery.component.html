@@ -1,0 +1,164 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- IMAGE GALLERY COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="gallery-showcase">
+  <h1 class="page-title">Galerie d'images</h1>
+  <p class="page-subtitle">Visualisez et explorez vos images</p>
+
+  <!-- Controls -->
+  <div class="gallery-controls">
+    <!-- Categories -->
+    <div class="category-filters">
+      <button
+        *ngFor="let category of categories"
+        class="category-btn"
+        [class.active]="activeCategory === category"
+        (click)="setCategory(category)"
+      >
+        {{ category === 'all' ? 'Toutes' : category }}
+      </button>
+    </div>
+
+    <!-- View Toggle -->
+    <div class="view-toggle">
+      <button
+        class="view-btn"
+        [class.active]="viewMode === 'grid'"
+        (click)="setViewMode('grid')"
+      >
+        <i class="bi bi-grid-3x3-gap"></i>
+      </button>
+      <button
+        class="view-btn"
+        [class.active]="viewMode === 'masonry'"
+        (click)="setViewMode('masonry')"
+      >
+        <i class="bi bi-columns-gap"></i>
+      </button>
+      <button
+        class="view-btn"
+        [class.active]="viewMode === 'list'"
+        (click)="setViewMode('list')"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid View -->
+  <div class="gallery-grid" *ngIf="viewMode === 'grid'">
+    <div
+      *ngFor="let image of filteredImages; let i = index"
+      class="gallery-item"
+      (click)="openLightbox(i)"
+    >
+      <div class="image-placeholder" [style.background-color]="image.src">
+        <i class="bi bi-image"></i>
+      </div>
+      <div class="image-overlay">
+        <div class="overlay-content">
+          <h4>{{ image.title }}</h4>
+          <span>{{ image.category }}</span>
+        </div>
+        <div class="overlay-actions">
+          <button class="overlay-btn" (click)="likeImage(image); $event.stopPropagation()">
+            <i class="bi bi-heart"></i>
+            {{ image.likes }}
+          </button>
+          <button class="overlay-btn">
+            <i class="bi bi-eye"></i>
+            {{ formatNumber(image.views) }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Masonry View -->
+  <div class="gallery-masonry" *ngIf="viewMode === 'masonry'">
+    <div
+      *ngFor="let image of filteredImages; let i = index"
+      class="masonry-item"
+      [class.tall]="i % 3 === 0"
+      (click)="openLightbox(i)"
+    >
+      <div class="image-placeholder" [style.background-color]="image.src">
+        <i class="bi bi-image"></i>
+      </div>
+      <div class="image-overlay">
+        <h4>{{ image.title }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- List View -->
+  <div class="gallery-list" *ngIf="viewMode === 'list'">
+    <div
+      *ngFor="let image of filteredImages; let i = index"
+      class="list-item"
+      (click)="openLightbox(i)"
+    >
+      <div class="list-thumbnail" [style.background-color]="image.src">
+        <i class="bi bi-image"></i>
+      </div>
+      <div class="list-info">
+        <h4>{{ image.title }}</h4>
+        <p>{{ image.description }}</p>
+        <div class="list-meta">
+          <span class="list-category">{{ image.category }}</span>
+          <span class="list-date">{{ formatDate(image.date) }}</span>
+        </div>
+      </div>
+      <div class="list-stats">
+        <span><i class="bi bi-heart-fill"></i> {{ image.likes }}</span>
+        <span><i class="bi bi-eye-fill"></i> {{ formatNumber(image.views) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" [class.open]="lightboxOpen" *ngIf="currentImage">
+    <div class="lightbox-backdrop" (click)="closeLightbox()"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" (click)="closeLightbox()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <button class="lightbox-nav lightbox-prev" (click)="previousImage()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="lightbox-image">
+        <div class="image-placeholder image-placeholder--large" [style.background-color]="currentImage.src">
+          <i class="bi bi-image"></i>
+        </div>
+      </div>
+
+      <button class="lightbox-nav lightbox-next" (click)="nextImage()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+      <div class="lightbox-info">
+        <h3>{{ currentImage.title }}</h3>
+        <p>{{ currentImage.description }}</p>
+        <div class="lightbox-meta">
+          <span class="lightbox-category">{{ currentImage.category }}</span>
+          <span class="lightbox-stats">
+            <i class="bi bi-heart-fill"></i> {{ currentImage.likes }}
+            <i class="bi bi-eye-fill"></i> {{ formatNumber(currentImage.views) }}
+          </span>
+        </div>
+        <div class="lightbox-actions">
+          <button class="action-btn"><i class="bi bi-heart"></i> J'aime</button>
+          <button class="action-btn"><i class="bi bi-share"></i> Partager</button>
+          <button class="action-btn"><i class="bi bi-download"></i> Télécharger</button>
+        </div>
+      </div>
+
+      <div class="lightbox-counter">
+        {{ currentImageIndex + 1 }} / {{ filteredImages.length }}
+      </div>
+    </div>
+  </div>
+</div>

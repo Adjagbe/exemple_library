@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance en cours - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* MAINTENANCE PAGE COMPONENT - Premium UI Library                 */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .maintenance-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    }
+
+    .maintenance-content { text-align: center; max-width: 600px; width: 100%; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ILLUSTRATION
+       ───────────────────────────────────────────────────────────────── */
+    .maintenance-illustration { position: relative; height: 150px; margin-bottom: 2rem; }
+    .gear-container { position: relative; display: inline-block; }
+    .gear { color: #f59e0b; }
+    .gear.gear-1 { font-size: 4rem; animation: rotate 4s linear infinite; }
+    .gear.gear-2 { font-size: 2.5rem; position: absolute; top: -10px; right: -30px; animation: rotate-reverse 3s linear infinite; }
+    .gear.gear-3 { font-size: 2rem; position: absolute; bottom: 0; left: -25px; animation: rotate 2.5s linear infinite; }
+    .tools { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); }
+    .tools i { font-size: 2.5rem; color: #92400e; }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes rotate-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MESSAGE
+       ───────────────────────────────────────────────────────────────── */
+    .maintenance-message { margin-bottom: 2rem; }
+    .maintenance-message h1 { font-size: 2rem; font-weight: 700; color: #92400e; margin: 0 0 0.75rem 0; }
+    .maintenance-message p { font-size: 1.1rem; color: #a16207; line-height: 1.6; margin: 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PROGRESS
+       ───────────────────────────────────────────────────────────────── */
+    .maintenance-progress { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+    .progress-header { display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.9rem; font-weight: 600; color: #374151; }
+    .progress-bar { height: 12px; background: #e5e7eb; border-radius: 6px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); border-radius: 6px; transition: width 0.5s ease; }
+    .estimated-time { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 1rem 0 0 0; font-size: 0.9rem; color: #6b7280; }
+    .estimated-time i { color: #f59e0b; }
+    .estimated-time strong { color: #374151; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       STATUS UPDATES
+       ───────────────────────────────────────────────────────────────── */
+    .status-updates { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); text-align: left; }
+    .status-updates h3 { font-size: 1rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; text-align: center; }
+    .updates-list { display: flex; flex-direction: column; gap: 0; }
+    .update-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; }
+    .update-time { font-size: 0.8rem; font-weight: 500; color: #9ca3af; width: 45px; flex-shrink: 0; }
+    .update-indicator { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .indicator-dot { width: 12px; height: 12px; border-radius: 50%; background: #e5e7eb; }
+    .status--completed .indicator-dot { background: #10b981; }
+    .status--in-progress .indicator-dot { background: #f59e0b; animation: pulse 1s ease-in-out infinite; }
+    .indicator-line { width: 2px; height: 20px; background: #e5e7eb; }
+    .update-item:last-child .indicator-line { display: none; }
+    .update-message { flex: 1; font-size: 0.875rem; color: #374151; }
+    .status--pending .update-message { color: #9ca3af; }
+    .update-status { flex-shrink: 0; }
+    .update-status i { font-size: 1rem; }
+    .update-status .bi-check-circle-fill { color: #10b981; }
+    .update-status .bi-arrow-repeat { color: #f59e0b; }
+    .update-status .bi-circle { color: #d1d5db; }
+    .update-status .spinning { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    /* ─────────────────────────────────────────────────────────────────
+       NOTIFICATION
+       ───────────────────────────────────────────────────────────────── */
+    .notification-signup { margin-bottom: 2rem; }
+    .notification-signup h3 { font-size: 1rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+    .signup-form { display: flex; gap: 0.75rem; max-width: 450px; margin: 0 auto; }
+    .signup-form input { flex: 1; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.95rem; background: white; transition: border-color 0.2s; }
+    .signup-form input:focus { outline: none; border-color: #f59e0b; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.5rem; border: none; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+    .btn--primary { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; }
+    .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FOOTER
+       ───────────────────────────────────────────────────────────────── */
+    .maintenance-footer { display: flex; justify-content: center; gap: 2rem; padding-top: 1rem; flex-wrap: wrap; }
+    .social-links { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: #92400e; }
+    .social-link { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 50%; color: #f59e0b; text-decoration: none; transition: all 0.2s ease; }
+    .social-link:hover { background: #f59e0b; color: white; }
+    .contact-info a { display: flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; color: #92400e; text-decoration: none; }
+    .contact-info a:hover { text-decoration: underline; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .maintenance-message h1 { font-size: 1.5rem; }
+      .signup-form { flex-direction: column; }
+      .maintenance-footer { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="maintenance-page">
+  <div class="maintenance-content">
+    <!-- Illustration -->
+    <div class="maintenance-illustration">
+      <div class="gear-container">
+        <i class="bi bi-gear gear gear-1"></i>
+        <i class="bi bi-gear-fill gear gear-2"></i>
+        <i class="bi bi-gear gear gear-3"></i>
+      </div>
+      <div class="tools">
+        <i class="bi bi-wrench-adjustable"></i>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="maintenance-message">
+      <h1>Maintenance en cours</h1>
+      <p>Nous effectuons actuellement des améliorations pour vous offrir une meilleure expérience. Nous serons de retour très bientôt !</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="maintenance-progress">
+      <div class="progress-header">
+        <span>Progression</span>
+        <span id="progressPercent">65%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 65%"></div>
+      </div>
+      <p class="estimated-time">
+        <i class="bi bi-clock"></i>
+        Temps estimé : <strong>2 heures</strong>
+      </p>
+    </div>
+
+    <!-- Status Updates -->
+    <div class="status-updates">
+      <h3>Statut des opérations</h3>
+      <div class="updates-list" id="updatesList"></div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification-signup">
+      <h3>Être notifié du retour en ligne</h3>
+      <div class="signup-form">
+        <input type="email" id="emailInput" placeholder="Votre adresse email">
+        <button class="btn btn--primary" onclick="subscribe()">
+          <i class="bi bi-bell"></i>
+          M'alerter
+        </button>
+      </div>
+    </div>
+
+    <!-- Social & Contact -->
+    <div class="maintenance-footer">
+      <div class="social-links">
+        <span>Suivez-nous :</span>
+        <a href="#" title="Twitter" class="social-link"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" title="Facebook" class="social-link"><i class="bi bi-facebook"></i></a>
+        <a href="#" title="LinkedIn" class="social-link"><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="contact-info">
+        <a href="mailto:support@example.com">
+          <i class="bi bi-envelope"></i>
+          support@example.com
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const statusUpdates = [
+    { time: '14:30', message: 'Mise à jour de la base de données en cours', status: 'completed' },
+    { time: '14:45', message: 'Migration des données utilisateurs', status: 'completed' },
+    { time: '15:00', message: 'Optimisation des performances', status: 'in-progress' },
+    { time: '15:30', message: 'Tests de sécurité', status: 'pending' },
+    { time: '16:00', message: 'Remise en ligne', status: 'pending' }
+  ];
+
+  function renderStatusUpdates() {
+    const container = document.getElementById('updatesList');
+    container.innerHTML = statusUpdates.map((update, i) => `
+      <div class="update-item status--${update.status}">
+        <span class="update-time">${update.time}</span>
+        <div class="update-indicator">
+          <span class="indicator-dot"></span>
+          <span class="indicator-line"></span>
+        </div>
+        <span class="update-message">${update.message}</span>
+        <span class="update-status">
+          ${update.status === 'completed' ? '<i class="bi bi-check-circle-fill"></i>' : ''}
+          ${update.status === 'in-progress' ? '<i class="bi bi-arrow-repeat spinning"></i>' : ''}
+          ${update.status === 'pending' ? '<i class="bi bi-circle"></i>' : ''}
+        </span>
+      </div>
+    `).join('');
+  }
+
+  function subscribe() {
+    const email = document.getElementById('emailInput').value;
+    if (email) {
+      alert(`Vous serez notifié à l'adresse: ${email}`);
+      document.getElementById('emailInput').value = '';
+    }
+  }
+
+  // Initialize
+  renderStatusUpdates();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CUSTOMER REVIEWS COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="reviews-page">
+  <div class="reviews-container">
+    <!-- Header -->
+    <header class="reviews-header">
+      <h1 class="page-title">
+        Customer Reviews
+      </h1>
+    </header>
+
+    <div class="reviews-content">
+      <!-- Left: Reviews Summary & List -->
+      <div class="reviews-main">
+        <!-- Rating Summary -->
+        <div class="rating-summary">
+          <div class="summary-left">
+            <div class="average-rating">
+              <span class="rating-number">{{ averageRating }}</span>
+              <div class="rating-stars">
+                <i *ngFor="let star of [1,2,3,4,5]" 
+                   class="bi"
+                   [ngClass]="star <= averageRating ? 'bi-star-fill' : (star - 0.5 <= averageRating ? 'bi-star-half' : 'bi-star')">
+                </i>
+              </div>
+              <span class="rating-count">Based on {{ totalReviews | number }} reviews</span>
+            </div>
+          </div>
+          <div class="summary-right">
+            <div class="rating-bars">
+              <div 
+                *ngFor="let rating of ratingBreakdown" 
+                class="rating-bar-row"
+                (click)="filterByRating = filterByRating === rating.stars ? 0 : rating.stars"
+                [class.active]="filterByRating === rating.stars">
+                <span class="stars-label">{{ rating.stars }} stars</span>
+                <div class="bar-track">
+                  <div class="bar-fill" [style.width.%]="rating.percentage"></div>
+                </div>
+                <span class="bar-count">{{ rating.count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Write Review Button -->
+        <div class="write-review-section">
+          <button class="write-review-btn" (click)="toggleReviewForm()">
+            <i class="bi bi-pencil-square"></i>
+            Write a Review
+          </button>
+        </div>
+
+        <!-- Write Review Form -->
+        <div class="review-form-container" *ngIf="showReviewForm">
+          <div class="review-form">
+            <h2 class="form-title">Share Your Experience</h2>
+            
+            <!-- Product Info -->
+            <div class="form-product">
+              <img [src]="productImage" [alt]="productName">
+              <span>{{ productName }}</span>
+            </div>
+
+            <!-- Rating Selection -->
+            <div class="form-group">
+              <label class="form-label">Your Rating *</label>
+              <div class="star-rating-input">
+                <button 
+                  *ngFor="let star of [1,2,3,4,5]" 
+                  type="button"
+                  class="star-btn"
+                  [class.active]="star <= (hoverRating || newReview.rating)"
+                  (click)="setRating(star)"
+                  (mouseenter)="setHoverRating(star)"
+                  (mouseleave)="setHoverRating(0)">
+                  <i class="bi" [ngClass]="star <= (hoverRating || newReview.rating) ? 'bi-star-fill' : 'bi-star'"></i>
+                </button>
+                <span class="rating-label" *ngIf="hoverRating || newReview.rating">
+                  {{ getRatingText(hoverRating || newReview.rating) }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Review Title -->
+            <div class="form-group">
+              <label class="form-label">Review Title *</label>
+              <input 
+                type="text" 
+                class="form-input"
+                [(ngModel)]="newReview.title"
+                placeholder="Summarize your experience">
+            </div>
+
+            <!-- Review Content -->
+            <div class="form-group">
+              <label class="form-label">Your Review *</label>
+              <textarea 
+                class="form-textarea"
+                [(ngModel)]="newReview.content"
+                placeholder="What did you like or dislike? What did you use this product for?"
+                rows="5"></textarea>
+              <span class="char-count" [class.error]="newReview.content.length < 20 && newReview.content.length > 0">
+                {{ newReview.content.length }} / 20 minimum characters
+              </span>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+              <label class="form-label">Add Photos (optional)</label>
+              <div class="image-upload">
+                <button class="upload-btn">
+                  <i class="bi bi-camera"></i>
+                  <span>Add Photos</span>
+                </button>
+                <span class="upload-hint">Up to 5 images, max 5MB each</span>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button class="btn btn--secondary" (click)="toggleReviewForm()">Cancel</button>
+              <button 
+                class="btn btn--primary" 
+                (click)="submitReview()"
+                [disabled]="!isReviewValid() || isSubmitting">
+                <span *ngIf="!isSubmitting">Submit Review</span>
+                <span *ngIf="isSubmitting">
+                  <i class="bi bi-arrow-repeat spin"></i>
+                  Submitting...
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Filter & Sort -->
+        <div class="reviews-controls">
+          <div class="filter-info">
+            <span *ngIf="filterByRating === 0">Showing all {{ getFilteredReviews().length }} reviews</span>
+            <span *ngIf="filterByRating > 0">
+              Showing {{ getFilteredReviews().length }} reviews with {{ filterByRating }} stars
+              <button class="clear-filter" (click)="filterByRating = 0">
+                <i class="bi bi-x"></i> Clear
+              </button>
+            </span>
+          </div>
+          <div class="sort-control">
+            <label>Sort by:</label>
+            <select [(ngModel)]="sortBy">
+              <option value="recent">Most Recent</option>
+              <option value="helpful">Most Helpful</option>
+              <option value="highest">Highest Rated</option>
+              <option value="lowest">Lowest Rated</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+          <div *ngFor="let review of getFilteredReviews()" class="review-card">
+            <!-- Review Header -->
+            <div class="review-header">
+              <img [src]="review.avatar" [alt]="review.author" class="reviewer-avatar">
+              <div class="reviewer-info">
+                <span class="reviewer-name">{{ review.author }}</span>
+                <span class="verified-badge" *ngIf="review.verified">
+                  <i class="bi bi-patch-check-fill"></i>
+                  Verified Purchase
+                </span>
+              </div>
+              <div class="review-meta">
+                <div class="review-rating">
+                  <i *ngFor="let star of [1,2,3,4,5]" 
+                     class="bi"
+                     [ngClass]="star <= review.rating ? 'bi-star-fill' : 'bi-star'">
+                  </i>
+                </div>
+                <span class="review-date">{{ formatDate(review.date) }}</span>
+              </div>
+            </div>
+
+            <!-- Review Content -->
+            <div class="review-content">
+              <h3 class="review-title">{{ review.title }}</h3>
+              <p class="review-text">{{ review.content }}</p>
+              
+              <!-- Review Images -->
+              <div class="review-images" *ngIf="review.images && review.images.length > 0">
+                <img *ngFor="let img of review.images" [src]="img" alt="Review photo">
+              </div>
+            </div>
+
+            <!-- Seller Response -->
+            <div class="seller-response" *ngIf="review.response">
+              <div class="response-header">
+                <i class="bi bi-shop"></i>
+                <span class="response-author">{{ review.response.author }}</span>
+                <span class="response-date">{{ formatDate(review.response.date) }}</span>
+              </div>
+              <p class="response-text">{{ review.response.content }}</p>
+            </div>
+
+            <!-- Review Actions -->
+            <div class="review-actions">
+              <span class="helpful-label">Was this review helpful?</span>
+              <div class="helpful-buttons">
+                <button 
+                  class="helpful-btn" 
+                  [class.voted]="hasVoted(review.id)"
+                  [disabled]="hasVoted(review.id)"
+                  (click)="voteHelpful(review, true)">
+                  <i class="bi bi-hand-thumbs-up"></i>
+                  <span>Yes ({{ review.helpful }})</span>
+                </button>
+                <button 
+                  class="helpful-btn" 
+                  [class.voted]="hasVoted(review.id)"
+                  [disabled]="hasVoted(review.id)"
+                  (click)="voteHelpful(review, false)">
+                  <i class="bi bi-hand-thumbs-down"></i>
+                  <span>No ({{ review.notHelpful }})</span>
+                </button>
+              </div>
+              <button class="report-btn">
+                <i class="bi bi-flag"></i>
+                Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-reviews" *ngIf="getFilteredReviews().length === 0">
+            <i class="bi bi-chat-square-text"></i>
+            <h3>No reviews found</h3>
+            <p *ngIf="filterByRating > 0">Try clearing your filter to see all reviews.</p>
+            <p *ngIf="filterByRating === 0">Be the first to write a review!</p>
+          </div>
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more" *ngIf="getFilteredReviews().length > 0">
+          <button class="load-more-btn">
+            <i class="bi bi-arrow-down-circle"></i>
+            Load More Reviews
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Product Card -->
+      <div class="reviews-sidebar">
+        <div class="product-card">
+          <img [src]="productImage" [alt]="productName" class="product-image">
+          <h3 class="product-name">{{ productName }}</h3>
+          <div class="product-rating">
+            <div class="stars">
+              <i *ngFor="let star of [1,2,3,4,5]" 
+                 class="bi"
+                 [ngClass]="star <= averageRating ? 'bi-star-fill' : (star - 0.5 <= averageRating ? 'bi-star-half' : 'bi-star')">
+              </i>
+            </div>
+            <span class="rating-text">{{ averageRating }} ({{ totalReviews | number }} reviews)</span>
+          </div>
+          <button class="view-product-btn">View Product</button>
+        </div>
+
+        <!-- Review Guidelines -->
+        <div class="guidelines-card">
+          <h4>
+            <i class="bi bi-info-circle"></i>
+            Review Guidelines
+          </h4>
+          <ul>
+            <li>Focus on the product and your experience</li>
+            <li>Be honest and objective</li>
+            <li>Include relevant details</li>
+            <li>Avoid inappropriate language</li>
+            <li>Don't include personal information</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

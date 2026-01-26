@@ -1,0 +1,166 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VERSIONING COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="versioning-showcase">
+  <h1 class="page-title">Historique des versions</h1>
+  <p class="page-subtitle">Gestion et suivi des versions du projet</p>
+
+  <!-- Controls -->
+  <div class="version-controls">
+    <div class="search-wrapper">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Rechercher une version..."
+        [(ngModel)]="searchQuery"
+      />
+    </div>
+    <div class="filter-tabs">
+      <button
+        class="filter-tab"
+        [class.active]="filterType === 'all'"
+        (click)="filterType = 'all'"
+      >Toutes</button>
+      <button
+        class="filter-tab"
+        [class.active]="filterType === 'major'"
+        (click)="filterType = 'major'"
+      >Majeures</button>
+      <button
+        class="filter-tab"
+        [class.active]="filterType === 'minor'"
+        (click)="filterType = 'minor'"
+      >Mineures</button>
+      <button
+        class="filter-tab"
+        [class.active]="filterType === 'patch'"
+        (click)="filterType = 'patch'"
+      >Patches</button>
+      <button
+        class="filter-tab"
+        [class.active]="filterType === 'draft'"
+        (click)="filterType = 'draft'"
+      >Brouillons</button>
+    </div>
+  </div>
+
+  <!-- Version Timeline -->
+  <div class="version-timeline">
+    <div
+      *ngFor="let version of filteredVersions; let first = first"
+      class="version-item"
+      [class.expanded]="expandedVersion === version.id"
+      [class.current]="version.status === 'current'"
+      [class.draft]="version.status === 'draft'"
+    >
+      <!-- Timeline indicator -->
+      <div class="timeline-indicator">
+        <div class="timeline-dot" [class.current]="version.status === 'current'">
+          <i class="bi" [ngClass]="version.status === 'current' ? 'bi-check-lg' : 'bi-tag'"></i>
+        </div>
+        <div class="timeline-line" *ngIf="!first"></div>
+      </div>
+
+      <!-- Version content -->
+      <div class="version-content">
+        <div class="version-header" (click)="toggleVersion(version.id)">
+          <div class="version-main">
+            <div class="version-title">
+              <span class="version-number">v{{ version.version }}</span>
+              <span class="version-badge" [ngClass]="getVersionBadge(version.type).class">
+                {{ getVersionBadge(version.type).label }}
+              </span>
+              <span class="status-badge" [ngClass]="getStatusBadge(version.status).class">
+                {{ getStatusBadge(version.status).label }}
+              </span>
+            </div>
+            <div class="version-meta">
+              <span class="version-date">
+                <i class="bi bi-calendar3"></i>
+                {{ formatDate(version.date) }}
+              </span>
+              <span class="version-author">
+                <span class="author-avatar">{{ version.author.initials }}</span>
+                {{ version.author.name }}
+              </span>
+              <span class="version-size" *ngIf="version.size">
+                <i class="bi bi-file-earmark"></i>
+                {{ version.size }}
+              </span>
+            </div>
+          </div>
+          <div class="version-actions">
+            <button class="action-btn" title="Télécharger">
+              <i class="bi bi-download"></i>
+            </button>
+            <button class="action-btn" title="Comparer">
+              <i class="bi bi-file-diff"></i>
+            </button>
+            <button class="expand-btn">
+              <i class="bi" [ngClass]="expandedVersion === version.id ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Version details -->
+        <div class="version-details" *ngIf="expandedVersion === version.id">
+          <p class="version-notes" *ngIf="version.notes">{{ version.notes }}</p>
+
+          <div class="changelog">
+            <h4 class="changelog-title">Changelog</h4>
+            <ul class="changelog-list">
+              <li
+                *ngFor="let change of version.changes"
+                class="changelog-item"
+              >
+                <span class="change-icon" [style.color]="getChangeColor(change.type)">
+                  <i class="bi" [ngClass]="getChangeIcon(change.type)"></i>
+                </span>
+                <span class="change-type" [style.color]="getChangeColor(change.type)">
+                  {{ change.type | titlecase }}
+                </span>
+                <span class="change-desc">{{ change.description }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="version-footer">
+            <button class="btn btn--secondary">
+              <i class="bi bi-clock-history"></i>
+              Restaurer cette version
+            </button>
+            <button class="btn btn--primary" *ngIf="version.status !== 'current'">
+              <i class="bi bi-arrow-up-circle"></i>
+              Définir comme actuelle
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Section -->
+  <section class="compare-section">
+    <h2 class="section-title">Comparer les versions</h2>
+    <div class="compare-card">
+      <div class="compare-select">
+        <label>Version A</label>
+        <select class="compare-dropdown">
+          <option *ngFor="let v of versions" [value]="v.version">v{{ v.version }}</option>
+        </select>
+      </div>
+      <div class="compare-arrow">
+        <i class="bi bi-arrow-left-right"></i>
+      </div>
+      <div class="compare-select">
+        <label>Version B</label>
+        <select class="compare-dropdown">
+          <option *ngFor="let v of versions" [value]="v.version">v{{ v.version }}</option>
+        </select>
+      </div>
+      <button class="btn btn--primary">Comparer</button>
+    </div>
+  </section>
+</div>

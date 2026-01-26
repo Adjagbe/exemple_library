@@ -1,0 +1,105 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ERROR MESSAGE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="error-showcase">
+  <h1 class="page-title">Messages d'Erreur</h1>
+
+  <!-- Toast Errors -->
+  <section class="showcase-section">
+    <h2 class="section-title">Toast Notifications</h2>
+    <div class="toast-container">
+      <div *ngFor="let toast of toasts" class="toast toast--error">
+        <div class="toast-icon">
+          <i class="bi" [ngClass]="toast.icon || 'bi-x-circle-fill'"></i>
+        </div>
+        <div class="toast-content">
+          <strong class="toast-title">{{ toast.title }}</strong>
+          <p class="toast-message">{{ toast.message }}</p>
+        </div>
+        <button *ngIf="toast.dismissible" class="toast-close" (click)="dismissToast(toast.id)">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner Error -->
+  <section class="showcase-section">
+    <h2 class="section-title">Banner d'Erreur</h2>
+    <div class="error-banner">
+      <div class="banner-icon">
+        <i class="bi" [ngClass]="banner.icon || 'bi-x-circle-fill'"></i>
+      </div>
+      <div class="banner-content">
+        <strong class="banner-title">{{ banner.title }}</strong>
+        <p class="banner-message">{{ banner.message }}</p>
+        <code *ngIf="banner.code" class="banner-code">{{ banner.code }}</code>
+      </div>
+      <button *ngIf="banner.action" class="banner-action" (click)="banner.action.callback()">
+        {{ banner.action.label }}
+      </button>
+    </div>
+  </section>
+
+  <!-- Inline Errors -->
+  <section class="showcase-section">
+    <h2 class="section-title">Messages Inline</h2>
+    <div class="form-demo">
+      <div class="form-group has-error">
+        <label>Email</label>
+        <input type="email" value="invalid-email" class="input-error">
+        <div class="inline-error">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>L'adresse email n'est pas valide.</span>
+        </div>
+      </div>
+      <div class="form-group has-error">
+        <label>Mot de passe</label>
+        <input type="password" class="input-error">
+        <div class="inline-error">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>Ce champ est requis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alert Boxes -->
+  <section class="showcase-section">
+    <h2 class="section-title">Alert Boxes</h2>
+    <div class="alerts-container">
+      <div *ngFor="let alert of alerts" class="alert alert--error">
+        <div class="alert-icon">
+          <i class="bi" [ngClass]="alert.icon || 'bi-exclamation-triangle'"></i>
+        </div>
+        <div class="alert-content">
+          <strong class="alert-title">{{ alert.title }}</strong>
+          <p class="alert-message">{{ alert.message }}</p>
+          <button *ngIf="alert.action" class="alert-action" (click)="alert.action.callback()">
+            {{ alert.action.label }}
+          </button>
+        </div>
+        <button class="alert-close" (click)="dismissAlert(alert.id)">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Validation Summary -->
+  <section class="showcase-section">
+    <h2 class="section-title">Résumé de Validation</h2>
+    <div class="validation-summary">
+      <div class="summary-header">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>3 erreurs doivent être corrigées</span>
+      </div>
+      <ul class="summary-list">
+        <li><a href="#">Le champ "Nom" est requis</a></li>
+        <li><a href="#">L'adresse email n'est pas valide</a></li>
+        <li><a href="#">Le mot de passe doit contenir au moins 8 caractères</a></li>
+      </ul>
+    </div>
+  </section>
+</div>

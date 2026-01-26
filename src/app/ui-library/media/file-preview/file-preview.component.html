@@ -1,0 +1,221 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FILE PREVIEW COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="preview-showcase">
+  <h1 class="page-title">Preview de fichiers</h1>
+  <p class="page-subtitle">Visualisez différents types de fichiers</p>
+
+  <!-- File List -->
+  <div class="file-list">
+    <div
+      *ngFor="let file of files"
+      class="file-card"
+      (click)="openPreview(file)"
+    >
+      <div class="file-thumbnail" [style.background-color]="getFileColor(file.type) + '15'">
+        <i class="bi" [ngClass]="getFileIcon(file.type)" [style.color]="getFileColor(file.type)"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">{{ file.name }}</h4>
+        <div class="file-meta">
+          <span>{{ file.size }}</span>
+          <span>{{ formatDate(file.date) }}</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="preview-modal" [class.open]="isPreviewOpen" *ngIf="currentFile">
+    <div class="modal-backdrop" (click)="closePreview()"></div>
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="header-info">
+          <i class="bi" [ngClass]="getFileIcon(currentFile.type)" [style.color]="getFileColor(currentFile.type)"></i>
+          <div>
+            <h3>{{ currentFile.name }}</h3>
+            <span>{{ currentFile.size }} • {{ currentFile.author }}</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="action-btn"><i class="bi bi-download"></i></button>
+          <button class="action-btn"><i class="bi bi-share"></i></button>
+          <button class="action-btn"><i class="bi bi-three-dots"></i></button>
+          <button class="close-btn" (click)="closePreview()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Content -->
+      <div class="preview-content">
+        <!-- Image Preview -->
+        <div class="preview-image" *ngIf="currentFile.type === 'image'">
+          <div class="image-placeholder" [style.background-color]="getFileColor(currentFile.type)">
+            <i class="bi bi-image"></i>
+            <span>Aperçu de l'image</span>
+          </div>
+        </div>
+
+        <!-- PDF Preview -->
+        <div class="preview-pdf" *ngIf="currentFile.type === 'pdf'">
+          <div class="pdf-viewer">
+            <div class="pdf-toolbar">
+              <button><i class="bi bi-zoom-out"></i></button>
+              <span>100%</span>
+              <button><i class="bi bi-zoom-in"></i></button>
+              <span class="page-info">Page 1 / 12</span>
+            </div>
+            <div class="pdf-content">
+              <div class="pdf-page">
+                <div class="pdf-placeholder">
+                  <i class="bi bi-file-earmark-pdf"></i>
+                  <span>Document PDF</span>
+                  <p>12 pages • Rapport financier Q4 2024</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Preview -->
+        <div class="preview-video" *ngIf="currentFile.type === 'video'">
+          <div class="video-player">
+            <div class="video-content" [style.background-color]="getFileColor(currentFile.type)">
+              <i class="bi bi-play-circle-fill"></i>
+            </div>
+            <div class="video-controls">
+              <button class="play-btn"><i class="bi bi-play-fill"></i></button>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 35%"></div>
+              </div>
+              <span class="time">01:24 / 04:12</span>
+              <button><i class="bi bi-volume-up-fill"></i></button>
+              <button><i class="bi bi-fullscreen"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio Preview -->
+        <div class="preview-audio" *ngIf="currentFile.type === 'audio'">
+          <div class="audio-player">
+            <div class="audio-cover" [style.background-color]="getFileColor(currentFile.type)">
+              <i class="bi bi-music-note-beamed"></i>
+            </div>
+            <div class="audio-info">
+              <h4>{{ currentFile.name }}</h4>
+              <p>Durée : 32:45</p>
+            </div>
+            <div class="audio-controls">
+              <button><i class="bi bi-skip-start-fill"></i></button>
+              <button class="play-btn"><i class="bi bi-play-fill"></i></button>
+              <button><i class="bi bi-skip-end-fill"></i></button>
+            </div>
+            <div class="audio-progress">
+              <span>12:30</span>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 40%"></div>
+              </div>
+              <span>32:45</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Preview -->
+        <div class="preview-code" *ngIf="currentFile.type === 'code'">
+          <div class="code-editor">
+            <div class="code-header">
+              <span class="file-tab active">{{ currentFile.name }}</span>
+            </div>
+            <pre class="code-content"><code>{{ currentFile.content }}</code></pre>
+          </div>
+        </div>
+
+        <!-- Document Preview -->
+        <div class="preview-document" *ngIf="currentFile.type === 'document'">
+          <div class="doc-viewer">
+            <div class="doc-page">
+              <h2>Spécifications du projet</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <h3>1. Introduction</h3>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <h3>2. Objectifs</h3>
+              <ul>
+                <li>Développer une interface utilisateur moderne</li>
+                <li>Optimiser les performances</li>
+                <li>Améliorer l'expérience utilisateur</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spreadsheet Preview -->
+        <div class="preview-spreadsheet" *ngIf="currentFile.type === 'spreadsheet'">
+          <div class="spreadsheet-viewer">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>A</th>
+                  <th>B</th>
+                  <th>C</th>
+                  <th>D</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="row-number">1</td>
+                  <td>Mois</td>
+                  <td>Ventes</td>
+                  <td>Objectif</td>
+                  <td>Écart</td>
+                </tr>
+                <tr>
+                  <td class="row-number">2</td>
+                  <td>Janvier</td>
+                  <td>45 000 €</td>
+                  <td>40 000 €</td>
+                  <td>+12.5%</td>
+                </tr>
+                <tr>
+                  <td class="row-number">3</td>
+                  <td>Février</td>
+                  <td>52 000 €</td>
+                  <td>45 000 €</td>
+                  <td>+15.5%</td>
+                </tr>
+                <tr>
+                  <td class="row-number">4</td>
+                  <td>Mars</td>
+                  <td>48 500 €</td>
+                  <td>50 000 €</td>
+                  <td>-3.0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <span class="file-date">Modifié le {{ formatDate(currentFile.date) }} par {{ currentFile.author }}</span>
+        <div class="footer-actions">
+          <button class="btn btn--secondary">
+            <i class="bi bi-pencil"></i>
+            Modifier
+          </button>
+          <button class="btn btn--primary">
+            <i class="bi bi-download"></i>
+            Télécharger
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

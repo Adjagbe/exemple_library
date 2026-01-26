@@ -1,0 +1,83 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MEGA MENU COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="mega-menu-wrapper" (mouseenter)="openMenu()" (mouseleave)="closeMenu()">
+  <!-- Trigger -->
+  <button class="mega-menu-trigger" [class.active]="isOpen">
+    <i class="bi bi-grid-3x3-gap"></i>
+    <span>Browse</span>
+    <i class="bi bi-chevron-down arrow"></i>
+  </button>
+
+  <!-- Mega Menu Panel -->
+  <div class="mega-menu" [class.mega-menu--open]="isOpen">
+    <div class="mega-menu-container">
+      <!-- Categories Sidebar -->
+      <div class="mega-menu-sidebar">
+        <ul class="category-list">
+          <li 
+            *ngFor="let category of categories"
+            class="category-item"
+            [class.active]="activeCategory === category.id"
+            (mouseenter)="setActiveCategory(category.id)">
+            <span class="category-title">{{ category.title }}</span>
+            <i class="bi bi-chevron-right"></i>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Content Area -->
+      <div class="mega-menu-content">
+        <!-- Category Items -->
+        <div class="content-section">
+          <h3 class="section-title">{{ getActiveCategory()?.title }}</h3>
+          <ul class="item-list">
+            <li *ngFor="let item of getActiveCategory()?.items" class="item">
+              <a [href]="item.link" class="item-link">
+                <i *ngIf="item.icon" class="bi" [ngClass]="item.icon"></i>
+                <span>{{ item.label }}</span>
+                <span *ngIf="item.badge" class="item-badge">{{ item.badge }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Featured Section -->
+        <div class="featured-section">
+          <h4 class="featured-title">Featured</h4>
+          <div class="featured-grid">
+            <a *ngFor="let featured of featuredItems" [href]="featured.link" class="featured-card">
+              <div class="featured-image">
+                <img [src]="featured.image" [alt]="featured.title">
+                <span *ngIf="featured.badge" class="featured-badge">{{ featured.badge }}</span>
+              </div>
+              <div class="featured-content">
+                <h5>{{ featured.title }}</h5>
+                <p>{{ featured.description }}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="mega-menu-footer">
+        <div class="footer-links">
+          <a href="/help" class="footer-link">
+            <i class="bi bi-question-circle"></i>
+            Help Center
+          </a>
+          <a href="/contact" class="footer-link">
+            <i class="bi bi-headset"></i>
+            Contact Support
+          </a>
+        </div>
+        <a href="/all" class="view-all-link">
+          View All Products
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

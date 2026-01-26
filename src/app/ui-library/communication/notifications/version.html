@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centre de notifications - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* NOTIFICATIONS COMPONENT - Premium UI Library                    */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .notifications-showcase {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 3rem 0 1rem 0;
+    }
+
+    /* CONTAINER */
+    .notifications-container {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .notifications-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .unread-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 8px;
+      background: #ef4444;
+      border-radius: 12px;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .header-actions { display: flex; gap: 1rem; }
+
+    .action-link {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0;
+      background: none;
+      border: none;
+      font-size: 0.8125rem;
+      color: #4f46e5;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-link:hover { color: #4338ca; }
+    .action-link--danger { color: #ef4444; }
+    .action-link--danger:hover { color: #dc2626; }
+
+    /* FILTERS */
+    .notifications-filters {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+      overflow-x: auto;
+    }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 2rem;
+      font-size: 0.8125rem;
+      color: #6b7280;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #c7d2fe;
+      color: #4f46e5;
+    }
+
+    .filter-btn.active {
+      background: #4f46e5;
+      border-color: #4f46e5;
+      color: white;
+    }
+
+    .filter-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+    }
+
+    /* NOTIFICATION LIST */
+    .notifications-list {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .notification-item {
+      position: relative;
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #f3f4f6;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .notification-item:hover {
+      background: #f9fafb;
+    }
+
+    .notification-item:hover .notification-actions { opacity: 1; }
+    .notification-item.unread { background: #faf5ff; }
+
+    .notification-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .notification-icon i { font-size: 1.125rem; }
+
+    .notification-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: white;
+      font-weight: 600;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .notification-content { flex: 1; min-width: 0; }
+
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      color: #111827;
+      font-size: 0.9375rem;
+    }
+
+    .notification-time {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+
+    .notification-message {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.875rem;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    .notification-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0;
+      background: none;
+      border: none;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .notification-action:hover { gap: 0.5rem; }
+    .notification-action i { font-size: 0.75rem; }
+
+    .notification-actions {
+      display: flex;
+      gap: 0.25rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .item-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.375rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .item-action:hover {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .item-action--danger:hover {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .unread-indicator {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #4f46e5;
+      border-radius: 50%;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .empty-state.visible { display: flex; }
+
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .empty-icon i { font-size: 1.5rem; color: #9ca3af; }
+    .empty-state h3 { margin: 0 0 0.375rem 0; font-size: 1rem; color: #374151; }
+    .empty-state p { margin: 0; font-size: 0.875rem; color: #9ca3af; }
+
+    /* SETTINGS */
+    .notifications-settings {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+    }
+
+    .settings-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .settings-btn:hover { background: #e5e7eb; }
+
+    /* TOAST SECTION */
+    .toast-section { margin-top: 2rem; }
+    .toast-examples { display: flex; flex-direction: column; gap: 1rem; }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .toast > i { font-size: 1.25rem; flex-shrink: 0; }
+
+    .toast--info { background: #eff6ff; border-left: 4px solid #3b82f6; }
+    .toast--info > i { color: #3b82f6; }
+
+    .toast--success { background: #f0fdf4; border-left: 4px solid #10b981; }
+    .toast--success > i { color: #10b981; }
+
+    .toast--warning { background: #fffbeb; border-left: 4px solid #f59e0b; }
+    .toast--warning > i { color: #f59e0b; }
+
+    .toast--error { background: #fef2f2; border-left: 4px solid #ef4444; }
+    .toast--error > i { color: #ef4444; }
+
+    .toast-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    .toast-content strong { font-size: 0.9375rem; color: #111827; }
+    .toast-content span { font-size: 0.8125rem; color: #6b7280; }
+
+    .toast-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      border: none;
+      border-radius: 0.25rem;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toast-close:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #374151;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .notifications-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .notification-actions { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="notifications-showcase">
+  <h1 class="page-title">Centre de notifications</h1>
+  <p class="page-subtitle">Gérez vos notifications et alertes</p>
+
+  <div class="notifications-container">
+    <!-- Header -->
+    <div class="notifications-header">
+      <div class="header-left">
+        <h2 class="header-title">
+          Notifications
+          <span class="unread-badge" id="unreadBadge">3</span>
+        </h2>
+      </div>
+      <div class="header-actions" id="headerActions">
+        <button class="action-link" id="markAllBtn" onclick="markAllAsRead()">
+          <i class="bi bi-check-all"></i>
+          Tout marquer comme lu
+        </button>
+        <button class="action-link action-link--danger" id="clearAllBtn" onclick="clearAll()">
+          <i class="bi bi-trash"></i>
+          Tout effacer
+        </button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="notifications-filters" id="filters">
+      <button class="filter-btn active" data-filter="all">Toutes</button>
+      <button class="filter-btn" data-filter="unread">Non lues <span class="filter-count" id="unreadFilterCount">3</span></button>
+      <button class="filter-btn" data-filter="mention"><i class="bi bi-at"></i> Mentions</button>
+      <button class="filter-btn" data-filter="task"><i class="bi bi-check2-square"></i> Tâches</button>
+      <button class="filter-btn" data-filter="message"><i class="bi bi-chat-dots"></i> Messages</button>
+    </div>
+
+    <!-- Notification List -->
+    <div class="notifications-list" id="notificationsList"></div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon"><i class="bi bi-bell-slash"></i></div>
+      <h3>Aucune notification</h3>
+      <p>Vous n'avez pas de notifications pour le moment</p>
+    </div>
+
+    <!-- Notification Settings -->
+    <div class="notifications-settings">
+      <button class="settings-btn"><i class="bi bi-gear"></i> Paramètres de notification</button>
+    </div>
+  </div>
+
+  <!-- Notification Toast Examples -->
+  <section class="toast-section">
+    <h2 class="section-title">Toasts de notification</h2>
+    <div class="toast-examples">
+      <div class="toast toast--info">
+        <i class="bi bi-info-circle-fill"></i>
+        <div class="toast-content">
+          <strong>Information</strong>
+          <span>Une nouvelle mise à jour est disponible</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+      <div class="toast toast--success">
+        <i class="bi bi-check-circle-fill"></i>
+        <div class="toast-content">
+          <strong>Succès</strong>
+          <span>Vos modifications ont été enregistrées</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+      <div class="toast toast--warning">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="toast-content">
+          <strong>Attention</strong>
+          <span>Votre session expire dans 5 minutes</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+      <div class="toast toast--error">
+        <i class="bi bi-x-circle-fill"></i>
+        <div class="toast-content">
+          <strong>Erreur</strong>
+          <span>Une erreur est survenue lors de l'enregistrement</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Notifications
+  let notifications = [
+    { id: '1', type: 'mention', title: 'Marie Lambert vous a mentionné', message: 'dans le projet "Refonte UI Dashboard"', time: new Date(Date.now() - 5 * 60000), read: false, avatar: { initials: 'ML', color: '#4f46e5' }, action: { label: 'Voir' } },
+    { id: '2', type: 'task', title: 'Nouvelle tâche assignée', message: "Implémenter le système d'authentification OAuth2", time: new Date(Date.now() - 15 * 60000), read: false, action: { label: 'Voir la tâche' } },
+    { id: '3', type: 'success', title: 'Déploiement réussi', message: 'La version 2.4.0 a été déployée en production', time: new Date(Date.now() - 30 * 60000), read: false },
+    { id: '4', type: 'message', title: 'Nouveau message de Pierre Durand', message: '"Hey ! Tu as vu les dernières maquettes ?"', time: new Date(Date.now() - 45 * 60000), read: true, avatar: { initials: 'PD', color: '#10b981' }, action: { label: 'Répondre' } },
+    { id: '5', type: 'warning', title: 'Quota de stockage presque atteint', message: '85% de votre espace de stockage est utilisé', time: new Date(Date.now() - 2 * 3600000), read: true, action: { label: 'Gérer' } },
+    { id: '6', type: 'info', title: 'Mise à jour disponible', message: "Une nouvelle version de l'application est disponible", time: new Date(Date.now() - 3 * 3600000), read: true, action: { label: 'Mettre à jour' } },
+    { id: '7', type: 'error', title: 'Échec de la synchronisation', message: 'La synchronisation avec le serveur a échoué', time: new Date(Date.now() - 5 * 3600000), read: true, action: { label: 'Réessayer' } },
+    { id: '8', type: 'task', title: 'Rappel : Deadline demain', message: 'La tâche "Documentation API" doit être terminée demain', time: new Date(Date.now() - 24 * 3600000), read: true }
+  ];
+
+  let activeFilter = 'all';
+
+  // Utilities
+  function getNotificationIcon(type) {
+    const icons = { info: 'bi-info-circle-fill', success: 'bi-check-circle-fill', warning: 'bi-exclamation-triangle-fill', error: 'bi-x-circle-fill', mention: 'bi-at', task: 'bi-check2-square', message: 'bi-chat-dots-fill' };
+    return icons[type] || 'bi-bell-fill';
+  }
+
+  function getNotificationColor(type) {
+    const colors = { info: '#3b82f6', success: '#10b981', warning: '#f59e0b', error: '#ef4444', mention: '#8b5cf6', task: '#06b6d4', message: '#4f46e5' };
+    return colors[type] || '#6b7280';
+  }
+
+  function formatTime(date) {
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    if (minutes < 1) return "À l'instant";
+    if (minutes < 60) return `Il y a ${minutes} min`;
+    if (hours < 24) return `Il y a ${hours}h`;
+    if (days === 1) return 'Hier';
+    if (days < 7) return `Il y a ${days} jours`;
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  }
+
+  function getUnreadCount() {
+    return notifications.filter(n => !n.read).length;
+  }
+
+  function getFilteredNotifications() {
+    if (activeFilter === 'all') return notifications;
+    if (activeFilter === 'unread') return notifications.filter(n => !n.read);
+    return notifications.filter(n => n.type === activeFilter);
+  }
+
+  function updateUI() {
+    const unreadCount = getUnreadCount();
+    document.getElementById('unreadBadge').textContent = unreadCount;
+    document.getElementById('unreadBadge').style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+    document.getElementById('unreadFilterCount').textContent = unreadCount;
+    document.getElementById('unreadFilterCount').style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+    document.getElementById('markAllBtn').style.display = unreadCount > 0 ? 'flex' : 'none';
+    document.getElementById('clearAllBtn').style.display = notifications.length > 0 ? 'flex' : 'none';
+  }
+
+  function renderNotifications() {
+    const filtered = getFilteredNotifications();
+    const container = document.getElementById('notificationsList');
+    const emptyState = document.getElementById('emptyState');
+
+    if (filtered.length === 0) {
+      container.innerHTML = '';
+      emptyState.classList.add('visible');
+      return;
+    }
+
+    emptyState.classList.remove('visible');
+    container.innerHTML = filtered.map(n => {
+      const color = getNotificationColor(n.type);
+      return `
+        <div class="notification-item ${n.read ? '' : 'unread'}" data-id="${n.id}" onclick="markAsRead('${n.id}')">
+          ${!n.avatar ? `
+            <div class="notification-icon" style="background-color: ${color}15; color: ${color}">
+              <i class="bi ${getNotificationIcon(n.type)}"></i>
+            </div>
+          ` : `
+            <div class="notification-avatar" style="background-color: ${n.avatar.color}">
+              ${n.avatar.initials}
+            </div>
+          `}
+          <div class="notification-content">
+            <div class="notification-header">
+              <span class="notification-title">${n.title}</span>
+              <span class="notification-time">${formatTime(n.time)}</span>
+            </div>
+            <p class="notification-message">${n.message}</p>
+            ${n.action ? `
+              <button class="notification-action" style="color: ${color}">
+                ${n.action.label} <i class="bi bi-arrow-right"></i>
+              </button>
+            ` : ''}
+          </div>
+          <div class="notification-actions">
+            ${!n.read ? `
+              <button class="item-action" title="Marquer comme lu" onclick="event.stopPropagation(); markAsRead('${n.id}')">
+                <i class="bi bi-check2"></i>
+              </button>
+            ` : ''}
+            <button class="item-action item-action--danger" title="Supprimer" onclick="event.stopPropagation(); deleteNotification('${n.id}')">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          ${!n.read ? '<span class="unread-indicator"></span>' : ''}
+        </div>
+      `;
+    }).join('');
+
+    updateUI();
+  }
+
+  function markAsRead(id) {
+    const n = notifications.find(n => n.id === id);
+    if (n) n.read = true;
+    renderNotifications();
+  }
+
+  function markAllAsRead() {
+    notifications.forEach(n => n.read = true);
+    renderNotifications();
+  }
+
+  function deleteNotification(id) {
+    notifications = notifications.filter(n => n.id !== id);
+    renderNotifications();
+  }
+
+  function clearAll() {
+    notifications = [];
+    renderNotifications();
+  }
+
+  function setFilter(filter) {
+    activeFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+    renderNotifications();
+  }
+
+  // Event listeners
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+  });
+
+  // Initialize
+  renderNotifications();
+</script>
+
+</body>
+</html>

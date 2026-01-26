@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* EXPORT COMPONENT - Premium UI Library                           */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .export-showcase {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CONTAINER
+       ───────────────────────────────────────────────────────────────── */
+    .export-container {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+    }
+
+    .export-section {
+      padding: 1.5rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .export-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 1rem 0;
+    }
+
+    .section-header .section-title {
+      margin: 0;
+    }
+
+    .section-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .link-btn:hover {
+      text-decoration: underline;
+    }
+
+    .divider {
+      color: #d1d5db;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FORMAT GRID
+       ───────────────────────────────────────────────────────────────── */
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .format-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border: 2px solid transparent;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .format-card:hover:not(.disabled) {
+      background: #f3f4f6;
+    }
+
+    .format-card.selected {
+      background: #eff6ff;
+      border-color: #4f46e5;
+    }
+
+    .format-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .format-card > i:first-child {
+      font-size: 1.5rem;
+      color: #6b7280;
+    }
+
+    .format-card.selected > i:first-child {
+      color: #4f46e5;
+    }
+
+    .format-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .format-name {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .format-ext {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .check-icon {
+      color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       COLUMNS
+       ───────────────────────────────────────────────────────────────── */
+    .columns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .column-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .column-item:hover {
+      background: #f3f4f6;
+    }
+
+    .column-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .column-item span {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .columns-info {
+      margin: 1rem 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       OPTIONS
+       ───────────────────────────────────────────────────────────────── */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .option-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .filename-input {
+      display: flex;
+      align-items: center;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .filename-input input {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border: none;
+      background: none;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .filename-input input:focus {
+      outline: none;
+    }
+
+    .filename-input .file-ext {
+      padding: 0.625rem 1rem;
+      background: #e5e7eb;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .date-range {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .date-range input {
+      flex: 1;
+      padding: 0.625rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .date-range input:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+
+    .date-range span {
+      color: #6b7280;
+    }
+
+    .checkbox-option {
+      justify-content: flex-end;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .checkbox-label span {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SUMMARY
+       ───────────────────────────────────────────────────────────────── */
+    .export-summary {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .summary-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .summary-item > i {
+      font-size: 1.25rem;
+      color: #6b7280;
+    }
+
+    .summary-item div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .summary-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .summary-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .export-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn--outline {
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: #374151;
+    }
+
+    .btn--outline:hover {
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MODAL
+       ───────────────────────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 1rem;
+      width: 100%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .modal-header h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0;
+    }
+
+    .close-btn {
+      padding: 0.5rem;
+      background: none;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      border-radius: 0.375rem;
+    }
+
+    .close-btn:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      max-height: 50vh;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #f3f4f6;
+      background: #f9fafb;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PREVIEW TABLE
+       ───────────────────────────────────────────────────────────────── */
+    .preview-table-container {
+      overflow-x: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+    }
+
+    .preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .preview-table th,
+    .preview-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .preview-table th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .preview-table td {
+      color: #6b7280;
+    }
+
+    .preview-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .preview-note {
+      margin: 1rem 0 0;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PROGRESS
+       ───────────────────────────────────────────────────────────────── */
+    .export-progress {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .export-progress.active {
+      display: flex;
+    }
+
+    .progress-content {
+      text-align: center;
+    }
+
+    .progress-icon {
+      font-size: 3rem;
+      color: #4f46e5;
+      margin-bottom: 1rem;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .progress-content h4 {
+      font-size: 1.125rem;
+      color: #111827;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .progress-bar {
+      width: 300px;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      width: 0;
+    }
+
+    .progress-text {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .export-showcase {
+        padding: 1rem;
+      }
+
+      .export-summary {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .summary-info {
+        justify-content: space-between;
+      }
+
+      .export-actions {
+        justify-content: stretch;
+      }
+
+      .export-actions .btn {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .format-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="export-showcase">
+    <h1 class="page-title">Export</h1>
+    <p class="page-subtitle">Exportez vos données en CSV, Excel, PDF ou JSON</p>
+
+    <div class="export-container">
+      <!-- Format Selection -->
+      <section class="export-section">
+        <h2 class="section-title">Format d'export</h2>
+        <div class="format-grid" id="formatGrid"></div>
+      </section>
+
+      <!-- Column Selection -->
+      <section class="export-section">
+        <div class="section-header">
+          <h2 class="section-title">Colonnes à exporter</h2>
+          <div class="section-actions">
+            <button class="link-btn" onclick="selectAllColumns()">Tout sélectionner</button>
+            <span class="divider">|</span>
+            <button class="link-btn" onclick="deselectAllColumns()">Tout désélectionner</button>
+          </div>
+        </div>
+        <div class="columns-grid" id="columnsGrid"></div>
+        <p class="columns-info" id="columnsInfo">6 colonnes sélectionnées</p>
+      </section>
+
+      <!-- Options -->
+      <section class="export-section">
+        <h2 class="section-title">Options</h2>
+        <div class="options-grid">
+          <div class="option-group">
+            <label class="option-label">Nom du fichier</label>
+            <div class="filename-input">
+              <input type="text" id="filename" value="export-data" placeholder="export-data">
+              <span class="file-ext" id="fileExt">.csv</span>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <label class="option-label">Période</label>
+            <div class="date-range">
+              <input type="date" id="dateStart">
+              <span>à</span>
+              <input type="date" id="dateEnd">
+            </div>
+          </div>
+
+          <div class="option-group checkbox-option">
+            <label class="checkbox-label">
+              <input type="checkbox" id="includeHeaders" checked>
+              <span>Inclure les en-têtes</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Summary & Export -->
+      <section class="export-section export-summary">
+        <div class="summary-info">
+          <div class="summary-item">
+            <i class="bi bi-file-earmark"></i>
+            <div>
+              <span class="summary-label">Format</span>
+              <span class="summary-value" id="summaryFormat">CSV (.csv)</span>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i class="bi bi-table"></i>
+            <div>
+              <span class="summary-label">Enregistrements</span>
+              <span class="summary-value">1 547</span>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i class="bi bi-columns-gap"></i>
+            <div>
+              <span class="summary-label">Colonnes</span>
+              <span class="summary-value" id="summaryColumns">6</span>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i class="bi bi-hdd"></i>
+            <div>
+              <span class="summary-label">Taille estimée</span>
+              <span class="summary-value" id="summarySize">181.2 Ko</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="export-actions">
+          <button class="btn btn--outline" onclick="openModal()">
+            <i class="bi bi-eye"></i>
+            Aperçu
+          </button>
+          <button class="btn btn--primary" id="exportBtn" onclick="startExport()">
+            <i class="bi bi-download"></i>
+            Exporter
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Export Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Aperçu de l'export</h3>
+        <button class="close-btn" onclick="closeModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" id="previewBody">
+        <div class="preview-table-container">
+          <table class="preview-table" id="previewTable"></table>
+        </div>
+        <p class="preview-note">Affichage des 3 premiers enregistrements sur 1 547</p>
+      </div>
+
+      <div class="modal-body export-progress" id="progressBody">
+        <div class="progress-content">
+          <div class="progress-icon">
+            <i class="bi bi-arrow-down-circle"></i>
+          </div>
+          <h4>Export en cours...</h4>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span class="progress-text" id="progressText">0%</span>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="modalFooter">
+        <button class="btn btn--outline" onclick="closeModal()">Annuler</button>
+        <button class="btn btn--primary" onclick="startExport()">
+          <i class="bi bi-download"></i>
+          Lancer l'export
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // EXPORT COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // DATA
+    // ─────────────────────────────────────────────────────────────────
+    const formats = [
+      { id: 'csv', name: 'CSV', extension: '.csv', icon: 'bi-filetype-csv', available: true },
+      { id: 'excel', name: 'Excel', extension: '.xlsx', icon: 'bi-file-earmark-excel', available: true },
+      { id: 'pdf', name: 'PDF', extension: '.pdf', icon: 'bi-file-earmark-pdf', available: true },
+      { id: 'json', name: 'JSON', extension: '.json', icon: 'bi-filetype-json', available: true }
+    ];
+
+    const columns = [
+      { key: 'id', label: 'ID', selected: true },
+      { key: 'name', label: 'Nom', selected: true },
+      { key: 'email', label: 'Email', selected: true },
+      { key: 'phone', label: 'Téléphone', selected: true },
+      { key: 'status', label: 'Statut', selected: true },
+      { key: 'createdAt', label: 'Date création', selected: true },
+      { key: 'lastLogin', label: 'Dernière connexion', selected: false },
+      { key: 'role', label: 'Rôle', selected: true },
+      { key: 'department', label: 'Département', selected: false }
+    ];
+
+    const sampleData = [
+      { id: 1, name: 'Jean Dupont', email: 'jean.dupont@email.com', phone: '+33 6 12 34 56 78', status: 'Actif', createdAt: '2024-01-15', role: 'Admin' },
+      { id: 2, name: 'Marie Martin', email: 'marie.martin@email.com', phone: '+33 6 23 45 67 89', status: 'Actif', createdAt: '2024-02-20', role: 'User' },
+      { id: 3, name: 'Pierre Bernard', email: 'pierre.bernard@email.com', phone: '+33 6 34 56 78 90', status: 'Inactif', createdAt: '2024-03-10', role: 'User' }
+    ];
+
+    let selectedFormat = 'csv';
+    const totalRecords = 1547;
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER FUNCTIONS
+    // ─────────────────────────────────────────────────────────────────
+    function renderFormats() {
+      const grid = document.getElementById('formatGrid');
+      grid.innerHTML = formats.map(format => `
+        <button 
+          class="format-card ${selectedFormat === format.id ? 'selected' : ''} ${!format.available ? 'disabled' : ''}"
+          onclick="${format.available ? `selectFormat('${format.id}')` : ''}"
+        >
+          <i class="bi ${format.icon}"></i>
+          <div class="format-info">
+            <span class="format-name">${format.name}</span>
+            <span class="format-ext">${format.extension}</span>
+          </div>
+          ${selectedFormat === format.id ? '<i class="bi bi-check-circle-fill check-icon"></i>' : ''}
+        </button>
+      `).join('');
+    }
+
+    function renderColumns() {
+      const grid = document.getElementById('columnsGrid');
+      grid.innerHTML = columns.map((col, index) => `
+        <label class="column-item">
+          <input type="checkbox" ${col.selected ? 'checked' : ''} onchange="toggleColumn(${index})">
+          <span>${col.label}</span>
+        </label>
+      `).join('');
+    }
+
+    function renderPreviewTable() {
+      const table = document.getElementById('previewTable');
+      const selectedCols = columns.filter(c => c.selected).slice(0, 5);
+
+      table.innerHTML = `
+        <thead>
+          <tr>
+            ${selectedCols.map(col => `<th>${col.label}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${sampleData.map(row => `
+            <tr>
+              ${selectedCols.map(col => `<td>${row[col.key] || ''}</td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      `;
+    }
+
+    function updateSummary() {
+      const format = formats.find(f => f.id === selectedFormat);
+      const selectedCount = columns.filter(c => c.selected).length;
+      const estimatedSize = getEstimatedSize(selectedCount);
+
+      document.getElementById('summaryFormat').textContent = `${format.name} (${format.extension})`;
+      document.getElementById('summaryColumns').textContent = selectedCount;
+      document.getElementById('columnsInfo').textContent = `${selectedCount} colonnes sélectionnées`;
+      document.getElementById('summarySize').textContent = estimatedSize;
+      document.getElementById('fileExt').textContent = format.extension;
+      document.getElementById('exportBtn').disabled = selectedCount === 0;
+    }
+
+    function getEstimatedSize(columnsCount) {
+      const baseSize = totalRecords * columnsCount * 20;
+      if (baseSize < 1024) return `${baseSize} o`;
+      if (baseSize < 1024 * 1024) return `${(baseSize / 1024).toFixed(1)} Ko`;
+      return `${(baseSize / 1024 / 1024).toFixed(1)} Mo`;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // EVENT HANDLERS
+    // ─────────────────────────────────────────────────────────────────
+    function selectFormat(formatId) {
+      selectedFormat = formatId;
+      renderFormats();
+      updateSummary();
+    }
+
+    function toggleColumn(index) {
+      columns[index].selected = !columns[index].selected;
+      updateSummary();
+    }
+
+    function selectAllColumns() {
+      columns.forEach(c => c.selected = true);
+      renderColumns();
+      updateSummary();
+    }
+
+    function deselectAllColumns() {
+      columns.forEach(c => c.selected = false);
+      renderColumns();
+      updateSummary();
+    }
+
+    function openModal() {
+      renderPreviewTable();
+      document.getElementById('previewBody').style.display = 'block';
+      document.getElementById('progressBody').classList.remove('active');
+      document.getElementById('modalFooter').style.display = 'flex';
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+    }
+
+    function startExport() {
+      document.getElementById('previewBody').style.display = 'none';
+      document.getElementById('progressBody').classList.add('active');
+      document.getElementById('modalFooter').style.display = 'none';
+      document.getElementById('modalOverlay').classList.add('open');
+
+      let progress = 0;
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+
+      const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          setTimeout(() => {
+            alert('Export terminé !');
+            closeModal();
+          }, 500);
+        }
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}%`;
+      }, 200);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderFormats();
+      renderColumns();
+      updateSummary();
+    });
+  </script>
+</body>
+</html>

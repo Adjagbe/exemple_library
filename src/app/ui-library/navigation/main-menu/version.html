@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Menu - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* MAIN MENU COMPONENT - Premium UI Library                        */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .demo-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .demo-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 1rem;
+    }
+
+    .main-menu {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      position: relative;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .mobile-toggle {
+      display: none;
+      padding: 0.75rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #374151;
+      cursor: pointer;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MENU LIST
+       ───────────────────────────────────────────────────────────────── */
+    .menu-list {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0 1rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MENU ITEM
+       ───────────────────────────────────────────────────────────────── */
+    .menu-item {
+      position: relative;
+    }
+
+    .menu-item.active > .menu-link {
+      background: #f0f5ff;
+      color: #4f46e5;
+    }
+
+    .menu-item:hover > .menu-link {
+      background: #f3f4f6;
+    }
+
+    .menu-item.has-children:hover .submenu,
+    .menu-item.submenu-open .submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .menu-item.submenu-open > .menu-link .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1rem;
+      color: #374151;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .menu-link i:first-child {
+      font-size: 1.125rem;
+    }
+
+    .menu-label {
+      flex: 1;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+      margin-left: 0.25rem;
+    }
+
+    .menu-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.125rem 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border-radius: 50px;
+    }
+
+    .badge--primary {
+      background: #eff6ff;
+      color: #4f46e5;
+    }
+
+    .badge--success {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .badge--warning {
+      background: #fffbeb;
+      color: #d97706;
+    }
+
+    .badge--danger {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SUBMENU
+       ───────────────────────────────────────────────────────────────── */
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      list-style: none;
+      padding: 0.5rem;
+      margin: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+
+    .submenu-item {
+      margin: 0;
+    }
+
+    .submenu-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: #4b5563;
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .submenu-link i {
+      font-size: 1rem;
+      color: #9ca3af;
+    }
+
+    .submenu-link:hover {
+      background: #f3f4f6;
+      color: #4f46e5;
+    }
+
+    .submenu-link:hover i {
+      color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .mobile-toggle {
+        display: block;
+      }
+
+      .menu-list {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.5rem 0;
+        z-index: 1000;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-list.mobile-open {
+        display: flex;
+      }
+
+      .menu-link {
+        padding: 1rem 1.5rem;
+        border-radius: 0;
+      }
+
+      .submenu {
+        position: static;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        padding-left: 1rem;
+        background: #f9fafb;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+      }
+
+      .menu-item.submenu-open .submenu {
+        display: block;
+      }
+
+      .submenu-link {
+        padding: 0.875rem 1.5rem;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 class="demo-title">Main Menu</h1>
+    
+    <nav class="main-menu">
+      <!-- Mobile Toggle -->
+      <button class="mobile-toggle" id="mobileToggle">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <!-- Menu Items -->
+      <ul class="menu-list" id="menuList">
+        <!-- Generated by JavaScript -->
+      </ul>
+    </nav>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // MAIN MENU COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // MENU DATA
+    // ─────────────────────────────────────────────────────────────────
+    const menuItems = [
+      {
+        id: 'dashboard',
+        label: 'Dashboard',
+        icon: 'bi-grid-1x2',
+        link: '/dashboard',
+        active: true
+      },
+      {
+        id: 'analytics',
+        label: 'Analytics',
+        icon: 'bi-graph-up',
+        link: '/analytics',
+        badge: 'New',
+        badgeType: 'primary'
+      },
+      {
+        id: 'products',
+        label: 'Products',
+        icon: 'bi-box-seam',
+        children: [
+          { id: 'all-products', label: 'All Products', icon: 'bi-grid', link: '/products' },
+          { id: 'add-product', label: 'Add Product', icon: 'bi-plus-circle', link: '/products/add' },
+          { id: 'categories', label: 'Categories', icon: 'bi-tags', link: '/products/categories' },
+          { id: 'inventory', label: 'Inventory', icon: 'bi-clipboard-data', link: '/products/inventory' }
+        ]
+      },
+      {
+        id: 'orders',
+        label: 'Orders',
+        icon: 'bi-cart3',
+        badge: '12',
+        badgeType: 'warning',
+        children: [
+          { id: 'all-orders', label: 'All Orders', icon: 'bi-list-ul', link: '/orders' },
+          { id: 'pending', label: 'Pending', icon: 'bi-clock', link: '/orders/pending', badge: '5', badgeType: 'warning' },
+          { id: 'completed', label: 'Completed', icon: 'bi-check-circle', link: '/orders/completed' },
+          { id: 'returns', label: 'Returns', icon: 'bi-arrow-return-left', link: '/orders/returns' }
+        ]
+      },
+      {
+        id: 'customers',
+        label: 'Customers',
+        icon: 'bi-people',
+        link: '/customers'
+      },
+      {
+        id: 'reports',
+        label: 'Reports',
+        icon: 'bi-file-earmark-bar-graph',
+        children: [
+          { id: 'sales', label: 'Sales Report', icon: 'bi-currency-dollar', link: '/reports/sales' },
+          { id: 'traffic', label: 'Traffic Report', icon: 'bi-bar-chart', link: '/reports/traffic' },
+          { id: 'revenue', label: 'Revenue Report', icon: 'bi-graph-up-arrow', link: '/reports/revenue' }
+        ]
+      },
+      {
+        id: 'settings',
+        label: 'Settings',
+        icon: 'bi-gear',
+        link: '/settings'
+      }
+    ];
+
+    let activeMenu = null;
+    let mobileMenuOpen = false;
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER MENU
+    // ─────────────────────────────────────────────────────────────────
+    function renderMenu() {
+      const container = document.getElementById('menuList');
+      container.innerHTML = menuItems.map(item => {
+        const hasChildren = item.children && item.children.length > 0;
+        const isActive = item.active ? 'active' : '';
+        const hasChildrenClass = hasChildren ? 'has-children' : '';
+
+        if (!hasChildren) {
+          return `
+            <li class="menu-item ${isActive}" data-id="${item.id}">
+              <a href="${item.link}" class="menu-link">
+                <i class="bi ${item.icon}"></i>
+                <span class="menu-label">${item.label}</span>
+                ${item.badge ? `<span class="menu-badge badge--${item.badgeType}">${item.badge}</span>` : ''}
+              </a>
+            </li>
+          `;
+        } else {
+          return `
+            <li class="menu-item ${isActive} ${hasChildrenClass}" data-id="${item.id}">
+              <button class="menu-link menu-trigger">
+                <i class="bi ${item.icon}"></i>
+                <span class="menu-label">${item.label}</span>
+                ${item.badge ? `<span class="menu-badge badge--${item.badgeType}">${item.badge}</span>` : ''}
+                <i class="bi bi-chevron-down dropdown-arrow"></i>
+              </button>
+              <ul class="submenu">
+                ${item.children.map(child => `
+                  <li class="submenu-item">
+                    <a href="${child.link}" class="submenu-link">
+                      <i class="bi ${child.icon}"></i>
+                      <span>${child.label}</span>
+                      ${child.badge ? `<span class="menu-badge badge--${child.badgeType}">${child.badge}</span>` : ''}
+                    </a>
+                  </li>
+                `).join('')}
+              </ul>
+            </li>
+          `;
+        }
+      }).join('');
+
+      // Add click listeners for submenu toggles
+      document.querySelectorAll('.menu-trigger').forEach(trigger => {
+        trigger.addEventListener('click', function(e) {
+          e.preventDefault();
+          const menuItem = this.closest('.menu-item');
+          const menuId = menuItem.dataset.id;
+          toggleSubmenu(menuId);
+        });
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // TOGGLE SUBMENU
+    // ─────────────────────────────────────────────────────────────────
+    function toggleSubmenu(menuId) {
+      const wasOpen = activeMenu === menuId;
+      
+      // Remove submenu-open from all items
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('submenu-open');
+      });
+
+      if (!wasOpen) {
+        const menuItem = document.querySelector(`.menu-item[data-id="${menuId}"]`);
+        if (menuItem) {
+          menuItem.classList.add('submenu-open');
+        }
+        activeMenu = menuId;
+      } else {
+        activeMenu = null;
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // TOGGLE MOBILE MENU
+    // ─────────────────────────────────────────────────────────────────
+    function toggleMobileMenu() {
+      mobileMenuOpen = !mobileMenuOpen;
+      const menuList = document.getElementById('menuList');
+      const toggleBtn = document.getElementById('mobileToggle');
+      const icon = toggleBtn.querySelector('i');
+
+      if (mobileMenuOpen) {
+        menuList.classList.add('mobile-open');
+        icon.className = 'bi bi-x-lg';
+      } else {
+        menuList.classList.remove('mobile-open');
+        icon.className = 'bi bi-list';
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // EVENT LISTENERS
+    // ─────────────────────────────────────────────────────────────────
+    document.getElementById('mobileToggle').addEventListener('click', toggleMobileMenu);
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', renderMenu);
+  </script>
+</body>
+</html>

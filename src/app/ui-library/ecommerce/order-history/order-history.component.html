@@ -1,0 +1,264 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ORDER HISTORY COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="order-history-page">
+  <div class="order-history-container">
+    <!-- Header -->
+    <header class="page-header">
+      <div class="header-content">
+        <h1 class="page-title">
+          <i class="bi bi-bag-check"></i>
+          Order History
+        </h1>
+        <p class="page-subtitle">View and manage your orders</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-value">{{ orders.length }}</span>
+          <span class="stat-label">Total Orders</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ getDeliveredCount() }}</span>
+          <span class="stat-label">Delivered</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ getInProgressCount() }}</span>
+          <span class="stat-label">In Progress</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filters -->
+    <div class="filters-section">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input 
+          type="text" 
+          placeholder="Search orders by number or product name..."
+          [(ngModel)]="searchQuery">
+      </div>
+      <div class="filter-controls">
+        <select class="filter-select" [(ngModel)]="statusFilter">
+          <option *ngFor="let status of statuses" [value]="status.value">{{ status.label }}</option>
+        </select>
+        <select class="filter-select" [(ngModel)]="dateFilter">
+          <option *ngFor="let date of dateRanges" [value]="date.value">{{ date.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Orders List -->
+    <div class="orders-list">
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="getFilteredOrders().length === 0">
+        <div class="empty-icon">
+          <i class="bi bi-bag-x"></i>
+        </div>
+        <h2>No orders found</h2>
+        <p *ngIf="searchQuery || statusFilter !== 'all' || dateFilter !== 'all'">
+          Try adjusting your filters to find what you're looking for.
+        </p>
+        <p *ngIf="!searchQuery && statusFilter === 'all' && dateFilter === 'all'">
+          You haven't placed any orders yet.
+        </p>
+        <button class="btn btn--primary">
+          <i class="bi bi-cart"></i>
+          Start Shopping
+        </button>
+      </div>
+
+      <!-- Order Cards -->
+      <div 
+        *ngFor="let order of getFilteredOrders()" 
+        class="order-card"
+        [class.expanded]="expandedOrderId === order.id">
+        
+        <!-- Order Header -->
+        <div class="order-header" (click)="toggleOrderDetails(order.id)">
+          <div class="order-info">
+            <div class="order-number">
+              <span class="label">Order</span>
+              <span class="value">{{ order.orderNumber }}</span>
+            </div>
+            <div class="order-date">
+              <i class="bi bi-calendar3"></i>
+              {{ order.date | date:'mediumDate' }}
+            </div>
+          </div>
+          
+          <div class="order-status" [ngClass]="getStatusClass(order.status)">
+            <i class="bi" [ngClass]="getStatusIcon(order.status)"></i>
+            <span>{{ order.status | titlecase }}</span>
+          </div>
+
+          <div class="order-total">
+            <span class="label">Total</span>
+            <span class="value">{{ order.total | currency }}</span>
+          </div>
+
+          <div class="order-items-preview">
+            <div class="items-thumbnails">
+              <img 
+                *ngFor="let item of order.items.slice(0, 3)" 
+                [src]="item.image" 
+                [alt]="item.name">
+              <span class="more-items" *ngIf="order.items.length > 3">
+                +{{ order.items.length - 3 }}
+              </span>
+            </div>
+          </div>
+
+          <button class="expand-btn">
+            <i class="bi" [ngClass]="expandedOrderId === order.id ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+          </button>
+        </div>
+
+        <!-- Order Details (Expanded) -->
+        <div class="order-details" *ngIf="expandedOrderId === order.id">
+          <!-- Progress Tracker (for active orders) -->
+          <div class="progress-tracker" *ngIf="order.status !== 'cancelled' && order.status !== 'refunded'">
+            <div 
+              *ngFor="let step of getProgressSteps(order.status)" 
+              class="progress-step"
+              [class.completed]="step.completed"
+              [class.current]="step.current">
+              <div class="step-icon">
+                <i class="bi" [ngClass]="getStatusIcon(step.step)"></i>
+              </div>
+              <span class="step-label">{{ step.step | titlecase }}</span>
+            </div>
+            <div class="progress-line">
+              <div class="progress-fill" [style.width.%]="getCompletedStepsCount(order.status) / 3 * 100"></div>
+            </div>
+          </div>
+
+          <!-- Shipping Info -->
+          <div class="shipping-info" *ngIf="order.trackingNumber && (order.status === 'shipped' || order.status === 'delivered')">
+            <div class="info-row">
+              <i class="bi bi-box-seam"></i>
+              <div class="info-content">
+                <span class="info-label">Tracking Number</span>
+                <span class="info-value tracking">{{ order.trackingNumber }}</span>
+              </div>
+              <button class="btn btn--sm btn--secondary" (click)="trackOrder(order.trackingNumber)">
+                <i class="bi bi-geo-alt"></i>
+                Track Package
+              </button>
+            </div>
+            <div class="info-row" *ngIf="order.estimatedDelivery">
+              <i class="bi bi-calendar-check"></i>
+              <div class="info-content">
+                <span class="info-label">{{ order.status === 'delivered' ? 'Delivered On' : 'Estimated Delivery' }}</span>
+                <span class="info-value">{{ order.estimatedDelivery | date:'fullDate' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div class="order-items">
+            <h4 class="section-title">Order Items</h4>
+            <div class="items-list">
+              <div *ngFor="let item of order.items" class="item-row">
+                <img [src]="item.image" [alt]="item.name" class="item-image">
+                <div class="item-info">
+                  <span class="item-name">{{ item.name }}</span>
+                  <span class="item-quantity">Qty: {{ item.quantity }}</span>
+                </div>
+                <div class="item-price">{{ item.price | currency }}</div>
+                <button 
+                  class="btn btn--sm btn--ghost" 
+                  *ngIf="order.status === 'delivered'"
+                  (click)="writeReview(item)">
+                  <i class="bi bi-star"></i>
+                  Review
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="order-summary-grid">
+            <div class="summary-column">
+              <h4 class="section-title">Shipping Address</h4>
+              <p class="address-text">{{ order.shippingAddress }}</p>
+            </div>
+            <div class="summary-column">
+              <h4 class="section-title">Payment</h4>
+              <p class="payment-text">
+                <i class="bi bi-credit-card"></i>
+                {{ order.paymentMethod }}
+              </p>
+            </div>
+            <div class="summary-column">
+              <h4 class="section-title">Order Summary</h4>
+              <div class="summary-lines">
+                <div class="summary-line">
+                  <span>Subtotal</span>
+                  <span>{{ order.subtotal | currency }}</span>
+                </div>
+                <div class="summary-line">
+                  <span>Shipping</span>
+                  <span>{{ order.shipping === 0 ? 'FREE' : (order.shipping | currency) }}</span>
+                </div>
+                <div class="summary-line">
+                  <span>Tax</span>
+                  <span>{{ order.tax | currency }}</span>
+                </div>
+                <div class="summary-line total">
+                  <span>Total</span>
+                  <span>{{ order.total | currency }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="order-actions">
+            <button class="btn btn--secondary" (click)="downloadInvoice(order)">
+              <i class="bi bi-file-earmark-pdf"></i>
+              Download Invoice
+            </button>
+            <button class="btn btn--secondary" (click)="reorder(order)">
+              <i class="bi bi-arrow-repeat"></i>
+              Reorder
+            </button>
+            <button 
+              class="btn btn--secondary" 
+              *ngIf="order.status === 'pending' || order.status === 'processing'"
+              (click)="cancelOrder(order)">
+              <i class="bi bi-x-circle"></i>
+              Cancel Order
+            </button>
+            <button 
+              class="btn btn--secondary" 
+              *ngIf="order.status === 'delivered'"
+              (click)="requestReturn(order)">
+              <i class="bi bi-arrow-return-left"></i>
+              Return Items
+            </button>
+            <button class="btn btn--ghost">
+              <i class="bi bi-question-circle"></i>
+              Get Help
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="getFilteredOrders().length > 0">
+      <button class="pagination-btn" disabled>
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <div class="pagination-pages">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+      </div>
+      <button class="pagination-btn">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

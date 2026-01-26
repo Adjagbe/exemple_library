@@ -1,0 +1,542 @@
+// ═══════════════════════════════════════════════════════════════
+// STATISTICS COMPONENT - Premium UI Library
+// ═══════════════════════════════════════════════════════════════
+
+.statistics-page {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// HEADER
+// ─────────────────────────────────────────────────────────────────
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-content {
+  h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
+  }
+
+  p {
+    color: #6b7280;
+    margin: 0;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.period-select {
+  padding: 0.625rem 2.5rem 0.625rem 1rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25em;
+
+  &:focus {
+    outline: none;
+    border-color: #4f46e5;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &--outline {
+    background: white;
+    border: 2px solid #e5e7eb;
+    color: #374151;
+
+    &:hover {
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// STATS GRID
+// ─────────────────────────────────────────────────────────────────
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+  }
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.see-all {
+  font-size: 0.8rem;
+  color: #4f46e5;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// DONUT CHART
+// ─────────────────────────────────────────────────────────────────
+.donut-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+}
+
+.donut-chart {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.donut-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.donut-legend {
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend-label {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.legend-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// BAR CHART
+// ─────────────────────────────────────────────────────────────────
+.bar-chart-container {
+  padding: 1.5rem;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 200px;
+  gap: 0.5rem;
+}
+
+.bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bar-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.bar {
+  width: 100%;
+  max-width: 50px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 6px 6px 0 0;
+  transition: height 0.3s ease;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.bar-value {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #4f46e5;
+  white-space: nowrap;
+}
+
+.bar-label {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// COMPARISON
+// ─────────────────────────────────────────────────────────────────
+.comparison-card {
+  grid-column: span 1;
+}
+
+.comparison-list {
+  padding: 1rem 1.5rem;
+}
+
+.comparison-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.comparison-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.comparison-current {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.comparison-change {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.positive {
+    background: #ecfdf5;
+    color: #10b981;
+  }
+
+  &.negative {
+    background: #fee2e2;
+    color: #ef4444;
+  }
+
+  &.neutral {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+}
+
+.comparison-bar {
+  grid-column: span 3;
+}
+
+.progress-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-current {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 3px;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// PRODUCTS TABLE
+// ─────────────────────────────────────────────────────────────────
+.products-card {
+  grid-column: span 2;
+}
+
+.products-table {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    th {
+      padding: 1rem 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+      background: #f9fafb;
+
+      &.text-right {
+        text-align: right;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:not(:last-child) td {
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      &:hover {
+        background: #f9fafb;
+      }
+    }
+
+    td {
+      padding: 1rem 1.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+
+      &.text-right {
+        text-align: right;
+      }
+
+      &.font-semibold {
+        font-weight: 600;
+        color: #111827;
+      }
+    }
+  }
+}
+
+.product-name {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.product-rank {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.growth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.positive {
+    background: #ecfdf5;
+    color: #10b981;
+  }
+
+  &.negative {
+    background: #fee2e2;
+    color: #ef4444;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// GEOGRAPHIC
+// ─────────────────────────────────────────────────────────────────
+.geo-card {
+  grid-column: span 1;
+}
+
+.geo-list {
+  padding: 1.5rem;
+}
+
+.geo-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.geo-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100px;
+}
+
+.geo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.geo-name {
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.geo-bar {
+  flex: 1;
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.geo-progress {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.geo-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111827;
+  width: 40px;
+  text-align: right;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RESPONSIVE
+// ─────────────────────────────────────────────────────────────────
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .products-card,
+  .comparison-card,
+  .geo-card {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .statistics-page {
+    padding: 1rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .donut-container {
+    flex-direction: column;
+  }
+
+  .comparison-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .comparison-bar {
+    grid-column: span 1;
+  }
+}

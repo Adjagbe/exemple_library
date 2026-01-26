@@ -1,0 +1,68 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 404 COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="error-page error-404">
+  <div class="error-content">
+    <!-- Illustration -->
+    <div class="error-illustration">
+      <div class="error-code">
+        <span class="digit">4</span>
+        <span class="digit zero">
+          <i class="bi bi-search"></i>
+        </span>
+        <span class="digit">4</span>
+      </div>
+      <div class="floating-elements">
+        <i class="bi bi-file-earmark floating-icon icon-1"></i>
+        <i class="bi bi-folder floating-icon icon-2"></i>
+        <i class="bi bi-question-circle floating-icon icon-3"></i>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="error-message">
+      <h1>Page introuvable</h1>
+      <p>Oups ! La page que vous recherchez semble avoir disparu dans le cyberespace. Elle a peut-être été déplacée ou supprimée.</p>
+    </div>
+
+    <!-- Search -->
+    <div class="error-search">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+          placeholder="Rechercher sur le site..."
+        >
+        <button class="search-btn" (click)="onSearch()">
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="error-actions">
+      <button class="btn btn--primary" (click)="goHome()">
+        <i class="bi bi-house"></i>
+        Retour à l'accueil
+      </button>
+      <button class="btn btn--outline" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i>
+        Page précédente
+      </button>
+    </div>
+
+    <!-- Popular Links -->
+    <div class="popular-links">
+      <p class="links-title">Liens utiles :</p>
+      <div class="links-list">
+        <a *ngFor="let link of popularLinks" [href]="link.url" class="link-item">
+          <i class="bi" [ngClass]="link.icon"></i>
+          {{ link.label }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ACTIVITY HISTORY COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="activity-history">
+  <!-- Header -->
+  <div class="activity-header">
+    <div class="header-content">
+      <h1>Historique d'activité</h1>
+      <p>Consultez toutes vos actions et événements récents</p>
+    </div>
+    <button class="btn btn--outline" (click)="clearFilters()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Actualiser
+    </button>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery"
+        placeholder="Rechercher une activité..."
+      >
+    </div>
+
+    <div class="filter-tabs">
+      <button 
+        *ngFor="let filter of filters"
+        class="filter-tab"
+        [class.active]="selectedFilter === filter.value"
+        (click)="selectedFilter = filter.value"
+      >
+        {{ filter.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Activity Timeline -->
+  <div class="timeline-container">
+    <ng-container *ngFor="let group of groupByDate(getFilteredActivities())">
+      <div class="date-group">
+        <div class="date-header">
+          <span class="date-label">{{ group.date }}</span>
+          <span class="date-count">{{ group.items.length }} activité(s)</span>
+        </div>
+
+        <div class="timeline">
+          <div 
+            *ngFor="let activity of group.items"
+            class="timeline-item"
+            [ngClass]="getActivityClass(activity.type)"
+          >
+            <div class="timeline-marker">
+              <div class="marker-icon">
+                <i class="bi" [ngClass]="getActivityIcon(activity.type)"></i>
+              </div>
+              <div class="marker-line"></div>
+            </div>
+
+            <div class="timeline-content">
+              <div class="activity-card">
+                <div class="card-header">
+                  <h3 class="activity-title">{{ activity.title }}</h3>
+                  <span class="activity-time">{{ getRelativeTime(activity.timestamp) }}</span>
+                </div>
+
+                <p class="activity-description">{{ activity.description }}</p>
+
+                <!-- User Info -->
+                <div class="activity-user" *ngIf="activity.user">
+                  <div class="user-avatar">{{ activity.user.avatar }}</div>
+                  <span class="user-name">{{ activity.user.name }}</span>
+                </div>
+
+                <!-- Metadata -->
+                <div class="activity-metadata" *ngIf="activity.metadata">
+                  <div class="meta-item" *ngIf="activity.metadata.ip">
+                    <i class="bi bi-globe"></i>
+                    <span>IP: {{ activity.metadata.ip }}</span>
+                  </div>
+                  <div class="meta-item" *ngIf="activity.metadata.device">
+                    <i class="bi bi-laptop"></i>
+                    <span>{{ activity.metadata.device }}</span>
+                  </div>
+                  <div class="meta-item" *ngIf="activity.metadata.location">
+                    <i class="bi bi-geo-alt"></i>
+                    <span>{{ activity.metadata.location }}</span>
+                  </div>
+                  <div class="meta-item" *ngIf="activity.metadata.file">
+                    <i class="bi bi-file-earmark"></i>
+                    <span>{{ activity.metadata.file }}</span>
+                  </div>
+                  <div class="meta-item meta-item--amount" *ngIf="activity.metadata.amount">
+                    <i class="bi bi-currency-euro"></i>
+                    <span>{{ activity.metadata.amount | number:'1.2-2' }} €</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Empty State -->
+    <div *ngIf="getFilteredActivities().length === 0" class="empty-state">
+      <i class="bi bi-clock-history"></i>
+      <h3>Aucune activité trouvée</h3>
+      <p>Modifiez vos filtres pour voir plus d'activités</p>
+      <button class="btn btn--primary" (click)="clearFilters()">
+        <i class="bi bi-funnel"></i>
+        Réinitialiser les filtres
+      </button>
+    </div>
+  </div>
+
+  <!-- Load More -->
+  <div class="load-more" *ngIf="getFilteredActivities().length > 0">
+    <button class="btn btn--outline btn--lg">
+      <i class="bi bi-arrow-down-circle"></i>
+      Charger plus d'activités
+    </button>
+  </div>
+</div>

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filters - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* FILTERS COMPONENT - Premium UI Library                          */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .filters-showcase {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       LAYOUT
+       ───────────────────────────────────────────────────────────────── */
+    .filters-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SIDEBAR
+       ───────────────────────────────────────────────────────────────── */
+    .filters-sidebar {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0;
+    }
+
+    .clear-all-btn {
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .clear-all-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ACTIVE FILTERS
+       ───────────────────────────────────────────────────────────────── */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .active-filter-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+      background: #eff6ff;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      color: #4f46e5;
+    }
+
+    .active-filter-tag button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: rgba(79, 70, 229, 0.1);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .active-filter-tag button:hover {
+      background: rgba(79, 70, 229, 0.2);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FILTER GROUPS
+       ───────────────────────────────────────────────────────────────── */
+    .filter-group {
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .filter-group:last-child {
+      border-bottom: none;
+    }
+
+    .group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1rem 0;
+      background: none;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #374151;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .group-header:hover {
+      color: #111827;
+    }
+
+    .group-header i {
+      color: #9ca3af;
+    }
+
+    .group-content {
+      padding-bottom: 1rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CHECKBOX & RADIO
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-list,
+    .radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .checkbox-item,
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      cursor: pointer;
+    }
+
+    .checkbox-item input,
+    .radio-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .checkbox-label,
+    .radio-label {
+      flex: 1;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .checkbox-count,
+    .radio-count {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RANGE FILTER
+       ───────────────────────────────────────────────────────────────── */
+    .range-filter {
+      padding: 0.5rem 0;
+    }
+
+    .range-values {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 0.75rem;
+    }
+
+    .range-inputs {
+      position: relative;
+      height: 24px;
+    }
+
+    .range-slider {
+      position: absolute;
+      width: 100%;
+      height: 6px;
+      top: 9px;
+      background: transparent;
+      appearance: none;
+      pointer-events: none;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 2px solid #4f46e5;
+      border-radius: 50%;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .range-slider:first-child::-webkit-slider-runnable-track {
+      background: linear-gradient(90deg, #e5e7eb 0%, #4f46e5 50%, #e5e7eb 100%);
+      height: 6px;
+      border-radius: 3px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       COLOR FILTER
+       ───────────────────────────────────────────────────────────────── */
+    .color-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .color-btn {
+      width: 32px;
+      height: 32px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .color-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .color-btn.selected {
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #4f46e5;
+    }
+
+    .color-btn i {
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RATING FILTER
+       ───────────────────────────────────────────────────────────────── */
+    .rating-filter {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .rating-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .rating-btn:hover {
+      background: #f9fafb;
+    }
+
+    .rating-btn.selected {
+      background: #eff6ff;
+      border-color: #4f46e5;
+    }
+
+    .rating-btn .stars {
+      display: flex;
+      gap: 0.125rem;
+    }
+
+    .rating-btn .stars i {
+      color: #fbbf24;
+      font-size: 0.875rem;
+    }
+
+    .rating-btn .stars i.bi-star {
+      color: #e5e7eb;
+    }
+
+    .rating-btn .rating-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CONTENT
+       ───────────────────────────────────────────────────────────────── */
+    .filters-content {
+      min-height: 600px;
+    }
+
+    .content-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .results-count {
+      font-size: 0.95rem;
+      color: #6b7280;
+    }
+
+    .sort-dropdown select {
+      padding: 0.625rem 2rem 0.625rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      background-size: 1.25em;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PRODUCT CARD
+       ───────────────────────────────────────────────────────────────── */
+    .product-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .product-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 180px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    }
+
+    .product-image i {
+      font-size: 3rem;
+      color: #9ca3af;
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-category {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #4f46e5;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0.25rem 0 0.5rem;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-rating i {
+      font-size: 0.75rem;
+      color: #fbbf24;
+    }
+
+    .product-rating i.bi-star {
+      color: #e5e7eb;
+    }
+
+    .product-rating span {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-left: 0.25rem;
+    }
+
+    .product-price {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .filters-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .filters-sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .filters-showcase {
+        padding: 1rem;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="filters-showcase">
+    <h1 class="page-title">Filtres</h1>
+    <p class="page-subtitle">Système de filtrage avancé pour vos données</p>
+
+    <div class="filters-layout">
+      <!-- Sidebar Filters -->
+      <aside class="filters-sidebar">
+        <div class="sidebar-header">
+          <h2>Filtres</h2>
+          <button class="clear-all-btn" id="clearAllBtn" style="display: none;" onclick="clearAllFilters()">
+            Tout effacer
+          </button>
+        </div>
+
+        <!-- Active Filters -->
+        <div class="active-filters" id="activeFilters" style="display: none;"></div>
+
+        <!-- Filter Groups -->
+        <div class="filter-groups" id="filterGroups"></div>
+      </aside>
+
+      <!-- Results Area -->
+      <main class="filters-content">
+        <div class="content-header">
+          <span class="results-count" id="resultsCount">456 résultats</span>
+          <div class="sort-dropdown">
+            <select>
+              <option>Pertinence</option>
+              <option>Prix croissant</option>
+              <option>Prix décroissant</option>
+              <option>Nouveautés</option>
+              <option>Meilleures notes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="content-grid" id="productGrid"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // FILTERS COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // DATA
+    // ─────────────────────────────────────────────────────────────────
+    const filterGroups = [
+      {
+        id: 'category',
+        label: 'Catégorie',
+        type: 'checkbox',
+        expanded: true,
+        options: [
+          { value: 'electronics', label: 'Électronique', count: 245, checked: false },
+          { value: 'clothing', label: 'Vêtements', count: 189, checked: false },
+          { value: 'home', label: 'Maison', count: 156, checked: false },
+          { value: 'sports', label: 'Sports', count: 98, checked: false },
+          { value: 'books', label: 'Livres', count: 76, checked: false }
+        ]
+      },
+      {
+        id: 'brand',
+        label: 'Marque',
+        type: 'checkbox',
+        expanded: true,
+        options: [
+          { value: 'apple', label: 'Apple', count: 89, checked: false },
+          { value: 'samsung', label: 'Samsung', count: 76, checked: false },
+          { value: 'sony', label: 'Sony', count: 54, checked: false },
+          { value: 'microsoft', label: 'Microsoft', count: 43, checked: false },
+          { value: 'lg', label: 'LG', count: 32, checked: false }
+        ]
+      },
+      {
+        id: 'price',
+        label: 'Prix',
+        type: 'range',
+        expanded: true,
+        range: { min: 0, max: 5000, current: [0, 5000], unit: '€' }
+      },
+      {
+        id: 'color',
+        label: 'Couleur',
+        type: 'color',
+        expanded: true,
+        colors: [
+          { value: 'black', hex: '#111827', checked: false },
+          { value: 'white', hex: '#ffffff', checked: false },
+          { value: 'gray', hex: '#6b7280', checked: false },
+          { value: 'red', hex: '#ef4444', checked: false },
+          { value: 'blue', hex: '#3b82f6', checked: false },
+          { value: 'green', hex: '#10b981', checked: false },
+          { value: 'yellow', hex: '#fbbf24', checked: false },
+          { value: 'purple', hex: '#8b5cf6', checked: false }
+        ]
+      },
+      {
+        id: 'rating',
+        label: 'Note minimum',
+        type: 'rating',
+        expanded: true,
+        rating: 0
+      },
+      {
+        id: 'availability',
+        label: 'Disponibilité',
+        type: 'radio',
+        expanded: false,
+        options: [
+          { value: 'all', label: 'Tous', checked: true },
+          { value: 'instock', label: 'En stock', count: 456 },
+          { value: 'preorder', label: 'Précommande', count: 23 }
+        ]
+      }
+    ];
+
+    let activeFilters = [];
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER FILTER GROUPS
+    // ─────────────────────────────────────────────────────────────────
+    function renderFilterGroups() {
+      const container = document.getElementById('filterGroups');
+      container.innerHTML = filterGroups.map(group => {
+        let content = '';
+
+        if (group.type === 'checkbox' && group.options) {
+          content = `
+            <div class="checkbox-list">
+              ${group.options.map(opt => `
+                <label class="checkbox-item">
+                  <input type="checkbox" ${opt.checked ? 'checked' : ''} 
+                    onchange="onCheckboxChange('${group.id}', '${opt.value}')">
+                  <span class="checkbox-label">${opt.label}</span>
+                  ${opt.count ? `<span class="checkbox-count">(${opt.count})</span>` : ''}
+                </label>
+              `).join('')}
+            </div>
+          `;
+        } else if (group.type === 'radio' && group.options) {
+          content = `
+            <div class="radio-list">
+              ${group.options.map(opt => `
+                <label class="radio-item">
+                  <input type="radio" name="${group.id}" ${opt.checked ? 'checked' : ''} 
+                    onchange="onRadioChange('${group.id}', '${opt.value}')">
+                  <span class="radio-label">${opt.label}</span>
+                  ${opt.count ? `<span class="radio-count">(${opt.count})</span>` : ''}
+                </label>
+              `).join('')}
+            </div>
+          `;
+        } else if (group.type === 'range' && group.range) {
+          content = `
+            <div class="range-filter">
+              <div class="range-values">
+                <span>${group.range.current[0]}${group.range.unit}</span>
+                <span>${group.range.current[1]}${group.range.unit}</span>
+              </div>
+              <div class="range-inputs">
+                <input type="range" class="range-slider" min="${group.range.min}" max="${group.range.max}" 
+                  value="${group.range.current[0]}" oninput="onRangeChange('${group.id}', 0, this.value)">
+                <input type="range" class="range-slider" min="${group.range.min}" max="${group.range.max}" 
+                  value="${group.range.current[1]}" oninput="onRangeChange('${group.id}', 1, this.value)">
+              </div>
+            </div>
+          `;
+        } else if (group.type === 'color' && group.colors) {
+          content = `
+            <div class="color-filter">
+              ${group.colors.map(color => {
+                const textColor = color.hex === '#ffffff' || color.hex === '#fbbf24' ? '#111827' : '#ffffff';
+                return `
+                  <button class="color-btn ${color.checked ? 'selected' : ''}" 
+                    style="background: ${color.hex}; border-color: ${color.hex === '#ffffff' ? '#e5e7eb' : color.hex}"
+                    title="${color.value}" onclick="onColorChange('${group.id}', '${color.value}')">
+                    ${color.checked ? `<i class="bi bi-check" style="color: ${textColor}"></i>` : ''}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          `;
+        } else if (group.type === 'rating') {
+          content = `
+            <div class="rating-filter">
+              ${[4, 3, 2, 1].map(star => `
+                <button class="rating-btn ${group.rating === star ? 'selected' : ''}" 
+                  onclick="onRatingChange('${group.id}', ${star})">
+                  <span class="stars">
+                    ${[1, 2, 3, 4, 5].map(s => `<i class="bi ${s <= star ? 'bi-star-fill' : 'bi-star'}"></i>`).join('')}
+                  </span>
+                  <span class="rating-label">${star}+ étoiles</span>
+                </button>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="filter-group">
+            <button class="group-header" onclick="toggleGroup('${group.id}')">
+              <span>${group.label}</span>
+              <i class="bi ${group.expanded ? 'bi-chevron-up' : 'bi-chevron-down'}"></i>
+            </button>
+            ${group.expanded ? `<div class="group-content">${content}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER ACTIVE FILTERS
+    // ─────────────────────────────────────────────────────────────────
+    function renderActiveFilters() {
+      const container = document.getElementById('activeFilters');
+      const clearBtn = document.getElementById('clearAllBtn');
+
+      if (activeFilters.length === 0) {
+        container.style.display = 'none';
+        clearBtn.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'flex';
+      clearBtn.style.display = 'block';
+
+      container.innerHTML = activeFilters.map(filter => `
+        <div class="active-filter-tag">
+          <span>${filter.label}</span>
+          <button onclick="removeFilter('${filter.groupId}', '${filter.value}')">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      `).join('');
+
+      // Update results count
+      const count = 456 - activeFilters.length * 50;
+      document.getElementById('resultsCount').textContent = `${Math.max(count, 10)} résultats`;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER PRODUCTS
+    // ─────────────────────────────────────────────────────────────────
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = [1, 2, 3, 4, 5, 6].map(i => `
+        <div class="product-card">
+          <div class="product-image">
+            <i class="bi bi-box"></i>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Catégorie</span>
+            <h3 class="product-name">Produit exemple ${i}</h3>
+            <div class="product-rating">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star"></i>
+              <span>(128)</span>
+            </div>
+            <span class="product-price">${(49.99 + i * 50).toFixed(2)} €</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // FILTER HANDLERS
+    // ─────────────────────────────────────────────────────────────────
+    function toggleGroup(groupId) {
+      const group = filterGroups.find(g => g.id === groupId);
+      if (group) {
+        group.expanded = !group.expanded;
+        renderFilterGroups();
+      }
+    }
+
+    function onCheckboxChange(groupId, value) {
+      const group = filterGroups.find(g => g.id === groupId);
+      const option = group?.options?.find(o => o.value === value);
+      if (option) {
+        option.checked = !option.checked;
+        updateActiveFilters();
+      }
+    }
+
+    function onRadioChange(groupId, value) {
+      const group = filterGroups.find(g => g.id === groupId);
+      group?.options?.forEach(opt => opt.checked = opt.value === value);
+      updateActiveFilters();
+    }
+
+    function onColorChange(groupId, value) {
+      const group = filterGroups.find(g => g.id === groupId);
+      const color = group?.colors?.find(c => c.value === value);
+      if (color) {
+        color.checked = !color.checked;
+        updateActiveFilters();
+        renderFilterGroups();
+      }
+    }
+
+    function onRatingChange(groupId, rating) {
+      const group = filterGroups.find(g => g.id === groupId);
+      if (group) {
+        group.rating = group.rating === rating ? 0 : rating;
+        updateActiveFilters();
+        renderFilterGroups();
+      }
+    }
+
+    function onRangeChange(groupId, index, value) {
+      const group = filterGroups.find(g => g.id === groupId);
+      if (group?.range) {
+        group.range.current[index] = parseInt(value);
+        updateActiveFilters();
+        renderFilterGroups();
+      }
+    }
+
+    function updateActiveFilters() {
+      activeFilters = [];
+
+      filterGroups.forEach(group => {
+        if (group.type === 'checkbox' || group.type === 'radio') {
+          group.options?.filter(opt => opt.checked && opt.value !== 'all').forEach(opt => {
+            activeFilters.push({
+              groupId: group.id,
+              groupLabel: group.label,
+              value: opt.value,
+              label: opt.label
+            });
+          });
+        }
+
+        if (group.type === 'color') {
+          group.colors?.filter(c => c.checked).forEach(c => {
+            activeFilters.push({
+              groupId: group.id,
+              groupLabel: group.label,
+              value: c.value,
+              label: c.value
+            });
+          });
+        }
+
+        if (group.type === 'rating' && group.rating && group.rating > 0) {
+          activeFilters.push({
+            groupId: group.id,
+            groupLabel: group.label,
+            value: String(group.rating),
+            label: `${group.rating}+ étoiles`
+          });
+        }
+
+        if (group.type === 'range' && group.range) {
+          const { min, max, current, unit } = group.range;
+          if (current[0] !== min || current[1] !== max) {
+            activeFilters.push({
+              groupId: group.id,
+              groupLabel: group.label,
+              value: `${current[0]}-${current[1]}`,
+              label: `${current[0]}${unit} - ${current[1]}${unit}`
+            });
+          }
+        }
+      });
+
+      renderActiveFilters();
+    }
+
+    function removeFilter(groupId, value) {
+      const group = filterGroups.find(g => g.id === groupId);
+      if (!group) return;
+
+      if (group.type === 'checkbox' || group.type === 'radio') {
+        const option = group.options?.find(opt => opt.value === value);
+        if (option) option.checked = false;
+      }
+
+      if (group.type === 'color') {
+        const color = group.colors?.find(c => c.value === value);
+        if (color) color.checked = false;
+      }
+
+      if (group.type === 'rating') {
+        group.rating = 0;
+      }
+
+      if (group.type === 'range' && group.range) {
+        group.range.current = [group.range.min, group.range.max];
+      }
+
+      updateActiveFilters();
+      renderFilterGroups();
+    }
+
+    function clearAllFilters() {
+      filterGroups.forEach(group => {
+        group.options?.forEach(opt => opt.checked = opt.value === 'all');
+        group.colors?.forEach(c => c.checked = false);
+        if (group.rating !== undefined) group.rating = 0;
+        if (group.range) group.range.current = [group.range.min, group.range.max];
+      });
+      activeFilters = [];
+      renderActiveFilters();
+      renderFilterGroups();
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderFilterGroups();
+      renderActiveFilters();
+      renderProducts();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MESSAGING COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="messaging-container">
+  <!-- Sidebar -->
+  <div class="messaging-sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">Messages</h2>
+      <button class="new-message-btn">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Rechercher..."
+        [(ngModel)]="searchQuery"
+      />
+    </div>
+
+    <!-- Contact List -->
+    <div class="contact-list">
+      <div
+        *ngFor="let contact of filteredContacts"
+        class="contact-item"
+        [class.active]="selectedContact?.id === contact.id"
+        [class.unread]="contact.unreadCount && contact.unreadCount > 0"
+        (click)="selectContact(contact)"
+      >
+        <div class="contact-avatar">
+          <span class="avatar-initials">{{ contact.initials }}</span>
+          <span class="status-dot" [style.background-color]="getStatusColor(contact.status)"></span>
+        </div>
+        <div class="contact-info">
+          <div class="contact-header">
+            <span class="contact-name">{{ contact.name }}</span>
+            <span class="contact-time" *ngIf="contact.lastMessageTime">
+              {{ formatTime(contact.lastMessageTime) }}
+            </span>
+          </div>
+          <div class="contact-preview">
+            <span class="last-message">{{ contact.lastMessage }}</span>
+            <span class="unread-badge" *ngIf="contact.unreadCount">
+              {{ contact.unreadCount }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="chat-area" *ngIf="selectedContact">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-contact">
+        <div class="contact-avatar">
+          <span class="avatar-initials">{{ selectedContact.initials }}</span>
+          <span class="status-dot" [style.background-color]="getStatusColor(selectedContact.status)"></span>
+        </div>
+        <div class="contact-details">
+          <span class="contact-name">{{ selectedContact.name }}</span>
+          <span class="contact-status">
+            {{ selectedContact.status === 'online' ? 'En ligne' :
+               selectedContact.status === 'away' ? 'Absent' :
+               selectedContact.status === 'busy' ? 'Occupé' : 'Hors ligne' }}
+          </span>
+        </div>
+      </div>
+      <div class="chat-actions">
+        <button class="action-btn">
+          <i class="bi bi-telephone"></i>
+        </button>
+        <button class="action-btn">
+          <i class="bi bi-camera-video"></i>
+        </button>
+        <button class="action-btn">
+          <i class="bi bi-info-circle"></i>
+        </button>
+        <button class="action-btn">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages-container">
+      <ng-container *ngFor="let message of messages; let i = index">
+        <!-- Date Separator -->
+        <div class="date-separator" *ngIf="shouldShowDateSeparator(message, i)">
+          <span>{{ formatDateSeparator(message.timestamp) }}</span>
+        </div>
+
+        <!-- Message -->
+        <div
+          class="message"
+          [class.message--own]="isOwnMessage(message)"
+          [class.message--other]="!isOwnMessage(message)"
+        >
+          <div class="message-avatar" *ngIf="!isOwnMessage(message)">
+            <span class="avatar-initials avatar-initials--sm">
+              {{ selectedContact.initials }}
+            </span>
+          </div>
+          <div class="message-bubble">
+            <p class="message-content">{{ message.content }}</p>
+            <div class="message-meta">
+              <span class="message-time">{{ formatMessageTime(message.timestamp) }}</span>
+              <span class="message-status" *ngIf="isOwnMessage(message)">
+                <i class="bi" [ngClass]="getStatusIcon(message.status)"
+                   [class.read]="message.status === 'read'"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+      <div class="input-actions">
+        <button class="input-btn">
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        <button class="input-btn">
+          <i class="bi bi-image"></i>
+        </button>
+        <button class="input-btn">
+          <i class="bi bi-paperclip"></i>
+        </button>
+      </div>
+      <div class="input-wrapper">
+        <input
+          type="text"
+          class="message-input"
+          placeholder="Écrire un message..."
+          [(ngModel)]="messageInput"
+          (keyup.enter)="sendMessage()"
+        />
+        <button class="emoji-btn">
+          <i class="bi bi-emoji-smile"></i>
+        </button>
+      </div>
+      <button class="send-btn" (click)="sendMessage()" [disabled]="!messageInput.trim()">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!selectedContact">
+    <div class="empty-icon">
+      <i class="bi bi-chat-dots"></i>
+    </div>
+    <h3>Sélectionnez une conversation</h3>
+    <p>Choisissez un contact pour commencer à discuter</p>
+  </div>
+</div>

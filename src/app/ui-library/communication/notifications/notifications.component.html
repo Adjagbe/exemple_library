@@ -1,0 +1,192 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NOTIFICATIONS COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="notifications-showcase">
+  <h1 class="page-title">Centre de notifications</h1>
+  <p class="page-subtitle">Gérez vos notifications et alertes</p>
+
+  <div class="notifications-container">
+    <!-- Header -->
+    <div class="notifications-header">
+      <div class="header-left">
+        <h2 class="header-title">
+          Notifications
+          <span class="unread-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+        </h2>
+      </div>
+      <div class="header-actions">
+        <button class="action-link" (click)="markAllAsRead()" *ngIf="unreadCount > 0">
+          <i class="bi bi-check-all"></i>
+          Tout marquer comme lu
+        </button>
+        <button class="action-link action-link--danger" (click)="clearAll()" *ngIf="notifications.length > 0">
+          <i class="bi bi-trash"></i>
+          Tout effacer
+        </button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="notifications-filters">
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'all'"
+        (click)="setFilter('all')"
+      >
+        Toutes
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'unread'"
+        (click)="setFilter('unread')"
+      >
+        Non lues
+        <span class="filter-count" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'mention'"
+        (click)="setFilter('mention')"
+      >
+        <i class="bi bi-at"></i>
+        Mentions
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'task'"
+        (click)="setFilter('task')"
+      >
+        <i class="bi bi-check2-square"></i>
+        Tâches
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'message'"
+        (click)="setFilter('message')"
+      >
+        <i class="bi bi-chat-dots"></i>
+        Messages
+      </button>
+    </div>
+
+    <!-- Notification List -->
+    <div class="notifications-list">
+      <div
+        *ngFor="let notification of filteredNotifications"
+        class="notification-item"
+        [class.unread]="!notification.read"
+        (click)="markAsRead(notification)"
+      >
+        <!-- Icon or Avatar -->
+        <div class="notification-icon" *ngIf="!notification.avatar"
+             [style.background-color]="getNotificationColor(notification.type) + '15'"
+             [style.color]="getNotificationColor(notification.type)">
+          <i class="bi" [ngClass]="getNotificationIcon(notification.type)"></i>
+        </div>
+        <div class="notification-avatar" *ngIf="notification.avatar"
+             [style.background-color]="notification.avatar.color">
+          {{ notification.avatar.initials }}
+        </div>
+
+        <!-- Content -->
+        <div class="notification-content">
+          <div class="notification-header">
+            <span class="notification-title">{{ notification.title }}</span>
+            <span class="notification-time">{{ formatTime(notification.time) }}</span>
+          </div>
+          <p class="notification-message">{{ notification.message }}</p>
+          <button
+            *ngIf="notification.action"
+            class="notification-action"
+            [style.color]="getNotificationColor(notification.type)"
+          >
+            {{ notification.action.label }}
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Actions -->
+        <div class="notification-actions">
+          <button
+            class="item-action"
+            title="Marquer comme lu"
+            *ngIf="!notification.read"
+            (click)="markAsRead(notification); $event.stopPropagation()"
+          >
+            <i class="bi bi-check2"></i>
+          </button>
+          <button
+            class="item-action item-action--danger"
+            title="Supprimer"
+            (click)="deleteNotification(notification.id); $event.stopPropagation()"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <!-- Unread indicator -->
+        <span class="unread-indicator" *ngIf="!notification.read"></span>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="filteredNotifications.length === 0">
+        <div class="empty-icon">
+          <i class="bi bi-bell-slash"></i>
+        </div>
+        <h3>Aucune notification</h3>
+        <p>Vous n'avez pas de notifications pour le moment</p>
+      </div>
+    </div>
+
+    <!-- Notification Settings -->
+    <div class="notifications-settings">
+      <button class="settings-btn">
+        <i class="bi bi-gear"></i>
+        Paramètres de notification
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Toast Examples -->
+  <section class="toast-section">
+    <h2 class="section-title">Toasts de notification</h2>
+    <div class="toast-examples">
+      <div class="toast toast--info">
+        <i class="bi bi-info-circle-fill"></i>
+        <div class="toast-content">
+          <strong>Information</strong>
+          <span>Une nouvelle mise à jour est disponible</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+
+      <div class="toast toast--success">
+        <i class="bi bi-check-circle-fill"></i>
+        <div class="toast-content">
+          <strong>Succès</strong>
+          <span>Vos modifications ont été enregistrées</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+
+      <div class="toast toast--warning">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="toast-content">
+          <strong>Attention</strong>
+          <span>Votre session expire dans 5 minutes</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+
+      <div class="toast toast--error">
+        <i class="bi bi-x-circle-fill"></i>
+        <div class="toast-content">
+          <strong>Erreur</strong>
+          <span>Une erreur est survenue lors de l'enregistrement</span>
+        </div>
+        <button class="toast-close"><i class="bi bi-x"></i></button>
+      </div>
+    </div>
+  </section>
+</div>

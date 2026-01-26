@@ -1,0 +1,169 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CHECKBOX COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="checkbox-showcase">
+  <!-- Basic Checkboxes -->
+  <section class="showcase-section">
+    <h2 class="section-title">Basic Checkboxes</h2>
+    <div class="checkbox-group">
+      <label 
+        *ngFor="let item of basicCheckboxes" 
+        class="checkbox-label"
+        [class.disabled]="item.disabled">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="item.checked"
+          [disabled]="item.disabled ?? false">
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">{{ item.label }}</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Checkboxes with Description -->
+  <section class="showcase-section">
+    <h2 class="section-title">Feature Selection</h2>
+    <p class="section-subtitle">Selected: {{ getSelectedCount() }} of {{ featureCheckboxes.length }} features</p>
+    
+    <div class="checkbox-cards">
+      <label 
+        *ngFor="let item of featureCheckboxes" 
+        class="checkbox-card"
+        [class.checked]="item.checked">
+        <input type="checkbox" [(ngModel)]="item.checked">
+        <span class="card-checkbox">
+          <i class="bi bi-check"></i>
+        </span>
+        <div class="card-content">
+          <span class="card-label">{{ item.label }}</span>
+          <span class="card-description">{{ item.description }}</span>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <!-- Parent-Child Checkboxes -->
+  <section class="showcase-section">
+    <h2 class="section-title">Nested Selection</h2>
+    
+    <div class="checkbox-tree">
+      <label class="checkbox-label checkbox-parent" [class.indeterminate]="isIndeterminate()">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="parentChecked"
+          (change)="toggleParent()">
+        <span class="checkbox-custom">
+          <i class="bi bi-check" *ngIf="!isIndeterminate()"></i>
+          <i class="bi bi-dash" *ngIf="isIndeterminate()"></i>
+        </span>
+        <span class="checkbox-text"><strong>Select All Files</strong></span>
+      </label>
+
+      <div class="checkbox-children">
+        <label 
+          *ngFor="let child of childCheckboxes" 
+          class="checkbox-label">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="child.checked"
+            (change)="updateParent()">
+          <span class="checkbox-custom">
+            <i class="bi bi-check"></i>
+          </span>
+          <span class="checkbox-text">{{ child.label }}</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Checkbox Sizes -->
+  <section class="showcase-section">
+    <h2 class="section-title">Sizes</h2>
+    <div class="checkbox-sizes">
+      <label class="checkbox-label checkbox--sm">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Small</span>
+      </label>
+
+      <label class="checkbox-label checkbox--md">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Medium (Default)</span>
+      </label>
+
+      <label class="checkbox-label checkbox--lg">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Large</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Checkbox Colors -->
+  <section class="showcase-section">
+    <h2 class="section-title">Colors</h2>
+    <div class="checkbox-colors">
+      <label class="checkbox-label checkbox--primary">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Primary</span>
+      </label>
+
+      <label class="checkbox-label checkbox--success">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Success</span>
+      </label>
+
+      <label class="checkbox-label checkbox--warning">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Warning</span>
+      </label>
+
+      <label class="checkbox-label checkbox--danger">
+        <input type="checkbox" checked>
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">Danger</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Agreement Checkbox -->
+  <section class="showcase-section">
+    <h2 class="section-title">Terms Agreement</h2>
+    <div class="agreement-box">
+      <label class="checkbox-label checkbox--agreement">
+        <input type="checkbox" [(ngModel)]="agreementChecked">
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">
+          I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+        </span>
+      </label>
+      <button class="btn btn--primary" [disabled]="!agreementChecked">
+        Continue
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </section>
+</div>

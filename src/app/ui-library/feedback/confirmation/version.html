@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dialogues de Confirmation - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* CONFIRMATION DIALOG COMPONENT - Premium UI Library              */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .confirmation-showcase { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .page-title { font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0; }
+    .page-subtitle { color: #6b7280; margin: 0 0 2rem 0; }
+    .showcase-section { margin-bottom: 3rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TRIGGER BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .button-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .trigger-btn { display: flex; align-items: center; gap: 0.625rem; padding: 1rem 1.25rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; font-size: 0.9rem; font-weight: 500; color: #374151; background: white; cursor: pointer; transition: all 0.2s ease; }
+    .trigger-btn i { font-size: 1.1rem; }
+    .trigger-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+    .trigger-btn--danger { border-color: #fecaca; }
+    .trigger-btn--danger:hover { border-color: #ef4444; color: #ef4444; }
+    .trigger-btn--danger i { color: #ef4444; }
+    .trigger-btn--warning { border-color: #fde68a; }
+    .trigger-btn--warning:hover { border-color: #f59e0b; color: #b45309; }
+    .trigger-btn--warning i { color: #f59e0b; }
+    .trigger-btn--info { border-color: #bfdbfe; }
+    .trigger-btn--info:hover { border-color: #3b82f6; color: #3b82f6; }
+    .trigger-btn--info i { color: #3b82f6; }
+    .trigger-btn--success { border-color: #bbf7d0; }
+    .trigger-btn--success:hover { border-color: #10b981; color: #10b981; }
+    .trigger-btn--success i { color: #10b981; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       DIALOG OVERLAY
+       ───────────────────────────────────────────────────────────────── */
+    .dialog-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; padding: 1rem; z-index: 1000; animation: fadeIn 0.2s ease; }
+    .dialog-overlay.hidden { display: none; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ─────────────────────────────────────────────────────────────────
+       DIALOG
+       ───────────────────────────────────────────────────────────────── */
+    .dialog { background: white; border-radius: 1rem; max-width: 420px; width: 100%; padding: 2rem; animation: scaleIn 0.2s ease; }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .dialog-icon { width: 64px; height: 64px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.75rem; }
+    .dialog--danger .dialog-icon { background: #fee2e2; color: #ef4444; }
+    .dialog--warning .dialog-icon { background: #fef3c7; color: #f59e0b; }
+    .dialog--info .dialog-icon { background: #dbeafe; color: #3b82f6; }
+    .dialog--success .dialog-icon { background: #d1fae5; color: #10b981; }
+    .dialog-content { text-align: center; margin-bottom: 1.5rem; }
+    .dialog-title { font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0; }
+    .dialog-message { font-size: 0.95rem; color: #6b7280; line-height: 1.6; margin: 0; }
+    .dialog-input { margin-top: 1.25rem; }
+    .dialog-input.hidden { display: none; }
+    .dialog-input input { width: 100%; padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.95rem; text-align: center; transition: border-color 0.2s; }
+    .dialog-input input:focus { outline: none; border-color: #ef4444; }
+    .dialog-actions { display: flex; gap: 0.75rem; }
+    .btn { flex: 1; padding: 0.875rem 1.25rem; border: none; border-radius: 0.5rem; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn--cancel { background: #f3f4f6; color: #374151; }
+    .btn--cancel:hover:not(:disabled) { background: #e5e7eb; }
+    .btn--danger { background: #ef4444; color: white; }
+    .btn--danger:hover:not(:disabled) { background: #dc2626; }
+    .btn--warning { background: #f59e0b; color: white; }
+    .btn--warning:hover:not(:disabled) { background: #d97706; }
+    .btn--info { background: #3b82f6; color: white; }
+    .btn--info:hover:not(:disabled) { background: #2563eb; }
+    .btn--success { background: #10b981; color: white; }
+    .btn--success:hover:not(:disabled) { background: #059669; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       INLINE CONFIRMATION
+       ───────────────────────────────────────────────────────────────── */
+    .inline-confirmations { display: flex; flex-direction: column; gap: 1rem; }
+    .inline-confirm { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.75rem; }
+    .inline-confirm > span { flex: 1; font-size: 0.95rem; color: #374151; }
+    .inline-confirm > i { font-size: 1.25rem; color: #f59e0b; }
+    .inline-confirm--warning { background: #fffbeb; border-color: #fde68a; }
+    .inline-actions { display: flex; gap: 0.5rem; }
+    .btn-inline { padding: 0.5rem 1rem; border: none; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn-inline--cancel { background: white; border: 1px solid #e5e7eb; color: #6b7280; }
+    .btn-inline--cancel:hover { background: #f3f4f6; }
+    .btn-inline--danger { background: #ef4444; color: white; }
+    .btn-inline--danger:hover { background: #dc2626; }
+    .btn-inline--warning { background: #f59e0b; color: white; }
+    .btn-inline--warning:hover { background: #d97706; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TOAST CONFIRMATION
+       ───────────────────────────────────────────────────────────────── */
+    .toast-confirm { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: #1f2937; border-radius: 0.75rem; max-width: 400px; }
+    .toast-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.1); border-radius: 50%; color: white; }
+    .toast-content { flex: 1; }
+    .toast-message { font-size: 0.9rem; color: white; }
+    .toast-progress { height: 3px; margin-top: 0.5rem; background: rgba(255, 255, 255, 0.2); border-radius: 2px; position: relative; overflow: hidden; }
+    .toast-progress::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 70%; background: #10b981; animation: progress 5s linear; }
+    @keyframes progress { from { width: 100%; } to { width: 0%; } }
+    .toast-undo { padding: 0.5rem 1rem; background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 0.375rem; color: white; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .toast-undo:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .dialog { padding: 1.5rem; }
+      .dialog-actions { flex-direction: column-reverse; }
+      .inline-confirm { flex-direction: column; text-align: center; }
+      .inline-actions { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="confirmation-showcase">
+  <h1 class="page-title">Dialogues de Confirmation</h1>
+  <p class="page-subtitle">Modales pour confirmer les actions importantes</p>
+
+  <!-- Trigger Buttons -->
+  <section class="showcase-section">
+    <h2 class="section-title">Types de Confirmation</h2>
+    <div class="button-grid" id="triggerButtons"></div>
+  </section>
+
+  <!-- Active Dialog -->
+  <div class="dialog-overlay hidden" id="dialogOverlay">
+    <div class="dialog" id="dialog" onclick="event.stopPropagation()">
+      <!-- Icon -->
+      <div class="dialog-icon"><i class="bi" id="dialogIcon"></i></div>
+      <!-- Content -->
+      <div class="dialog-content">
+        <h3 class="dialog-title" id="dialogTitle"></h3>
+        <p class="dialog-message" id="dialogMessage"></p>
+        <!-- Input Confirmation -->
+        <div class="dialog-input hidden" id="dialogInput">
+          <input type="text" id="confirmInput" placeholder="">
+        </div>
+      </div>
+      <!-- Actions -->
+      <div class="dialog-actions">
+        <button class="btn btn--cancel" id="cancelBtn">Annuler</button>
+        <button class="btn" id="confirmBtn">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Confirmations -->
+  <section class="showcase-section">
+    <h2 class="section-title">Confirmation Inline</h2>
+    <div class="inline-confirmations">
+      <!-- Simple Inline -->
+      <div class="inline-confirm">
+        <span>Supprimer ce fichier ?</span>
+        <div class="inline-actions">
+          <button class="btn-inline btn-inline--cancel">Non</button>
+          <button class="btn-inline btn-inline--danger">Oui, supprimer</button>
+        </div>
+      </div>
+      <!-- With Icon -->
+      <div class="inline-confirm inline-confirm--warning">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Cette action va modifier 12 éléments</span>
+        <div class="inline-actions">
+          <button class="btn-inline btn-inline--cancel">Annuler</button>
+          <button class="btn-inline btn-inline--warning">Continuer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toast Confirmation -->
+  <section class="showcase-section">
+    <h2 class="section-title">Toast avec Annulation</h2>
+    <div class="toast-confirm">
+      <div class="toast-icon"><i class="bi bi-trash"></i></div>
+      <div class="toast-content">
+        <span class="toast-message">Élément supprimé</span>
+        <div class="toast-progress"></div>
+      </div>
+      <button class="toast-undo">Annuler</button>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Dialog configurations
+  const dialogs = [
+    {
+      id: 'delete',
+      type: 'danger',
+      title: 'Supprimer cet élément ?',
+      message: 'Cette action est irréversible. Toutes les données associées seront définitivement supprimées.',
+      icon: 'bi-trash3',
+      confirmLabel: 'Supprimer',
+      cancelLabel: 'Annuler'
+    },
+    {
+      id: 'logout',
+      type: 'warning',
+      title: 'Se déconnecter ?',
+      message: 'Vous allez être déconnecté de votre compte. Les modifications non enregistrées seront perdues.',
+      icon: 'bi-box-arrow-right',
+      confirmLabel: 'Se déconnecter',
+      cancelLabel: 'Rester connecté'
+    },
+    {
+      id: 'save',
+      type: 'info',
+      title: 'Enregistrer les modifications ?',
+      message: 'Vous avez des modifications non enregistrées. Voulez-vous les sauvegarder avant de continuer ?',
+      icon: 'bi-floppy',
+      confirmLabel: 'Enregistrer',
+      cancelLabel: 'Ne pas enregistrer'
+    },
+    {
+      id: 'publish',
+      type: 'success',
+      title: 'Publier ce contenu ?',
+      message: 'Une fois publié, ce contenu sera visible par tous les utilisateurs.',
+      icon: 'bi-send',
+      confirmLabel: 'Publier',
+      cancelLabel: 'Annuler'
+    },
+    {
+      id: 'delete-account',
+      type: 'danger',
+      title: 'Supprimer votre compte ?',
+      message: 'Pour confirmer la suppression définitive de votre compte, tapez "SUPPRIMER" ci-dessous.',
+      icon: 'bi-person-x',
+      confirmLabel: 'Supprimer mon compte',
+      cancelLabel: 'Annuler',
+      requireInput: true,
+      inputPlaceholder: 'Tapez SUPPRIMER'
+    }
+  ];
+
+  let activeDialog = null;
+
+  // Elements
+  const triggerButtonsEl = document.getElementById('triggerButtons');
+  const dialogOverlay = document.getElementById('dialogOverlay');
+  const dialog = document.getElementById('dialog');
+  const dialogIcon = document.getElementById('dialogIcon');
+  const dialogTitle = document.getElementById('dialogTitle');
+  const dialogMessage = document.getElementById('dialogMessage');
+  const dialogInput = document.getElementById('dialogInput');
+  const confirmInput = document.getElementById('confirmInput');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const confirmBtn = document.getElementById('confirmBtn');
+
+  // Render trigger buttons
+  function renderTriggerButtons() {
+    triggerButtonsEl.innerHTML = dialogs.map(d => `
+      <button class="trigger-btn trigger-btn--${d.type}" data-id="${d.id}">
+        <i class="bi ${d.icon}"></i>
+        ${d.title}
+      </button>
+    `).join('');
+    document.querySelectorAll('.trigger-btn').forEach(btn => {
+      btn.addEventListener('click', () => openDialog(btn.dataset.id));
+    });
+  }
+
+  function openDialog(id) {
+    activeDialog = dialogs.find(d => d.id === id);
+    if (!activeDialog) return;
+
+    // Update dialog content
+    dialog.className = `dialog dialog--${activeDialog.type}`;
+    dialogIcon.className = `bi ${activeDialog.icon}`;
+    dialogTitle.textContent = activeDialog.title;
+    dialogMessage.textContent = activeDialog.message;
+    cancelBtn.textContent = activeDialog.cancelLabel;
+    confirmBtn.textContent = activeDialog.confirmLabel;
+    confirmBtn.className = `btn btn--${activeDialog.type}`;
+
+    // Input field
+    if (activeDialog.requireInput) {
+      dialogInput.classList.remove('hidden');
+      confirmInput.placeholder = activeDialog.inputPlaceholder || '';
+      confirmInput.value = '';
+      confirmBtn.disabled = true;
+    } else {
+      dialogInput.classList.add('hidden');
+      confirmBtn.disabled = false;
+    }
+
+    dialogOverlay.classList.remove('hidden');
+  }
+
+  function closeDialog() {
+    dialogOverlay.classList.add('hidden');
+    activeDialog = null;
+    confirmInput.value = '';
+  }
+
+  function canConfirm() {
+    if (activeDialog?.requireInput) {
+      return confirmInput.value.toUpperCase() === 'SUPPRIMER';
+    }
+    return true;
+  }
+
+  // Event listeners
+  dialogOverlay.addEventListener('click', closeDialog);
+  cancelBtn.addEventListener('click', closeDialog);
+  confirmBtn.addEventListener('click', () => {
+    if (canConfirm()) {
+      alert(`Action confirmée: ${activeDialog.title}`);
+      closeDialog();
+    }
+  });
+
+  confirmInput.addEventListener('input', () => {
+    confirmBtn.disabled = !canConfirm();
+  });
+
+  confirmInput.addEventListener('keyup', e => {
+    if (e.key === 'Enter' && canConfirm()) {
+      confirmBtn.click();
+    }
+  });
+
+  // Initialize
+  renderTriggerButtons();
+</script>
+
+</body>
+</html>

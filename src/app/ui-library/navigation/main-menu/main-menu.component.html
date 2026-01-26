@@ -1,0 +1,68 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MAIN MENU COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<nav class="main-menu">
+  <!-- Mobile Toggle -->
+  <button class="mobile-toggle" (click)="toggleMobileMenu()">
+    <i class="bi" [ngClass]="mobileMenuOpen ? 'bi-x-lg' : 'bi-list'"></i>
+  </button>
+
+  <!-- Menu Items -->
+  <ul class="menu-list" [class.mobile-open]="mobileMenuOpen">
+    <li 
+      *ngFor="let item of menuItems" 
+      class="menu-item"
+      [class.active]="item.active"
+      [class.has-children]="item.children && item.children.length > 0"
+      [class.submenu-open]="isSubmenuOpen(item.id)">
+      
+      <!-- Simple Link -->
+      <a 
+        *ngIf="!item.children" 
+        [href]="item.link" 
+        class="menu-link">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+        <span 
+          *ngIf="item.badge" 
+          class="menu-badge"
+          [ngClass]="'badge--' + item.badgeType">
+          {{ item.badge }}
+        </span>
+      </a>
+
+      <!-- Dropdown Trigger -->
+      <button 
+        *ngIf="item.children" 
+        class="menu-link menu-trigger"
+        (click)="toggleSubmenu(item.id)">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+        <span 
+          *ngIf="item.badge" 
+          class="menu-badge"
+          [ngClass]="'badge--' + item.badgeType">
+          {{ item.badge }}
+        </span>
+        <i class="bi bi-chevron-down dropdown-arrow"></i>
+      </button>
+
+      <!-- Submenu -->
+      <ul *ngIf="item.children" class="submenu">
+        <li *ngFor="let child of item.children" class="submenu-item">
+          <a [href]="child.link" class="submenu-link">
+            <i class="bi" [ngClass]="child.icon"></i>
+            <span>{{ child.label }}</span>
+            <span 
+              *ngIf="child.badge" 
+              class="menu-badge"
+              [ngClass]="'badge--' + child.badgeType">
+              {{ child.badge }}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

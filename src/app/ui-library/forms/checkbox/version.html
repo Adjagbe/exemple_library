@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkbox - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* CHECKBOX COMPONENT - Premium UI Library                         */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .checkbox-showcase {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+
+    .showcase-section {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin: 0 0 1.25rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BASIC CHECKBOX
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-label input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .checkbox-label.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .checkbox-custom {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #d1d5db;
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .checkbox-custom i {
+      font-size: 0.875rem;
+      color: white;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-label:hover .checkbox-custom {
+      border-color: #4f46e5;
+    }
+
+    .checkbox-label input:checked + .checkbox-custom {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .checkbox-label input:checked + .checkbox-custom i {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .checkbox-label input:focus + .checkbox-custom {
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
+
+    .checkbox-text {
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CHECKBOX CARDS
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-cards {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .checkbox-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: #f9fafb;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-card input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .checkbox-card:hover {
+      border-color: #d1d5db;
+      background: white;
+    }
+
+    .checkbox-card.checked {
+      border-color: #4f46e5;
+      background: #eff6ff;
+    }
+
+    .card-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #d1d5db;
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .card-checkbox i {
+      font-size: 0.875rem;
+      color: white;
+      opacity: 0;
+    }
+
+    .checkbox-card.checked .card-checkbox {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .checkbox-card.checked .card-checkbox i {
+      opacity: 1;
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .card-label {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .card-description {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CHECKBOX TREE
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-tree {
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 0.75rem;
+    }
+
+    .checkbox-parent {
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .checkbox-parent.indeterminate .checkbox-custom {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .checkbox-parent.indeterminate .checkbox-custom i {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .checkbox-children {
+      padding-left: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SIZES
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-sizes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .checkbox--sm .checkbox-custom {
+      width: 16px;
+      height: 16px;
+      border-radius: 0.25rem;
+    }
+
+    .checkbox--sm .checkbox-custom i {
+      font-size: 0.625rem;
+    }
+
+    .checkbox--sm .checkbox-text {
+      font-size: 0.8rem;
+    }
+
+    .checkbox--lg .checkbox-custom {
+      width: 28px;
+      height: 28px;
+      border-radius: 0.5rem;
+    }
+
+    .checkbox--lg .checkbox-custom i {
+      font-size: 1rem;
+    }
+
+    .checkbox--lg .checkbox-text {
+      font-size: 1rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       COLORS
+       ───────────────────────────────────────────────────────────────── */
+    .checkbox-colors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .checkbox--primary input:checked + .checkbox-custom {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .checkbox--success input:checked + .checkbox-custom {
+      background: #10b981;
+      border-color: #10b981;
+    }
+
+    .checkbox--warning input:checked + .checkbox-custom {
+      background: #f59e0b;
+      border-color: #f59e0b;
+    }
+
+    .checkbox--danger input:checked + .checkbox-custom {
+      background: #dc2626;
+      border-color: #dc2626;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       AGREEMENT
+       ───────────────────────────────────────────────────────────────── */
+    .agreement-box {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: #f9fafb;
+      border-radius: 0.75rem;
+    }
+
+    .checkbox--agreement .checkbox-text a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+
+    .checkbox--agreement .checkbox-text a:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn--primary {
+      background: #4f46e5;
+      color: white;
+      border: none;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background: #4338ca;
+    }
+  </style>
+</head>
+<body>
+  <div class="checkbox-showcase">
+    <!-- Basic Checkboxes -->
+    <section class="showcase-section">
+      <h2 class="section-title">Basic Checkboxes</h2>
+      <div class="checkbox-group" id="basicGroup"></div>
+    </section>
+
+    <!-- Checkboxes with Description -->
+    <section class="showcase-section">
+      <h2 class="section-title">Feature Selection</h2>
+      <p class="section-subtitle" id="featureCount">Selected: 2 of 4 features</p>
+      <div class="checkbox-cards" id="featureCards"></div>
+    </section>
+
+    <!-- Parent-Child Checkboxes -->
+    <section class="showcase-section">
+      <h2 class="section-title">Nested Selection</h2>
+      <div class="checkbox-tree">
+        <label class="checkbox-label checkbox-parent" id="parentLabel">
+          <input type="checkbox" id="parentCheckbox" onchange="toggleParent()">
+          <span class="checkbox-custom">
+            <i class="bi bi-check" id="parentIcon"></i>
+          </span>
+          <span class="checkbox-text"><strong>Select All Files</strong></span>
+        </label>
+        <div class="checkbox-children" id="childrenGroup"></div>
+      </div>
+    </section>
+
+    <!-- Checkbox Sizes -->
+    <section class="showcase-section">
+      <h2 class="section-title">Sizes</h2>
+      <div class="checkbox-sizes">
+        <label class="checkbox-label checkbox--sm">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Small</span>
+        </label>
+        <label class="checkbox-label checkbox--md">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Medium (Default)</span>
+        </label>
+        <label class="checkbox-label checkbox--lg">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Large</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Checkbox Colors -->
+    <section class="showcase-section">
+      <h2 class="section-title">Colors</h2>
+      <div class="checkbox-colors">
+        <label class="checkbox-label checkbox--primary">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Primary</span>
+        </label>
+        <label class="checkbox-label checkbox--success">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Success</span>
+        </label>
+        <label class="checkbox-label checkbox--warning">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Warning</span>
+        </label>
+        <label class="checkbox-label checkbox--danger">
+          <input type="checkbox" checked>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">Danger</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Agreement Checkbox -->
+    <section class="showcase-section">
+      <h2 class="section-title">Terms Agreement</h2>
+      <div class="agreement-box">
+        <label class="checkbox-label checkbox--agreement">
+          <input type="checkbox" id="agreementCheckbox" onchange="toggleAgreement()">
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </span>
+        </label>
+        <button class="btn btn--primary" id="continueBtn" disabled>
+          Continue
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // CHECKBOX COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // DATA
+    // ─────────────────────────────────────────────────────────────────
+    const basicCheckboxes = [
+      { id: 'option1', label: 'Option 1', checked: true },
+      { id: 'option2', label: 'Option 2', checked: false },
+      { id: 'option3', label: 'Option 3 (Disabled)', checked: false, disabled: true },
+      { id: 'option4', label: 'Option 4 (Checked & Disabled)', checked: true, disabled: true }
+    ];
+
+    const featureCheckboxes = [
+      { id: 'analytics', label: 'Analytics & Reporting', description: 'Get detailed insights and performance metrics', checked: true },
+      { id: 'notifications', label: 'Push Notifications', description: 'Receive real-time alerts and updates', checked: true },
+      { id: 'api', label: 'API Access', description: 'Full access to REST API endpoints', checked: false },
+      { id: 'support', label: 'Priority Support', description: '24/7 dedicated customer support', checked: false }
+    ];
+
+    const childCheckboxes = [
+      { id: 'child1', label: 'Select All Documents', checked: false },
+      { id: 'child2', label: 'Select All Images', checked: false },
+      { id: 'child3', label: 'Select All Videos', checked: false }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER FUNCTIONS
+    // ─────────────────────────────────────────────────────────────────
+    function renderBasicCheckboxes() {
+      const container = document.getElementById('basicGroup');
+      container.innerHTML = basicCheckboxes.map(item => `
+        <label class="checkbox-label ${item.disabled ? 'disabled' : ''}">
+          <input type="checkbox" ${item.checked ? 'checked' : ''} ${item.disabled ? 'disabled' : ''}>
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">${item.label}</span>
+        </label>
+      `).join('');
+    }
+
+    function renderFeatureCards() {
+      const container = document.getElementById('featureCards');
+      container.innerHTML = featureCheckboxes.map((item, index) => `
+        <label class="checkbox-card ${item.checked ? 'checked' : ''}" onclick="toggleFeature(${index})">
+          <input type="checkbox" ${item.checked ? 'checked' : ''}>
+          <span class="card-checkbox"><i class="bi bi-check"></i></span>
+          <div class="card-content">
+            <span class="card-label">${item.label}</span>
+            <span class="card-description">${item.description}</span>
+          </div>
+        </label>
+      `).join('');
+      updateFeatureCount();
+    }
+
+    function renderChildCheckboxes() {
+      const container = document.getElementById('childrenGroup');
+      container.innerHTML = childCheckboxes.map((item, index) => `
+        <label class="checkbox-label">
+          <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChild(${index})">
+          <span class="checkbox-custom"><i class="bi bi-check"></i></span>
+          <span class="checkbox-text">${item.label}</span>
+        </label>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // HANDLERS
+    // ─────────────────────────────────────────────────────────────────
+    function toggleFeature(index) {
+      featureCheckboxes[index].checked = !featureCheckboxes[index].checked;
+      renderFeatureCards();
+    }
+
+    function updateFeatureCount() {
+      const count = featureCheckboxes.filter(f => f.checked).length;
+      document.getElementById('featureCount').textContent = `Selected: ${count} of ${featureCheckboxes.length} features`;
+    }
+
+    function toggleParent() {
+      const checked = document.getElementById('parentCheckbox').checked;
+      childCheckboxes.forEach(c => c.checked = checked);
+      renderChildCheckboxes();
+      updateParentState();
+    }
+
+    function toggleChild(index) {
+      childCheckboxes[index].checked = !childCheckboxes[index].checked;
+      updateParentState();
+    }
+
+    function updateParentState() {
+      const checkedCount = childCheckboxes.filter(c => c.checked).length;
+      const parentCheckbox = document.getElementById('parentCheckbox');
+      const parentLabel = document.getElementById('parentLabel');
+      const parentIcon = document.getElementById('parentIcon');
+
+      if (checkedCount === childCheckboxes.length) {
+        parentCheckbox.checked = true;
+        parentLabel.classList.remove('indeterminate');
+        parentIcon.className = 'bi bi-check';
+      } else if (checkedCount > 0) {
+        parentCheckbox.checked = false;
+        parentLabel.classList.add('indeterminate');
+        parentIcon.className = 'bi bi-dash';
+      } else {
+        parentCheckbox.checked = false;
+        parentLabel.classList.remove('indeterminate');
+        parentIcon.className = 'bi bi-check';
+      }
+    }
+
+    function toggleAgreement() {
+      const checked = document.getElementById('agreementCheckbox').checked;
+      document.getElementById('continueBtn').disabled = !checked;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderBasicCheckboxes();
+      renderFeatureCards();
+      renderChildCheckboxes();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catégories - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* CATEGORIES COMPONENT - Premium UI Library                       */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .categories-showcase {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title { font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0; }
+    .page-subtitle { color: #6b7280; margin: 0 0 1.5rem 0; }
+    .section { margin-top: 3rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+
+    /* CONTROLS */
+    .categories-controls { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+    .search-wrapper { flex: 1; position: relative; }
+    .search-wrapper i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+    .search-input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.95rem; }
+    .search-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+    .view-toggle { display: flex; background: #f3f4f6; border-radius: 0.5rem; padding: 0.25rem; }
+    .view-btn { padding: 0.5rem 0.75rem; background: transparent; border: none; border-radius: 0.375rem; cursor: pointer; color: #6b7280; transition: all 0.2s; }
+    .view-btn:hover { color: #374151; }
+    .view-btn.active { background: white; color: #4f46e5; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+
+    /* SELECTION BAR */
+    .selection-bar { display: none; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 0.5rem; margin-bottom: 1.5rem; }
+    .selection-bar.visible { display: flex; }
+    .selection-bar span { font-size: 0.875rem; color: #4f46e5; }
+    .clear-btn { display: flex; align-items: center; gap: 0.375rem; padding: 0.375rem 0.75rem; background: white; border: 1px solid #c7d2fe; border-radius: 0.375rem; font-size: 0.8125rem; color: #4f46e5; cursor: pointer; transition: all 0.2s; }
+    .clear-btn:hover { background: #4f46e5; color: white; }
+
+    /* GRID VIEW */
+    .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .category-card { position: relative; display: flex; gap: 1rem; padding: 1.25rem; background: white; border: 2px solid #e5e7eb; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; }
+    .category-card:hover { border-color: #c7d2fe; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+    .category-card.selected { border-color: #4f46e5; background: #faf5ff; }
+    .category-icon { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 0.75rem; flex-shrink: 0; }
+    .category-icon i { font-size: 1.5rem; }
+    .category-info { flex: 1; min-width: 0; }
+    .category-name { margin: 0 0 0.375rem 0; font-size: 1.1rem; font-weight: 600; color: #111827; }
+    .category-description { margin: 0 0 0.5rem 0; font-size: 0.8125rem; color: #6b7280; line-height: 1.4; }
+    .category-count { font-size: 0.75rem; color: #9ca3af; font-weight: 500; }
+    .category-check { position: absolute; top: 0.75rem; right: 0.75rem; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #4f46e5; border-radius: 50%; color: white; font-size: 0.875rem; }
+
+    /* LIST VIEW */
+    .categories-list { display: none; flex-direction: column; gap: 0.5rem; }
+    .categories-list.active { display: flex; }
+    .category-list-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: white; border: 2px solid #e5e7eb; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; }
+    .category-list-item:hover { border-color: #c7d2fe; }
+    .category-list-item.selected { border-color: #4f46e5; background: #faf5ff; }
+    .list-icon { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 0.5rem; flex-shrink: 0; }
+    .list-icon i { font-size: 1.25rem; }
+    .list-content { flex: 1; min-width: 0; }
+    .list-name { margin: 0; font-size: 1rem; font-weight: 600; color: #111827; }
+    .list-description { font-size: 0.8125rem; color: #6b7280; }
+    .list-count { padding: 0.25rem 0.75rem; background: #f3f4f6; border-radius: 2rem; font-size: 0.8125rem; font-weight: 600; color: #374151; }
+    .list-check { font-size: 1.25rem; color: #d1d5db; }
+    .list-check .bi-check-circle-fill { color: #4f46e5; }
+
+    /* TREE VIEW */
+    .categories-tree { display: none; flex-direction: column; gap: 0.25rem; }
+    .categories-tree.active { display: flex; }
+    .tree-category { background: white; border: 1px solid #e5e7eb; border-radius: 0.75rem; overflow: hidden; }
+    .tree-parent { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; cursor: pointer; transition: all 0.2s; }
+    .tree-parent:hover { background: #f9fafb; }
+    .expand-btn { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #f3f4f6; border: none; border-radius: 0.375rem; cursor: pointer; color: #6b7280; transition: all 0.2s; }
+    .expand-btn:hover { background: #e5e7eb; }
+    .tree-icon { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 0.5rem; }
+    .tree-icon i { font-size: 1.125rem; }
+    .tree-icon--sm { width: 28px; height: 28px; }
+    .tree-icon--sm i { font-size: 0.875rem; }
+    .tree-name { flex: 1; font-weight: 600; color: #111827; }
+    .tree-count { padding: 0.125rem 0.5rem; background: #f3f4f6; border-radius: 1rem; font-size: 0.75rem; color: #6b7280; }
+    .tree-select { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: transparent; border: none; cursor: pointer; color: #d1d5db; font-size: 1.125rem; transition: all 0.2s; }
+    .tree-select:hover { color: #9ca3af; }
+    .tree-select.selected { color: #4f46e5; }
+    .tree-children { padding: 0 1rem 1rem 3.5rem; }
+    .tree-child { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 0.5rem; transition: all 0.2s; }
+    .tree-child:hover { background: #f9fafb; }
+    .tree-child.selected { background: #faf5ff; }
+
+    /* COMPACT CATEGORIES */
+    .compact-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .compact-category { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; color: #374151; }
+    .compact-category:hover { border-color: var(--cat-color, #4f46e5); background: color-mix(in srgb, var(--cat-color, #4f46e5) 5%, white); }
+    .compact-category i { color: var(--cat-color, #4f46e5); }
+    .compact-count { padding: 0.125rem 0.5rem; background: #f3f4f6; border-radius: 1rem; font-size: 0.6875rem; color: #6b7280; }
+
+    /* PILL CATEGORIES */
+    .pill-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .pill-category { padding: 0.5rem 1rem; border: none; border-radius: 2rem; font-size: 0.8125rem; font-weight: 500; color: white; cursor: pointer; transition: all 0.2s; }
+    .pill-category:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .categories-grid.hidden, .categories-list.hidden, .categories-tree.hidden { display: none; }
+    .categories-grid.active { display: grid; }
+
+    @media (max-width: 768px) {
+      .categories-grid { grid-template-columns: 1fr; }
+      .categories-controls { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="categories-showcase">
+  <h1 class="page-title">Catégories</h1>
+  <p class="page-subtitle">Affichage et sélection de catégories</p>
+
+  <!-- Controls -->
+  <div class="categories-controls">
+    <div class="search-wrapper">
+      <i class="bi bi-search"></i>
+      <input type="text" class="search-input" placeholder="Rechercher une catégorie..." id="searchInput" />
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid"><i class="bi bi-grid-3x3-gap"></i></button>
+      <button class="view-btn" data-view="list"><i class="bi bi-list"></i></button>
+      <button class="view-btn" data-view="tree"><i class="bi bi-diagram-3"></i></button>
+    </div>
+  </div>
+
+  <!-- Selection Info -->
+  <div class="selection-bar" id="selectionBar">
+    <span><strong id="selectionCount">0</strong> catégorie(s) sélectionnée(s)</span>
+    <button class="clear-btn" onclick="clearSelection()"><i class="bi bi-x-lg"></i> Effacer</button>
+  </div>
+
+  <!-- GRID VIEW -->
+  <div class="categories-grid active" id="categoriesGrid"></div>
+
+  <!-- LIST VIEW -->
+  <div class="categories-list" id="categoriesList"></div>
+
+  <!-- TREE VIEW -->
+  <div class="categories-tree" id="categoriesTree"></div>
+
+  <!-- Compact Categories -->
+  <section class="section">
+    <h2 class="section-title">Catégories compactes</h2>
+    <div class="compact-categories" id="compactCategories"></div>
+  </section>
+
+  <!-- Pills Categories -->
+  <section class="section">
+    <h2 class="section-title">Catégories en pilules</h2>
+    <div class="pill-categories" id="pillCategories"></div>
+  </section>
+</div>
+
+<script>
+  // Data
+  const categories = [
+    { id: '1', name: 'Développement', description: 'Langages, frameworks et outils de développement', icon: 'bi-code-slash', color: '#4f46e5', count: 256, children: [
+      { id: '1-1', name: 'Frontend', icon: 'bi-window', color: '#06b6d4', count: 89 },
+      { id: '1-2', name: 'Backend', icon: 'bi-server', color: '#8b5cf6', count: 102 },
+      { id: '1-3', name: 'Mobile', icon: 'bi-phone', color: '#ec4899', count: 65 }
+    ], expanded: true },
+    { id: '2', name: 'Design', description: 'UI/UX, graphisme et ressources visuelles', icon: 'bi-palette', color: '#ec4899', count: 142, children: [
+      { id: '2-1', name: 'UI Design', icon: 'bi-grid', color: '#f97316', count: 58 },
+      { id: '2-2', name: 'UX Research', icon: 'bi-person-lines-fill', color: '#14b8a6', count: 34 },
+      { id: '2-3', name: 'Illustrations', icon: 'bi-brush', color: '#a855f7', count: 50 }
+    ], expanded: false },
+    { id: '3', name: 'Marketing', description: 'SEO, publicité et stratégies marketing', icon: 'bi-megaphone', color: '#f59e0b', count: 98, children: [
+      { id: '3-1', name: 'SEO', icon: 'bi-search', color: '#22c55e', count: 42 },
+      { id: '3-2', name: 'Social Media', icon: 'bi-share', color: '#3b82f6', count: 36 },
+      { id: '3-3', name: 'Email Marketing', icon: 'bi-envelope', color: '#ef4444', count: 20 }
+    ], expanded: false },
+    { id: '4', name: 'Business', description: 'Gestion, finance et entrepreneuriat', icon: 'bi-briefcase', color: '#10b981', count: 87, children: [
+      { id: '4-1', name: 'Management', icon: 'bi-people', color: '#6366f1', count: 31 },
+      { id: '4-2', name: 'Finance', icon: 'bi-cash-stack', color: '#22c55e', count: 28 },
+      { id: '4-3', name: 'Startups', icon: 'bi-rocket', color: '#f97316', count: 28 }
+    ], expanded: false },
+    { id: '5', name: 'Data Science', description: 'Analytics, ML et intelligence artificielle', icon: 'bi-graph-up', color: '#8b5cf6', count: 134, children: [
+      { id: '5-1', name: 'Machine Learning', icon: 'bi-cpu', color: '#4f46e5', count: 56 },
+      { id: '5-2', name: 'Analytics', icon: 'bi-bar-chart', color: '#06b6d4', count: 48 },
+      { id: '5-3', name: 'Big Data', icon: 'bi-database', color: '#ec4899', count: 30 }
+    ], expanded: false },
+    { id: '6', name: 'DevOps', description: 'Cloud, CI/CD et infrastructure', icon: 'bi-cloud', color: '#06b6d4', count: 76, children: [
+      { id: '6-1', name: 'Cloud', icon: 'bi-cloud-upload', color: '#3b82f6', count: 32 },
+      { id: '6-2', name: 'CI/CD', icon: 'bi-arrow-repeat', color: '#22c55e', count: 24 },
+      { id: '6-3', name: 'Containers', icon: 'bi-box', color: '#8b5cf6', count: 20 }
+    ], expanded: false }
+  ];
+
+  let viewMode = 'grid';
+  let searchQuery = '';
+  let selectedCategories = [];
+
+  function getFilteredCategories() {
+    if (!searchQuery) return categories;
+    return categories.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.description.toLowerCase().includes(searchQuery.toLowerCase()));
+  }
+
+  function isSelected(id) { return selectedCategories.includes(id); }
+
+  function toggleSelection(id) {
+    const idx = selectedCategories.indexOf(id);
+    if (idx > -1) selectedCategories.splice(idx, 1);
+    else selectedCategories.push(id);
+    updateSelectionBar();
+    render();
+  }
+
+  function clearSelection() { selectedCategories = []; updateSelectionBar(); render(); }
+
+  function updateSelectionBar() {
+    const bar = document.getElementById('selectionBar');
+    document.getElementById('selectionCount').textContent = selectedCategories.length;
+    bar.classList.toggle('visible', selectedCategories.length > 0);
+  }
+
+  function renderGrid() {
+    document.getElementById('categoriesGrid').innerHTML = getFilteredCategories().map(c => `
+      <div class="category-card ${isSelected(c.id) ? 'selected' : ''}" data-id="${c.id}">
+        <div class="category-icon" style="background-color: ${c.color}15; color: ${c.color}"><i class="bi ${c.icon}"></i></div>
+        <div class="category-info">
+          <h3 class="category-name">${c.name}</h3>
+          <p class="category-description">${c.description}</p>
+          <span class="category-count">${c.count} éléments</span>
+        </div>
+        ${isSelected(c.id) ? '<div class="category-check"><i class="bi bi-check-lg"></i></div>' : ''}
+      </div>
+    `).join('');
+    document.querySelectorAll('.category-card').forEach(card => card.addEventListener('click', () => toggleSelection(card.dataset.id)));
+  }
+
+  function renderList() {
+    document.getElementById('categoriesList').innerHTML = getFilteredCategories().map(c => `
+      <div class="category-list-item ${isSelected(c.id) ? 'selected' : ''}" data-id="${c.id}">
+        <div class="list-icon" style="background-color: ${c.color}15; color: ${c.color}"><i class="bi ${c.icon}"></i></div>
+        <div class="list-content"><h4 class="list-name">${c.name}</h4><span class="list-description">${c.description}</span></div>
+        <span class="list-count">${c.count}</span>
+        <div class="list-check"><i class="bi ${isSelected(c.id) ? 'bi-check-circle-fill' : 'bi-circle'}"></i></div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.category-list-item').forEach(item => item.addEventListener('click', () => toggleSelection(item.dataset.id)));
+  }
+
+  function renderTree() {
+    document.getElementById('categoriesTree').innerHTML = getFilteredCategories().map(c => `
+      <div class="tree-category" data-id="${c.id}">
+        <div class="tree-parent ${c.expanded ? 'expanded' : ''}">
+          ${c.children?.length ? `<button class="expand-btn"><i class="bi ${c.expanded ? 'bi-chevron-down' : 'bi-chevron-right'}"></i></button>` : '<span style="width:24px"></span>'}
+          <div class="tree-icon" style="background-color: ${c.color}15; color: ${c.color}"><i class="bi ${c.icon}"></i></div>
+          <span class="tree-name">${c.name}</span>
+          <span class="tree-count">${c.count}</span>
+          <button class="tree-select ${isSelected(c.id) ? 'selected' : ''}" data-id="${c.id}"><i class="bi ${isSelected(c.id) ? 'bi-check-square-fill' : 'bi-square'}"></i></button>
+        </div>
+        ${c.expanded && c.children?.length ? `
+          <div class="tree-children">
+            ${c.children.map(ch => `
+              <div class="tree-child ${isSelected(ch.id) ? 'selected' : ''}" data-id="${ch.id}">
+                <div class="tree-icon tree-icon--sm" style="background-color: ${ch.color}15; color: ${ch.color}"><i class="bi ${ch.icon}"></i></div>
+                <span class="tree-name">${ch.name}</span>
+                <span class="tree-count">${ch.count}</span>
+                <button class="tree-select ${isSelected(ch.id) ? 'selected' : ''}" data-id="${ch.id}"><i class="bi ${isSelected(ch.id) ? 'bi-check-square-fill' : 'bi-square'}"></i></button>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+    document.querySelectorAll('.expand-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const cat = categories.find(c => c.id === btn.closest('.tree-category').dataset.id);
+        if (cat) { cat.expanded = !cat.expanded; renderTree(); }
+      });
+    });
+    document.querySelectorAll('.tree-select').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); toggleSelection(btn.dataset.id); }));
+    document.querySelectorAll('.tree-child').forEach(child => child.addEventListener('click', () => toggleSelection(child.dataset.id)));
+  }
+
+  function renderCompact() {
+    document.getElementById('compactCategories').innerHTML = categories.map(c => `
+      <button class="compact-category" style="--cat-color: ${c.color}"><i class="bi ${c.icon}"></i><span>${c.name}</span><span class="compact-count">${c.count}</span></button>
+    `).join('');
+  }
+
+  function renderPills() {
+    document.getElementById('pillCategories').innerHTML = categories.map(c => `
+      <button class="pill-category" style="background-color: ${c.color}">${c.name}</button>
+    `).join('');
+  }
+
+  function setView(view) {
+    viewMode = view;
+    document.querySelectorAll('.view-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
+    document.getElementById('categoriesGrid').classList.toggle('active', view === 'grid');
+    document.getElementById('categoriesList').classList.toggle('active', view === 'list');
+    document.getElementById('categoriesTree').classList.toggle('active', view === 'tree');
+    render();
+  }
+
+  function render() {
+    renderGrid();
+    renderList();
+    renderTree();
+  }
+
+  document.querySelectorAll('.view-btn').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
+  document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; render(); });
+
+  // Initialize
+  render();
+  renderCompact();
+  renderPills();
+</script>
+
+</body>
+</html>

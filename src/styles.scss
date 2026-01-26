@@ -1,1 +1,395 @@
-/* You can add global styles to this file, and also import other style files */
+/**
+ * ============================================================================
+ * UI LIBRARY PREMIUM - STYLES GLOBAUX
+ * ============================================================================
+ * Ce fichier contient les styles globaux de l'application, incluant :
+ * - Import de Bootstrap 5.3+
+ * - Variables CSS personnalisées (Design System 2026)
+ * - Utilitaires globaux
+ * - Animations et transitions
+ * ============================================================================
+ */
+
+// =============================================================================
+// IMPORTS BOOTSTRAP
+// =============================================================================
+// @import 'bootstrap/scss/bootstrap';
+@use "bootstrap/scss/bootstrap";
+
+
+// =============================================================================
+// VARIABLES CSS PERSONNALISÉES - DESIGN SYSTEM 2026
+// =============================================================================
+:root {
+  // --------------------------------------------------------------------------
+  // Palette de couleurs primaires
+  // --------------------------------------------------------------------------
+  --ui-primary: #6366f1;      // Indigo moderne
+  --ui-primary-hover: #4f46e5;     // Indigo foncé au survol
+  --ui-primary-light: #eef2ff;     // Indigo très clair (backgrounds)
+  --ui-primary-rgb: 99, 102, 241;  // RGB pour les opacités
+
+  // --------------------------------------------------------------------------
+  // Palette de couleurs secondaires
+  // --------------------------------------------------------------------------
+  --ui-secondary: #64748b;         // Slate moderne
+  --ui-secondary-hover: #475569;   // Slate foncé
+  --ui-secondary-light: #f1f5f9;   // Slate très clair
+
+  // --------------------------------------------------------------------------
+  // Couleurs sémantiques (succès, erreur, warning, info)
+  // --------------------------------------------------------------------------
+  --ui-success: #10b981;           // Emerald
+  --ui-success-light: #d1fae5;
+  --ui-danger: #ef4444;            // Red
+  --ui-danger-light: #fee2e2;
+  --ui-warning: #f59e0b;           // Amber
+  --ui-warning-light: #fef3c7;
+  --ui-info: #3b82f6;              // Blue
+  --ui-info-light: #dbeafe;
+
+  // --------------------------------------------------------------------------
+  // Couleurs neutres (textes, backgrounds, bordures)
+  // --------------------------------------------------------------------------
+  --ui-text-primary: #1e293b;      // Texte principal (slate-800)
+  --ui-text-secondary: #64748b;    // Texte secondaire (slate-500)
+  --ui-text-muted: #94a3b8;        // Texte désactivé (slate-400)
+  --ui-text-inverse: #ffffff;      // Texte sur fond sombre
+
+  --ui-bg-primary: #ffffff;        // Background principal
+  --ui-bg-secondary: #f8fafc;      // Background secondaire (slate-50)
+  --ui-bg-tertiary: #f1f5f9;       // Background tertiaire (slate-100)
+  --ui-bg-dark: #0f172a;           // Background sombre (slate-900)
+
+  --ui-border-light: #e2e8f0;      // Bordure légère (slate-200)
+  --ui-border-default: #cbd5e1;    // Bordure par défaut (slate-300)
+  --ui-border-dark: #94a3b8;       // Bordure foncée (slate-400)
+
+  // --------------------------------------------------------------------------
+  // Typographie
+  // --------------------------------------------------------------------------
+  --ui-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  --ui-font-size-xs: 0.75rem;      // 12px
+  --ui-font-size-sm: 0.875rem;     // 14px
+  --ui-font-size-base: 1rem;       // 16px
+  --ui-font-size-lg: 1.125rem;     // 18px
+  --ui-font-size-xl: 1.25rem;      // 20px
+  --ui-font-size-2xl: 1.5rem;      // 24px
+  --ui-font-size-3xl: 1.875rem;    // 30px
+  --ui-font-size-4xl: 2.25rem;     // 36px
+
+  --ui-font-weight-normal: 400;
+  --ui-font-weight-medium: 500;
+  --ui-font-weight-semibold: 600;
+  --ui-font-weight-bold: 700;
+
+  --ui-line-height-tight: 1.25;
+  --ui-line-height-normal: 1.5;
+  --ui-line-height-relaxed: 1.75;
+
+  // --------------------------------------------------------------------------
+  // Espacements
+  // --------------------------------------------------------------------------
+  --ui-spacing-xs: 0.25rem;        // 4px
+  --ui-spacing-sm: 0.5rem;         // 8px
+  --ui-spacing-md: 1rem;           // 16px
+  --ui-spacing-lg: 1.5rem;         // 24px
+  --ui-spacing-xl: 2rem;           // 32px
+  --ui-spacing-2xl: 3rem;          // 48px
+  --ui-spacing-3xl: 4rem;          // 64px
+
+  // --------------------------------------------------------------------------
+  // Bordures et arrondis
+  // --------------------------------------------------------------------------
+  --ui-radius-sm: 0.375rem;        // 6px
+  --ui-radius-md: 0.5rem;          // 8px
+  --ui-radius-lg: 0.75rem;         // 12px
+  --ui-radius-xl: 1rem;            // 16px
+  --ui-radius-2xl: 1.5rem;         // 24px
+  --ui-radius-full: 9999px;        // Cercle complet
+
+  // --------------------------------------------------------------------------
+  // Ombres (design moderne avec plusieurs niveaux)
+  // --------------------------------------------------------------------------
+  --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --ui-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --ui-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --ui-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --ui-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  // --------------------------------------------------------------------------
+  // Transitions et animations
+  // --------------------------------------------------------------------------
+  --ui-transition-fast: 150ms ease;
+  --ui-transition-base: 200ms ease;
+  --ui-transition-slow: 300ms ease;
+  --ui-transition-slower: 500ms ease;
+
+  // --------------------------------------------------------------------------
+  // Z-index (hiérarchie des couches)
+  // --------------------------------------------------------------------------
+  --ui-z-dropdown: 1000;
+  --ui-z-sticky: 1020;
+  --ui-z-fixed: 1030;
+  --ui-z-modal-backdrop: 1040;
+  --ui-z-modal: 1050;
+  --ui-z-popover: 1060;
+  --ui-z-tooltip: 1070;
+  --ui-z-toast: 1080;
+
+  // --------------------------------------------------------------------------
+  // Breakpoints (pour référence JS)
+  // --------------------------------------------------------------------------
+  --ui-breakpoint-sm: 576px;
+  --ui-breakpoint-md: 768px;
+  --ui-breakpoint-lg: 992px;
+  --ui-breakpoint-xl: 1200px;
+  --ui-breakpoint-2xl: 1400px;
+}
+
+// =============================================================================
+// RESET ET BASE GLOBALE
+// =============================================================================
+
+/**
+ * Reset de base pour une meilleure cohérence cross-browser
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+ * Configuration du body avec la typographie de base
+ */
+body {
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size-base);
+  font-weight: var(--ui-font-weight-normal);
+  line-height: var(--ui-line-height-normal);
+  color: var(--ui-text-primary);
+  background-color: var(--ui-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Amélioration de l'accessibilité du focus
+ */
+:focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: 2px;
+}
+
+/**
+ * Suppression du outline par défaut (remplacé par focus-visible)
+ */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// =============================================================================
+// UTILITAIRES GLOBAUX
+// =============================================================================
+
+/**
+ * Classes utilitaires pour les couleurs de texte
+ */
+.text-primary { color: var(--ui-primary) !important; }
+.text-secondary { color: var(--ui-text-secondary) !important; }
+.text-muted { color: var(--ui-text-muted) !important; }
+.text-success { color: var(--ui-success) !important; }
+.text-danger { color: var(--ui-danger) !important; }
+.text-warning { color: var(--ui-warning) !important; }
+.text-info { color: var(--ui-info) !important; }
+
+/**
+ * Classes utilitaires pour les backgrounds
+ */
+.bg-primary-light { background-color: var(--ui-primary-light) !important; }
+.bg-secondary-light { background-color: var(--ui-secondary-light) !important; }
+.bg-success-light { background-color: var(--ui-success-light) !important; }
+.bg-danger-light { background-color: var(--ui-danger-light) !important; }
+.bg-warning-light { background-color: var(--ui-warning-light) !important; }
+.bg-info-light { background-color: var(--ui-info-light) !important; }
+
+/**
+ * Classes utilitaires pour les ombres
+ */
+.shadow-xs { box-shadow: var(--ui-shadow-xs) !important; }
+.shadow-sm { box-shadow: var(--ui-shadow-sm) !important; }
+.shadow-md { box-shadow: var(--ui-shadow-md) !important; }
+.shadow-lg { box-shadow: var(--ui-shadow-lg) !important; }
+.shadow-xl { box-shadow: var(--ui-shadow-xl) !important; }
+
+/**
+ * Classes utilitaires pour les bordures arrondies
+ */
+.rounded-sm { border-radius: var(--ui-radius-sm) !important; }
+.rounded-md { border-radius: var(--ui-radius-md) !important; }
+.rounded-lg { border-radius: var(--ui-radius-lg) !important; }
+.rounded-xl { border-radius: var(--ui-radius-xl) !important; }
+
+// =============================================================================
+// ANIMATIONS GLOBALES
+// =============================================================================
+
+/**
+ * Animation de fondu entrant
+ */
+@keyframes ui-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Animation de glissement vers le haut
+ */
+@keyframes ui-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Animation de glissement vers le bas
+ */
+@keyframes ui-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Animation de scale
+ */
+@keyframes ui-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/**
+ * Animation de pulsation (loading)
+ */
+@keyframes ui-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/**
+ * Animation de spin (loading)
+ */
+@keyframes ui-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/**
+ * Classes d'animation réutilisables
+ */
+.animate-fade-in { animation: ui-fade-in var(--ui-transition-base) ease-out; }
+.animate-slide-up { animation: ui-slide-up var(--ui-transition-base) ease-out; }
+.animate-slide-down { animation: ui-slide-down var(--ui-transition-base) ease-out; }
+.animate-scale-in { animation: ui-scale-in var(--ui-transition-base) ease-out; }
+.animate-pulse { animation: ui-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-spin { animation: ui-spin 1s linear infinite; }
+
+// =============================================================================
+// SCROLLBAR PERSONNALISÉE
+// =============================================================================
+
+/**
+ * Scrollbar moderne et discrète pour Webkit
+ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ui-bg-tertiary);
+  border-radius: var(--ui-radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ui-border-default);
+  border-radius: var(--ui-radius-full);
+  
+  &:hover {
+    background: var(--ui-border-dark);
+  }
+}
+
+// =============================================================================
+// OVERRIDE BOOTSTRAP POUR COHÉRENCE DESIGN SYSTEM
+// =============================================================================
+
+/**
+ * Boutons primaires avec le design system
+ */
+.btn-primary {
+  background-color: var(--ui-primary);
+  border-color: var(--ui-primary);
+  
+  &:hover,
+  &:focus {
+    background-color: var(--ui-primary-hover);
+    border-color: var(--ui-primary-hover);
+  }
+}
+
+/**
+ * Cards avec le design system
+ */
+.card {
+  border: 1px solid var(--ui-border-light);
+  border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-sm);
+}
+
+/**
+ * Inputs avec le design system
+ */
+.form-control,
+.form-select {
+  border-color: var(--ui-border-default);
+  border-radius: var(--ui-radius-md);
+  
+  &:focus {
+    border-color: var(--ui-primary);
+    box-shadow: 0 0 0 3px rgba(var(--ui-primary-rgb), 0.1);
+  }
+}

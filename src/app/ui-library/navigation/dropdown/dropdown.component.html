@@ -1,0 +1,58 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DROPDOWN MENU COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="dropdown" [class.dropdown--open]="isOpen" [ngClass]="'dropdown--' + size">
+  <!-- Button Trigger -->
+  <button 
+    *ngIf="triggerType === 'button'" 
+    class="dropdown-trigger dropdown-trigger--button"
+    (click)="toggle()">
+    <span>{{ triggerText }}</span>
+    <i class="bi bi-chevron-down"></i>
+  </button>
+
+  <!-- Icon Trigger -->
+  <button 
+    *ngIf="triggerType === 'icon'" 
+    class="dropdown-trigger dropdown-trigger--icon"
+    (click)="toggle()">
+    <i class="bi" [ngClass]="triggerIcon"></i>
+  </button>
+
+  <!-- Avatar Trigger -->
+  <button 
+    *ngIf="triggerType === 'avatar'" 
+    class="dropdown-trigger dropdown-trigger--avatar"
+    (click)="toggle()">
+    <img [src]="avatarSrc" alt="User avatar" class="trigger-avatar">
+    <i class="bi bi-chevron-down"></i>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div class="dropdown-menu" [ngClass]="'dropdown-menu--' + position">
+    <ul class="dropdown-list">
+      <ng-container *ngFor="let item of items">
+        <!-- Divider -->
+        <li *ngIf="item.divider" class="dropdown-divider"></li>
+
+        <!-- Menu Item -->
+        <li 
+          *ngIf="!item.divider"
+          class="dropdown-item"
+          [class.dropdown-item--disabled]="item.disabled"
+          [class.dropdown-item--danger]="item.danger"
+          (click)="onItemClick(item)">
+          <a *ngIf="item.link" [href]="item.link" class="dropdown-link">
+            <i *ngIf="item.icon" class="bi" [ngClass]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+          <button *ngIf="!item.link" class="dropdown-link">
+            <i *ngIf="item.icon" class="bi" [ngClass]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </button>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

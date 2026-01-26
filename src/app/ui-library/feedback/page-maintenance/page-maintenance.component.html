@@ -1,0 +1,92 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MAINTENANCE PAGE COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="maintenance-page">
+  <div class="maintenance-content">
+    <!-- Illustration -->
+    <div class="maintenance-illustration">
+      <div class="gear-container">
+        <i class="bi bi-gear gear gear-1"></i>
+        <i class="bi bi-gear-fill gear gear-2"></i>
+        <i class="bi bi-gear gear gear-3"></i>
+      </div>
+      <div class="tools">
+        <i class="bi bi-wrench-adjustable"></i>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="maintenance-message">
+      <h1>Maintenance en cours</h1>
+      <p>Nous effectuons actuellement des améliorations pour vous offrir une meilleure expérience. Nous serons de retour très bientôt !</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="maintenance-progress">
+      <div class="progress-header">
+        <span>Progression</span>
+        <span>{{ progress }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress"></div>
+      </div>
+      <p class="estimated-time">
+        <i class="bi bi-clock"></i>
+        Temps estimé : <strong>{{ estimatedTime }}</strong>
+      </p>
+    </div>
+
+    <!-- Status Updates -->
+    <div class="status-updates">
+      <h3>Statut des opérations</h3>
+      <div class="updates-list">
+        <div *ngFor="let update of statusUpdates" class="update-item" [ngClass]="'status--' + update.status">
+          <span class="update-time">{{ update.time }}</span>
+          <div class="update-indicator">
+            <span class="indicator-dot"></span>
+            <span class="indicator-line"></span>
+          </div>
+          <span class="update-message">{{ update.message }}</span>
+          <span class="update-status">
+            <i *ngIf="update.status === 'completed'" class="bi bi-check-circle-fill"></i>
+            <i *ngIf="update.status === 'in-progress'" class="bi bi-arrow-repeat spinning"></i>
+            <i *ngIf="update.status === 'pending'" class="bi bi-circle"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification-signup">
+      <h3>Être notifié du retour en ligne</h3>
+      <div class="signup-form">
+        <input 
+          type="email" 
+          [(ngModel)]="email"
+          placeholder="Votre adresse email"
+        >
+        <button class="btn btn--primary" (click)="subscribe()">
+          <i class="bi bi-bell"></i>
+          M'alerter
+        </button>
+      </div>
+    </div>
+
+    <!-- Social & Contact -->
+    <div class="maintenance-footer">
+      <div class="social-links">
+        <span>Suivez-nous :</span>
+        <a *ngFor="let social of socialLinks" [href]="social.url" [title]="social.label" class="social-link">
+          <i class="bi" [ngClass]="social.icon"></i>
+        </a>
+      </div>
+      <div class="contact-info">
+        <a href="mailto:support@example.com">
+          <i class="bi bi-envelope"></i>
+          support&#64;example.com
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

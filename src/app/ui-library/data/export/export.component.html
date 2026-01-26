@@ -1,0 +1,180 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- EXPORT COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="export-showcase">
+  <h1 class="page-title">Export</h1>
+  <p class="page-subtitle">Exportez vos données en CSV, Excel, PDF ou JSON</p>
+
+  <div class="export-container">
+    <!-- Format Selection -->
+    <section class="export-section">
+      <h2 class="section-title">Format d'export</h2>
+      <div class="format-grid">
+        <button 
+          *ngFor="let format of formats"
+          class="format-card"
+          [class.selected]="selectedFormat === format.id"
+          [class.disabled]="!format.available"
+          (click)="format.available && selectFormat(format.id)"
+        >
+          <i class="bi" [ngClass]="format.icon"></i>
+          <div class="format-info">
+            <span class="format-name">{{ format.name }}</span>
+            <span class="format-ext">{{ format.extension }}</span>
+          </div>
+          <i *ngIf="selectedFormat === format.id" class="bi bi-check-circle-fill check-icon"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Column Selection -->
+    <section class="export-section">
+      <div class="section-header">
+        <h2 class="section-title">Colonnes à exporter</h2>
+        <div class="section-actions">
+          <button class="link-btn" (click)="selectAllColumns()">Tout sélectionner</button>
+          <span class="divider">|</span>
+          <button class="link-btn" (click)="deselectAllColumns()">Tout désélectionner</button>
+        </div>
+      </div>
+      <div class="columns-grid">
+        <label *ngFor="let column of columns" class="column-item">
+          <input 
+            type="checkbox" 
+            [checked]="column.selected"
+            (change)="toggleColumn(column)"
+          >
+          <span>{{ column.label }}</span>
+        </label>
+      </div>
+      <p class="columns-info">{{ getSelectedColumnsCount() }} colonnes sélectionnées</p>
+    </section>
+
+    <!-- Options -->
+    <section class="export-section">
+      <h2 class="section-title">Options</h2>
+      <div class="options-grid">
+        <div class="option-group">
+          <label class="option-label">Nom du fichier</label>
+          <div class="filename-input">
+            <input type="text" [(ngModel)]="filename" placeholder="export-data">
+            <span class="file-ext">{{ getSelectedFormat()?.extension }}</span>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label">Période</label>
+          <div class="date-range">
+            <input type="date" [(ngModel)]="dateStart" placeholder="Date début">
+            <span>à</span>
+            <input type="date" [(ngModel)]="dateEnd" placeholder="Date fin">
+          </div>
+        </div>
+
+        <div class="option-group checkbox-option">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="includeHeaders">
+            <span>Inclure les en-têtes</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary & Export -->
+    <section class="export-section export-summary">
+      <div class="summary-info">
+        <div class="summary-item">
+          <i class="bi bi-file-earmark"></i>
+          <div>
+            <span class="summary-label">Format</span>
+            <span class="summary-value">{{ getSelectedFormat()?.name }} ({{ getSelectedFormat()?.extension }})</span>
+          </div>
+        </div>
+        <div class="summary-item">
+          <i class="bi bi-table"></i>
+          <div>
+            <span class="summary-label">Enregistrements</span>
+            <span class="summary-value">{{ totalRecords | number }}</span>
+          </div>
+        </div>
+        <div class="summary-item">
+          <i class="bi bi-columns-gap"></i>
+          <div>
+            <span class="summary-label">Colonnes</span>
+            <span class="summary-value">{{ getSelectedColumnsCount() }}</span>
+          </div>
+        </div>
+        <div class="summary-item">
+          <i class="bi bi-hdd"></i>
+          <div>
+            <span class="summary-label">Taille estimée</span>
+            <span class="summary-value">{{ getEstimatedSize() }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="export-actions">
+        <button class="btn btn--outline" (click)="openModal()">
+          <i class="bi bi-eye"></i>
+          Aperçu
+        </button>
+        <button class="btn btn--primary" (click)="startExport()" [disabled]="getSelectedColumnsCount() === 0">
+          <i class="bi bi-download"></i>
+          Exporter
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Export Modal -->
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Aperçu de l'export</h3>
+        <button class="close-btn" (click)="closeModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" *ngIf="!isExporting">
+        <div class="preview-table-container">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th *ngFor="let col of getPreviewColumns()">{{ col.label }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of previewData">
+                <td *ngFor="let col of getPreviewColumns()">{{ row[col.key] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="preview-note">Affichage des 3 premiers enregistrements sur {{ totalRecords }}</p>
+      </div>
+
+      <div class="modal-body export-progress" *ngIf="isExporting">
+        <div class="progress-content">
+          <div class="progress-icon">
+            <i class="bi bi-arrow-down-circle"></i>
+          </div>
+          <h4>Export en cours...</h4>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="exportProgress"></div>
+          </div>
+          <span class="progress-text">{{ exportProgress | number:'1.0-0' }}%</span>
+        </div>
+      </div>
+
+      <div class="modal-footer" *ngIf="!isExporting">
+        <button class="btn btn--outline" (click)="closeModal()">Annuler</button>
+        <button class="btn btn--primary" (click)="startExport()">
+          <i class="bi bi-download"></i>
+          Lancer l'export
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

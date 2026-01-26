@@ -1,0 +1,152 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FILE UPLOAD COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="upload-showcase">
+  <h1 class="page-title">Upload de fichiers</h1>
+  <p class="page-subtitle">Zone de téléchargement avec suivi de progression</p>
+
+  <!-- Drop Zone -->
+  <div
+    class="drop-zone"
+    [class.dragging]="isDragging"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <div class="drop-content">
+      <div class="drop-icon">
+        <i class="bi bi-cloud-arrow-up"></i>
+      </div>
+      <h3>Glissez-déposez vos fichiers ici</h3>
+      <p>ou</p>
+      <label class="browse-btn">
+        <input type="file" multiple (change)="onFileSelect($event)" />
+        Parcourir les fichiers
+      </label>
+      <span class="drop-hint">
+        Formats acceptés: PDF, DOC, XLS, PPT, Images, ZIP (max 25 MB)
+      </span>
+    </div>
+  </div>
+
+  <!-- Upload Stats -->
+  <div class="upload-stats" *ngIf="files.length > 0">
+    <div class="stat">
+      <span class="stat-value">{{ files.length }}</span>
+      <span class="stat-label">Fichier(s)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{{ completedCount }}</span>
+      <span class="stat-label">Terminé(s)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{{ formatSize(totalSize) }}</span>
+      <span class="stat-label">Taille totale</span>
+    </div>
+    <button class="clear-btn" (click)="clearAll()">
+      <i class="bi bi-trash"></i>
+      Tout effacer
+    </button>
+  </div>
+
+  <!-- File List -->
+  <div class="file-list" *ngIf="files.length > 0">
+    <div
+      *ngFor="let file of files"
+      class="file-item"
+      [class.completed]="file.status === 'completed'"
+      [class.error]="file.status === 'error'"
+    >
+      <!-- File Icon -->
+      <div class="file-icon" [style.color]="getFileColor(file.type)">
+        <i class="bi" [ngClass]="getFileIcon(file.type)"></i>
+      </div>
+
+      <!-- File Info -->
+      <div class="file-info">
+        <div class="file-header">
+          <span class="file-name">{{ file.name }}</span>
+          <span class="file-size">{{ formatSize(file.size) }}</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="file-progress" *ngIf="file.status === 'uploading' || file.status === 'pending'">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="file.progress"></div>
+          </div>
+          <span class="progress-text">{{ file.progress | number:'1.0-0' }}%</span>
+        </div>
+
+        <!-- Status -->
+        <div class="file-status" *ngIf="file.status === 'completed'">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>Upload terminé</span>
+        </div>
+
+        <!-- Error -->
+        <div class="file-error" *ngIf="file.status === 'error'">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          <span>{{ file.error }}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="file-actions">
+        <button
+          class="action-btn"
+          title="Réessayer"
+          *ngIf="file.status === 'error'"
+          (click)="retryUpload(file)"
+        >
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+        <button
+          class="action-btn action-btn--danger"
+          title="Supprimer"
+          (click)="removeFile(file.id)"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alternative Upload Styles -->
+  <section class="alt-styles">
+    <h2 class="section-title">Styles alternatifs</h2>
+
+    <!-- Compact Upload -->
+    <div class="compact-upload">
+      <i class="bi bi-paperclip"></i>
+      <span>Ajouter une pièce jointe</span>
+      <input type="file" />
+    </div>
+
+    <!-- Button Upload -->
+    <div class="button-upload">
+      <button class="upload-btn">
+        <i class="bi bi-upload"></i>
+        Importer un fichier
+      </button>
+      <span class="upload-hint">PNG, JPG jusqu'à 10MB</span>
+    </div>
+
+    <!-- Avatar Upload -->
+    <div class="avatar-upload">
+      <div class="avatar-preview">
+        <i class="bi bi-person"></i>
+      </div>
+      <div class="avatar-actions">
+        <button class="avatar-btn avatar-btn--primary">
+          <i class="bi bi-camera"></i>
+          Changer la photo
+        </button>
+        <button class="avatar-btn avatar-btn--danger">
+          <i class="bi bi-trash"></i>
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

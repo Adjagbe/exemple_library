@@ -1,0 +1,241 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- WYSIWYG EDITOR COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="wysiwyg-container">
+  <h1 class="page-title">Éditeur WYSIWYG</h1>
+  <p class="page-subtitle">Éditeur de texte riche avec outils de formatage</p>
+
+  <div class="editor-wrapper">
+    <!-- Toolbar -->
+    <div class="editor-toolbar">
+      <!-- Undo/Redo -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Annuler (Ctrl+Z)" (click)="undo()">
+          <i class="bi bi-arrow-counterclockwise"></i>
+        </button>
+        <button class="toolbar-btn" title="Rétablir (Ctrl+Shift+Z)" (click)="redo()">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <!-- Headings -->
+      <div class="toolbar-group">
+        <select class="toolbar-select" [(ngModel)]="selectedHeading" (change)="formatHeading()">
+          <option *ngFor="let opt of headingOptions" [value]="opt.value">{{ opt.label }}</option>
+        </select>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <!-- Text formatting -->
+      <div class="toolbar-group">
+        <button
+          *ngFor="let tool of textFormattingTools"
+          class="toolbar-btn"
+          [class.active]="isCommandActive(tool.command)"
+          [title]="tool.title"
+          (click)="execCommand(tool.command)"
+        >
+          <i class="bi" [ngClass]="tool.icon"></i>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <!-- Alignment -->
+      <div class="toolbar-group">
+        <button
+          *ngFor="let tool of alignmentTools"
+          class="toolbar-btn"
+          [class.active]="isCommandActive(tool.command)"
+          [title]="tool.title"
+          (click)="execCommand(tool.command)"
+        >
+          <i class="bi" [ngClass]="tool.icon"></i>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <!-- Lists -->
+      <div class="toolbar-group">
+        <button
+          *ngFor="let tool of listTools"
+          class="toolbar-btn"
+          [class.active]="isCommandActive(tool.command)"
+          [title]="tool.title"
+          (click)="execCommand(tool.command)"
+        >
+          <i class="bi" [ngClass]="tool.icon"></i>
+        </button>
+        <button class="toolbar-btn" title="Diminuer le retrait" (click)="outdent()">
+          <i class="bi bi-text-indent-left"></i>
+        </button>
+        <button class="toolbar-btn" title="Augmenter le retrait" (click)="indent()">
+          <i class="bi bi-text-indent-right"></i>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <!-- Insert elements -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Insérer un lien" (click)="openLinkModal()">
+          <i class="bi bi-link-45deg"></i>
+        </button>
+        <button class="toolbar-btn" title="Insérer une image" (click)="openImageModal()">
+          <i class="bi bi-image"></i>
+        </button>
+        <button class="toolbar-btn" title="Citation" (click)="insertQuote()">
+          <i class="bi bi-quote"></i>
+        </button>
+        <button class="toolbar-btn" title="Bloc de code" (click)="insertCode()">
+          <i class="bi bi-code-slash"></i>
+        </button>
+        <button class="toolbar-btn" title="Ligne horizontale" (click)="insertHr()">
+          <i class="bi bi-dash-lg"></i>
+        </button>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <!-- Clear & Source -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Effacer le formatage" (click)="clearFormatting()">
+          <i class="bi bi-eraser"></i>
+        </button>
+        <button
+          class="toolbar-btn"
+          [class.active]="showSourceCode"
+          title="Code source"
+          (click)="toggleSourceCode()"
+        >
+          <i class="bi bi-code"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Editor Content -->
+    <div class="editor-content" *ngIf="!showSourceCode">
+      <div
+        #editor
+        class="editor-area"
+        contenteditable="true"
+        [innerHTML]="content"
+        (input)="onEditorInput()"
+        (keydown)="onKeyDown($event)"
+        (mouseup)="updateFormattingState()"
+      ></div>
+    </div>
+
+    <!-- Source Code View -->
+    <div class="source-content" *ngIf="showSourceCode">
+      <textarea
+        class="source-textarea"
+        [(ngModel)]="sourceCode"
+        placeholder="Code HTML..."
+      ></textarea>
+    </div>
+
+    <!-- Footer -->
+    <div class="editor-footer">
+      <div class="editor-stats">
+        <span><strong>{{ wordCount }}</strong> mots</span>
+        <span><strong>{{ charCount }}</strong> caractères</span>
+      </div>
+      <div class="editor-actions">
+        <button class="btn btn--secondary">Annuler</button>
+        <button class="btn btn--primary">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link Modal -->
+  <div class="modal-overlay" *ngIf="showLinkModal" (click)="closeLinkModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="bi bi-link-45deg"></i> Insérer un lien</h3>
+        <button class="modal-close" (click)="closeLinkModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>URL du lien</label>
+          <input type="url" class="form-input" [(ngModel)]="linkUrl" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Texte du lien (optionnel)</label>
+          <input type="text" class="form-input" [(ngModel)]="linkText" placeholder="Texte affiché" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--secondary" (click)="closeLinkModal()">Annuler</button>
+        <button class="btn btn--primary" (click)="insertLink()" [disabled]="!linkUrl">
+          Insérer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal-overlay" *ngIf="showImageModal" (click)="closeImageModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="bi bi-image"></i> Insérer une image</h3>
+        <button class="modal-close" (click)="closeImageModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>URL de l'image</label>
+          <input type="url" class="form-input" [(ngModel)]="imageUrl" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Texte alternatif</label>
+          <input type="text" class="form-input" [(ngModel)]="imageAlt" placeholder="Description de l'image" />
+        </div>
+        <div class="image-preview" *ngIf="imageUrl">
+          <img [src]="imageUrl" [alt]="imageAlt" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--secondary" (click)="closeImageModal()">Annuler</button>
+        <button class="btn btn--primary" (click)="insertImage()" [disabled]="!imageUrl">
+          Insérer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Section -->
+  <div class="help-section">
+    <h3>Raccourcis clavier</h3>
+    <div class="shortcuts-grid">
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>B</kbd>
+        <span>Gras</span>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>I</kbd>
+        <span>Italique</span>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>U</kbd>
+        <span>Souligné</span>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>Z</kbd>
+        <span>Annuler</span>
+      </div>
+      <div class="shortcut">
+        <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd>
+        <span>Rétablir</span>
+      </div>
+    </div>
+  </div>
+</div>

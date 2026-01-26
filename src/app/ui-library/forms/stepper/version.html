@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stepper - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* STEPPER (WIZARD) COMPONENT - Premium UI Library                 */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .stepper-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       COMPLETION STATE
+       ───────────────────────────────────────────────────────────────── */
+    .completion-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      display: none;
+    }
+
+    .completion-state.visible {
+      display: block;
+    }
+
+    .completion-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+    }
+
+    .completion-icon i {
+      font-size: 3rem;
+      color: white;
+    }
+
+    .completion-state h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 1rem 0;
+    }
+
+    .completion-state p {
+      font-size: 1.1rem;
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       HEADER
+       ───────────────────────────────────────────────────────────────── */
+    .stepper-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .steps-indicator {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .step-indicator.active,
+    .step-indicator.completed {
+      opacity: 1;
+    }
+
+    .step-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border: 2px solid #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .step-circle i {
+      font-size: 1.25rem;
+      color: #9ca3af;
+    }
+
+    .step-indicator.active .step-circle {
+      background: #eff6ff;
+      border-color: #4f46e5;
+    }
+
+    .step-indicator.active .step-circle i {
+      color: #4f46e5;
+    }
+
+    .step-indicator.completed .step-circle {
+      background: #10b981;
+      border-color: #10b981;
+    }
+
+    .step-indicator.completed .step-circle i {
+      color: white;
+    }
+
+    .step-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .step-subtitle {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CONTENT
+       ───────────────────────────────────────────────────────────────── */
+    .stepper-content {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .step-panel {
+      animation: fadeIn 0.3s ease;
+      display: none;
+    }
+
+    .step-panel.active {
+      display: block;
+    }
+
+    .panel-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .panel-subtitle {
+      font-size: 1rem;
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FORM ELEMENTS
+       ───────────────────────────────────────────────────────────────── */
+    .step-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+    }
+
+    .input-wrapper .form-input {
+      padding-left: 2.75rem;
+    }
+
+    .form-input,
+    .form-select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RADIO GROUP
+       ───────────────────────────────────────────────────────────────── */
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .radio-option {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .radio-option input {
+      display: none;
+    }
+
+    .radio-mark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .radio-mark::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 10px;
+      height: 10px;
+      background: #4f46e5;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+
+    .radio-option input:checked + .radio-mark {
+      border-color: #4f46e5;
+    }
+
+    .radio-option input:checked + .radio-mark::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .radio-option:hover {
+      border-color: #d1d5db;
+    }
+
+    .radio-option:has(input:checked) {
+      border-color: #4f46e5;
+      background: #eff6ff;
+    }
+
+    .radio-option i {
+      font-size: 1.25rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TOGGLE OPTIONS
+       ───────────────────────────────────────────────────────────────── */
+    .toggle-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .toggle-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 0.75rem;
+      cursor: pointer;
+    }
+
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toggle-title {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .toggle-desc {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 26px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #d1d5db;
+      border-radius: 13px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: #4f46e5;
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(22px);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       REVIEW SECTIONS
+       ───────────────────────────────────────────────────────────────── */
+    .review-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .review-section {
+      background: #f9fafb;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .section-header h4 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 0;
+    }
+
+    .section-header h4 i {
+      color: #4f46e5;
+    }
+
+    .edit-btn {
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      text-decoration: underline;
+    }
+
+    .section-content p {
+      font-size: 0.875rem;
+      color: #4b5563;
+      margin: 0.5rem 0;
+    }
+
+    .section-content p strong {
+      color: #111827;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TERMS AGREEMENT
+       ───────────────────────────────────────────────────────────────── */
+    .terms-agreement {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      display: none;
+    }
+
+    .checkbox-mark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checkbox-label input:checked + .checkbox-mark {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .checkbox-label input:checked + .checkbox-mark::after {
+      content: '✓';
+      color: white;
+      font-size: 0.75rem;
+    }
+
+    .checkbox-label span:last-child {
+      font-size: 0.875rem;
+      color: #4b5563;
+    }
+
+    .checkbox-label span:last-child a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+
+    .checkbox-label span:last-child a:hover {
+      text-decoration: underline;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ACTIONS
+       ───────────────────────────────────────────────────────────────── */
+    .stepper-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn--secondary {
+      background: white;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn--secondary:hover:not(:disabled) {
+      background: #f9fafb;
+    }
+
+    .btn--success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .steps-indicator {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .step-indicator {
+        flex: 0 0 calc(50% - 0.5rem);
+      }
+      .step-info {
+        display: none;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .radio-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stepper-container">
+    <!-- Completion State -->
+    <div class="completion-state" id="completionState">
+      <div class="completion-icon">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <h2>Successfully Completed!</h2>
+      <p>Your account has been created and you're all set to get started.</p>
+      <button class="btn btn--primary">
+        <i class="bi bi-house"></i>
+        Go to Dashboard
+      </button>
+    </div>
+
+    <!-- Stepper -->
+    <div class="stepper" id="stepper">
+      <!-- Progress Header -->
+      <div class="stepper-header">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        
+        <div class="steps-indicator" id="stepsIndicator"></div>
+      </div>
+
+      <!-- Step Content -->
+      <div class="stepper-content">
+        <!-- Step 1: Account -->
+        <div class="step-panel active" id="step-1">
+          <h2 class="panel-title">Create Your Account</h2>
+          <p class="panel-subtitle">Enter your email and choose a secure password</p>
+
+          <form class="step-form">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <div class="input-wrapper">
+                <i class="bi bi-envelope"></i>
+                <input type="email" class="form-input" id="email" placeholder="you@example.com" oninput="validateStep()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <div class="input-wrapper">
+                <i class="bi bi-lock"></i>
+                <input type="password" class="form-input" id="password" placeholder="Create a strong password" oninput="validateStep()">
+              </div>
+              <span class="form-hint">Minimum 8 characters with uppercase and numbers</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Confirm Password</label>
+              <div class="input-wrapper">
+                <i class="bi bi-lock-fill"></i>
+                <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm your password" oninput="validateStep()">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 2: Personal Info -->
+        <div class="step-panel" id="step-2">
+          <h2 class="panel-title">Personal Information</h2>
+          <p class="panel-subtitle">Tell us a bit about yourself</p>
+
+          <form class="step-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" id="firstName" placeholder="John" oninput="validateStep()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" id="lastName" placeholder="Doe" oninput="validateStep()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phone Number (Optional)</label>
+              <div class="input-wrapper">
+                <i class="bi bi-phone"></i>
+                <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 000-0000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Date of Birth (Optional)</label>
+              <div class="input-wrapper">
+                <i class="bi bi-calendar"></i>
+                <input type="date" class="form-input" id="dateOfBirth">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 3: Preferences -->
+        <div class="step-panel" id="step-3">
+          <h2 class="panel-title">Preferences</h2>
+          <p class="panel-subtitle">Customize your experience</p>
+
+          <form class="step-form">
+            <div class="form-group">
+              <label class="form-label">Theme</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="theme" value="light" checked>
+                  <span class="radio-mark"></span>
+                  <i class="bi bi-sun"></i>
+                  <span>Light Mode</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="theme" value="dark">
+                  <span class="radio-mark"></span>
+                  <i class="bi bi-moon"></i>
+                  <span>Dark Mode</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="theme" value="system">
+                  <span class="radio-mark"></span>
+                  <i class="bi bi-display"></i>
+                  <span>System</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Language</label>
+              <select class="form-select" id="language">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
+
+            <div class="toggle-options">
+              <label class="toggle-option">
+                <div class="toggle-info">
+                  <span class="toggle-title">Email Newsletter</span>
+                  <span class="toggle-desc">Receive updates and news via email</span>
+                </div>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="newsletter" checked>
+                  <span class="toggle-slider"></span>
+                </div>
+              </label>
+
+              <label class="toggle-option">
+                <div class="toggle-info">
+                  <span class="toggle-title">Push Notifications</span>
+                  <span class="toggle-desc">Get notified about important updates</span>
+                </div>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="notifications" checked>
+                  <span class="toggle-slider"></span>
+                </div>
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 4: Confirmation -->
+        <div class="step-panel" id="step-4">
+          <h2 class="panel-title">Review & Confirm</h2>
+          <p class="panel-subtitle">Please review your information before submitting</p>
+
+          <div class="review-sections">
+            <div class="review-section">
+              <div class="section-header">
+                <h4><i class="bi bi-person"></i> Account</h4>
+                <button class="edit-btn" onclick="goToStep(1)">Edit</button>
+              </div>
+              <div class="section-content">
+                <p><strong>Email:</strong> <span id="reviewEmail"></span></p>
+                <p><strong>Password:</strong> ••••••••</p>
+              </div>
+            </div>
+
+            <div class="review-section">
+              <div class="section-header">
+                <h4><i class="bi bi-card-text"></i> Personal Info</h4>
+                <button class="edit-btn" onclick="goToStep(2)">Edit</button>
+              </div>
+              <div class="section-content">
+                <p><strong>Name:</strong> <span id="reviewName"></span></p>
+                <p id="reviewPhoneRow"><strong>Phone:</strong> <span id="reviewPhone"></span></p>
+                <p id="reviewDobRow"><strong>Date of Birth:</strong> <span id="reviewDob"></span></p>
+              </div>
+            </div>
+
+            <div class="review-section">
+              <div class="section-header">
+                <h4><i class="bi bi-gear"></i> Preferences</h4>
+                <button class="edit-btn" onclick="goToStep(3)">Edit</button>
+              </div>
+              <div class="section-content">
+                <p><strong>Theme:</strong> <span id="reviewTheme"></span></p>
+                <p><strong>Newsletter:</strong> <span id="reviewNewsletter"></span></p>
+                <p><strong>Notifications:</strong> <span id="reviewNotifications"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="terms-agreement">
+            <label class="checkbox-label">
+              <input type="checkbox" id="termsCheckbox" onchange="validateStep()">
+              <span class="checkbox-mark"></span>
+              <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="stepper-actions">
+        <button class="btn btn--secondary" id="backBtn" onclick="prevStep()" disabled>
+          <i class="bi bi-arrow-left"></i>
+          Back
+        </button>
+
+        <button class="btn btn--primary" id="nextBtn" onclick="nextStep()" disabled>
+          Continue
+          <i class="bi bi-arrow-right"></i>
+        </button>
+
+        <button class="btn btn--primary btn--success" id="submitBtn" onclick="submit()" style="display: none;">
+          <i class="bi bi-check-circle"></i>
+          Complete Setup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // STEPPER COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    let currentStep = 1;
+    let isProcessing = false;
+
+    const steps = [
+      { id: 1, title: 'Account', subtitle: 'Create your account', icon: 'bi-person', completed: false, active: true },
+      { id: 2, title: 'Personal Info', subtitle: 'Your personal details', icon: 'bi-card-text', completed: false, active: false },
+      { id: 3, title: 'Preferences', subtitle: 'Customize settings', icon: 'bi-gear', completed: false, active: false },
+      { id: 4, title: 'Confirmation', subtitle: 'Review and submit', icon: 'bi-check-circle', completed: false, active: false }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER
+    // ─────────────────────────────────────────────────────────────────
+    function renderSteps() {
+      const container = document.getElementById('stepsIndicator');
+      container.innerHTML = steps.map(step => `
+        <div class="step-indicator ${step.active ? 'active' : ''} ${step.completed ? 'completed' : ''}" onclick="goToStep(${step.id})">
+          <div class="step-circle">
+            <i class="bi ${step.completed ? 'bi-check' : step.icon}"></i>
+          </div>
+          <div class="step-info">
+            <span class="step-title">${step.title}</span>
+            <span class="step-subtitle">${step.subtitle}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateProgress() {
+      const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+    }
+
+    function updatePanels() {
+      document.querySelectorAll('.step-panel').forEach((panel, index) => {
+        panel.classList.toggle('active', index + 1 === currentStep);
+      });
+    }
+
+    function updateButtons() {
+      const backBtn = document.getElementById('backBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      backBtn.disabled = currentStep === 1;
+      
+      if (currentStep === steps.length) {
+        nextBtn.style.display = 'none';
+        submitBtn.style.display = 'flex';
+      } else {
+        nextBtn.style.display = 'flex';
+        submitBtn.style.display = 'none';
+      }
+
+      validateStep();
+    }
+
+    function updateReviewSection() {
+      document.getElementById('reviewEmail').textContent = document.getElementById('email').value || 'Not provided';
+      
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      document.getElementById('reviewName').textContent = `${firstName} ${lastName}` || 'Not provided';
+      
+      const phone = document.getElementById('phone').value;
+      const phoneRow = document.getElementById('reviewPhoneRow');
+      if (phone) {
+        document.getElementById('reviewPhone').textContent = phone;
+        phoneRow.style.display = 'block';
+      } else {
+        phoneRow.style.display = 'none';
+      }
+      
+      const dob = document.getElementById('dateOfBirth').value;
+      const dobRow = document.getElementById('reviewDobRow');
+      if (dob) {
+        document.getElementById('reviewDob').textContent = dob;
+        dobRow.style.display = 'block';
+      } else {
+        dobRow.style.display = 'none';
+      }
+      
+      const theme = document.querySelector('input[name="theme"]:checked').value;
+      document.getElementById('reviewTheme').textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+      
+      document.getElementById('reviewNewsletter').textContent = document.getElementById('newsletter').checked ? 'Subscribed' : 'Not subscribed';
+      document.getElementById('reviewNotifications').textContent = document.getElementById('notifications').checked ? 'Enabled' : 'Disabled';
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // NAVIGATION
+    // ─────────────────────────────────────────────────────────────────
+    function nextStep() {
+      if (currentStep < steps.length) {
+        steps[currentStep - 1].completed = true;
+        steps[currentStep - 1].active = false;
+        currentStep++;
+        steps[currentStep - 1].active = true;
+        
+        if (currentStep === 4) {
+          updateReviewSection();
+        }
+        
+        renderSteps();
+        updateProgress();
+        updatePanels();
+        updateButtons();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        steps[currentStep - 1].active = false;
+        steps[currentStep - 1].completed = false;
+        currentStep--;
+        steps[currentStep - 1].active = true;
+        
+        renderSteps();
+        updateProgress();
+        updatePanels();
+        updateButtons();
+      }
+    }
+
+    function goToStep(stepId) {
+      if (stepId <= currentStep) {
+        steps[currentStep - 1].active = false;
+        currentStep = stepId;
+        steps[currentStep - 1].active = true;
+        
+        // Mark later steps as incomplete
+        for (let i = currentStep; i < steps.length; i++) {
+          steps[i].completed = false;
+        }
+        
+        renderSteps();
+        updateProgress();
+        updatePanels();
+        updateButtons();
+      }
+    }
+
+    function validateStep() {
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      let isValid = false;
+
+      switch (currentStep) {
+        case 1:
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+          isValid = email && password && password === confirmPassword && password.length >= 8;
+          break;
+        case 2:
+          const firstName = document.getElementById('firstName').value;
+          const lastName = document.getElementById('lastName').value;
+          isValid = firstName && lastName;
+          break;
+        case 3:
+          isValid = true;
+          break;
+        case 4:
+          isValid = document.getElementById('termsCheckbox').checked;
+          break;
+      }
+
+      nextBtn.disabled = !isValid;
+      submitBtn.disabled = !isValid || isProcessing;
+    }
+
+    function submit() {
+      isProcessing = true;
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Processing...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById('stepper').style.display = 'none';
+        document.getElementById('completionState').classList.add('visible');
+      }, 2000);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderSteps();
+      updateProgress();
+      updateButtons();
+    });
+  </script>
+</body>
+</html>

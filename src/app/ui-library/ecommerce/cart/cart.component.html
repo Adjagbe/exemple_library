@@ -1,0 +1,196 @@
+<div class="cart-page">
+  <div class="cart-container">
+    <!-- Cart Header -->
+    <header class="cart-header">
+      <h1 class="cart-header__title">
+        <i class="bi bi-cart3"></i>
+        Mon Panier
+        <span class="cart-header__count">({{ itemCount }} articles)</span>
+      </h1>
+      @if (items.length > 0) {
+        <button class="clear-btn" (click)="clearCart()">
+          <i class="bi bi-trash3"></i>
+          Vider le panier
+        </button>
+      }
+    </header>
+
+    @if (items.length === 0) {
+      <!-- Empty Cart -->
+      <div class="empty-cart">
+        <div class="empty-cart__icon">
+          <i class="bi bi-cart-x"></i>
+        </div>
+        <h2>Votre panier est vide</h2>
+        <p>Découvrez nos produits et commencez votre shopping !</p>
+        <a href="#" class="btn btn--primary">
+          <i class="bi bi-bag"></i>
+          Continuer mes achats
+        </a>
+      </div>
+    } @else {
+      <div class="cart-content">
+        <!-- Cart Items -->
+        <div class="cart-items">
+          @for (item of items; track item.id) {
+            <div class="cart-item" [class.out-of-stock]="!item.inStock">
+              <div class="cart-item__image">
+                <img [src]="item.image" [alt]="item.name">
+                @if (!item.inStock) {
+                  <span class="stock-badge">Rupture</span>
+                }
+              </div>
+              
+              <div class="cart-item__info">
+                <h3 class="cart-item__name">{{ item.name }}</h3>
+                <p class="cart-item__variant">{{ item.variant }}</p>
+                
+                @if (!item.inStock) {
+                  <div class="stock-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    Ce produit n'est plus disponible
+                  </div>
+                }
+              </div>
+              
+              <div class="cart-item__quantity">
+                <div class="quantity-selector">
+                  <button 
+                    class="qty-btn" 
+                    (click)="decrementQuantity(item)"
+                    [disabled]="item.quantity <= 1 || !item.inStock">
+                    <i class="bi bi-dash"></i>
+                  </button>
+                  <input 
+                    type="number" 
+                    class="qty-input"
+                    [ngModel]="item.quantity"
+                    (ngModelChange)="updateQuantity(item, $event)"
+                    [disabled]="!item.inStock"
+                    min="1" 
+                    [max]="item.maxQuantity">
+                  <button 
+                    class="qty-btn" 
+                    (click)="incrementQuantity(item)"
+                    [disabled]="item.quantity >= item.maxQuantity || !item.inStock">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+                <span class="max-qty">Max: {{ item.maxQuantity }}</span>
+              </div>
+              
+              <div class="cart-item__price">
+                <span class="price-total">{{ formatPrice(item.price * item.quantity) }}</span>
+                @if (item.quantity > 1) {
+                  <span class="price-unit">{{ formatPrice(item.price) }} / unité</span>
+                }
+              </div>
+              
+              <button class="cart-item__remove" (click)="removeItem(item)">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          }
+        </div>
+
+        <!-- Cart Summary -->
+        <aside class="cart-summary">
+          <h2 class="summary-title">Récapitulatif</h2>
+          
+          <!-- Coupon -->
+          <div class="coupon-section">
+            @if (!appliedCoupon) {
+              <div class="coupon-form">
+                <input 
+                  type="text" 
+                  class="coupon-input"
+                  placeholder="Code promo"
+                  [(ngModel)]="couponCode"
+                  (keydown.enter)="applyCoupon()">
+                <button class="coupon-btn" (click)="applyCoupon()" [disabled]="!couponCode">
+                  Appliquer
+                </button>
+              </div>
+              @if (couponError) {
+                <p class="coupon-error">{{ couponError }}</p>
+              }
+            } @else {
+              <div class="coupon-applied">
+                <div class="coupon-info">
+                  <i class="bi bi-tag-fill"></i>
+                  <span>{{ appliedCoupon.code }}</span>
+                  <span class="coupon-discount">-{{ appliedCoupon.discount }}%</span>
+                </div>
+                <button class="coupon-remove" (click)="removeCoupon()">
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            }
+          </div>
+
+          <!-- Summary Lines -->
+          <div class="summary-lines">
+            <div class="summary-line">
+              <span>Sous-total</span>
+              <span>{{ formatPrice(subtotal) }}</span>
+            </div>
+            @if (discount > 0) {
+              <div class="summary-line discount">
+                <span>Réduction</span>
+                <span>-{{ formatPrice(discount) }}</span>
+              </div>
+            }
+            <div class="summary-line">
+              <span>Livraison</span>
+              <span>
+                @if (shipping === 0) {
+                  <span class="free-shipping">Gratuite</span>
+                } @else {
+                  {{ formatPrice(shipping) }}
+                }
+              </span>
+            </div>
+            @if (shipping > 0) {
+              <p class="shipping-info">
+                <i class="bi bi-info-circle"></i>
+                Livraison gratuite dès 100€ d'achat
+              </p>
+            }
+          </div>
+
+          <div class="summary-total">
+            <span>Total</span>
+            <span class="total-amount">{{ formatPrice(total) }}</span>
+          </div>
+
+          <button class="btn btn--primary btn--full btn--lg" (click)="checkout()">
+            <i class="bi bi-lock"></i>
+            Passer la commande
+          </button>
+
+          <div class="payment-methods">
+            <p>Moyens de paiement acceptés</p>
+            <div class="payment-icons">
+              <i class="bi bi-credit-card"></i>
+              <i class="bi bi-paypal"></i>
+              <i class="bi bi-apple"></i>
+            </div>
+          </div>
+
+          <div class="security-info">
+            <i class="bi bi-shield-check"></i>
+            <span>Paiement 100% sécurisé</span>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Continue Shopping -->
+      <div class="continue-shopping">
+        <a href="#" class="continue-link">
+          <i class="bi bi-arrow-left"></i>
+          Continuer mes achats
+        </a>
+      </div>
+    }
+  </div>
+</div>

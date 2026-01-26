@@ -1,0 +1,266 @@
+<div class="roles-permissions">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="page-header__content">
+      <h1 class="page-header__title">
+        <i class="bi bi-shield-lock-fill"></i>
+        Rôles & Permissions
+      </h1>
+      <p class="page-header__subtitle">Gérez les rôles utilisateurs et leurs permissions d'accès</p>
+    </div>
+    <button class="btn btn--primary" (click)="openCreateModal()">
+      <i class="bi bi-plus-lg"></i>
+      Nouveau rôle
+    </button>
+  </header>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button 
+      class="tabs__item" 
+      [class.tabs__item--active]="activeTab() === 'roles'"
+      (click)="setActiveTab('roles')">
+      <i class="bi bi-person-badge"></i>
+      Rôles
+      <span class="tabs__badge">{{ roles().length }}</span>
+    </button>
+    <button 
+      class="tabs__item" 
+      [class.tabs__item--active]="activeTab() === 'permissions'"
+      (click)="setActiveTab('permissions')">
+      <i class="bi bi-key-fill"></i>
+      Permissions
+      <span class="tabs__badge">{{ permissions().length }}</span>
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <i class="bi bi-search search-bar__icon"></i>
+    <input 
+      type="text" 
+      class="search-bar__input" 
+      [placeholder]="activeTab() === 'roles' ? 'Rechercher un rôle...' : 'Rechercher une permission...'"
+      [ngModel]="searchQuery()"
+      (ngModelChange)="searchQuery.set($event)">
+    @if (searchQuery()) {
+      <button class="search-bar__clear" (click)="searchQuery.set('')">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    }
+  </div>
+
+  <!-- Roles Tab Content -->
+  @if (activeTab() === 'roles') {
+    <div class="roles-grid">
+      @for (role of filteredRoles(); track role.id) {
+        <div class="role-card" [style.--role-color]="role.color">
+          <div class="role-card__header">
+            <div class="role-card__icon" [style.background]="role.color">
+              <i class="bi bi-shield-fill"></i>
+            </div>
+            <div class="role-card__info">
+              <h3 class="role-card__name">{{ role.name }}</h3>
+              <p class="role-card__description">{{ role.description }}</p>
+            </div>
+            @if (!role.isSystem) {
+              <div class="role-card__actions">
+                <button class="btn-icon" title="Modifier" (click)="openEditModal(role)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn-icon btn-icon--danger" title="Supprimer" (click)="deleteRole(role)">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            } @else {
+              <span class="role-card__badge">Système</span>
+            }
+          </div>
+          
+          <div class="role-card__stats">
+            <div class="role-card__stat">
+              <i class="bi bi-key"></i>
+              <span>{{ getPermissionCount(role) }} permissions</span>
+            </div>
+            <div class="role-card__stat">
+              <i class="bi bi-people"></i>
+              <span>{{ role.usersCount }} utilisateurs</span>
+            </div>
+          </div>
+
+          <div class="role-card__permissions">
+            <span class="role-card__permissions-title">Permissions actives</span>
+            <div class="role-card__permissions-list">
+              @for (permId of role.permissions.slice(0, 5); track permId) {
+                @let perm = getPermissionById(permId);
+                @if (perm) {
+                  <span class="permission-tag">{{ perm.name }}</span>
+                }
+              }
+              @if (role.permissions.length > 5) {
+                <span class="permission-tag permission-tag--more">+{{ role.permissions.length - 5 }}</span>
+              }
+            </div>
+          </div>
+
+          <button class="role-card__edit-btn" (click)="openEditModal(role)">
+            <i class="bi bi-sliders"></i>
+            Gérer les permissions
+          </button>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <i class="bi bi-search"></i>
+          <p>Aucun rôle trouvé</p>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Permissions Tab Content -->
+  @if (activeTab() === 'permissions') {
+    <div class="permissions-list">
+      @for (category of permissionCategories; track category) {
+        @if (groupedPermissions()[category]; as perms) {
+          <div class="permission-category">
+            <div class="permission-category__header">
+              <div class="permission-category__icon">
+                <i class="bi" [ngClass]="getCategoryIcon(category)"></i>
+              </div>
+              <div class="permission-category__info">
+                <h3 class="permission-category__title">{{ category }}</h3>
+                <span class="permission-category__count">{{ perms.length }} permissions</span>
+              </div>
+            </div>
+            
+            <div class="permission-category__items">
+              @for (perm of perms; track perm.id) {
+                <div class="permission-item">
+                  <div class="permission-item__info">
+                    <span class="permission-item__name">{{ perm.name }}</span>
+                    <span class="permission-item__description">{{ perm.description }}</span>
+                  </div>
+                  <code class="permission-item__code">{{ perm.id }}</code>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      } @empty {
+        <div class="empty-state">
+          <i class="bi bi-search"></i>
+          <p>Aucune permission trouvée</p>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Modal -->
+  @if (isModalOpen()) {
+    <div class="modal-overlay" (click)="closeModal()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal__header">
+          <h2 class="modal__title">
+            <i class="bi" [ngClass]="modalMode() === 'create' ? 'bi-plus-circle' : 'bi-pencil-square'"></i>
+            {{ modalMode() === 'create' ? 'Créer un rôle' : 'Modifier le rôle' }}
+          </h2>
+          <button class="modal__close" (click)="closeModal()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="modal__body">
+          <!-- Informations du rôle -->
+          <div class="form-section">
+            <h3 class="form-section__title">Informations</h3>
+            
+            <div class="form-group">
+              <label class="form-label">Nom du rôle</label>
+              <input 
+                type="text" 
+                class="form-input" 
+                placeholder="Ex: Gestionnaire"
+                [(ngModel)]="newRole.name">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea 
+                class="form-input form-input--textarea" 
+                placeholder="Décrivez le rôle..."
+                [(ngModel)]="newRole.description"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Couleur</label>
+              <div class="color-picker">
+                @for (color of ['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#64748b']; track color) {
+                  <button 
+                    type="button"
+                    class="color-picker__item"
+                    [class.color-picker__item--active]="newRole.color === color"
+                    [style.background]="color"
+                    (click)="newRole.color = color">
+                    @if (newRole.color === color) {
+                      <i class="bi bi-check"></i>
+                    }
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Permissions -->
+          <div class="form-section">
+            <h3 class="form-section__title">
+              Permissions
+              <span class="form-section__count">{{ newRole.permissions?.length || 0 }} sélectionnées</span>
+            </h3>
+
+            <div class="permissions-selector">
+              @for (category of permissionCategories; track category) {
+                <div class="permissions-selector__category">
+                  <div class="permissions-selector__category-header">
+                    <label class="checkbox">
+                      <input 
+                        type="checkbox" 
+                        [checked]="isCategoryFullySelected(category)"
+                        [indeterminate]="isCategoryPartiallySelected(category)"
+                        (change)="toggleCategory(category)">
+                      <span class="checkbox__mark"></span>
+                      <span class="checkbox__label">
+                        <i class="bi" [ngClass]="getCategoryIcon(category)"></i>
+                        {{ category }}
+                      </span>
+                    </label>
+                  </div>
+                  
+                  <div class="permissions-selector__items">
+                    @for (perm of getPermissionsByCategory(category); track perm.id) {
+                      <label class="checkbox checkbox--small">
+                        <input 
+                          type="checkbox" 
+                          [checked]="hasPermission(perm.id)"
+                          (change)="togglePermission(perm.id)">
+                        <span class="checkbox__mark"></span>
+                        <span class="checkbox__label">{{ perm.name }}</span>
+                      </label>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="modal__footer">
+          <button class="btn btn--secondary" (click)="closeModal()">Annuler</button>
+          <button class="btn btn--primary" (click)="saveRole()" [disabled]="!newRole.name">
+            <i class="bi" [ngClass]="modalMode() === 'create' ? 'bi-plus-lg' : 'bi-check-lg'"></i>
+            {{ modalMode() === 'create' ? 'Créer le rôle' : 'Enregistrer' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

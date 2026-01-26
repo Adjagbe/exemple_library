@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des Rôles & Permissions - Site Web Version</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       ROLES & PERMISSIONS - Site Web Version
+       Interface tableau avec TreeView dans modal
+       ═══════════════════════════════════════════════════════════════ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      min-height: 100vh;
+      background: #f9fafb;
+    }
+
+    .role-permission-page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PAGE HEADER
+       ───────────────────────────────────────────────────────────────── */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .page-header__left {
+      flex: 1;
+    }
+
+    .page-header__title {
+      font-size: 1.625rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.375rem 0;
+    }
+
+    .page-header__subtitle {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.125rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn--primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .btn--primary:hover {
+      background: #4338ca;
+    }
+
+    .btn--secondary {
+      background: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn--secondary:hover {
+      background: #f9fafb;
+      border-color: #9ca3af;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TOOLBAR
+       ───────────────────────────────────────────────────────────────── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .toolbar__right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .per-page {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .per-page select {
+      padding: 0.375rem 0.625rem;
+      font-size: 0.8rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.375rem;
+      background: white;
+      cursor: pointer;
+    }
+
+    .per-page select:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-box > i {
+      position: absolute;
+      left: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 1rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.625rem 2.5rem 0.625rem 2.5rem;
+      font-size: 0.875rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      background: white;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .search-box input::placeholder {
+      color: #9ca3af;
+    }
+
+    .search-box__clear {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.25rem;
+      color: #6b7280;
+      cursor: pointer;
+    }
+
+    .search-box__clear:hover {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TABLE
+       ───────────────────────────────────────────────────────────────── */
+    .table-container {
+      background: white;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin-bottom: 0;
+    }
+
+    .table__th {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .table__th--actions {
+      width: 140px;
+      text-align: center;
+    }
+
+    .table__row {
+      transition: background 0.15s ease;
+    }
+
+    .table__row:hover {
+      background: #f9fafb;
+    }
+
+    .table__row:not(:last-child) {
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .table__td {
+      padding: 1rem;
+      font-size: 0.875rem;
+      color: #374151;
+      vertical-align: middle;
+    }
+
+    .table__td--actions {
+      text-align: center;
+    }
+
+    .table__empty {
+      padding: 3rem;
+      text-align: center;
+    }
+
+    .role-name {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .code-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: #f3f4f6;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: #4f46e5;
+    }
+
+    .permission-count,
+    .user-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .permission-count i,
+    .user-count i {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .status-badge__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-badge--active {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .status-badge--active .status-badge__dot {
+      background: #10b981;
+    }
+
+    .status-badge--active:hover {
+      background: #d1fae5;
+    }
+
+    .status-badge--inactive {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .status-badge--inactive .status-badge__dot {
+      background: #ef4444;
+    }
+
+    .status-badge--inactive:hover {
+      background: #fee2e2;
+    }
+
+    .date-text {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: none;
+      border-radius: 0.375rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background: #f3f4f6;
+      color: #4f46e5;
+    }
+
+    .action-btn--danger:hover {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .action-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .action-btn:disabled:hover {
+      background: transparent;
+      color: #6b7280;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 2rem;
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      color: #d1d5db;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PAGINATION
+       ───────────────────────────────────────────────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      border-radius: 0 0 0.75rem 0.75rem;
+    }
+
+    .pagination__info {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .pagination__info strong {
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .pagination__controls {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .pagination__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      padding: 0 0.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.375rem;
+      font-size: 0.8rem;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pagination__btn:hover:not(:disabled) {
+      background: #f3f4f6;
+      border-color: #d1d5db;
+    }
+
+    .pagination__btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination__btn--page {
+      font-weight: 500;
+    }
+
+    .pagination__btn--page:hover:not(:disabled) {
+      background: #eef2ff;
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    .pagination__btn--active {
+      background: #4f46e5;
+      border-color: #4f46e5;
+      color: white;
+    }
+
+    .pagination__btn--active:hover:not(:disabled) {
+      background: #4338ca;
+      border-color: #4338ca;
+      color: white;
+    }
+
+    .pagination__ellipsis {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MODAL
+       ───────────────────────────────────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(17, 24, 39, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 1000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 960px;
+      max-height: 90vh;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal__title {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0;
+    }
+
+    .modal__title i {
+      color: #4f46e5;
+    }
+
+    .modal__close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.375rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .modal__close:hover {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .modal__body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .modal__section {
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .modal__section--form {
+      border-right: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    .modal__section--tree {
+      background: white;
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .section-title i {
+      color: #4f46e5;
+    }
+
+    .section-title__count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #4f46e5;
+      background: #eef2ff;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FORM
+       ───────────────────────────────────────────────────────────────── */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+
+    .required {
+      color: #dc2626;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.875rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      background: white;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .form-input--code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      text-transform: uppercase;
+    }
+
+    .form-hint {
+      display: block;
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.375rem;
+    }
+
+    .status-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .status-toggle__btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .status-toggle__btn:hover {
+      background: #f9fafb;
+    }
+
+    .status-toggle__btn--active {
+      background: #eef2ff;
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TREE VIEW
+       ───────────────────────────────────────────────────────────────── */
+    .tree-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .tree-node {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .tree-node__header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: white;
+      border-bottom: 1px solid transparent;
+    }
+
+    .tree-node__header.has-children {
+      border-bottom-color: #e5e7eb;
+    }
+
+    .tree-node__toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tree-node__toggle:hover {
+      color: #4f46e5;
+    }
+
+    .tree-node__children {
+      padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+      animation: expandDown 0.2s ease;
+    }
+
+    .tree-node__child {
+      padding: 0.375rem 0;
+    }
+
+    .tree-node__child:not(:last-child) {
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .tree-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .tree-checkbox input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .tree-checkbox__mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border: 2px solid #d1d5db;
+      border-radius: 0.25rem;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+      margin-top: 1px;
+      position: relative;
+    }
+
+    .tree-checkbox__mark::after {
+      content: '';
+      width: 10px;
+      height: 6px;
+      border: 2px solid white;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg) scale(0);
+      transition: transform 0.15s ease;
+      margin-top: -2px;
+    }
+
+    .tree-checkbox input:checked + .tree-checkbox__mark {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .tree-checkbox input:checked + .tree-checkbox__mark::after {
+      transform: rotate(-45deg) scale(1);
+    }
+
+    .tree-checkbox.indeterminate .tree-checkbox__mark {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+
+    .tree-checkbox.indeterminate .tree-checkbox__mark::after {
+      width: 8px;
+      height: 2px;
+      border: none;
+      background: white;
+      transform: rotate(0) scale(1);
+      margin-top: 0;
+      border-radius: 1px;
+    }
+
+    .tree-checkbox__content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    .tree-checkbox__label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .tree-checkbox__desc {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .tree-checkbox--child {
+      padding: 0.375rem 0.5rem;
+      border-radius: 0.375rem;
+      transition: background 0.15s ease;
+    }
+
+    .tree-checkbox--child:hover {
+      background: rgba(79, 70, 229, 0.05);
+    }
+
+    .tree-checkbox--child .tree-checkbox__label {
+      font-weight: 400;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ANIMATIONS
+       ───────────────────────────────────────────────────────────────── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes expandDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .modal__body {
+        grid-template-columns: 1fr;
+      }
+
+      .modal__section--form {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .role-permission-page {
+        padding: 1rem;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        max-width: none;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .table {
+        min-width: 800px;
+      }
+
+      .modal {
+        max-height: 100vh;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="role-permission-page">
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="page-header__left">
+        <h1 class="page-header__title">Gestion des Rôles</h1>
+        <p class="page-header__subtitle">Configurez les rôles et leurs permissions d'accès</p>
+      </div>
+      <button class="btn btn--primary" id="btnCreateRole">
+        <i class="bi bi-plus-lg"></i>
+        Nouveau rôle
+      </button>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="Rechercher un rôle..."
+        >
+        <button class="search-box__clear" id="btnClearSearch" style="display: none;">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      <div class="toolbar__right">
+        <div class="per-page">
+          <span>Afficher</span>
+          <select id="itemsPerPage">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+          <span>par page</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="table__th">Nom du rôle</th>
+            <th class="table__th">Code</th>
+            <th class="table__th">Permissions</th>
+            <th class="table__th">Utilisateurs</th>
+            <th class="table__th">Statut</th>
+            <th class="table__th">Créé le</th>
+            <th class="table__th table__th--actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rolesTableBody">
+          <!-- Rows will be generated by JavaScript -->
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <div class="pagination__info" id="paginationInfo">
+          <!-- Info will be generated by JavaScript -->
+        </div>
+        <div class="pagination__controls" id="paginationControls">
+          <!-- Controls will be generated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" style="display: none;">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">
+          <i class="bi bi-plus-circle"></i>
+          <span id="modalTitle">Créer un nouveau rôle</span>
+        </h2>
+        <button class="modal__close" id="btnCloseModal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal__body">
+        <!-- Form Section -->
+        <div class="modal__section modal__section--form">
+          <h3 class="section-title">
+            <i class="bi bi-info-circle"></i>
+            Informations du rôle
+          </h3>
+          <form id="roleForm">
+            <input type="hidden" id="roleId">
+            <div class="form-group">
+              <label class="form-label" for="roleName">
+                Nom du rôle <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-input" 
+                id="roleName" 
+                placeholder="Ex: Gestionnaire"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="roleCode">
+                Code <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="form-input form-input--code" 
+                id="roleCode" 
+                placeholder="Ex: MANAGER"
+                required
+              >
+              <span class="form-hint">Identifiant unique en majuscules</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Statut</label>
+              <div class="status-toggle">
+                <button type="button" class="status-toggle__btn status-toggle__btn--active" data-status="active">
+                  <i class="bi bi-check-circle"></i>
+                  Actif
+                </button>
+                <button type="button" class="status-toggle__btn" data-status="inactive">
+                  <i class="bi bi-x-circle"></i>
+                  Inactif
+                </button>
+              </div>
+              <input type="hidden" id="roleStatus" value="active">
+            </div>
+          </form>
+        </div>
+
+        <!-- Tree Section -->
+        <div class="modal__section modal__section--tree">
+          <h3 class="section-title">
+            <i class="bi bi-key"></i>
+            Permissions
+            <span class="section-title__count" id="permissionsCount">0 sélectionnée(s)</span>
+          </h3>
+          <div class="tree-container" id="permissionsTree">
+            <!-- Tree will be generated by JavaScript -->
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--secondary" id="btnCancel">Annuler</button>
+        <button type="button" class="btn btn--primary" id="btnSave">
+          <i class="bi bi-check-lg"></i>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ═══════════════════════════════════════════════════════════════
+     * ROLES & PERMISSIONS - Site Web Version
+     * Interface tableau avec TreeView dans modal - JavaScript
+     * ═══════════════════════════════════════════════════════════════
+     */
+
+    // ─────────────────────────────────────────────────────────────────
+    // DATA
+    // ─────────────────────────────────────────────────────────────────
+
+    /** Arbre des permissions */
+    const permissionsTree = [
+      {
+        id: 'users',
+        name: 'Gestion des utilisateurs',
+        expanded: true,
+        children: [
+          { id: 'users.view', name: 'Consulter les utilisateurs', description: 'Voir la liste et les détails' },
+          { id: 'users.create', name: 'Créer un utilisateur', description: 'Ajouter de nouveaux utilisateurs' },
+          { id: 'users.edit', name: 'Modifier un utilisateur', description: 'Éditer les informations' },
+          { id: 'users.delete', name: 'Supprimer un utilisateur', description: 'Retirer du système' },
+          { id: 'users.export', name: 'Exporter les utilisateurs', description: 'Télécharger en CSV/Excel' },
+        ]
+      },
+      {
+        id: 'content',
+        name: 'Gestion du contenu',
+        expanded: false,
+        children: [
+          { id: 'content.view', name: 'Consulter le contenu', description: 'Voir les articles et pages' },
+          { id: 'content.create', name: 'Créer du contenu', description: 'Rédiger des articles' },
+          { id: 'content.edit', name: 'Modifier le contenu', description: 'Éditer les publications' },
+          { id: 'content.delete', name: 'Supprimer le contenu', description: 'Retirer des publications' },
+          { id: 'content.publish', name: 'Publier le contenu', description: 'Mettre en ligne' },
+        ]
+      },
+      {
+        id: 'orders',
+        name: 'Gestion des commandes',
+        expanded: false,
+        children: [
+          { id: 'orders.view', name: 'Consulter les commandes', description: 'Voir toutes les commandes' },
+          { id: 'orders.process', name: 'Traiter les commandes', description: 'Valider et expédier' },
+          { id: 'orders.cancel', name: 'Annuler les commandes', description: 'Annuler une commande' },
+          { id: 'orders.refund', name: 'Rembourser', description: 'Effectuer des remboursements' },
+        ]
+      },
+      {
+        id: 'reports',
+        name: 'Rapports & Statistiques',
+        expanded: false,
+        children: [
+          { id: 'reports.view', name: 'Consulter les rapports', description: 'Accéder aux tableaux de bord' },
+          { id: 'reports.create', name: 'Créer des rapports', description: 'Générer des rapports personnalisés' },
+          { id: 'reports.export', name: 'Exporter les rapports', description: 'Télécharger en PDF/Excel' },
+        ]
+      },
+      {
+        id: 'settings',
+        name: 'Paramètres système',
+        expanded: false,
+        children: [
+          { id: 'settings.general', name: 'Paramètres généraux', description: 'Configuration de base' },
+          { id: 'settings.security', name: 'Sécurité', description: 'Options de sécurité' },
+          { id: 'settings.email', name: 'Emails', description: 'Configuration des emails' },
+          { id: 'settings.api', name: 'API & Intégrations', description: 'Clés API et webhooks' },
+        ]
+      }
+    ];
+
+    /** Liste des rôles */
+    let roles = [
+      {
+        id: '1',
+        name: 'Super Administrateur',
+        code: 'SUPER_ADMIN',
+        permissions: ['users.view', 'users.create', 'users.edit', 'users.delete', 'users.export', 'content.view', 'content.create', 'content.edit', 'content.delete', 'content.publish', 'orders.view', 'orders.process', 'orders.cancel', 'orders.refund', 'reports.view', 'reports.create', 'reports.export', 'settings.general', 'settings.security', 'settings.email', 'settings.api'],
+        status: 'active',
+        createdAt: '2024-01-15',
+        usersCount: 2
+      },
+      {
+        id: '2',
+        name: 'Gestionnaire',
+        code: 'MANAGER',
+        permissions: ['users.view', 'users.create', 'users.edit', 'content.view', 'content.create', 'content.edit', 'content.publish', 'reports.view'],
+        status: 'active',
+        createdAt: '2024-02-20',
+        usersCount: 5
+      },
+      {
+        id: '3',
+        name: 'Éditeur',
+        code: 'EDITOR',
+        permissions: ['content.view', 'content.create', 'content.edit', 'content.publish'],
+        status: 'active',
+        createdAt: '2024-03-10',
+        usersCount: 12
+      },
+      {
+        id: '4',
+        name: 'Commercial',
+        code: 'SALES',
+        permissions: ['orders.view', 'orders.process', 'reports.view', 'reports.export'],
+        status: 'active',
+        createdAt: '2024-03-15',
+        usersCount: 8
+      },
+      {
+        id: '5',
+        name: 'Support Client',
+        code: 'SUPPORT',
+        permissions: ['users.view', 'orders.view', 'orders.process'],
+        status: 'inactive',
+        createdAt: '2024-04-01',
+        usersCount: 3
+      },
+      {
+        id: '6',
+        name: 'Comptable',
+        code: 'ACCOUNTANT',
+        permissions: ['orders.view', 'reports.view', 'reports.create', 'reports.export'],
+        status: 'active',
+        createdAt: '2024-04-10',
+        usersCount: 4
+      },
+      {
+        id: '7',
+        name: 'Marketing',
+        code: 'MARKETING',
+        permissions: ['content.view', 'content.create', 'reports.view'],
+        status: 'active',
+        createdAt: '2024-05-01',
+        usersCount: 6
+      },
+      {
+        id: '8',
+        name: 'Visiteur',
+        code: 'VISITOR',
+        permissions: ['content.view'],
+        status: 'active',
+        createdAt: '2024-05-15',
+        usersCount: 45
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // STATE
+    // ─────────────────────────────────────────────────────────────────
+
+    let searchQuery = '';
+    let currentPage = 1;
+    let itemsPerPage = 5;
+    let modalMode = 'create';
+    let selectedPermissions = [];
+    let expandedNodes = { users: true };
+
+    // ─────────────────────────────────────────────────────────────────
+    // DOM ELEMENTS
+    // ─────────────────────────────────────────────────────────────────
+
+    const searchInput = document.getElementById('searchInput');
+    const btnClearSearch = document.getElementById('btnClearSearch');
+    const itemsPerPageSelect = document.getElementById('itemsPerPage');
+    const rolesTableBody = document.getElementById('rolesTableBody');
+    const paginationInfo = document.getElementById('paginationInfo');
+    const paginationControls = document.getElementById('paginationControls');
+    const pagination = document.getElementById('pagination');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalTitle');
+    const permissionsTreeEl = document.getElementById('permissionsTree');
+    const permissionsCount = document.getElementById('permissionsCount');
+    const btnCreateRole = document.getElementById('btnCreateRole');
+    const btnCloseModal = document.getElementById('btnCloseModal');
+    const btnCancel = document.getElementById('btnCancel');
+    const btnSave = document.getElementById('btnSave');
+    const roleIdInput = document.getElementById('roleId');
+    const roleNameInput = document.getElementById('roleName');
+    const roleCodeInput = document.getElementById('roleCode');
+    const roleStatusInput = document.getElementById('roleStatus');
+    const statusToggleBtns = document.querySelectorAll('.status-toggle__btn');
+
+    // ─────────────────────────────────────────────────────────────────
+    // UTILITY FUNCTIONS
+    // ─────────────────────────────────────────────────────────────────
+
+    /** Formater la date */
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    /** Obtenir le résumé des permissions */
+    function getPermissionsSummary(role) {
+      const count = role.permissions.length;
+      return `${count} permission${count > 1 ? 's' : ''}`;
+    }
+
+    /** Filtrer les rôles */
+    function getFilteredRoles() {
+      const query = searchQuery.toLowerCase();
+      if (!query) return roles;
+      return roles.filter(role =>
+        role.name.toLowerCase().includes(query) ||
+        role.code.toLowerCase().includes(query)
+      );
+    }
+
+    /** Obtenir les rôles paginés */
+    function getPaginatedRoles() {
+      const filtered = getFilteredRoles();
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return filtered.slice(start, end);
+    }
+
+    /** Calculer le nombre total de pages */
+    function getTotalPages() {
+      return Math.ceil(getFilteredRoles().length / itemsPerPage);
+    }
+
+    /** Générer les numéros de pages */
+    function getPageNumbers() {
+      const total = getTotalPages();
+      const pages = [];
+      
+      if (total <= 7) {
+        for (let i = 1; i <= total; i++) pages.push(i);
+      } else {
+        if (currentPage <= 3) {
+          pages.push(1, 2, 3, 4, -1, total);
+        } else if (currentPage >= total - 2) {
+          pages.push(1, -1, total - 3, total - 2, total - 1, total);
+        } else {
+          pages.push(1, -1, currentPage - 1, currentPage, currentPage + 1, -1, total);
+        }
+      }
+      return pages;
+    }
+
+    /** Obtenir les infos de pagination */
+    function getPaginationInfo() {
+      const total = getFilteredRoles().length;
+      const start = (currentPage - 1) * itemsPerPage + 1;
+      const end = Math.min(currentPage * itemsPerPage, total);
+      return { start, end, total };
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER FUNCTIONS
+    // ─────────────────────────────────────────────────────────────────
+
+    /** Rendre le tableau */
+    function renderTable() {
+      const paginatedRoles = getPaginatedRoles();
+      
+      if (paginatedRoles.length === 0) {
+        rolesTableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="table__empty">
+              <div class="empty-state">
+                <i class="bi bi-search"></i>
+                <p>Aucun rôle trouvé</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        pagination.style.display = 'none';
+        return;
+      }
+
+      pagination.style.display = 'flex';
+
+      rolesTableBody.innerHTML = paginatedRoles.map(role => `
+        <tr class="table__row">
+          <td class="table__td">
+            <span class="role-name">${role.name}</span>
+          </td>
+          <td class="table__td">
+            <code class="code-badge">${role.code}</code>
+          </td>
+          <td class="table__td">
+            <span class="permission-count">
+              ${getPermissionsSummary(role)}
+            </span>
+          </td>
+          <td class="table__td">
+            <span class="user-count">
+              <i class="bi bi-people"></i>
+              ${role.usersCount}
+            </span>
+          </td>
+          <td class="table__td">
+            <button 
+              class="status-badge status-badge--${role.status}"
+              onclick="toggleRoleStatus('${role.id}')">
+              <span class="status-badge__dot"></span>
+              ${role.status === 'active' ? 'Actif' : 'Inactif'}
+            </button>
+          </td>
+          <td class="table__td">
+            <span class="date-text">${formatDate(role.createdAt)}</span>
+          </td>
+          <td class="table__td table__td--actions">
+            <div class="actions">
+              <button class="action-btn" title="Modifier les permissions" onclick="openEditModal('${role.id}')">
+                <i class="bi bi-shield-lock"></i>
+              </button>
+              <button class="action-btn" title="Modifier" onclick="openEditModal('${role.id}')">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button 
+                class="action-btn action-btn--danger" 
+                title="Supprimer" 
+                onclick="deleteRole('${role.id}')"
+                ${role.usersCount > 0 ? 'disabled' : ''}>
+                <i class="bi bi-trash3"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    /** Rendre la pagination */
+    function renderPagination() {
+      const filtered = getFilteredRoles();
+      if (filtered.length === 0) return;
+
+      const info = getPaginationInfo();
+      const pageNumbers = getPageNumbers();
+      const totalPages = getTotalPages();
+
+      paginationInfo.innerHTML = `
+        Affichage de <strong>${info.start}</strong> à <strong>${info.end}</strong> sur <strong>${info.total}</strong> rôles
+      `;
+
+      paginationControls.innerHTML = `
+        <button 
+          class="pagination__btn" 
+          ${currentPage === 1 ? 'disabled' : ''}
+          onclick="goToPage(${currentPage - 1})">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        ${pageNumbers.map(page => {
+          if (page === -1) {
+            return '<span class="pagination__ellipsis">...</span>';
+          }
+          return `
+            <button 
+              class="pagination__btn pagination__btn--page ${page === currentPage ? 'pagination__btn--active' : ''}"
+              onclick="goToPage(${page})">
+              ${page}
+            </button>
+          `;
+        }).join('')}
+        <button 
+          class="pagination__btn" 
+          ${currentPage === totalPages ? 'disabled' : ''}
+          onclick="goToPage(${currentPage + 1})">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      `;
+    }
+
+    /** Rendre l'arbre des permissions */
+    function renderPermissionsTree() {
+      permissionsTreeEl.innerHTML = permissionsTree.map(node => {
+        const isExpanded = expandedNodes[node.id];
+        const childIds = node.children.map(c => c.id);
+        const selectedCount = childIds.filter(id => selectedPermissions.includes(id)).length;
+        const isFullySelected = selectedCount === childIds.length;
+        const isPartiallySelected = selectedCount > 0 && selectedCount < childIds.length;
+
+        return `
+          <div class="tree-node">
+            <div class="tree-node__header ${isExpanded ? 'has-children' : ''}">
+              <button class="tree-node__toggle" onclick="toggleNode('${node.id}')">
+                <i class="bi bi-chevron-${isExpanded ? 'down' : 'right'}"></i>
+              </button>
+              <label class="tree-checkbox ${isPartiallySelected ? 'indeterminate' : ''}">
+                <input 
+                  type="checkbox" 
+                  ${isFullySelected ? 'checked' : ''}
+                  onchange="toggleParentPermissions('${node.id}')"
+                >
+                <span class="tree-checkbox__mark"></span>
+                <span class="tree-checkbox__content">
+                  <span class="tree-checkbox__label">${node.name}</span>
+                </span>
+              </label>
+            </div>
+            ${isExpanded ? `
+              <div class="tree-node__children">
+                ${node.children.map(child => `
+                  <div class="tree-node__child">
+                    <label class="tree-checkbox tree-checkbox--child">
+                      <input 
+                        type="checkbox" 
+                        ${selectedPermissions.includes(child.id) ? 'checked' : ''}
+                        onchange="togglePermission('${child.id}')"
+                      >
+                      <span class="tree-checkbox__mark"></span>
+                      <span class="tree-checkbox__content">
+                        <span class="tree-checkbox__label">${child.name}</span>
+                        ${child.description ? `<span class="tree-checkbox__desc">${child.description}</span>` : ''}
+                      </span>
+                    </label>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      updatePermissionsCount();
+    }
+
+    /** Mettre à jour le compteur de permissions */
+    function updatePermissionsCount() {
+      const count = selectedPermissions.length;
+      permissionsCount.textContent = `${count} sélectionnée${count > 1 ? 's' : ''}`;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // EVENT HANDLERS
+    // ─────────────────────────────────────────────────────────────────
+
+    /** Aller à une page */
+    function goToPage(page) {
+      const totalPages = getTotalPages();
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderTable();
+        renderPagination();
+      }
+    }
+
+    /** Changer le nombre d'éléments par page */
+    function changeItemsPerPage(value) {
+      itemsPerPage = parseInt(value);
+      currentPage = 1;
+      renderTable();
+      renderPagination();
+    }
+
+    /** Toggle l'expansion d'un noeud */
+    function toggleNode(nodeId) {
+      expandedNodes[nodeId] = !expandedNodes[nodeId];
+      renderPermissionsTree();
+    }
+
+    /** Toggle une permission */
+    function togglePermission(permId) {
+      if (selectedPermissions.includes(permId)) {
+        selectedPermissions = selectedPermissions.filter(p => p !== permId);
+      } else {
+        selectedPermissions.push(permId);
+      }
+      renderPermissionsTree();
+    }
+
+    /** Toggle toutes les permissions d'un parent */
+    function toggleParentPermissions(nodeId) {
+      const node = permissionsTree.find(n => n.id === nodeId);
+      if (!node) return;
+
+      const childIds = node.children.map(c => c.id);
+      const allSelected = childIds.every(id => selectedPermissions.includes(id));
+
+      if (allSelected) {
+        selectedPermissions = selectedPermissions.filter(p => !childIds.includes(p));
+      } else {
+        childIds.forEach(id => {
+          if (!selectedPermissions.includes(id)) {
+            selectedPermissions.push(id);
+          }
+        });
+      }
+      renderPermissionsTree();
+    }
+
+    /** Toggle le statut d'un rôle */
+    function toggleRoleStatus(roleId) {
+      roles = roles.map(r => {
+        if (r.id === roleId) {
+          return { ...r, status: r.status === 'active' ? 'inactive' : 'active' };
+        }
+        return r;
+      });
+      renderTable();
+    }
+
+    /** Ouvrir modal création */
+    function openCreateModal() {
+      modalMode = 'create';
+      modalTitle.textContent = 'Créer un nouveau rôle';
+      roleIdInput.value = '';
+      roleNameInput.value = '';
+      roleCodeInput.value = '';
+      roleStatusInput.value = 'active';
+      selectedPermissions = [];
+      expandedNodes = { users: true };
+      
+      updateStatusToggle('active');
+      renderPermissionsTree();
+      modalBackdrop.style.display = 'flex';
+    }
+
+    /** Ouvrir modal édition */
+    function openEditModal(roleId) {
+      const role = roles.find(r => r.id === roleId);
+      if (!role) return;
+
+      modalMode = 'edit';
+      modalTitle.textContent = 'Modifier le rôle';
+      roleIdInput.value = role.id;
+      roleNameInput.value = role.name;
+      roleCodeInput.value = role.code;
+      roleStatusInput.value = role.status;
+      selectedPermissions = [...role.permissions];
+      expandedNodes = { users: true };
+
+      updateStatusToggle(role.status);
+      renderPermissionsTree();
+      modalBackdrop.style.display = 'flex';
+    }
+
+    /** Fermer modal */
+    function closeModal() {
+      modalBackdrop.style.display = 'none';
+    }
+
+    /** Mettre à jour le toggle de statut */
+    function updateStatusToggle(status) {
+      statusToggleBtns.forEach(btn => {
+        if (btn.dataset.status === status) {
+          btn.classList.add('status-toggle__btn--active');
+        } else {
+          btn.classList.remove('status-toggle__btn--active');
+        }
+      });
+      roleStatusInput.value = status;
+    }
+
+    /** Sauvegarder le rôle */
+    function saveRole() {
+      const name = roleNameInput.value.trim();
+      const code = roleCodeInput.value.trim().toUpperCase().replace(/\s+/g, '_');
+      const status = roleStatusInput.value;
+
+      if (!name || !code) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+
+      if (modalMode === 'create') {
+        const newRole = {
+          id: Date.now().toString(),
+          name,
+          code,
+          permissions: [...selectedPermissions],
+          status,
+          createdAt: new Date().toISOString().split('T')[0],
+          usersCount: 0
+        };
+        roles.push(newRole);
+      } else {
+        const roleId = roleIdInput.value;
+        roles = roles.map(r => {
+          if (r.id === roleId) {
+            return {
+              ...r,
+              name,
+              code,
+              permissions: [...selectedPermissions],
+              status
+            };
+          }
+          return r;
+        });
+      }
+
+      closeModal();
+      renderTable();
+      renderPagination();
+    }
+
+    /** Supprimer un rôle */
+    function deleteRole(roleId) {
+      const role = roles.find(r => r.id === roleId);
+      if (!role) return;
+
+      if (role.usersCount > 0) {
+        alert(`Impossible de supprimer ce rôle car ${role.usersCount} utilisateur(s) y sont assignés.`);
+        return;
+      }
+
+      if (confirm(`Êtes-vous sûr de vouloir supprimer le rôle "${role.name}" ?`)) {
+        roles = roles.filter(r => r.id !== roleId);
+        renderTable();
+        renderPagination();
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // EVENT LISTENERS
+    // ─────────────────────────────────────────────────────────────────
+
+    // Recherche
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      currentPage = 1;
+      btnClearSearch.style.display = searchQuery ? 'flex' : 'none';
+      renderTable();
+      renderPagination();
+    });
+
+    btnClearSearch.addEventListener('click', () => {
+      searchQuery = '';
+      searchInput.value = '';
+      currentPage = 1;
+      btnClearSearch.style.display = 'none';
+      renderTable();
+      renderPagination();
+    });
+
+    // Items per page
+    itemsPerPageSelect.addEventListener('change', (e) => {
+      changeItemsPerPage(e.target.value);
+    });
+
+    // Modal
+    btnCreateRole.addEventListener('click', openCreateModal);
+    btnCloseModal.addEventListener('click', closeModal);
+    btnCancel.addEventListener('click', closeModal);
+    btnSave.addEventListener('click', saveRole);
+
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) {
+        closeModal();
+      }
+    });
+
+    // Status toggle
+    statusToggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        updateStatusToggle(btn.dataset.status);
+      });
+    });
+
+    // Code input uppercase
+    roleCodeInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.toUpperCase().replace(/\s+/g, '_');
+    });
+
+    // ─────────────────────────────────────────────────────────────────
+    // INITIALIZATION
+    // ─────────────────────────────────────────────────────────────────
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+      renderPagination();
+    });
+  </script>
+</body>
+</html>

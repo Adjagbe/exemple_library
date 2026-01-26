@@ -1,0 +1,64 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 500 COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="error-page error-500">
+  <div class="error-content">
+    <!-- Illustration -->
+    <div class="error-illustration">
+      <div class="server-icon">
+        <i class="bi bi-hdd-stack"></i>
+        <div class="error-spark spark-1"></div>
+        <div class="error-spark spark-2"></div>
+        <div class="error-spark spark-3"></div>
+      </div>
+      <div class="error-code">500</div>
+    </div>
+
+    <!-- Message -->
+    <div class="error-message">
+      <h1>Erreur serveur</h1>
+      <p>Quelque chose s'est mal passé de notre côté. Nos équipes techniques ont été notifiées et travaillent à résoudre le problème.</p>
+    </div>
+
+    <!-- Error Details -->
+    <div class="error-details">
+      <div class="detail-item">
+        <span class="detail-label">ID de l'erreur</span>
+        <code class="detail-value">{{ errorId }}</code>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Timestamp</span>
+        <code class="detail-value">{{ timestamp }}</code>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="error-actions">
+      <button class="btn btn--primary" (click)="retry()">
+        <i class="bi bi-arrow-clockwise"></i>
+        Réessayer
+      </button>
+      <button class="btn btn--outline" (click)="goHome()">
+        <i class="bi bi-house"></i>
+        Accueil
+      </button>
+      <button class="btn btn--ghost" (click)="reportIssue()">
+        <i class="bi bi-flag"></i>
+        Signaler
+      </button>
+    </div>
+
+    <!-- Status -->
+    <div class="status-info">
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span>Vérification du statut des services...</span>
+      </div>
+      <a href="#" class="status-link">
+        <i class="bi bi-bar-chart"></i>
+        Page de statut
+      </a>
+    </div>
+  </div>
+</div>

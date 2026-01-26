@@ -1,0 +1,140 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- RADIO BUTTON COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="radio-showcase">
+  <!-- Basic Radio Buttons -->
+  <section class="showcase-section">
+    <h2 class="section-title">Basic Radio Buttons</h2>
+    <div class="radio-group">
+      <label 
+        *ngFor="let option of basicOptions" 
+        class="radio-label"
+        [class.disabled]="option.disabled">
+        <input 
+          type="radio" 
+          name="basic"
+          [value]="option.value"
+          [(ngModel)]="selectedBasic"
+          [disabled]="option.disabled ?? false">
+        <span class="radio-custom"></span>
+        <span class="radio-text">{{ option.label }}</span>
+      </label>
+    </div>
+    <p class="selected-value">Selected: <strong>{{ selectedBasic }}</strong></p>
+  </section>
+
+  <!-- Plan Selection Cards -->
+  <section class="showcase-section">
+    <h2 class="section-title">Select Your Plan</h2>
+    <div class="radio-cards">
+      <label 
+        *ngFor="let plan of planOptions"
+        class="radio-card"
+        [class.selected]="selectedPlan === plan.value">
+        <input 
+          type="radio" 
+          name="plan"
+          [value]="plan.value"
+          [(ngModel)]="selectedPlan">
+        <div class="card-icon">
+          <i class="bi" [ngClass]="plan.icon"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">{{ plan.label }}</span>
+          <span class="card-description">{{ plan.description }}</span>
+        </div>
+        <span class="card-price">{{ plan.price }}</span>
+        <span class="card-check">
+          <i class="bi bi-check-circle-fill"></i>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Shipping Options -->
+  <section class="showcase-section">
+    <h2 class="section-title">Shipping Method</h2>
+    <div class="radio-list">
+      <label 
+        *ngFor="let option of shippingOptions"
+        class="radio-list-item"
+        [class.selected]="selectedShipping === option.value">
+        <input 
+          type="radio" 
+          name="shipping"
+          [value]="option.value"
+          [(ngModel)]="selectedShipping">
+        <span class="radio-custom"></span>
+        <div class="item-content">
+          <span class="item-label">{{ option.label }}</span>
+          <span class="item-description">{{ option.description }}</span>
+        </div>
+        <span class="item-price" [class.free]="option.price === 'Free'">{{ option.price }}</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Color Selection -->
+  <section class="showcase-section">
+    <h2 class="section-title">Select Color</h2>
+    <div class="color-options">
+      <label 
+        *ngFor="let color of colorOptions"
+        class="color-option"
+        [class.selected]="selectedColor === color.value">
+        <input 
+          type="radio" 
+          name="color"
+          [value]="color.value"
+          [(ngModel)]="selectedColor">
+        <span class="color-swatch" [style.background]="color.color"></span>
+      </label>
+    </div>
+    <p class="selected-value">Selected: <strong>{{ selectedColor }}</strong></p>
+  </section>
+
+  <!-- Rating Selection -->
+  <section class="showcase-section">
+    <h2 class="section-title">Rate Your Experience</h2>
+    <div class="rating-options">
+      <label 
+        *ngFor="let rating of ['1', '2', '3', '4', '5']"
+        class="rating-option"
+        [class.selected]="selectedRating === rating">
+        <input 
+          type="radio" 
+          name="rating"
+          [value]="rating"
+          [(ngModel)]="selectedRating">
+        <div class="rating-content">
+          <span class="rating-number">{{ rating }}</span>
+          <i class="bi bi-star-fill"></i>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <!-- Button Group Style -->
+  <section class="showcase-section">
+    <h2 class="section-title">Button Group Style</h2>
+    <div class="radio-button-group">
+      <label class="radio-button" [class.selected]="selectedBasic === 'option1'">
+        <input type="radio" name="buttonGroup" value="option1" [(ngModel)]="selectedBasic">
+        <span>Daily</span>
+      </label>
+      <label class="radio-button" [class.selected]="selectedBasic === 'option2'">
+        <input type="radio" name="buttonGroup" value="option2" [(ngModel)]="selectedBasic">
+        <span>Weekly</span>
+      </label>
+      <label class="radio-button" [class.selected]="selectedBasic === 'option3'">
+        <input type="radio" name="buttonGroup" value="option3" [(ngModel)]="selectedBasic">
+        <span>Monthly</span>
+      </label>
+      <label class="radio-button" [class.selected]="selectedBasic === 'option4'">
+        <input type="radio" name="buttonGroup" value="option4" [(ngModel)]="selectedBasic">
+        <span>Yearly</span>
+      </label>
+    </div>
+  </section>
+</div>

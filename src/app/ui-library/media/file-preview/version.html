@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview de fichiers - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* FILE PREVIEW COMPONENT - Premium UI Library                     */
+    /* ═══════════════════════════════════════════════════════════════ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .preview-showcase {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       FILE LIST
+       ───────────────────────────────────────────────────────────────── */
+    .file-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .file-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .file-card:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .file-card:hover .preview-btn {
+      opacity: 1;
+    }
+
+    .file-thumbnail {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .file-thumbnail i {
+      font-size: 1.25rem;
+    }
+
+    .file-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #111827;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .preview-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.5rem;
+      color: #6b7280;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+
+    .preview-btn:hover {
+      background: #4f46e5;
+      color: white;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PREVIEW MODAL
+       ───────────────────────────────────────────────────────────────── */
+    .preview-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .preview-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      max-height: 90vh;
+      background: white;
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .header-info i {
+      font-size: 1.5rem;
+    }
+
+    .header-info h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    .header-info span {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.5rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+      color: #ef4444;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PREVIEW CONTENT
+       ───────────────────────────────────────────────────────────────── */
+    .preview-content {
+      flex: 1;
+      overflow: auto;
+      background: #f9fafb;
+      display: none;
+    }
+
+    .preview-content.active {
+      display: block;
+    }
+
+    /* Image */
+    .preview-image {
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      color: white;
+    }
+
+    .image-placeholder i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* PDF */
+    .pdf-viewer {
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pdf-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: #374151;
+      color: white;
+    }
+
+    .pdf-toolbar button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 0.25rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    .pdf-toolbar button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .pdf-toolbar .page-info {
+      margin-left: auto;
+      font-size: 0.875rem;
+    }
+
+    .pdf-content {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+      background: #525252;
+    }
+
+    .pdf-page {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .pdf-placeholder {
+      height: 100%;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+
+    .pdf-placeholder i {
+      font-size: 3rem;
+      color: #ef4444;
+      margin-bottom: 1rem;
+    }
+
+    .pdf-placeholder span {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .pdf-placeholder p {
+      font-size: 0.875rem;
+    }
+
+    /* Video */
+    .video-player {
+      background: black;
+    }
+
+    .video-content {
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-content i {
+      font-size: 5rem;
+      color: white;
+      opacity: 0.8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .video-content i:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .video-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: #1f2937;
+      color: white;
+    }
+
+    .video-controls button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .video-controls button.play-btn {
+      width: 36px;
+      height: 36px;
+      background: #4f46e5;
+      border-radius: 50%;
+    }
+
+    .video-controls .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: #4b5563;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .video-controls .progress-fill {
+      height: 100%;
+      background: #4f46e5;
+      border-radius: 2px;
+    }
+
+    .video-controls .time {
+      font-size: 0.8125rem;
+      color: #9ca3af;
+    }
+
+    /* Audio */
+    .audio-player {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .audio-cover {
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .audio-cover i {
+      font-size: 4rem;
+      color: white;
+    }
+
+    .audio-info {
+      text-align: center;
+    }
+
+    .audio-info h4 {
+      margin: 0 0 0.25rem 0;
+      color: #111827;
+    }
+
+    .audio-info p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .audio-controls button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 50%;
+      color: #374151;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: all 0.2s;
+    }
+
+    .audio-controls button:hover {
+      background: #e5e7eb;
+    }
+
+    .audio-controls button.play-btn {
+      width: 56px;
+      height: 56px;
+      background: #4f46e5;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .audio-progress {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .audio-progress span {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .audio-progress .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+    }
+
+    .audio-progress .progress-fill {
+      height: 100%;
+      background: #4f46e5;
+      border-radius: 2px;
+    }
+
+    /* Code */
+    .code-editor {
+      font-family: 'Fira Code', monospace;
+    }
+
+    .code-header {
+      padding: 0.5rem 1rem;
+      background: #1f2937;
+      border-bottom: 1px solid #374151;
+    }
+
+    .file-tab {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      color: #9ca3af;
+    }
+
+    .file-tab.active {
+      color: white;
+      background: #374151;
+      border-radius: 0.25rem 0.25rem 0 0;
+    }
+
+    .code-content {
+      padding: 1rem;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    .code-content code {
+      white-space: pre;
+    }
+
+    /* Document */
+    .doc-viewer {
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .doc-page {
+      width: 100%;
+      max-width: 700px;
+      padding: 3rem;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .doc-page h2 {
+      margin: 0 0 1rem 0;
+      font-size: 1.5rem;
+      color: #111827;
+    }
+
+    .doc-page h3 {
+      margin: 1.5rem 0 0.75rem 0;
+      font-size: 1.125rem;
+      color: #374151;
+    }
+
+    .doc-page p {
+      margin: 0 0 1rem 0;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    .doc-page ul {
+      margin: 0;
+      padding-left: 1.5rem;
+      color: #6b7280;
+    }
+
+    .doc-page ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Spreadsheet */
+    .spreadsheet-viewer {
+      padding: 1rem;
+      overflow: auto;
+    }
+
+    .spreadsheet-viewer table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      font-size: 0.875rem;
+    }
+
+    .spreadsheet-viewer th,
+    .spreadsheet-viewer td {
+      border: 1px solid #e5e7eb;
+      padding: 0.5rem 1rem;
+      text-align: left;
+    }
+
+    .spreadsheet-viewer th {
+      background: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .spreadsheet-viewer .row-number {
+      background: #f9fafb;
+      color: #9ca3af;
+      text-align: center;
+      width: 40px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MODAL FOOTER
+       ───────────────────────────────────────────────────────────────── */
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .file-date {
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn--primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .btn--primary:hover {
+      background: #4338ca;
+    }
+
+    .btn--secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .btn--secondary:hover {
+      background: #e5e7eb;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .preview-showcase {
+        padding: 1rem;
+      }
+
+      .file-list {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-btn {
+        opacity: 1;
+      }
+
+      .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="preview-showcase">
+  <h1 class="page-title">Preview de fichiers</h1>
+  <p class="page-subtitle">Visualisez différents types de fichiers</p>
+
+  <!-- File List -->
+  <div class="file-list" id="fileList">
+    <!-- Image File -->
+    <div class="file-card" onclick="openPreview('image')">
+      <div class="file-thumbnail" style="background-color: rgba(139, 92, 246, 0.15);">
+        <i class="bi bi-file-earmark-image" style="color: #8b5cf6;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">dashboard-design.png</h4>
+        <div class="file-meta">
+          <span>2.4 MB</span>
+          <span>15 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+
+    <!-- PDF File -->
+    <div class="file-card" onclick="openPreview('pdf')">
+      <div class="file-thumbnail" style="background-color: rgba(239, 68, 68, 0.15);">
+        <i class="bi bi-file-earmark-pdf" style="color: #ef4444;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">rapport-financier.pdf</h4>
+        <div class="file-meta">
+          <span>1.8 MB</span>
+          <span>14 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+
+    <!-- Video File -->
+    <div class="file-card" onclick="openPreview('video')">
+      <div class="file-thumbnail" style="background-color: rgba(236, 72, 153, 0.15);">
+        <i class="bi bi-file-earmark-play" style="color: #ec4899;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">demo-product.mp4</h4>
+        <div class="file-meta">
+          <span>45 MB</span>
+          <span>13 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+
+    <!-- Audio File -->
+    <div class="file-card" onclick="openPreview('audio')">
+      <div class="file-thumbnail" style="background-color: rgba(6, 182, 212, 0.15);">
+        <i class="bi bi-file-earmark-music" style="color: #06b6d4;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">podcast-episode.mp3</h4>
+        <div class="file-meta">
+          <span>12 MB</span>
+          <span>12 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+
+    <!-- Code File -->
+    <div class="file-card" onclick="openPreview('code')">
+      <div class="file-thumbnail" style="background-color: rgba(16, 185, 129, 0.15);">
+        <i class="bi bi-file-earmark-code" style="color: #10b981;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">app.component.ts</h4>
+        <div class="file-meta">
+          <span>4.2 KB</span>
+          <span>11 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+
+    <!-- Document File -->
+    <div class="file-card" onclick="openPreview('document')">
+      <div class="file-thumbnail" style="background-color: rgba(59, 130, 246, 0.15);">
+        <i class="bi bi-file-earmark-word" style="color: #3b82f6;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">specifications.docx</h4>
+        <div class="file-meta">
+          <span>856 KB</span>
+          <span>10 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+
+    <!-- Spreadsheet File -->
+    <div class="file-card" onclick="openPreview('spreadsheet')">
+      <div class="file-thumbnail" style="background-color: rgba(34, 197, 94, 0.15);">
+        <i class="bi bi-file-earmark-excel" style="color: #22c55e;"></i>
+      </div>
+      <div class="file-info">
+        <h4 class="file-name">analytics-data.xlsx</h4>
+        <div class="file-meta">
+          <span>1.2 MB</span>
+          <span>9 janv. 2024</span>
+        </div>
+      </div>
+      <button class="preview-btn">
+        <i class="bi bi-eye"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="preview-modal" id="previewModal">
+    <div class="modal-backdrop" onclick="closePreview()"></div>
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="header-info">
+          <i class="bi" id="modalIcon"></i>
+          <div>
+            <h3 id="modalFileName">Nom du fichier</h3>
+            <span id="modalFileMeta">Taille • Auteur</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="action-btn"><i class="bi bi-download"></i></button>
+          <button class="action-btn"><i class="bi bi-share"></i></button>
+          <button class="action-btn"><i class="bi bi-three-dots"></i></button>
+          <button class="close-btn" onclick="closePreview()">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Contents -->
+      <!-- Image Preview -->
+      <div class="preview-content" id="previewImage">
+        <div class="preview-image">
+          <div class="image-placeholder" style="background-color: #8b5cf6;">
+            <i class="bi bi-image"></i>
+            <span>Aperçu de l'image</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PDF Preview -->
+      <div class="preview-content" id="previewPdf">
+        <div class="pdf-viewer">
+          <div class="pdf-toolbar">
+            <button><i class="bi bi-zoom-out"></i></button>
+            <span>100%</span>
+            <button><i class="bi bi-zoom-in"></i></button>
+            <span class="page-info">Page 1 / 12</span>
+          </div>
+          <div class="pdf-content">
+            <div class="pdf-page">
+              <div class="pdf-placeholder">
+                <i class="bi bi-file-earmark-pdf"></i>
+                <span>Document PDF</span>
+                <p>12 pages • Rapport financier Q4 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Preview -->
+      <div class="preview-content" id="previewVideo">
+        <div class="video-player">
+          <div class="video-content" style="background-color: #ec4899;">
+            <i class="bi bi-play-circle-fill"></i>
+          </div>
+          <div class="video-controls">
+            <button class="play-btn"><i class="bi bi-play-fill"></i></button>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 35%"></div>
+            </div>
+            <span class="time">01:24 / 04:12</span>
+            <button><i class="bi bi-volume-up-fill"></i></button>
+            <button><i class="bi bi-fullscreen"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audio Preview -->
+      <div class="preview-content" id="previewAudio">
+        <div class="audio-player">
+          <div class="audio-cover" style="background-color: #06b6d4;">
+            <i class="bi bi-music-note-beamed"></i>
+          </div>
+          <div class="audio-info">
+            <h4>podcast-episode.mp3</h4>
+            <p>Durée : 32:45</p>
+          </div>
+          <div class="audio-controls">
+            <button><i class="bi bi-skip-start-fill"></i></button>
+            <button class="play-btn"><i class="bi bi-play-fill"></i></button>
+            <button><i class="bi bi-skip-end-fill"></i></button>
+          </div>
+          <div class="audio-progress">
+            <span>12:30</span>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 40%"></div>
+            </div>
+            <span>32:45</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Preview -->
+      <div class="preview-content" id="previewCode">
+        <div class="code-editor">
+          <div class="code-header">
+            <span class="file-tab active">app.component.ts</span>
+          </div>
+          <pre class="code-content"><code>import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss']
+})
+export class AppComponent {
+  title = 'Premium UI Library';
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Document Preview -->
+      <div class="preview-content" id="previewDocument">
+        <div class="doc-viewer">
+          <div class="doc-page">
+            <h2>Spécifications du projet</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <h3>1. Introduction</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <h3>2. Objectifs</h3>
+            <ul>
+              <li>Développer une interface utilisateur moderne</li>
+              <li>Optimiser les performances</li>
+              <li>Améliorer l'expérience utilisateur</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spreadsheet Preview -->
+      <div class="preview-content" id="previewSpreadsheet">
+        <div class="spreadsheet-viewer">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-number">1</td>
+                <td>Mois</td>
+                <td>Ventes</td>
+                <td>Objectif</td>
+                <td>Écart</td>
+              </tr>
+              <tr>
+                <td class="row-number">2</td>
+                <td>Janvier</td>
+                <td>45 000 €</td>
+                <td>40 000 €</td>
+                <td>+12.5%</td>
+              </tr>
+              <tr>
+                <td class="row-number">3</td>
+                <td>Février</td>
+                <td>52 000 €</td>
+                <td>45 000 €</td>
+                <td>+15.5%</td>
+              </tr>
+              <tr>
+                <td class="row-number">4</td>
+                <td>Mars</td>
+                <td>48 500 €</td>
+                <td>50 000 €</td>
+                <td>-3.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <span class="file-date" id="modalFileDate">Modifié le 15 janv. 2024 par Marie Lambert</span>
+        <div class="footer-actions">
+          <button class="btn btn--secondary">
+            <i class="bi bi-pencil"></i>
+            Modifier
+          </button>
+          <button class="btn btn--primary">
+            <i class="bi bi-download"></i>
+            Télécharger
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ═══════════════════════════════════════════════════════════════
+  // FILE PREVIEW - JavaScript
+  // ═══════════════════════════════════════════════════════════════
+
+  const fileData = {
+    image: {
+      name: 'dashboard-design.png',
+      size: '2.4 MB',
+      author: 'Marie Lambert',
+      date: '15 janv. 2024',
+      icon: 'bi-file-earmark-image',
+      color: '#8b5cf6'
+    },
+    pdf: {
+      name: 'rapport-financier.pdf',
+      size: '1.8 MB',
+      author: 'Pierre Durand',
+      date: '14 janv. 2024',
+      icon: 'bi-file-earmark-pdf',
+      color: '#ef4444'
+    },
+    video: {
+      name: 'demo-product.mp4',
+      size: '45 MB',
+      author: 'Sophie Martin',
+      date: '13 janv. 2024',
+      icon: 'bi-file-earmark-play',
+      color: '#ec4899'
+    },
+    audio: {
+      name: 'podcast-episode.mp3',
+      size: '12 MB',
+      author: 'Jean Dupont',
+      date: '12 janv. 2024',
+      icon: 'bi-file-earmark-music',
+      color: '#06b6d4'
+    },
+    code: {
+      name: 'app.component.ts',
+      size: '4.2 KB',
+      author: 'Marie Lambert',
+      date: '11 janv. 2024',
+      icon: 'bi-file-earmark-code',
+      color: '#10b981'
+    },
+    document: {
+      name: 'specifications.docx',
+      size: '856 KB',
+      author: 'Pierre Durand',
+      date: '10 janv. 2024',
+      icon: 'bi-file-earmark-word',
+      color: '#3b82f6'
+    },
+    spreadsheet: {
+      name: 'analytics-data.xlsx',
+      size: '1.2 MB',
+      author: 'Sophie Martin',
+      date: '9 janv. 2024',
+      icon: 'bi-file-earmark-excel',
+      color: '#22c55e'
+    }
+  };
+
+  const previewTypeMap = {
+    image: 'previewImage',
+    pdf: 'previewPdf',
+    video: 'previewVideo',
+    audio: 'previewAudio',
+    code: 'previewCode',
+    document: 'previewDocument',
+    spreadsheet: 'previewSpreadsheet'
+  };
+
+  function openPreview(type) {
+    const modal = document.getElementById('previewModal');
+    const file = fileData[type];
+
+    // Update header
+    const icon = document.getElementById('modalIcon');
+    icon.className = 'bi ' + file.icon;
+    icon.style.color = file.color;
+
+    document.getElementById('modalFileName').textContent = file.name;
+    document.getElementById('modalFileMeta').textContent = file.size + ' • ' + file.author;
+    document.getElementById('modalFileDate').textContent = 'Modifié le ' + file.date + ' par ' + file.author;
+
+    // Hide all previews
+    Object.values(previewTypeMap).forEach(id => {
+      document.getElementById(id).classList.remove('active');
+    });
+
+    // Show selected preview
+    document.getElementById(previewTypeMap[type]).classList.add('active');
+
+    // Open modal
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePreview() {
+    const modal = document.getElementById('previewModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closePreview();
+    }
+  });
+</script>
+
+</body>
+</html>

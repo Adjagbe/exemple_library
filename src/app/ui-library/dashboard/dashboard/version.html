@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* ═══════════════════════════════════════════════════════════════ */
+    /* DASHBOARD COMPONENT - Premium UI Library                        */
+    /* ═══════════════════════════════════════════════════════════════ */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    .dashboard {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      background: #f8fafc;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       HEADER
+       ───────────────────────────────────────────────────────────────── */
+    .dashboard-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-content h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .header-content p {
+      color: #6b7280;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .time-select {
+      padding: 0.625rem 2.5rem 0.625rem 1rem;
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.25em;
+    }
+
+    .time-select:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BUTTONS
+       ───────────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn--sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+    }
+
+    .btn--primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn--outline {
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: #374151;
+    }
+
+    .btn--outline:hover {
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    .btn--ghost {
+      background: none;
+      border: none;
+      color: #4f46e5;
+      padding: 0.375rem 0.5rem;
+    }
+
+    .btn--ghost:hover {
+      background: #eff6ff;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       KPI CARDS
+       ───────────────────────────────────────────────────────────────── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .kpi-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 0.75rem;
+      font-size: 1.5rem;
+    }
+
+    .kpi-icon--primary {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      color: #4f46e5;
+    }
+
+    .kpi-icon--success {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      color: #10b981;
+    }
+
+    .kpi-icon--warning {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      color: #f59e0b;
+    }
+
+    .kpi-icon--info {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: #0ea5e9;
+    }
+
+    .kpi-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.2;
+      margin: 0.25rem 0;
+    }
+
+    .kpi-change {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .kpi-change--up {
+      color: #10b981;
+    }
+
+    .kpi-change--down {
+      color: #ef4444;
+    }
+
+    .kpi-change--neutral {
+      color: #6b7280;
+    }
+
+    .kpi-change i {
+      font-size: 1rem;
+    }
+
+    .change-period {
+      font-weight: 400;
+      color: #9ca3af;
+      margin-left: 0.25rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MAIN CONTENT
+       ───────────────────────────────────────────────────────────────── */
+    .dashboard-content {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 1.5rem;
+    }
+
+    .chart-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .section-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .card-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0;
+    }
+
+    .see-all {
+      font-size: 0.8rem;
+      color: #4f46e5;
+      text-decoration: none;
+    }
+
+    .see-all:hover {
+      text-decoration: underline;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CHART
+       ───────────────────────────────────────────────────────────────── */
+    .chart-legend {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot--primary {
+      background: #4f46e5;
+    }
+
+    .dot--secondary {
+      background: #d1d5db;
+    }
+
+    .chart-container {
+      padding: 1.5rem;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 200px;
+      gap: 1rem;
+    }
+
+    .bar-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 100%;
+    }
+
+    .bar {
+      width: 24px;
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s ease;
+      cursor: pointer;
+    }
+
+    .bar--primary {
+      background: linear-gradient(180deg, #4f46e5 0%, #7c3aed 100%);
+    }
+
+    .bar--primary:hover {
+      opacity: 0.9;
+    }
+
+    .bar--secondary {
+      background: #e5e7eb;
+    }
+
+    .bar--secondary:hover {
+      background: #d1d5db;
+    }
+
+    .bar-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CATEGORIES
+       ───────────────────────────────────────────────────────────────── */
+    .categories-card .card-header {
+      border-bottom: none;
+    }
+
+    .categories-content {
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .category-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 120px;
+    }
+
+    .category-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .category-name {
+      font-size: 0.85rem;
+      color: #374151;
+    }
+
+    .category-bar {
+      flex: 1;
+      height: 8px;
+      background: #f3f4f6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .category-progress {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .category-value {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #111827;
+      width: 40px;
+      text-align: right;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SIDEBAR
+       ───────────────────────────────────────────────────────────────── */
+    .dashboard-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ACTIVITY LIST
+       ───────────────────────────────────────────────────────────────── */
+    .activity-list {
+      padding: 0 1rem 1rem;
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0.5rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 0.9rem;
+    }
+
+    .activity-icon--success {
+      background: #ecfdf5;
+      color: #10b981;
+    }
+
+    .activity-icon--primary {
+      background: #eff6ff;
+      color: #4f46e5;
+    }
+
+    .activity-icon--danger {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .activity-icon--info {
+      background: #f0f9ff;
+      color: #0ea5e9;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-content p {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.85rem;
+      color: #374151;
+      line-height: 1.4;
+    }
+
+    .activity-content p strong {
+      color: #111827;
+    }
+
+    .activity-target {
+      color: #4f46e5;
+    }
+
+    .activity-time {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       TASK LIST
+       ───────────────────────────────────────────────────────────────── */
+    .task-list {
+      padding: 0 1rem 1rem;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem 0.5rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .task-item:last-child {
+      border-bottom: none;
+    }
+
+    .task-checkbox input {
+      width: 18px;
+      height: 18px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .task-content {
+      flex: 1;
+    }
+
+    .task-title {
+      display: block;
+      font-size: 0.875rem;
+      color: #374151;
+      margin-bottom: 0.375rem;
+    }
+
+    .task-title.completed {
+      text-decoration: line-through;
+      color: #9ca3af;
+    }
+
+    .task-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .task-priority {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      text-transform: capitalize;
+    }
+
+    .task-priority--high {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .task-priority--medium {
+      background: #fffbeb;
+      color: #f59e0b;
+    }
+
+    .task-priority--low {
+      background: #ecfdf5;
+      color: #10b981;
+    }
+
+    .task-due {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .task-due i {
+      margin-right: 0.25rem;
+    }
+
+    .task-assignee {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+       ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 1200px) {
+      .dashboard-content {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-sidebar {
+        flex-direction: row;
+      }
+
+      .dashboard-sidebar .section-card {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        padding: 1rem;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .header-actions {
+        flex-wrap: wrap;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-sidebar {
+        flex-direction: column;
+      }
+
+      .bar-chart {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <h1>Dashboard</h1>
+        <p>Vue d'ensemble de votre activité</p>
+      </div>
+
+      <div class="header-actions">
+        <select id="timeRange" class="time-select">
+          <option value="7days">7 jours</option>
+          <option value="30days" selected>30 jours</option>
+          <option value="90days">90 jours</option>
+          <option value="year">1 an</option>
+        </select>
+        <button class="btn btn--outline">
+          <i class="bi bi-download"></i>
+          Exporter
+        </button>
+        <button class="btn btn--primary">
+          <i class="bi bi-plus-lg"></i>
+          Nouveau
+        </button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid" id="kpiGrid">
+      <!-- KPIs seront générés par JavaScript -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="dashboard-content">
+      <!-- Chart Section -->
+      <div class="chart-section">
+        <div class="section-card">
+          <div class="card-header">
+            <h3>Revenus mensuels</h3>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="dot dot--primary"></span> Ce mois</span>
+              <span class="legend-item"><span class="dot dot--secondary"></span> Mois précédent</span>
+            </div>
+          </div>
+          <div class="chart-container">
+            <div class="bar-chart" id="barChart">
+              <!-- Barres générées par JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="section-card categories-card">
+          <div class="card-header">
+            <h3>Ventes par catégorie</h3>
+          </div>
+          <div class="categories-content" id="categoriesContent">
+            <!-- Catégories générées par JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="dashboard-sidebar">
+        <!-- Activity -->
+        <div class="section-card">
+          <div class="card-header">
+            <h3>Activité récente</h3>
+            <a href="#" class="see-all">Tout voir</a>
+          </div>
+          <div class="activity-list" id="activityList">
+            <!-- Activités générées par JavaScript -->
+          </div>
+        </div>
+
+        <!-- Tasks -->
+        <div class="section-card">
+          <div class="card-header">
+            <h3>Tâches</h3>
+            <button class="btn btn--sm btn--ghost">
+              <i class="bi bi-plus"></i>
+              Ajouter
+            </button>
+          </div>
+          <div class="task-list" id="taskList">
+            <!-- Tâches générées par JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // DASHBOARD COMPONENT - Premium UI Library
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─────────────────────────────────────────────────────────────────
+    // KPIs DATA
+    // ─────────────────────────────────────────────────────────────────
+    const kpis = [
+      {
+        id: 'revenue',
+        label: 'Revenus',
+        value: 124500,
+        previousValue: 98000,
+        change: 27.04,
+        changeType: 'increase',
+        icon: 'bi-currency-euro',
+        iconBg: 'primary',
+        format: 'currency'
+      },
+      {
+        id: 'orders',
+        label: 'Commandes',
+        value: 1284,
+        previousValue: 1156,
+        change: 11.07,
+        changeType: 'increase',
+        icon: 'bi-bag-check',
+        iconBg: 'success',
+        format: 'number'
+      },
+      {
+        id: 'customers',
+        label: 'Clients',
+        value: 5632,
+        previousValue: 5890,
+        change: -4.38,
+        changeType: 'decrease',
+        icon: 'bi-people',
+        iconBg: 'warning',
+        format: 'number'
+      },
+      {
+        id: 'conversion',
+        label: 'Taux de conversion',
+        value: 3.42,
+        previousValue: 3.15,
+        change: 8.57,
+        changeType: 'increase',
+        icon: 'bi-graph-up-arrow',
+        iconBg: 'info',
+        format: 'percentage'
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // CHART DATA
+    // ─────────────────────────────────────────────────────────────────
+    const revenueChart = {
+      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+      values: [12500, 18200, 15800, 22400, 19600, 24500],
+      previousValues: [10200, 14800, 13200, 18600, 16400, 20100]
+    };
+
+    const categoryData = [
+      { name: 'Électronique', value: 45, color: '#4f46e5' },
+      { name: 'Vêtements', value: 28, color: '#10b981' },
+      { name: 'Maison', value: 15, color: '#f59e0b' },
+      { name: 'Sports', value: 12, color: '#ef4444' }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // ACTIVITIES DATA
+    // ─────────────────────────────────────────────────────────────────
+    const activities = [
+      { id: 1, user: 'Marie Martin', avatar: 'MM', action: 'a créé', target: 'une nouvelle commande #1234', time: 'Il y a 5 min', type: 'create' },
+      { id: 2, user: 'Jean Dupont', avatar: 'JD', action: 'a modifié', target: 'le produit "iPhone 15"', time: 'Il y a 15 min', type: 'update' },
+      { id: 3, user: 'Sophie Bernard', avatar: 'SB', action: 'a commenté', target: 'sur le ticket #456', time: 'Il y a 30 min', type: 'comment' },
+      { id: 4, user: 'Lucas Moreau', avatar: 'LM', action: 'a terminé', target: 'la tâche "Mise à jour stock"', time: 'Il y a 1h', type: 'complete' },
+      { id: 5, user: 'Emma Petit', avatar: 'EP', action: 'a supprimé', target: 'le client inactif #789', time: 'Il y a 2h', type: 'delete' }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // TASKS DATA
+    // ─────────────────────────────────────────────────────────────────
+    const tasks = [
+      { id: 1, title: 'Finaliser la présentation Q2', status: 'in-progress', priority: 'high', dueDate: '2024-05-10', assignee: 'JD' },
+      { id: 2, title: 'Réviser les stocks produits', status: 'todo', priority: 'medium', dueDate: '2024-05-12', assignee: 'MM' },
+      { id: 3, title: 'Contacter fournisseur X', status: 'done', priority: 'low', dueDate: '2024-05-08', assignee: 'SB' },
+      { id: 4, title: 'Mise à jour documentation', status: 'in-progress', priority: 'medium', dueDate: '2024-05-15', assignee: 'LM' }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────────────────────────────────────
+    function formatKPIValue(kpi) {
+      if (kpi.format === 'currency') {
+        return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(kpi.value);
+      }
+      if (kpi.format === 'percentage') {
+        return `${kpi.value}%`;
+      }
+      return new Intl.NumberFormat('fr-FR').format(kpi.value);
+    }
+
+    function getChangeClass(changeType) {
+      if (changeType === 'increase') return 'kpi-change--up';
+      if (changeType === 'decrease') return 'kpi-change--down';
+      return 'kpi-change--neutral';
+    }
+
+    function getChangeIcon(changeType) {
+      if (changeType === 'increase') return 'bi-arrow-up-short';
+      if (changeType === 'decrease') return 'bi-arrow-down-short';
+      return 'bi-dash';
+    }
+
+    function getActivityIcon(type) {
+      const icons = {
+        'create': 'bi-plus-circle',
+        'update': 'bi-pencil',
+        'delete': 'bi-trash',
+        'comment': 'bi-chat-dots',
+        'complete': 'bi-check-circle'
+      };
+      return icons[type] || 'bi-circle';
+    }
+
+    function getActivityIconClass(type) {
+      const classes = {
+        'create': 'activity-icon--success',
+        'update': 'activity-icon--primary',
+        'delete': 'activity-icon--danger',
+        'comment': 'activity-icon--info',
+        'complete': 'activity-icon--success'
+      };
+      return classes[type] || '';
+    }
+
+    function getChartBarHeight(value) {
+      const max = Math.max(...revenueChart.values);
+      return (value / max) * 100;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER KPIs
+    // ─────────────────────────────────────────────────────────────────
+    function renderKPIs() {
+      const container = document.getElementById('kpiGrid');
+      container.innerHTML = kpis.map(kpi => `
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon--${kpi.iconBg}">
+            <i class="bi ${kpi.icon}"></i>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">${kpi.label}</span>
+            <span class="kpi-value">${formatKPIValue(kpi)}</span>
+            ${kpi.change !== undefined ? `
+              <div class="kpi-change ${getChangeClass(kpi.changeType)}">
+                <i class="bi ${getChangeIcon(kpi.changeType)}"></i>
+                <span>${kpi.change > 0 ? '+' : ''}${kpi.change}%</span>
+                <span class="change-period">vs mois dernier</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER CHART
+    // ─────────────────────────────────────────────────────────────────
+    function renderChart() {
+      const container = document.getElementById('barChart');
+      container.innerHTML = revenueChart.labels.map((label, i) => `
+        <div class="bar-group">
+          <div class="bars">
+            <div 
+              class="bar bar--secondary" 
+              style="height: ${getChartBarHeight(revenueChart.previousValues[i])}%"
+              title="${revenueChart.previousValues[i]} €"
+            ></div>
+            <div 
+              class="bar bar--primary" 
+              style="height: ${getChartBarHeight(revenueChart.values[i])}%"
+              title="${revenueChart.values[i]} €"
+            ></div>
+          </div>
+          <span class="bar-label">${label}</span>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER CATEGORIES
+    // ─────────────────────────────────────────────────────────────────
+    function renderCategories() {
+      const container = document.getElementById('categoriesContent');
+      container.innerHTML = categoryData.map(cat => `
+        <div class="category-item">
+          <div class="category-info">
+            <span class="category-dot" style="background: ${cat.color}"></span>
+            <span class="category-name">${cat.name}</span>
+          </div>
+          <div class="category-bar">
+            <div class="category-progress" style="width: ${cat.value}%; background: ${cat.color}"></div>
+          </div>
+          <span class="category-value">${cat.value}%</span>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER ACTIVITIES
+    // ─────────────────────────────────────────────────────────────────
+    function renderActivities() {
+      const container = document.getElementById('activityList');
+      container.innerHTML = activities.map(activity => `
+        <div class="activity-item">
+          <div class="activity-icon ${getActivityIconClass(activity.type)}">
+            <i class="bi ${getActivityIcon(activity.type)}"></i>
+          </div>
+          <div class="activity-content">
+            <p>
+              <strong>${activity.user}</strong>
+              ${activity.action}
+              <span class="activity-target">${activity.target}</span>
+            </p>
+            <span class="activity-time">${activity.time}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RENDER TASKS
+    // ─────────────────────────────────────────────────────────────────
+    function renderTasks() {
+      const container = document.getElementById('taskList');
+      container.innerHTML = tasks.map(task => `
+        <div class="task-item">
+          <div class="task-checkbox">
+            <input type="checkbox" ${task.status === 'done' ? 'checked' : ''} onchange="toggleTask(${task.id})">
+          </div>
+          <div class="task-content">
+            <span class="task-title ${task.status === 'done' ? 'completed' : ''}">${task.title}</span>
+            <div class="task-meta">
+              <span class="task-priority task-priority--${task.priority}">${task.priority}</span>
+              <span class="task-due"><i class="bi bi-calendar"></i> ${task.dueDate}</span>
+            </div>
+          </div>
+          <div class="task-assignee">${task.assignee}</div>
+        </div>
+      `).join('');
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // TOGGLE TASK
+    // ─────────────────────────────────────────────────────────────────
+    function toggleTask(taskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (task) {
+        task.status = task.status === 'done' ? 'todo' : 'done';
+        renderTasks();
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // EVENT LISTENERS
+    // ─────────────────────────────────────────────────────────────────
+    document.getElementById('timeRange').addEventListener('change', function(e) {
+      console.log('Time range changed:', e.target.value);
+    });
+
+    // ─────────────────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      renderKPIs();
+      renderChart();
+      renderCategories();
+      renderActivities();
+      renderTasks();
+    });
+  </script>
+</body>
+</html>
