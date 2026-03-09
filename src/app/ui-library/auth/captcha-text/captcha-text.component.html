@@ -1,0 +1,71 @@
+<div class="captcha-container">
+  <div class="captcha-card">
+    @if (!isVerified) {
+      <!-- Header -->
+      <div class="captcha-header">
+        <div class="captcha-header__icon">
+          <i class="bi bi-fonts"></i>
+        </div>
+        <div>
+          <h3 class="captcha-header__title">Vérification de sécurité</h3>
+          <p class="captcha-header__subtitle">Reproduisez le texte affiché</p>
+        </div>
+      </div>
+
+      <!-- Erreur -->
+      @if (error) {
+        <div class="alert alert--error">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>{{ error }}</span>
+        </div>
+      }
+
+      <!-- Text CAPTCHA -->
+      <div class="text-captcha">
+        <div class="text-captcha__display">
+          <span class="captcha-text">{{ captchaText }}</span>
+          <button class="refresh-btn" (click)="generateCaptcha()" [disabled]="isLoading">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+
+        <div class="text-captcha__input">
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Entrez le texte ci-dessus"
+            [value]="userInput"
+            (input)="userInput = $any($event.target).value"
+            (keydown.enter)="verify()"
+          />
+        </div>
+
+        <button
+          class="btn btn--primary btn--full"
+          (click)="verify()"
+          [disabled]="isLoading || !userInput"
+        >
+          @if (isLoading) {
+            <span class="spinner"></span>
+            Vérification...
+          } @else {
+            Vérifier
+          }
+        </button>
+      </div>
+    } @else {
+      <!-- Succès -->
+      <div class="success-state">
+        <div class="success-icon">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h3 class="success-title">Vérification réussie</h3>
+        <p class="success-text">Vous avez prouvé que vous n'êtes pas un robot.</p>
+        <div class="verified-badge">
+          <i class="bi bi-shield-fill-check"></i>
+          <span>Vérifié</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="download-showcase">
+  <h1 class="page-title">Téléchargements</h1>
+  <p class="page-subtitle">Gestionnaire de téléchargements</p>
+
+  <!-- Featured Download -->
+  <section class="featured-download">
+    <div class="featured-content">
+      <div class="featured-icon">
+        <i class="bi bi-box-seam"></i>
+      </div>
+      <div class="featured-info">
+        <h2>Application Premium v2.4.0</h2>
+        <p>La dernière version avec toutes les nouvelles fonctionnalités</p>
+        <div class="featured-meta">
+          <span><i class="bi bi-calendar3"></i> 15 Janvier 2024</span>
+          <span><i class="bi bi-download"></i> 12.4k téléchargements</span>
+        </div>
+      </div>
+      <div class="featured-action">
+        <button class="download-btn download-btn--large">
+          <i class="bi bi-download"></i>
+          Télécharger
+        </button>
+        <span class="download-size">124 MB</span>
+      </div>
+    </div>
+    <div class="platform-buttons">
+      <button
+        *ngFor="let platform of platformDownloads"
+        class="platform-btn"
+      >
+        <i class="bi" [ngClass]="platform.icon"></i>
+        <span>{{ platform.platform }}</span>
+        <small>{{ platform.size }}</small>
+      </button>
+    </div>
+  </section>
+</div>

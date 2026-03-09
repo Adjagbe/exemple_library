@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historique des téléchargements - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f3f4f6;min-height:100vh}
+
+    .download-history-showcase{max-width:900px;margin:0 auto;padding:2rem}
+    .section-title{font-size:1.125rem;font-weight:600;color:#374151;margin:0 0 1rem}
+
+    .history-list{display:flex;flex-direction:column;gap:.5rem}
+    .history-item{display:flex;align-items:center;gap:1rem;padding:.875rem 1rem;background:#fff;border:1px solid #e5e7eb;border-radius:.5rem;transition:all .2s}
+    .history-item:hover{background:#f9fafb}
+    .history-item:hover .action-btn{opacity:1}
+    .history-icon{color:#10b981;font-size:1.125rem}
+    .history-info{flex:1;display:flex;flex-direction:column}
+    .history-name{font-size:.875rem;font-weight:500;color:#111827}
+    .history-date{font-size:.75rem;color:#9ca3af}
+    .history-size{font-size:.8125rem;color:#6b7280}
+    .action-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:#f3f4f6;border:none;border-radius:.375rem;color:#6b7280;cursor:pointer;transition:all .2s;opacity:0}
+    .action-btn:hover{background:#e5e7eb;color:#374151}
+  </style>
+</head>
+<body>
+
+<div class="download-history-showcase">
+  <h2 class="section-title">Historique</h2>
+  <div class="history-list" id="historyList"></div>
+</div>
+
+<script>
+(function(){
+var downloadHistory = [
+  { name: 'Application-v2.3.0.exe', date: new Date('2024-01-05'), size: '122 MB' },
+  { name: 'Plugin-v1.2.0.crx', date: new Date('2024-01-02'), size: '2.0 MB' },
+  { name: 'Documentation-v2.3.pdf', date: new Date('2023-12-28'), size: '8.2 MB' }
+];
+
+function formatDate(date) {
+  return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+document.getElementById('historyList').innerHTML = downloadHistory.map(function(h) {
+  return '<div class="history-item">' +
+    '<div class="history-icon"><i class="bi bi-file-earmark-check"></i></div>' +
+    '<div class="history-info">' +
+      '<span class="history-name">'+h.name+'</span>' +
+      '<span class="history-date">'+formatDate(h.date)+'</span>' +
+    '</div>' +
+    '<span class="history-size">'+h.size+'</span>' +
+    '<button class="action-btn" title="Retélécharger"><i class="bi bi-arrow-clockwise"></i></button>' +
+  '</div>';
+}).join('');
+})();
+</script>
+
+</body>
+</html>

@@ -1,7 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// NOTIFICATIONS COMPONENT - Premium UI Library
-// Notification center
-// ═══════════════════════════════════════════════════════════════
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';

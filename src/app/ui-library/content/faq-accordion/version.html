@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ Accordion - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f9fafb;color:#374151;min-height:100vh}
+
+    /* PAGE */
+    .faq-page{max-width:1100px;margin:0 auto;padding:2rem}
+
+    /* HEADER */
+    .faq-header{text-align:center;margin-bottom:3rem}
+    .faq-header h1{font-size:2.5rem;font-weight:800;margin:0 0 .75rem;background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .faq-header p{font-size:1.1rem;color:#6b7280;margin:0 0 2rem;max-width:600px;margin-left:auto;margin-right:auto}
+
+    /* SEARCH */
+    .faq-search{display:flex;align-items:center;gap:.75rem;max-width:600px;margin:0 auto;padding:.875rem 1.25rem;background:#fff;border:2px solid #e5e7eb;border-radius:1rem;box-shadow:0 4px 20px rgba(0,0,0,.05);transition:all .3s}
+    .faq-search:focus-within{border-color:#4f46e5;box-shadow:0 4px 20px rgba(79,70,229,.15)}
+    .faq-search i.search-icon{font-size:1.25rem;color:#9ca3af}
+    .faq-search input{flex:1;border:none;background:none;font-size:1rem;color:#374151;outline:none}
+    .faq-search input::placeholder{color:#9ca3af}
+    .clear-btn{padding:.375rem;background:#f3f4f6;border:none;border-radius:50%;color:#6b7280;cursor:pointer;transition:all .2s;display:none;width:28px;height:28px;align-items:center;justify-content:center}
+    .clear-btn.visible{display:inline-flex}
+    .clear-btn:hover{background:#e5e7eb;color:#374151}
+
+    /* CONTENT LAYOUT */
+    .faq-content{display:grid;grid-template-columns:220px 1fr;gap:2rem}
+
+    /* CATEGORIES */
+    .faq-categories{display:flex;flex-direction:column;gap:.5rem;position:sticky;top:2rem;height:fit-content}
+    .category-btn{display:flex;align-items:center;gap:.75rem;padding:.875rem 1rem;background:#fff;border:2px solid transparent;border-radius:.75rem;font-size:.9rem;font-weight:500;color:#6b7280;cursor:pointer;transition:all .2s;text-align:left}
+    .category-btn:hover{background:#f9fafb;color:#374151}
+    .category-btn.active{background:#eff6ff;border-color:#4f46e5;color:#4f46e5}
+    .category-btn.active .count{background:#4f46e5;color:#fff}
+    .category-btn i{font-size:1.1rem;width:20px;text-align:center}
+    .category-btn .cat-name{flex:1}
+    .count{padding:.125rem .5rem;background:#e5e7eb;border-radius:9999px;font-size:.75rem;font-weight:600;color:#6b7280}
+
+    /* FAQ LIST */
+    .faq-list{min-width:0}
+    .faq-actions{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .results-count{font-size:.9rem;color:#6b7280;font-weight:500;display:none}
+    .results-count.visible{display:inline}
+    .action-btns{display:flex;gap:.75rem}
+    .text-btn{display:flex;align-items:center;gap:.375rem;padding:.5rem .75rem;background:none;border:none;font-size:.8rem;color:#6b7280;cursor:pointer;border-radius:.375rem;transition:all .2s}
+    .text-btn:hover{background:#f3f4f6;color:#374151}
+
+    /* CATEGORY SECTION */
+    .category-section{margin-bottom:2rem}
+    .category-section:last-child{margin-bottom:0}
+    .category-title{display:flex;align-items:center;gap:.625rem;font-size:1.1rem;font-weight:600;color:#374151;margin:0 0 1rem}
+    .category-title i{color:#4f46e5}
+
+    /* ACCORDION */
+    .accordion{display:flex;flex-direction:column;gap:.75rem}
+    .accordion-item{background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;overflow:hidden;transition:all .3s}
+    .accordion-item:hover{border-color:#d1d5db;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .accordion-item.is-open{border-color:#4f46e5;box-shadow:0 4px 16px rgba(79,70,229,.1)}
+    .accordion-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;padding:1.125rem 1.25rem;background:none;border:none;cursor:pointer;text-align:left;transition:background .2s}
+    .accordion-header:hover{background:#f9fafb}
+    .is-open .accordion-header{background:#f9fafb}
+    .accordion-header .question{font-size:.95rem;font-weight:600;color:#111827;line-height:1.5}
+    .accordion-header .toggle-icon{flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border-radius:50%;color:#6b7280;font-size:.875rem;transition:all .2s}
+    .is-open .accordion-header .toggle-icon{background:#4f46e5;color:#fff}
+    .accordion-body{padding:0 1.25rem 1.25rem;animation:fadeIn .3s ease;display:none}
+    .is-open .accordion-body{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+    .answer{font-size:.9rem;color:#6b7280;line-height:1.7;margin:0 0 1rem}
+
+    /* FEEDBACK */
+    .feedback{display:flex;align-items:center;gap:1rem;padding-top:1rem;border-top:1px solid #f3f4f6}
+    .feedback-label{font-size:.8rem;color:#9ca3af}
+    .feedback-btns{display:flex;gap:.5rem}
+    .feedback-btn{display:flex;align-items:center;gap:.375rem;padding:.375rem .75rem;background:#f9fafb;border:1px solid #e5e7eb;border-radius:9999px;font-size:.75rem;color:#6b7280;cursor:pointer;transition:all .2s}
+    .feedback-btn:hover{background:#f3f4f6;border-color:#d1d5db;color:#374151}
+    .feedback-btn i{font-size:.875rem}
+
+    /* NO RESULTS */
+    .no-results{text-align:center;padding:4rem 2rem;background:#f9fafb;border-radius:1rem;display:none}
+    .no-results.visible{display:block}
+    .no-results i{font-size:4rem;color:#d1d5db;margin-bottom:1rem}
+    .no-results h3{font-size:1.25rem;color:#374151;margin:0 0 .5rem}
+    .no-results p{color:#6b7280;margin:0 0 1.5rem}
+
+    /* CONTACT CTA */
+    .contact-cta{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;margin-top:3rem;padding:1.5rem 2rem;background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);border-radius:1rem;color:#fff}
+    .cta-content{display:flex;align-items:center;gap:1rem}
+    .cta-content>i{font-size:2.5rem;opacity:.9}
+    .cta-text h3{font-size:1.1rem;font-weight:600;margin:0 0 .25rem}
+    .cta-text p{font-size:.9rem;opacity:.9;margin:0}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;border:none;border-radius:.5rem;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none}
+    .btn--primary{background:#fff;color:#4f46e5}
+    .btn--primary:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+    .btn--cta{background:#4f46e5;color:#fff;border-radius:.5rem}
+    .btn--cta:hover{background:#4338ca}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .faq-page{padding:1rem}
+      .faq-header h1{font-size:1.75rem}
+      .faq-header p{font-size:1rem}
+      .faq-content{grid-template-columns:1fr;gap:1.5rem}
+      .faq-categories{flex-direction:row;flex-wrap:wrap;position:static}
+      .category-btn{flex:1;min-width:140px;justify-content:center;text-align:center}
+      .category-btn i{display:none}
+      .faq-actions{flex-direction:column;align-items:flex-start;gap:.75rem}
+      .feedback{flex-direction:column;align-items:flex-start;gap:.75rem}
+      .contact-cta{flex-direction:column;text-align:center;padding:2rem 1.5rem}
+      .cta-content{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+<div class="faq-page">
+  <!-- Header -->
+  <div class="faq-header">
+    <h1>Questions Fréquentes</h1>
+    <p><span id="totalCount"></span> questions dans notre base de connaissances.</p>
+    <div class="faq-search">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" id="searchInput" placeholder="Rechercher une question..." oninput="handleSearch()">
+      <button class="clear-btn" id="clearBtn" onclick="clearSearch()"><i class="bi bi-x-lg"></i></button>
+    </div>
+  </div>
+
+  <div class="faq-content">
+    <!-- Categories Navigation -->
+    <nav class="faq-categories" id="categoriesNav"></nav>
+
+    <!-- FAQ List -->
+    <div class="faq-list">
+      <div class="faq-actions">
+        <span class="results-count" id="resultsCount"></span>
+        <div class="action-btns">
+          <button class="text-btn" onclick="expandAll()"><i class="bi bi-arrows-expand"></i> Tout ouvrir</button>
+          <button class="text-btn" onclick="collapseAll()"><i class="bi bi-arrows-collapse"></i> Tout fermer</button>
+        </div>
+      </div>
+      <div id="faqListContent"></div>
+      <div class="no-results" id="noResults">
+        <i class="bi bi-search"></i>
+        <h3>Aucun résultat trouvé</h3>
+        <p>Essayez avec d'autres termes de recherche ou parcourez les catégories.</p>
+        <button class="btn btn--cta" onclick="clearSearch()">Voir toutes les questions</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact CTA -->
+  <div class="contact-cta">
+    <div class="cta-content">
+      <i class="bi bi-chat-dots-fill"></i>
+      <div class="cta-text">
+        <h3>Vous n'avez pas trouvé de réponse ?</h3>
+        <p>Notre équipe support est là pour vous aider</p>
+      </div>
+    </div>
+    <button class="btn btn--primary"><i class="bi bi-headset"></i> Contacter le support</button>
+  </div>
+</div>
+
+<script>
+const categories = [
+  {
+    id: 'general', name: 'Général', icon: 'bi-info-circle',
+    items: [
+      { id:'g1', question:"Qu'est-ce que notre plateforme SaaS ?", answer:"Notre plateforme SaaS est une solution complète de gestion d'entreprise qui vous permet de centraliser vos données, automatiser vos processus et collaborer efficacement avec votre équipe. Elle inclut des modules de CRM, de gestion de projets, de facturation et bien plus encore.", isOpen:true, helpful:{yes:42,no:3} },
+      { id:'g2', question:"Comment puis-je créer un compte ?", answer:"Pour créer un compte, cliquez sur le bouton \"S'inscrire\" en haut de la page. Vous devrez fournir votre adresse email professionnelle, choisir un mot de passe sécurisé, puis vérifier votre email. Une fois vérifié, vous aurez accès à un essai gratuit de 14 jours.", isOpen:false, helpful:{yes:89,no:7} },
+      { id:'g3', question:"Quels navigateurs sont supportés ?", answer:"Notre application est optimisée pour les versions récentes de Chrome, Firefox, Safari et Edge. Nous recommandons de toujours utiliser la dernière version de votre navigateur pour une expérience optimale et une sécurité maximale.", isOpen:false, helpful:{yes:28,no:2} }
+    ]
+  },
+  {
+    id: 'billing', name: 'Facturation', icon: 'bi-credit-card',
+    items: [
+      { id:'b1', question:"Quels modes de paiement acceptez-vous ?", answer:"Nous acceptons les cartes de crédit (Visa, Mastercard, American Express), les virements bancaires SEPA et PayPal. Pour les entreprises, nous proposons également la facturation sur devis avec des conditions de paiement adaptées.", isOpen:false, helpful:{yes:56,no:4} },
+      { id:'b2', question:"Puis-je changer de forfait à tout moment ?", answer:"Oui, vous pouvez upgrader ou downgrader votre forfait à tout moment depuis votre espace de gestion. Le changement prend effet immédiatement pour les upgrades, et à la fin de la période de facturation en cours pour les downgrades.", isOpen:false, helpful:{yes:71,no:8} },
+      { id:'b3', question:"Comment annuler mon abonnement ?", answer:"Vous pouvez annuler votre abonnement depuis les paramètres de votre compte, section \"Abonnement\". L'annulation prendra effet à la fin de votre période de facturation en cours. Vos données seront conservées pendant 30 jours après l'annulation.", isOpen:false, helpful:{yes:34,no:12} }
+    ]
+  },
+  {
+    id: 'security', name: 'Sécurité', icon: 'bi-shield-check',
+    items: [
+      { id:'s1', question:"Mes données sont-elles sécurisées ?", answer:"Absolument. Nous utilisons un chiffrement AES-256 pour toutes les données stockées et TLS 1.3 pour les données en transit. Nos serveurs sont hébergés dans des datacenters certifiés ISO 27001 en Europe, et nous effectuons des audits de sécurité réguliers.", isOpen:false, helpful:{yes:98,no:2} },
+      { id:'s2', question:"Proposez-vous l'authentification à deux facteurs ?", answer:"Oui, nous proposons plusieurs méthodes d'authentification à deux facteurs : application d'authentification (Google Authenticator, Authy), SMS, et clés de sécurité physiques (FIDO2/WebAuthn). L'activation de la 2FA est fortement recommandée pour tous les utilisateurs.", isOpen:false, helpful:{yes:67,no:3} }
+    ]
+  },
+  {
+    id: 'support', name: 'Support', icon: 'bi-headset',
+    items: [
+      { id:'sp1', question:"Comment contacter le support ?", answer:"Notre support est disponible via plusieurs canaux : chat en direct (24/7 pour les plans Business et Enterprise), email (support@example.com), téléphone (pour les plans Enterprise), et notre centre d'aide en ligne avec des tutoriels vidéo.", isOpen:false, helpful:{yes:112,no:9} },
+      { id:'sp2', question:"Quel est le délai de réponse du support ?", answer:"Notre temps de réponse moyen est de 2 heures pour les demandes critiques, 4 heures pour les demandes normales, et 24 heures pour les questions générales. Les clients Enterprise bénéficient d'un support prioritaire avec un temps de réponse garanti de 1 heure.", isOpen:false, helpful:{yes:45,no:6} }
+    ]
+  }
+];
+
+let activeCategory = 'general';
+let searchQuery = '';
+
+function getTotalQuestions() {
+  return categories.reduce((t, c) => t + c.items.length, 0);
+}
+
+function getFilteredCategories() {
+  if (!searchQuery.trim()) return categories;
+  const q = searchQuery.toLowerCase();
+  return categories.map(c => ({
+    ...c,
+    items: c.items.filter(i => i.question.toLowerCase().includes(q) || i.answer.toLowerCase().includes(q))
+  })).filter(c => c.items.length > 0);
+}
+
+function getActiveCategory() {
+  if (searchQuery.trim()) return null;
+  return categories.find(c => c.id === activeCategory);
+}
+
+function selectCategory(id) {
+  activeCategory = id;
+  render();
+}
+
+function toggleItem(itemId) {
+  categories.forEach(c => c.items.forEach(i => { if (i.id === itemId) i.isOpen = !i.isOpen; }));
+  render();
+}
+
+function markHelpful(itemId, isHelpful) {
+  categories.forEach(c => c.items.forEach(i => {
+    if (i.id === itemId) { if (isHelpful) i.helpful.yes++; else i.helpful.no++; }
+  }));
+  render();
+}
+
+function expandAll() {
+  const cats = searchQuery.trim() ? getFilteredCategories() : [getActiveCategory()].filter(Boolean);
+  cats.forEach(c => c.items.forEach(i => i.isOpen = true));
+  render();
+}
+
+function collapseAll() {
+  const cats = searchQuery.trim() ? getFilteredCategories() : [getActiveCategory()].filter(Boolean);
+  cats.forEach(c => c.items.forEach(i => i.isOpen = false));
+  render();
+}
+
+function handleSearch() {
+  searchQuery = document.getElementById('searchInput').value;
+  document.getElementById('clearBtn').classList.toggle('visible', !!searchQuery);
+  render();
+}
+
+function clearSearch() {
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearBtn').classList.remove('visible');
+  render();
+}
+
+function renderAccordionItems(items) {
+  return items.map(item => `
+    <div class="accordion-item ${item.isOpen ? 'is-open' : ''}">
+      <button class="accordion-header" onclick="toggleItem('${item.id}')">
+        <span class="question">${item.question}</span>
+        <span class="toggle-icon"><i class="bi ${item.isOpen ? 'bi-dash-lg' : 'bi-plus-lg'}"></i></span>
+      </button>
+      <div class="accordion-body">
+        <p class="answer">${item.answer}</p>
+        ${item.helpful ? `
+        <div class="feedback">
+          <span class="feedback-label">Cette réponse vous a-t-elle aidé ?</span>
+          <div class="feedback-btns">
+            <button class="feedback-btn" onclick="markHelpful('${item.id}',true)"><i class="bi bi-hand-thumbs-up"></i> Oui (${item.helpful.yes})</button>
+            <button class="feedback-btn" onclick="markHelpful('${item.id}',false)"><i class="bi bi-hand-thumbs-down"></i> Non (${item.helpful.no})</button>
+          </div>
+        </div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function render() {
+  // Total
+  document.getElementById('totalCount').textContent = getTotalQuestions();
+
+  // Categories nav
+  const nav = document.getElementById('categoriesNav');
+  nav.style.display = searchQuery.trim() ? 'none' : '';
+  nav.innerHTML = categories.map(c => `
+    <button class="category-btn ${activeCategory === c.id ? 'active' : ''}" onclick="selectCategory('${c.id}')">
+      <i class="bi ${c.icon}"></i>
+      <span class="cat-name">${c.name}</span>
+      <span class="count">${c.items.length}</span>
+    </button>
+  `).join('');
+
+  // Results count
+  const rc = document.getElementById('resultsCount');
+  if (searchQuery.trim()) {
+    const filtered = getFilteredCategories();
+    const total = filtered.reduce((t, c) => t + c.items.length, 0);
+    rc.textContent = total > 0 ? total + ' résultat(s) trouvé(s)' : 'Aucun résultat trouvé';
+    rc.classList.add('visible');
+  } else {
+    rc.classList.remove('visible');
+  }
+
+  // Content
+  const content = document.getElementById('faqListContent');
+  const noResults = document.getElementById('noResults');
+
+  if (searchQuery.trim()) {
+    const filtered = getFilteredCategories();
+    if (filtered.length === 0) {
+      content.innerHTML = '';
+      noResults.classList.add('visible');
+    } else {
+      noResults.classList.remove('visible');
+      content.innerHTML = filtered.map(c => `
+        <div class="category-section">
+          <h2 class="category-title"><i class="bi ${c.icon}"></i> ${c.name}</h2>
+          <div class="accordion">${renderAccordionItems(c.items)}</div>
+        </div>
+      `).join('');
+    }
+  } else {
+    noResults.classList.remove('visible');
+    const cat = getActiveCategory();
+    if (cat) {
+      content.innerHTML = `
+        <div class="category-section">
+          <h2 class="category-title"><i class="bi ${cat.icon}"></i> ${cat.name}</h2>
+          <div class="accordion">${renderAccordionItems(cat.items)}</div>
+        </div>
+      `;
+    }
+  }
+}
+
+render();
+</script>
+</body>
+</html>

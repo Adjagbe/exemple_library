@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Reviews - Premium UI Library</title>
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════════════ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f9fafb;
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       REVIEWS PAGE
+    ═══════════════════════════════════════════════════════════════ */
+    .reviews-page {
+      min-height: 100vh;
+      background: #f9fafb;
+      padding: 2rem;
+    }
+
+    .reviews-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       HEADER
+    ─────────────────────────────────────────────────────────────────── */
+    .reviews-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       CONTENT LAYOUT
+    ─────────────────────────────────────────────────────────────────── */
+    .reviews-content {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .reviews-content {
+        grid-template-columns: 1fr;
+      }
+      .reviews-sidebar {
+        order: -1;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RATING SUMMARY
+    ─────────────────────────────────────────────────────────────────── */
+    .rating-summary {
+      display: flex;
+      gap: 3rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .rating-summary {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+
+    .summary-left {
+      flex: 0 0 auto;
+      text-align: center;
+    }
+
+    .average-rating {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rating-number {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1;
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .rating-stars i {
+      font-size: 1.25rem;
+      color: #f59e0b;
+    }
+
+    .rating-count {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .summary-right {
+      flex: 1;
+    }
+
+    .rating-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .rating-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .rating-bar-row:hover {
+      background: #f3f4f6;
+    }
+
+    .rating-bar-row.active {
+      background: #eff6ff;
+    }
+
+    .stars-label {
+      flex: 0 0 60px;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f59e0b, #f97316);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .bar-count {
+      flex: 0 0 40px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       WRITE REVIEW
+    ─────────────────────────────────────────────────────────────────── */
+    .write-review-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .write-review-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 1rem;
+      background: white;
+      border: 2px dashed #e5e7eb;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4f46e5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .write-review-btn:hover {
+      background: #f5f3ff;
+      border-color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       REVIEW FORM
+    ─────────────────────────────────────────────────────────────────── */
+    .review-form-container {
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .review-form-container.open {
+      display: block;
+    }
+
+    .review-form {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .form-product {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-product img {
+      width: 60px;
+      height: 60px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+    }
+
+    .form-product span {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+
+    .star-rating-input {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .star-btn {
+      background: none;
+      border: none;
+      padding: 0.25rem;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .star-btn i {
+      font-size: 2rem;
+      color: #d1d5db;
+      transition: color 0.2s ease;
+    }
+
+    .star-btn.active i,
+    .star-btn:hover i {
+      color: #f59e0b;
+    }
+
+    .star-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .rating-label {
+      margin-left: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #f59e0b;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .form-textarea {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-textarea:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .form-textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .char-count {
+      display: block;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 0.375rem;
+      text-align: right;
+    }
+
+    .char-count.error {
+      color: #dc2626;
+    }
+
+    .image-upload {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .upload-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: #f3f4f6;
+      border: 1px dashed #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-btn:hover {
+      background: #e5e7eb;
+      border-color: #9ca3af;
+    }
+
+    .upload-btn i {
+      font-size: 1.125rem;
+    }
+
+    .upload-hint {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       REVIEWS CONTROLS
+    ─────────────────────────────────────────────────────────────────── */
+    .reviews-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.75rem 0;
+    }
+
+    @media (max-width: 640px) {
+      .reviews-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+    }
+
+    .filter-info {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .clear-filter {
+      background: none;
+      border: none;
+      color: #4f46e5;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-left: 0.5rem;
+    }
+
+    .clear-filter:hover {
+      text-decoration: underline;
+    }
+
+    .sort-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sort-control label {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .sort-control select {
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      background: white url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") right 0.5rem center/1.25em 1.25em no-repeat;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .sort-control select:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       REVIEWS LIST
+    ─────────────────────────────────────────────────────────────────── */
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .review-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .review-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .review-header {
+        flex-wrap: wrap;
+      }
+    }
+
+    .reviewer-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .reviewer-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .reviewer-name {
+      display: block;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      color: #16a34a;
+      margin-top: 0.25rem;
+    }
+
+    .verified-badge i {
+      font-size: 0.875rem;
+    }
+
+    .review-meta {
+      text-align: right;
+    }
+
+    @media (max-width: 640px) {
+      .review-meta {
+        text-align: left;
+        width: 100%;
+      }
+    }
+
+    .review-rating {
+      display: flex;
+      gap: 0.125rem;
+    }
+
+    .review-rating i {
+      font-size: 1rem;
+      color: #f59e0b;
+    }
+
+    .review-date {
+      display: block;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 0.25rem;
+    }
+
+    .review-content {
+      margin-bottom: 1rem;
+    }
+
+    .review-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: #374151;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .review-images {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .review-images img {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .review-images img:hover {
+      transform: scale(1.05);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SELLER RESPONSE
+    ─────────────────────────────────────────────────────────────────── */
+    .seller-response {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    .response-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .response-header i {
+      color: #16a34a;
+    }
+
+    .response-author {
+      font-weight: 600;
+      color: #16a34a;
+      font-size: 0.875rem;
+    }
+
+    .response-date {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .response-text {
+      font-size: 0.875rem;
+      color: #374151;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       REVIEW ACTIONS
+    ─────────────────────────────────────────────────────────────────── */
+    .review-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    @media (max-width: 640px) {
+      .review-actions {
+        flex-wrap: wrap;
+      }
+    }
+
+    .helpful-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .helpful-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .helpful-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 0.375rem;
+      font-size: 0.8rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .helpful-btn:hover:not(:disabled) {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .helpful-btn:disabled {
+      cursor: default;
+    }
+
+    .helpful-btn.voted {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .report-btn {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .report-btn:hover {
+      color: #dc2626;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       EMPTY STATE
+    ─────────────────────────────────────────────────────────────────── */
+    .empty-reviews {
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 0.75rem;
+      display: none;
+    }
+
+    .empty-reviews.show {
+      display: block;
+    }
+
+    .empty-reviews i {
+      font-size: 3rem;
+      color: #d1d5db;
+      margin-bottom: 1rem;
+    }
+
+    .empty-reviews h3 {
+      font-size: 1.125rem;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .empty-reviews p {
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       LOAD MORE
+    ─────────────────────────────────────────────────────────────────── */
+    .load-more {
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+
+    .load-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .load-more-btn:hover {
+      background: #f3f4f6;
+      border-color: #d1d5db;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SIDEBAR
+    ─────────────────────────────────────────────────────────────────── */
+    .product-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .product-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 0.75rem;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .product-rating {
+      margin-bottom: 1rem;
+    }
+
+    .product-rating .stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.125rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-rating .stars i {
+      font-size: 1rem;
+      color: #f59e0b;
+    }
+
+    .product-rating .rating-text {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .view-product-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .view-product-btn:hover {
+      background: #4338ca;
+    }
+
+    .guidelines-card {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+
+    .guidelines-card h4 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #92400e;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .guidelines-card h4 i {
+      color: #f59e0b;
+    }
+
+    .guidelines-card ul {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .guidelines-card li {
+      font-size: 0.8rem;
+      color: #78350f;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       BUTTONS
+    ─────────────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn--primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background: #4338ca;
+    }
+
+    .btn--primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn--secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .btn--secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       RESPONSIVE
+    ─────────────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .reviews-page {
+        padding: 1rem;
+      }
+
+      .rating-summary {
+        padding: 1.5rem;
+      }
+
+      .rating-number {
+        font-size: 3rem;
+      }
+
+      .review-form {
+        padding: 1.5rem;
+      }
+
+      .review-card {
+        padding: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reviews-page">
+    <div class="reviews-container">
+      <!-- Header -->
+      <header class="reviews-header">
+        <h1 class="page-title">Customer Reviews</h1>
+      </header>
+
+      <div class="reviews-content">
+        <!-- Left: Reviews Summary & List -->
+        <div class="reviews-main">
+          <!-- Rating Summary -->
+          <div class="rating-summary">
+            <div class="summary-left">
+              <div class="average-rating">
+                <span class="rating-number" id="avgRating">4.6</span>
+                <div class="rating-stars" id="avgStars"></div>
+                <span class="rating-count">Based on <span id="totalCount">1,284</span> reviews</span>
+              </div>
+            </div>
+            <div class="summary-right">
+              <div class="rating-bars" id="ratingBars"></div>
+            </div>
+          </div>
+
+          <!-- Write Review Button -->
+          <div class="write-review-section">
+            <button class="write-review-btn" id="writeReviewBtn">
+              <i class="bi bi-pencil-square"></i>
+              Write a Review
+            </button>
+          </div>
+
+          <!-- Write Review Form -->
+          <div class="review-form-container" id="reviewFormContainer">
+            <div class="review-form">
+              <h2 class="form-title">Share Your Experience</h2>
+              
+              <!-- Product Info -->
+              <div class="form-product">
+                <img src="https://placehold.co/120x120/e5e7eb/64748b?text=Product" alt="Premium Wireless Headphones">
+                <span>Premium Wireless Headphones</span>
+              </div>
+
+              <!-- Rating Selection -->
+              <div class="form-group">
+                <label class="form-label">Your Rating *</label>
+                <div class="star-rating-input" id="starRatingInput">
+                  <button type="button" class="star-btn" data-rating="1"><i class="bi bi-star"></i></button>
+                  <button type="button" class="star-btn" data-rating="2"><i class="bi bi-star"></i></button>
+                  <button type="button" class="star-btn" data-rating="3"><i class="bi bi-star"></i></button>
+                  <button type="button" class="star-btn" data-rating="4"><i class="bi bi-star"></i></button>
+                  <button type="button" class="star-btn" data-rating="5"><i class="bi bi-star"></i></button>
+                  <span class="rating-label" id="ratingLabel"></span>
+                </div>
+              </div>
+
+              <!-- Review Title -->
+              <div class="form-group">
+                <label class="form-label">Review Title *</label>
+                <input type="text" class="form-input" id="reviewTitle" placeholder="Summarize your experience">
+              </div>
+
+              <!-- Review Content -->
+              <div class="form-group">
+                <label class="form-label">Your Review *</label>
+                <textarea class="form-textarea" id="reviewContent" placeholder="What did you like or dislike? What did you use this product for?" rows="5"></textarea>
+                <span class="char-count" id="charCount">0 / 20 minimum characters</span>
+              </div>
+
+              <!-- Image Upload -->
+              <div class="form-group">
+                <label class="form-label">Add Photos (optional)</label>
+                <div class="image-upload">
+                  <button type="button" class="upload-btn">
+                    <i class="bi bi-camera"></i>
+                    <span>Add Photos</span>
+                  </button>
+                  <span class="upload-hint">Up to 5 images, max 5MB each</span>
+                </div>
+              </div>
+
+              <!-- Form Actions -->
+              <div class="form-actions">
+                <button class="btn btn--secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn--primary" id="submitBtn" disabled>Submit Review</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reviews Filter & Sort -->
+          <div class="reviews-controls">
+            <div class="filter-info" id="filterInfo">Showing all <span id="reviewCount">5</span> reviews</div>
+            <div class="sort-control">
+              <label>Sort by:</label>
+              <select id="sortSelect">
+                <option value="recent">Most Recent</option>
+                <option value="helpful">Most Helpful</option>
+                <option value="highest">Highest Rated</option>
+                <option value="lowest">Lowest Rated</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Reviews List -->
+          <div class="reviews-list" id="reviewsList"></div>
+
+          <!-- Empty State -->
+          <div class="empty-reviews" id="emptyState">
+            <i class="bi bi-chat-square-text"></i>
+            <h3>No reviews found</h3>
+            <p id="emptyMessage">Be the first to write a review!</p>
+          </div>
+
+          <!-- Load More -->
+          <div class="load-more" id="loadMore">
+            <button class="load-more-btn">
+              <i class="bi bi-arrow-down-circle"></i>
+              Load More Reviews
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Product Card -->
+        <div class="reviews-sidebar">
+          <div class="product-card">
+            <img src="https://placehold.co/120x120/e5e7eb/64748b?text=Product" alt="Product" class="product-image">
+            <h3 class="product-name">Premium Wireless Headphones</h3>
+            <div class="product-rating">
+              <div class="stars" id="productStars"></div>
+              <span class="rating-text"><span id="productRating">4.6</span> (<span id="productReviewCount">1,284</span> reviews)</span>
+            </div>
+            <button class="view-product-btn">View Product</button>
+          </div>
+
+          <!-- Review Guidelines -->
+          <div class="guidelines-card">
+            <h4>
+              <i class="bi bi-info-circle"></i>
+              Review Guidelines
+            </h4>
+            <ul>
+              <li>Focus on the product and your experience</li>
+              <li>Be honest and objective</li>
+              <li>Include relevant details</li>
+              <li>Avoid inappropriate language</li>
+              <li>Don't include personal information</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const state = {
+        averageRating: 4.6,
+        totalReviews: 1284,
+        ratingBreakdown: [
+          { stars: 5, count: 856, percentage: 67 },
+          { stars: 4, count: 257, percentage: 20 },
+          { stars: 3, count: 103, percentage: 8 },
+          { stars: 2, count: 45, percentage: 3 },
+          { stars: 1, count: 23, percentage: 2 }
+        ],
+        reviews: [
+          {
+            id: '1',
+            author: 'Sarah Johnson',
+            avatar: 'https://placehold.co/48x48/4f46e5/ffffff?text=SJ',
+            rating: 5,
+            title: "Best headphones I've ever owned!",
+            content: "The sound quality is incredible, and the noise cancellation is top-notch. I use these for work calls and listening to music, and they excel at both. Battery life is amazing - I only charge them once a week with daily use. Highly recommend!",
+            date: new Date('2024-01-12'),
+            helpful: 42,
+            notHelpful: 3,
+            verified: true,
+            images: ['https://placehold.co/80x80/e5e7eb/64748b?text=Photo+1', 'https://placehold.co/80x80/e5e7eb/64748b?text=Photo+2']
+          },
+          {
+            id: '2',
+            author: 'Michael Chen',
+            avatar: 'https://placehold.co/48x48/16a34a/ffffff?text=MC',
+            rating: 4,
+            title: 'Great quality, minor comfort issues',
+            content: "Sound quality is excellent and the build feels premium. My only complaint is that after about 3 hours of continuous use, my ears start to feel a bit warm. That said, for shorter sessions they're perfect. Would still recommend.",
+            date: new Date('2024-01-08'),
+            helpful: 28,
+            notHelpful: 5,
+            verified: true,
+            response: {
+              author: 'TechCorp Support',
+              content: "Thank you for your feedback, Michael! We appreciate you sharing your experience. Our ear cushions are designed for breathability, but we understand comfort can vary. Feel free to contact us for tips on adjusting the fit.",
+              date: new Date('2024-01-09')
+            }
+          },
+          {
+            id: '3',
+            author: 'Emily Rodriguez',
+            avatar: 'https://placehold.co/48x48/dc2626/ffffff?text=ER',
+            rating: 5,
+            title: 'Perfect for remote work',
+            content: "I bought these specifically for video calls and they've exceeded my expectations. Colleagues say my voice is crystal clear, and the noise cancellation blocks out all the background noise in my apartment. The multipoint connection is a game changer!",
+            date: new Date('2024-01-05'),
+            helpful: 35,
+            notHelpful: 2,
+            verified: true
+          },
+          {
+            id: '4',
+            author: 'David Kim',
+            avatar: 'https://placehold.co/48x48/f59e0b/ffffff?text=DK',
+            rating: 3,
+            title: 'Good but not great',
+            content: "Decent headphones for the price. Sound quality is good but not audiophile level. ANC works well in most situations. My main issue is the app - it's buggy and crashes frequently. Hope they fix this in future updates.",
+            date: new Date('2024-01-02'),
+            helpful: 15,
+            notHelpful: 8,
+            verified: false
+          },
+          {
+            id: '5',
+            author: 'Lisa Thompson',
+            avatar: 'https://placehold.co/48x48/7c3aed/ffffff?text=LT',
+            rating: 5,
+            title: 'Worth every penny!',
+            content: "After months of research, I finally pulled the trigger on these headphones and couldn't be happier. The sound stage is wide, bass is punchy but not overwhelming, and mids are clear. Perfect for all genres of music.",
+            date: new Date('2023-12-28'),
+            helpful: 52,
+            notHelpful: 1,
+            verified: true
+          }
+        ],
+        sortBy: 'recent',
+        filterByRating: 0,
+        showReviewForm: false,
+        newReview: { rating: 0, title: '', content: '' },
+        hoverRating: 0,
+        isSubmitting: false,
+        votedReviews: new Set()
+      };
+
+      const els = {
+        avgRating: document.getElementById('avgRating'),
+        avgStars: document.getElementById('avgStars'),
+        totalCount: document.getElementById('totalCount'),
+        ratingBars: document.getElementById('ratingBars'),
+        writeReviewBtn: document.getElementById('writeReviewBtn'),
+        reviewFormContainer: document.getElementById('reviewFormContainer'),
+        starRatingInput: document.getElementById('starRatingInput'),
+        ratingLabel: document.getElementById('ratingLabel'),
+        reviewTitle: document.getElementById('reviewTitle'),
+        reviewContent: document.getElementById('reviewContent'),
+        charCount: document.getElementById('charCount'),
+        cancelBtn: document.getElementById('cancelBtn'),
+        submitBtn: document.getElementById('submitBtn'),
+        filterInfo: document.getElementById('filterInfo'),
+        sortSelect: document.getElementById('sortSelect'),
+        reviewsList: document.getElementById('reviewsList'),
+        emptyState: document.getElementById('emptyState'),
+        emptyMessage: document.getElementById('emptyMessage'),
+        loadMore: document.getElementById('loadMore'),
+        productStars: document.getElementById('productStars'),
+        productRating: document.getElementById('productRating'),
+        productReviewCount: document.getElementById('productReviewCount')
+      };
+
+      function generateStars(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalf = rating % 1 >= 0.5;
+        let html = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= fullStars) html += '<i class="bi bi-star-fill"></i>';
+          else if (i === fullStars + 1 && hasHalf) html += '<i class="bi bi-star-half"></i>';
+          else html += '<i class="bi bi-star"></i>';
+        }
+        return html;
+      }
+
+      function formatDate(date) {
+        const now = new Date();
+        const diff = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+        if (diff === 0) return 'Today';
+        if (diff === 1) return 'Yesterday';
+        if (diff < 7) return `${diff} days ago`;
+        if (diff < 30) return `${Math.floor(diff / 7)} weeks ago`;
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function getRatingText(rating) {
+        return ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][rating] || '';
+      }
+
+      function renderSummary() {
+        els.avgRating.textContent = state.averageRating;
+        els.avgStars.innerHTML = generateStars(state.averageRating);
+        els.totalCount.textContent = state.totalReviews.toLocaleString();
+        els.productRating.textContent = state.averageRating;
+        els.productStars.innerHTML = generateStars(state.averageRating);
+        els.productReviewCount.textContent = state.totalReviews.toLocaleString();
+      }
+
+      function renderRatingBars() {
+        els.ratingBars.innerHTML = state.ratingBreakdown.map(item => `
+          <div class="rating-bar-row ${state.filterByRating === item.stars ? 'active' : ''}" data-stars="${item.stars}">
+            <span class="stars-label">${item.stars} stars</span>
+            <div class="bar-track"><div class="bar-fill" style="width: ${item.percentage}%"></div></div>
+            <span class="bar-count">${item.count}</span>
+          </div>
+        `).join('');
+        document.querySelectorAll('.rating-bar-row').forEach(row => {
+          row.addEventListener('click', () => {
+            const stars = parseInt(row.dataset.stars);
+            state.filterByRating = state.filterByRating === stars ? 0 : stars;
+            renderRatingBars();
+            renderReviews();
+            updateFilterInfo();
+          });
+        });
+      }
+
+      function updateFilterInfo() {
+        const filtered = getFilteredReviews();
+        if (state.filterByRating === 0) {
+          els.filterInfo.innerHTML = `Showing all <span>${filtered.length}</span> reviews`;
+        } else {
+          els.filterInfo.innerHTML = `Showing ${filtered.length} reviews with ${state.filterByRating} stars <button class="clear-filter" id="clearFilterBtn"><i class="bi bi-x"></i> Clear</button>`;
+          document.getElementById('clearFilterBtn').addEventListener('click', () => {
+            state.filterByRating = 0;
+            renderRatingBars();
+            renderReviews();
+            updateFilterInfo();
+          });
+        }
+      }
+
+      function getFilteredReviews() {
+        let filtered = [...state.reviews];
+        if (state.filterByRating > 0) filtered = filtered.filter(r => r.rating === state.filterByRating);
+        switch (state.sortBy) {
+          case 'recent': filtered.sort((a, b) => b.date - a.date); break;
+          case 'helpful': filtered.sort((a, b) => b.helpful - a.helpful); break;
+          case 'highest': filtered.sort((a, b) => b.rating - a.rating); break;
+          case 'lowest': filtered.sort((a, b) => a.rating - b.rating); break;
+        }
+        return filtered;
+      }
+
+      function renderReviews() {
+        const filtered = getFilteredReviews();
+        if (filtered.length === 0) {
+          els.reviewsList.style.display = 'none';
+          els.loadMore.style.display = 'none';
+          els.emptyState.classList.add('show');
+          els.emptyMessage.textContent = state.filterByRating > 0 ? 'Try clearing your filter to see all reviews.' : 'Be the first to write a review!';
+          return;
+        }
+        els.emptyState.classList.remove('show');
+        els.reviewsList.style.display = 'flex';
+        els.loadMore.style.display = 'block';
+
+        els.reviewsList.innerHTML = filtered.map(review => {
+          const hasVoted = state.votedReviews.has(review.id);
+          return `
+            <div class="review-card" data-id="${review.id}">
+              <div class="review-header">
+                <img src="${review.avatar}" alt="${review.author}" class="reviewer-avatar">
+                <div class="reviewer-info">
+                  <span class="reviewer-name">${review.author}</span>
+                  ${review.verified ? '<span class="verified-badge"><i class="bi bi-patch-check-fill"></i> Verified Purchase</span>' : ''}
+                </div>
+                <div class="review-meta">
+                  <div class="review-rating">${generateStars(review.rating)}</div>
+                  <span class="review-date">${formatDate(review.date)}</span>
+                </div>
+              </div>
+              <div class="review-content">
+                <h3 class="review-title">${review.title}</h3>
+                <p class="review-text">${review.content}</p>
+                ${review.images ? `<div class="review-images">${review.images.map(img => `<img src="${img}" alt="Review photo">`).join('')}</div>` : ''}
+              </div>
+              ${review.response ? `
+                <div class="seller-response">
+                  <div class="response-header">
+                    <i class="bi bi-shop"></i>
+                    <span class="response-author">${review.response.author}</span>
+                    <span class="response-date">${formatDate(review.response.date)}</span>
+                  </div>
+                  <p class="response-text">${review.response.content}</p>
+                </div>
+              ` : ''}
+              <div class="review-actions">
+                <span class="helpful-label">Was this review helpful?</span>
+                <div class="helpful-buttons">
+                  <button class="helpful-btn ${hasVoted ? 'voted' : ''}" ${hasVoted ? 'disabled' : ''} data-action="helpful" data-review="${review.id}">
+                    <i class="bi bi-hand-thumbs-up"></i><span>Yes (${review.helpful})</span>
+                  </button>
+                  <button class="helpful-btn ${hasVoted ? 'voted' : ''}" ${hasVoted ? 'disabled' : ''} data-action="not-helpful" data-review="${review.id}">
+                    <i class="bi bi-hand-thumbs-down"></i><span>No (${review.notHelpful})</span>
+                  </button>
+                </div>
+                <button class="report-btn"><i class="bi bi-flag"></i> Report</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.helpful-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const reviewId = btn.dataset.review;
+            if (state.votedReviews.has(reviewId)) return;
+            const review = state.reviews.find(r => r.id === reviewId);
+            if (review) {
+              if (btn.dataset.action === 'helpful') review.helpful++;
+              else review.notHelpful++;
+              state.votedReviews.add(reviewId);
+              renderReviews();
+            }
+          });
+        });
+      }
+
+      function toggleReviewForm() {
+        state.showReviewForm = !state.showReviewForm;
+        els.reviewFormContainer.classList.toggle('open', state.showReviewForm);
+        if (!state.showReviewForm) resetForm();
+      }
+
+      function resetForm() {
+        state.newReview = { rating: 0, title: '', content: '' };
+        state.hoverRating = 0;
+        els.reviewTitle.value = '';
+        els.reviewContent.value = '';
+        updateStarsDisplay();
+        updateCharCount();
+        validateForm();
+      }
+
+      function updateStarsDisplay() {
+        const rating = state.hoverRating || state.newReview.rating;
+        els.starRatingInput.querySelectorAll('.star-btn').forEach((btn, index) => {
+          const i = btn.querySelector('i');
+          if (index < rating) {
+            btn.classList.add('active');
+            i.className = 'bi bi-star-fill';
+          } else {
+            btn.classList.remove('active');
+            i.className = 'bi bi-star';
+          }
+        });
+        els.ratingLabel.textContent = state.newReview.rating > 0 ? getRatingText(state.hoverRating || state.newReview.rating) : '';
+      }
+
+      function updateCharCount() {
+        const count = els.reviewContent.value.length;
+        els.charCount.textContent = `${count} / 20 minimum characters`;
+        els.charCount.classList.toggle('error', count > 0 && count < 20);
+      }
+
+      function validateForm() {
+        const isValid = state.newReview.rating > 0 && els.reviewTitle.value.trim().length > 0 && els.reviewContent.value.trim().length >= 20;
+        els.submitBtn.disabled = !isValid;
+        return isValid;
+      }
+
+      function submitReview() {
+        if (!validateForm() || state.isSubmitting) return;
+        state.isSubmitting = true;
+        els.submitBtn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Submitting...';
+        setTimeout(() => {
+          state.reviews.unshift({
+            id: Date.now().toString(),
+            author: 'You',
+            avatar: 'https://placehold.co/48x48/374151/ffffff?text=You',
+            rating: state.newReview.rating,
+            title: els.reviewTitle.value.trim(),
+            content: els.reviewContent.value.trim(),
+            date: new Date(),
+            helpful: 0,
+            notHelpful: 0,
+            verified: true
+          });
+          state.totalReviews++;
+          state.isSubmitting = false;
+          els.submitBtn.innerHTML = 'Submit Review';
+          toggleReviewForm();
+          renderSummary();
+          renderReviews();
+          updateFilterInfo();
+        }, 1500);
+      }
+
+      function init() {
+        renderSummary();
+        renderRatingBars();
+        renderReviews();
+        updateFilterInfo();
+
+        els.writeReviewBtn.addEventListener('click', toggleReviewForm);
+        els.cancelBtn.addEventListener('click', toggleReviewForm);
+
+        els.starRatingInput.querySelectorAll('.star-btn').forEach(btn => {
+          btn.addEventListener('mouseenter', () => { state.hoverRating = parseInt(btn.dataset.rating); updateStarsDisplay(); });
+          btn.addEventListener('mouseleave', () => { state.hoverRating = 0; updateStarsDisplay(); });
+          btn.addEventListener('click', () => { state.newReview.rating = parseInt(btn.dataset.rating); updateStarsDisplay(); validateForm(); });
+        });
+
+        els.reviewTitle.addEventListener('input', () => { state.newReview.title = els.reviewTitle.value; validateForm(); });
+        els.reviewContent.addEventListener('input', () => { state.newReview.content = els.reviewContent.value; updateCharCount(); validateForm(); });
+        els.submitBtn.addEventListener('click', submitReview);
+        els.sortSelect.addEventListener('change', () => { state.sortBy = els.sortSelect.value; renderReviews(); });
+      }
+
+      init();
+    })();
+  </script>
+
+</body>
+</html>

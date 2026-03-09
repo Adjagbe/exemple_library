@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%); min-height: 100vh; }
+
+    .payment-page { min-height: 100vh; padding: 2rem; }
+    .payment-container { max-width: 1100px; margin: 0 auto; }
+
+    /* SUCCESS */
+    .payment-success { display: none; align-items: center; justify-content: center; min-height: calc(100vh - 4rem); }
+    .payment-success.show { display: flex; }
+    .success-card { background: white; border-radius: 1rem; padding: 3rem; max-width: 450px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+    .success-card h1 { font-size: 1.75rem; color: #111827; margin: 0 0 0.5rem 0; }
+    .success-card .amount-paid { font-size: 2rem; font-weight: 700; color: #10b981; margin: 0 0 1rem 0; }
+    .success-card .success-message { color: #6b7280; margin: 0 0 2rem 0; line-height: 1.6; }
+    .success-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; animation: successPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+    .success-icon i { font-size: 2.5rem; color: white; }
+    @keyframes successPop { 0%{transform:scale(0);opacity:0} 50%{transform:scale(1.2)} 100%{transform:scale(1);opacity:1} }
+    .success-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* CONTENT LAYOUT */
+    .payment-content { display: grid; grid-template-columns: 1fr 380px; gap: 2rem; }
+    .payment-main { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .page-title { display: flex; align-items: center; gap: 0.75rem; font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0 0 1.5rem 0; }
+    .page-title i { color: #4f46e5; }
+
+    /* ERROR */
+    .error-alert { display: none; align-items: center; gap: 0.75rem; padding: 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.5rem; margin-bottom: 1.5rem; color: #dc2626; font-size: 0.9rem; }
+    .error-alert.show { display: flex; }
+    .error-alert i { font-size: 1.25rem; }
+    .error-alert span { flex: 1; }
+    .error-alert .close-btn { background: none; border: none; color: #dc2626; cursor: pointer; padding: 0.25rem; }
+
+    /* METHODS */
+    .payment-methods { margin-bottom: 2rem; }
+    .section-title { font-size: 1rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+    .methods-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+    .method-card { position: relative; display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s ease; background: white; }
+    .method-card:hover { border-color: #d1d5db; transform: translateY(-2px); }
+    .method-card.selected { border-color: #4f46e5; background: #f5f3ff; }
+    .method-icon { width: 40px; height: 40px; background: #f3f4f6; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; }
+    .method-icon i { font-size: 1.25rem; color: #374151; }
+    .method-card.selected .method-icon { background: #4f46e5; }
+    .method-card.selected .method-icon i { color: white; }
+    .method-name { font-size: 0.75rem; font-weight: 500; color: #374151; text-align: center; }
+    .check-icon { position: absolute; top: 0.5rem; right: 0.5rem; font-size: 1rem; color: #4f46e5; }
+
+    /* PAYMENT FORM */
+    .payment-form { padding-top: 1.5rem; border-top: 1px solid #e5e7eb; display: none; }
+    .payment-form.show { display: block; }
+    .subsection-title { font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+
+    /* SAVED CARDS */
+    .cards-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .saved-card { position: relative; border: 2px solid #e5e7eb; border-radius: 0.75rem; overflow: hidden; cursor: pointer; transition: all 0.2s ease; }
+    .saved-card:hover { border-color: #d1d5db; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .saved-card.selected { border-color: #4f46e5; }
+    .card-visual { position: relative; padding: 1rem; color: white; min-height: 110px; background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); }
+    .card-visual.visa { background: linear-gradient(135deg, #1a1f71 0%, #0d1033 100%); }
+    .card-visual.mastercard { background: linear-gradient(135deg, #eb001b 0%, #f79e1b 100%); }
+    .card-visual.amex { background: linear-gradient(135deg, #006fcf 0%, #0040a1 100%); }
+    .card-brand-logo { margin-bottom: 0.75rem; }
+    .card-brand-logo i { font-size: 1.5rem; opacity: 0.8; }
+    .card-number-display { font-family: 'Courier New', monospace; font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    .card-details { display: flex; justify-content: space-between; font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; }
+    .default-badge { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.2rem 0.5rem; background: rgba(255,255,255,0.2); border-radius: 0.25rem; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
+    .card-actions { display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; }
+    .action-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: white; border: 1px solid #e5e7eb; border-radius: 0.375rem; color: #6b7280; cursor: pointer; transition: all 0.2s ease; }
+    .action-btn:hover { background: #f3f4f6; color: #4f46e5; }
+    .action-btn.delete:hover { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+    .add-card-btn { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: #4f46e5; font-size: 0.875rem; font-weight: 500; cursor: pointer; padding: 0.5rem 0; }
+    .add-card-btn:hover, .add-card-btn.active { text-decoration: underline; }
+
+    /* CARD PREVIEW */
+    .card-preview { margin-bottom: 1.5rem; }
+    .preview-card { position: relative; width: 100%; max-width: 320px; height: 180px; padding: 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 1rem; color: white; box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+    .preview-card.visa { background: linear-gradient(135deg, #1a1f71 0%, #0d1033 100%); }
+    .preview-card.mastercard { background: linear-gradient(135deg, #eb001b 0%, #f79e1b 100%); }
+    .preview-card.amex { background: linear-gradient(135deg, #006fcf 0%, #0040a1 100%); }
+    .preview-card.discover { background: linear-gradient(135deg, #ff6600 0%, #f54900 100%); }
+    .preview-brand { position: absolute; top: 1rem; right: 1.5rem; }
+    .preview-brand i { font-size: 2rem; opacity: 0.8; }
+    .preview-chip { position: absolute; top: 1.25rem; left: 1.5rem; }
+    .preview-chip i { font-size: 2rem; opacity: 0.6; }
+    .preview-number { position: absolute; top: 50%; left: 1.5rem; transform: translateY(-50%); font-family: 'Courier New', monospace; font-size: 1.25rem; letter-spacing: 0.15em; }
+    .preview-details { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; display: flex; justify-content: space-between; }
+    .preview-name { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.9; }
+    .preview-expiry { font-size: 0.75rem; font-family: 'Courier New', monospace; }
+
+    /* FORM */
+    .card-form, .bank-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-label { display: flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+    .form-label .help-icon { font-size: 0.75rem; color: #9ca3af; cursor: help; }
+    .input-wrapper { position: relative; }
+    .input-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9ca3af; font-size: 1rem; }
+    .form-input { width: 100%; padding: 0.875rem 1rem 0.875rem 2.75rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.9rem; transition: all 0.2s ease; }
+    .form-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .form-input::placeholder { color: #9ca3af; }
+    .form-input.no-icon { padding-left: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .checkbox-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; margin-top: 0.5rem; }
+    .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: #4f46e5; }
+    .checkbox-text { font-size: 0.875rem; color: #374151; }
+
+    /* WALLET */
+    .wallet-info { text-align: center; padding: 2rem; }
+    .wallet-info h3 { font-size: 1.125rem; color: #111827; margin: 0 0 0.5rem 0; }
+    .wallet-info p { color: #6b7280; margin: 0; max-width: 300px; margin: 0 auto; }
+    .wallet-icon { width: 64px; height: 64px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .wallet-icon i { font-size: 2rem; color: white; }
+    .wallet-icon.paypal { background: linear-gradient(135deg, #003087, #009cde); }
+    .wallet-icon.apple { background: linear-gradient(135deg, #000, #333); }
+    .wallet-icon.google { background: linear-gradient(135deg, #4285f4, #34a853 50%, #fbbc05 75%, #ea4335); }
+
+    /* BANK */
+    .account-type-selector { display: flex; gap: 1rem; }
+    .type-option { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; background: white; }
+    .type-option input { display: none; }
+    .type-option span { font-weight: 500; color: #374151; }
+    .type-option:hover { border-color: #d1d5db; }
+    .type-option.selected { border-color: #4f46e5; background: #f5f3ff; }
+    .type-option.selected span { color: #4f46e5; }
+    .bank-info { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: #fef9c3; border-radius: 0.5rem; margin-top: 0.5rem; }
+    .bank-info i { color: #ca8a04; font-size: 1.25rem; margin-top: 0.125rem; }
+    .bank-info p { color: #854d0e; margin: 0; font-size: 0.875rem; }
+
+    /* SECURITY */
+    .security-info { display: flex; justify-content: center; gap: 2rem; padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid #e5e7eb; }
+    .security-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #16a34a; }
+    .security-item i { font-size: 1rem; }
+
+    /* SIDEBAR */
+    .payment-sidebar { display: block; }
+    .order-summary { background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 1rem; }
+    .summary-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin: 0 0 1.5rem 0; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
+    .summary-line { display: flex; justify-content: space-between; padding: 0.625rem 0; font-size: 0.9rem; color: #6b7280; }
+    .summary-line .free { color: #16a34a; font-weight: 500; }
+    .summary-line.discount { color: #16a34a; }
+    .summary-total { display: flex; justify-content: space-between; padding: 1rem 0; margin-top: 0.5rem; border-top: 1px solid #e5e7eb; font-size: 1.25rem; font-weight: 700; color: #111827; }
+
+    .pay-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s ease; margin-top: 1rem; }
+    .pay-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(79,70,229,0.4); }
+    .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .pay-btn .processing { display: flex; align-items: center; gap: 0.5rem; }
+    .spin { animation: spin 1s linear infinite; }
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    .terms-text { font-size: 0.75rem; color: #9ca3af; text-align: center; margin: 1rem 0 0 0; line-height: 1.5; }
+    .terms-text a { color: #4f46e5; text-decoration: none; }
+    .terms-text a:hover { text-decoration: underline; }
+    .accepted-cards { text-align: center; margin-top: 1.5rem; }
+    .accepted-cards p { font-size: 0.75rem; color: #9ca3af; margin: 0 0 0.5rem 0; }
+    .card-icons { display: flex; justify-content: center; gap: 1rem; font-size: 1.5rem; color: #6b7280; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.875rem 1.5rem; font-size: 0.9rem; font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; width: 100%; }
+    .btn--primary { background: #4f46e5; color: white; }
+    .btn--primary:hover { background: #4338ca; }
+    .btn--secondary { background: #f3f4f6; color: #374151; }
+    .btn--secondary:hover { background: #e5e7eb; }
+
+    @media (max-width: 1024px) { .payment-content { grid-template-columns: 1fr; } .payment-sidebar { order: -1; } }
+    @media (max-width: 768px) {
+      .payment-page { padding: 1rem; }
+      .payment-main { padding: 1.5rem; }
+      .methods-grid { grid-template-columns: repeat(3, 1fr); }
+      .cards-list { grid-template-columns: 1fr; }
+      .preview-card { max-width: 100%; }
+      .form-row { grid-template-columns: 1fr; }
+      .security-info { flex-direction: column; align-items: center; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="payment-page">
+  <div class="payment-container">
+    <!-- Success Screen -->
+    <div class="payment-success" id="paymentSuccess">
+      <div class="success-card">
+        <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
+        <h1>Payment Successful!</h1>
+        <p class="amount-paid" id="amountPaidText">$459.97 paid</p>
+        <p class="success-message">Your payment has been processed successfully. A confirmation email has been sent to your registered email address.</p>
+        <div class="success-actions">
+          <button class="btn btn--primary"><i class="bi bi-receipt"></i> View Receipt</button>
+          <button class="btn btn--secondary">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-content" id="paymentContent">
+      <div class="payment-main">
+        <h1 class="page-title"><i class="bi bi-credit-card-2-front"></i> Payment</h1>
+
+        <div class="error-alert" id="errorAlert">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span id="errorText"></span>
+          <button class="close-btn" onclick="closeError()"><i class="bi bi-x"></i></button>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="payment-methods">
+          <h2 class="section-title">Select Payment Method</h2>
+          <div class="methods-grid" id="methodsGrid"></div>
+        </div>
+
+        <!-- Card Form -->
+        <div class="payment-form" id="formCard">
+          <div class="saved-cards" id="savedCardsSection">
+            <h3 class="subsection-title">Your Saved Cards</h3>
+            <div class="cards-list" id="cardsList"></div>
+            <button class="add-card-btn" id="addCardBtn" onclick="addNewCard()"><i class="bi bi-plus-circle"></i> Use a different card</button>
+          </div>
+          <div id="newCardForm" style="display:none">
+            <h3 class="subsection-title">Enter New Card Details</h3>
+            <div class="card-preview">
+              <div class="preview-card" id="previewCard">
+                <div class="preview-brand"><i class="bi bi-credit-card" id="previewBrandIcon"></i></div>
+                <div class="preview-number" id="previewNumber">•••• •••• •••• ••••</div>
+                <div class="preview-details">
+                  <div class="preview-name" id="previewName">CARDHOLDER NAME</div>
+                  <div class="preview-expiry" id="previewExpiry">MM/YY</div>
+                </div>
+                <div class="preview-chip"><i class="bi bi-sim"></i></div>
+              </div>
+            </div>
+            <form class="card-form" onsubmit="return false">
+              <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <div class="input-wrapper"><i class="bi bi-credit-card input-icon"></i><input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cardholder Name</label>
+                <div class="input-wrapper"><i class="bi bi-person input-icon"></i><input type="text" class="form-input" id="cardName" placeholder="John Doe" oninput="updatePreview()"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Expiry Date</label>
+                  <div class="input-wrapper"><i class="bi bi-calendar3 input-icon"></i><input type="text" class="form-input" id="expiryDate" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">CVV <i class="bi bi-question-circle-fill help-icon" title="3 or 4 digit security code on the back of your card"></i></label>
+                  <div class="input-wrapper"><i class="bi bi-lock input-icon"></i><input type="password" class="form-input" id="cvv" placeholder="•••" maxlength="4"></div>
+                </div>
+              </div>
+              <label class="checkbox-label"><input type="checkbox" id="saveCard"><span class="checkbox-text">Save this card for future purchases</span></label>
+            </form>
+          </div>
+        </div>
+
+        <!-- PayPal -->
+        <div class="payment-form" id="formPaypal">
+          <div class="wallet-info"><div class="wallet-icon paypal"><i class="bi bi-paypal"></i></div><h3>Pay with PayPal</h3><p>You will be redirected to PayPal to complete your payment securely.</p></div>
+        </div>
+        <!-- Apple Pay -->
+        <div class="payment-form" id="formApple">
+          <div class="wallet-info"><div class="wallet-icon apple"><i class="bi bi-apple"></i></div><h3>Pay with Apple Pay</h3><p>Use Touch ID, Face ID, or your passcode to confirm payment on your device.</p></div>
+        </div>
+        <!-- Google Pay -->
+        <div class="payment-form" id="formGoogle">
+          <div class="wallet-info"><div class="wallet-icon google"><i class="bi bi-google"></i></div><h3>Pay with Google Pay</h3><p>A fast and simple way to pay using cards saved in your Google account.</p></div>
+        </div>
+        <!-- Bank Transfer -->
+        <div class="payment-form" id="formBank">
+          <h3 class="subsection-title">Bank Account Details</h3>
+          <form class="bank-form" onsubmit="return false">
+            <div class="form-group"><label class="form-label">Bank Name</label><input type="text" class="form-input no-icon" id="bankName" placeholder="Enter your bank name"></div>
+            <div class="form-group">
+              <label class="form-label">Account Type</label>
+              <div class="account-type-selector">
+                <label class="type-option selected" id="typeChecking" onclick="selectAccountType('checking')"><input type="radio" name="accountType" value="checking" checked><span>Checking</span></label>
+                <label class="type-option" id="typeSavings" onclick="selectAccountType('savings')"><input type="radio" name="accountType" value="savings"><span>Savings</span></label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Routing Number</label><input type="text" class="form-input no-icon" id="routingNumber" placeholder="9 digits" maxlength="9"></div>
+              <div class="form-group"><label class="form-label">Account Number</label><input type="text" class="form-input no-icon" id="accountNumber" placeholder="Enter account number"></div>
+            </div>
+            <div class="bank-info"><i class="bi bi-info-circle"></i><p>Bank transfers may take 1-3 business days to process.</p></div>
+          </form>
+        </div>
+
+        <div class="security-info">
+          <div class="security-item"><i class="bi bi-shield-lock-fill"></i><span>256-bit SSL encryption</span></div>
+          <div class="security-item"><i class="bi bi-patch-check-fill"></i><span>PCI DSS compliant</span></div>
+          <div class="security-item"><i class="bi bi-lock-fill"></i><span>Secure payment processing</span></div>
+        </div>
+      </div>
+
+      <div class="payment-sidebar">
+        <div class="order-summary">
+          <h2 class="summary-title">Order Summary</h2>
+          <div class="summary-line"><span>Subtotal</span><span>$499.97</span></div>
+          <div class="summary-line"><span>Shipping</span><span class="free">FREE</span></div>
+          <div class="summary-line discount"><span>Discount (SAVE10)</span><span>-$50.00</span></div>
+          <div class="summary-line"><span>Tax</span><span>$10.00</span></div>
+          <div class="summary-total"><span>Total</span><span>$459.97</span></div>
+          <button class="pay-btn" id="payBtn" onclick="processPayment()">
+            <span id="payBtnText"><i class="bi bi-lock-fill"></i> Pay $459.97</span>
+            <span id="payBtnProcessing" style="display:none" class="processing"><i class="bi bi-arrow-repeat spin"></i> Processing...</span>
+          </button>
+          <p class="terms-text">By completing this purchase you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+        </div>
+        <div class="accepted-cards">
+          <p>We accept</p>
+          <div class="card-icons">
+            <i class="bi bi-credit-card-2-front" title="Visa"></i>
+            <i class="bi bi-credit-card" title="Mastercard"></i>
+            <i class="bi bi-credit-card-2-back" title="Amex"></i>
+            <i class="bi bi-credit-card-fill" title="Discover"></i>
+            <i class="bi bi-paypal" title="PayPal"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const paymentMethods = [
+    { id:'card', name:'Credit / Debit Card', icon:'bi-credit-card-2-front' },
+    { id:'paypal', name:'PayPal', icon:'bi-paypal' },
+    { id:'apple', name:'Apple Pay', icon:'bi-apple' },
+    { id:'google', name:'Google Pay', icon:'bi-google' },
+    { id:'bank', name:'Bank Transfer', icon:'bi-bank' }
+  ];
+
+  let savedCards = [
+    { id:'1', brand:'Visa', last4:'4242', expiry:'12/25', isDefault:true, cardHolder:'John Doe' },
+    { id:'2', brand:'Mastercard', last4:'8888', expiry:'09/26', isDefault:false, cardHolder:'John Doe' },
+    { id:'3', brand:'Amex', last4:'0005', expiry:'03/24', isDefault:false, cardHolder:'John D.' }
+  ];
+
+  let selectedMethod = 'card';
+  let selectedSavedCard = '1';
+  let showNewCardForm = false;
+  let isProcessing = false;
+  const amount = 459.97;
+
+  function getSavedCardIcon(brand) {
+    switch (brand.toLowerCase()) {
+      case 'visa': return 'bi-credit-card';
+      case 'mastercard': return 'bi-credit-card-2-front';
+      case 'amex': return 'bi-credit-card-2-back';
+      default: return 'bi-credit-card';
+    }
+  }
+
+  function renderMethods() {
+    document.getElementById('methodsGrid').innerHTML = paymentMethods.map(m =>
+      `<div class="method-card ${selectedMethod===m.id?'selected':''}" onclick="selectMethod('${m.id}')">
+        <div class="method-icon"><i class="bi ${m.icon}"></i></div>
+        <span class="method-name">${m.name}</span>
+        ${selectedMethod===m.id?'<i class="bi bi-check-circle-fill check-icon"></i>':''}
+      </div>`
+    ).join('');
+  }
+
+  function renderSavedCards() {
+    document.getElementById('cardsList').innerHTML = savedCards.map(c =>
+      `<div class="saved-card ${selectedSavedCard===c.id&&!showNewCardForm?'selected':''}" onclick="selectSavedCard('${c.id}')">
+        <div class="card-visual ${c.brand.toLowerCase()}">
+          <div class="card-brand-logo"><i class="bi ${getSavedCardIcon(c.brand)}"></i></div>
+          <div class="card-number-display">•••• •••• •••• ${c.last4}</div>
+          <div class="card-details"><div class="card-holder">${c.cardHolder}</div><div class="card-expiry">${c.expiry}</div></div>
+          ${c.isDefault?'<span class="default-badge">Default</span>':''}
+        </div>
+        <div class="card-actions">
+          ${!c.isDefault?`<button class="action-btn" onclick="event.stopPropagation();setDefaultCard('${c.id}')" title="Set as default"><i class="bi bi-star"></i></button>`:''}
+          <button class="action-btn delete" onclick="event.stopPropagation();deleteSavedCard('${c.id}')" title="Delete card"><i class="bi bi-trash"></i></button>
+        </div>
+      </div>`
+    ).join('');
+    document.getElementById('savedCardsSection').style.display = savedCards.length > 0 ? '' : 'none';
+    document.getElementById('addCardBtn').classList.toggle('active', showNewCardForm);
+    document.getElementById('newCardForm').style.display = (showNewCardForm || savedCards.length===0) ? '' : 'none';
+  }
+
+  function selectMethod(id) {
+    selectedMethod = id;
+    renderMethods();
+    showForm();
+    closeError();
+  }
+
+  function showForm() {
+    ['formCard','formPaypal','formApple','formGoogle','formBank'].forEach(f => document.getElementById(f).classList.remove('show'));
+    const map = { card:'formCard', paypal:'formPaypal', apple:'formApple', google:'formGoogle', bank:'formBank' };
+    document.getElementById(map[selectedMethod]).classList.add('show');
+  }
+
+  function selectSavedCard(id) { selectedSavedCard=id; showNewCardForm=false; renderSavedCards(); }
+  function addNewCard() { showNewCardForm=true; selectedSavedCard=''; renderSavedCards(); }
+  function deleteSavedCard(id) { savedCards=savedCards.filter(c=>c.id!==id); if(selectedSavedCard===id){selectedSavedCard=savedCards.length?savedCards[0].id:'';if(!savedCards.length)showNewCardForm=true;} renderSavedCards(); }
+  function setDefaultCard(id) { savedCards=savedCards.map(c=>({...c,isDefault:c.id===id})); renderSavedCards(); }
+
+  function formatCardNumber(input) {
+    let v=input.value.replace(/\D/g,'');
+    v=v.replace(/(.{4})/g,'$1 ').trim();
+    input.value=v.substring(0,19);
+    updatePreview();
+  }
+
+  function formatExpiry(input) {
+    let v=input.value.replace(/\D/g,'');
+    if(v.length>=2) v=v.substring(0,2)+'/'+v.substring(2,4);
+    input.value=v;
+    updatePreview();
+  }
+
+  function getCardBrand() {
+    const n = (document.getElementById('cardNumber').value||'').replace(/\s/g,'');
+    if(n.startsWith('4')) return 'visa';
+    if(n.startsWith('5')) return 'mastercard';
+    if(n.startsWith('3')) return 'amex';
+    if(n.startsWith('6')) return 'discover';
+    return '';
+  }
+
+  function updatePreview() {
+    const num = document.getElementById('cardNumber').value || '•••• •••• •••• ••••';
+    const name = document.getElementById('cardName').value || 'CARDHOLDER NAME';
+    const exp = document.getElementById('expiryDate').value || 'MM/YY';
+    document.getElementById('previewNumber').textContent = num;
+    document.getElementById('previewName').textContent = name;
+    document.getElementById('previewExpiry').textContent = exp;
+    const brand = getCardBrand();
+    const card = document.getElementById('previewCard');
+    card.className = 'preview-card' + (brand?' '+brand:'');
+  }
+
+  function selectAccountType(type) {
+    document.getElementById('typeChecking').classList.toggle('selected', type==='checking');
+    document.getElementById('typeSavings').classList.toggle('selected', type==='savings');
+  }
+
+  function closeError() {
+    document.getElementById('errorAlert').classList.remove('show');
+  }
+
+  function isFormValid() {
+    if(selectedMethod==='card') {
+      if(selectedSavedCard && !showNewCardForm) return true;
+      return document.getElementById('cardNumber').value.length>=19 && document.getElementById('cardName').value.length>0 && document.getElementById('expiryDate').value.length===5 && document.getElementById('cvv').value.length>=3;
+    }
+    if(selectedMethod==='bank') {
+      return document.getElementById('bankName').value.length>0 && document.getElementById('accountNumber').value.length>0 && document.getElementById('routingNumber').value.length>0;
+    }
+    return true;
+  }
+
+  function processPayment() {
+    if(!isFormValid()||isProcessing) return;
+    isProcessing=true;
+    document.getElementById('payBtnText').style.display='none';
+    document.getElementById('payBtnProcessing').style.display='';
+    document.getElementById('payBtn').disabled=true;
+
+    setTimeout(()=>{
+      isProcessing=false;
+      if(Math.random()>0.1) {
+        document.getElementById('paymentContent').style.display='none';
+        document.getElementById('paymentSuccess').classList.add('show');
+        document.getElementById('amountPaidText').textContent='$'+amount.toFixed(2)+' paid';
+      } else {
+        document.getElementById('payBtnText').style.display='';
+        document.getElementById('payBtnProcessing').style.display='none';
+        document.getElementById('payBtn').disabled=false;
+        document.getElementById('errorText').textContent='Payment failed. Please check your card details and try again.';
+        document.getElementById('errorAlert').classList.add('show');
+      }
+    }, 2500);
+  }
+
+  renderMethods();
+  renderSavedCards();
+  showForm();
+</script>
+</body>
+</html>

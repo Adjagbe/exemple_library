@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captcha Image - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:whitesmoke;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+
+    .captcha-card{width:100%;max-width:420px;background:#fff;border-radius:1rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);overflow:hidden}
+
+    .captcha-header{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+    .captcha-header__icon{width:48px;height:48px;background:rgba(255,255,255,.2);border-radius:.75rem;display:flex;align-items:center;justify-content:center}
+    .captcha-header__icon i{font-size:1.5rem}
+    .captcha-header__title{font-size:1rem;font-weight:600;margin:0 0 .25rem}
+    .captcha-header__subtitle{font-size:.8rem;margin:0;opacity:.9}
+
+    .alert{display:none;align-items:center;gap:.5rem;margin:.75rem;padding:.75rem;border-radius:.5rem;font-size:.8rem}
+    .alert.show{display:flex}
+    .alert--error{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+
+    .image-captcha{padding:1rem}
+    .image-captcha__instruction{display:flex;align-items:center;gap:.5rem;padding:.75rem;background:#f0f9ff;border-radius:.5rem;margin-bottom:1rem;font-size:.85rem;color:#0369a1}
+    .image-captcha__instruction strong{color:#0c4a6e}
+    .image-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem}
+    .image-item{position:relative;aspect-ratio:1;border:3px solid transparent;border-radius:.5rem;overflow:hidden;cursor:pointer;transition:all .2s;padding:0;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#9ca3af}
+    .image-item:hover{border-color:#a5b4fc}
+    .image-item.selected{border-color:#4f46e5}
+    .image-item__check{position:absolute;top:.375rem;right:.375rem;width:24px;height:24px;background:#4f46e5;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.875rem}
+    .captcha-footer{display:flex;align-items:center;justify-content:space-between}
+    .selected-count{font-size:.8rem;color:#6b7280}
+    .captcha-actions{display:flex;align-items:center;gap:.5rem}
+    .refresh-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border:none;border-radius:.5rem;color:#6b7280;cursor:pointer;transition:all .2s}
+    .refresh-btn:hover{background:#e5e7eb;color:#4f46e5}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.625rem 1.25rem;font-size:.875rem;font-weight:600;border:none;border-radius:.5rem;cursor:pointer;transition:all .2s}
+    .btn--primary{background:#4f46e5;color:#fff}
+    .btn--primary:hover:not(:disabled){background:#4338ca}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+
+    .captcha-content{display:block}.captcha-content.hidden{display:none}
+    .success-state{display:none;padding:2.5rem;text-align:center}
+    .success-state.show{display:block}
+    .success-icon{width:80px;height:80px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center}
+    .success-icon i{font-size:5rem;color:#10b981}
+    .success-title{font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 .5rem}
+    .success-text{font-size:.9rem;color:#6b7280;margin:0 0 1.5rem}
+    .verified-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;background:#d1fae5;border-radius:9999px;color:#059669;font-size:.875rem;font-weight:600}
+  </style>
+</head>
+<body>
+<div class="captcha-card">
+  <div class="captcha-content" id="captchaContent">
+    <div class="captcha-header">
+      <div class="captcha-header__icon"><i class="bi bi-grid-3x3"></i></div>
+      <div><h3 class="captcha-header__title">Vérification de sécurité</h3><p class="captcha-header__subtitle">Sélectionnez les images correspondantes</p></div>
+    </div>
+
+    <div class="alert alert--error" id="alertError"><i class="bi bi-exclamation-circle"></i><span id="errorText"></span></div>
+
+    <div class="image-captcha">
+      <div class="image-captcha__instruction"><i class="bi bi-hand-index"></i><span>Sélectionnez toutes les images contenant des <strong id="targetLabel">feux de circulation</strong></span></div>
+      <div class="image-grid" id="imageGrid"></div>
+      <div class="captcha-footer">
+        <span class="selected-count" id="selectedCount">0 sélectionnée(s)</span>
+        <div class="captcha-actions"><button class="refresh-btn" onclick="generateCaptcha()"><i class="bi bi-arrow-clockwise"></i></button><button class="btn btn--primary" id="verifyBtn" onclick="verify()" disabled>Vérifier</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="success-state" id="successState">
+    <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
+    <h3 class="success-title">Vérification réussie</h3>
+    <p class="success-text">Vous avez prouvé que vous n'êtes pas un robot.</p>
+    <div class="verified-badge"><i class="bi bi-shield-fill-check"></i><span>Vérifié</span></div>
+  </div>
+</div>
+
+<script>
+(function(){
+var images = [];
+var attemptsImage = 0;
+var icons = ['bi-car-front','bi-bicycle','bi-bus-front','bi-truck','bi-airplane','bi-train-front','bi-tree','bi-house','bi-building'];
+var targets = ['feux de circulation','passages piétons','voitures','bus','vélos'];
+
+function generateCaptcha() {
+  document.getElementById('alertError').classList.remove('show');
+  var target = targets[Math.floor(Math.random()*targets.length)];
+  document.getElementById('targetLabel').textContent = target;
+  images = Array.from({length:9}, function(_,i) { return {
+    id:i, icon:icons[Math.floor(Math.random()*icons.length)],
+    isCorrect: Math.random() > 0.6, selected: false
+  }; });
+  var correct = images.filter(function(i){return i.isCorrect}).length;
+  while (correct < 2) { images[Math.floor(Math.random()*9)].isCorrect = true; correct++; }
+  renderImages();
+}
+
+function renderImages() {
+  var grid = document.getElementById('imageGrid');
+  grid.innerHTML = images.map(function(img) {
+    return '<button class="image-item'+(img.selected?' selected':'')+'" onclick="toggleImage('+img.id+')">' +
+      '<i class="bi '+img.icon+'"></i>' +
+      (img.selected ? '<div class="image-item__check"><i class="bi bi-check-lg"></i></div>' : '') +
+    '</button>';
+  }).join('');
+  var count = images.filter(function(i){return i.selected}).length;
+  document.getElementById('selectedCount').textContent = count + ' sélectionnée(s)';
+  document.getElementById('verifyBtn').disabled = count === 0;
+}
+
+function toggleImage(id) {
+  var img = images.find(function(i){return i.id===id});
+  if (img) img.selected = !img.selected;
+  renderImages();
+}
+
+function verify() {
+  document.getElementById('alertError').classList.remove('show');
+  var selCorrect = images.filter(function(i){return i.selected&&i.isCorrect}).length;
+  var selWrong = images.filter(function(i){return i.selected&&!i.isCorrect}).length;
+  var totalCorrect = images.filter(function(i){return i.isCorrect}).length;
+  var valid = selCorrect === totalCorrect && selWrong === 0;
+
+  if (valid) {
+    document.getElementById('captchaContent').classList.add('hidden');
+    document.getElementById('successState').classList.add('show');
+  } else {
+    attemptsImage++;
+    if (attemptsImage >= 3) {
+      showError('Trop de tentatives. Veuillez réessayer.');
+      attemptsImage = 0;
+    } else {
+      showError('Vérification échouée. Réessayez.');
+    }
+    generateCaptcha();
+  }
+}
+
+function showError(msg) {
+  document.getElementById('errorText').textContent = msg;
+  document.getElementById('alertError').classList.add('show');
+}
+
+window.generateCaptcha = generateCaptcha;
+window.toggleImage = toggleImage;
+window.verify = verify;
+
+generateCaptcha();
+})();
+</script>
+</body>
+</html>

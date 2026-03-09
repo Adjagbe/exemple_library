@@ -19,7 +19,7 @@ export class EmailConfirmationComponent implements OnInit {
   }
 
   async verifyEmail(): Promise<void> {
-    this.status = 'loading';
+    this.status = 'success';
     
     // Simulation de la vérification du token
     await new Promise(resolve => setTimeout(resolve, 2000)); 

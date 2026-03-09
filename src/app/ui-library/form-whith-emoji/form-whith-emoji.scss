@@ -1,0 +1,109 @@
+
+// .component-form-page {
+//   max-width: 700px;
+//   margin: 0 auto;
+// }
+
+// .page-header {
+//   margin-bottom: 2rem;
+
+//   .back-link {
+//     display: inline-block;
+//     margin-bottom: 0.75rem;
+//     color: $text-secondary;
+//     text-decoration: none;
+//     font-size: 0.9rem;
+//     transition: color 0.2s;
+
+//     &:hover {
+//       color: $primary-color;
+//     }
+//   }
+
+//   h1 {
+//     font-size: 1.5rem;
+//     font-weight: 700;
+//     color: $text-primary;
+//     margin: 0;
+//   }
+// }
+
+// .component-form {
+//   padding: 2rem;
+// }
+
+// .error-alert {
+//   display: flex;
+//   align-items: center;
+//   gap: 0.5rem;
+//   padding: 1rem;
+//   background: rgba($danger-color, 0.1);
+//   border: 1px solid $danger-color;
+//   border-radius: 8px;
+//   color: $danger-color;
+//   margin-bottom: 1.5rem;
+// }
+
+// .icon-selector {
+//   display: flex;
+//   align-items: flex-start;
+//   gap: 1.5rem;
+
+//   .selected-icon {
+//     width: 80px;
+//     height: 80px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-size: 3rem;
+//     background: rgba($primary-color, 0.1);
+//     border: 2px solid $primary-color;
+//     border-radius: 12px;
+//   }
+
+//   .icon-options {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 0.5rem;
+//     flex: 1;
+//   }
+
+//   .icon-btn {
+//     width: 44px;
+//     height: 44px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-size: 1.25rem;
+//     background: $dark-card;
+//     border: 1px solid $border-color;
+//     border-radius: 8px;
+//     cursor: pointer;
+//     transition: all 0.2s;
+
+//     &:hover {
+//       border-color: $primary-color;
+//       transform: scale(1.1);
+//     }
+
+//     &.active {
+//       background: rgba($primary-color, 0.2);
+//       border-color: $primary-color;
+//     }
+//   }
+// }
+
+// .form-hint {
+//   margin-top: 0.5rem;
+//   font-size: 0.8rem;
+//   color: $text-secondary;
+// }
+
+// .form-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 1rem;
+//   margin-top: 2rem;
+//   padding-top: 1.5rem;
+//   border-top: 1px solid $border-color;
+// }

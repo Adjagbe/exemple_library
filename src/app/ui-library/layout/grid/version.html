@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid System - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f9fafb;color:#374151}
+
+    .demo-page{max-width:1200px;margin:0 auto;padding:2rem}
+    .demo-title{text-align:center;margin-bottom:3rem}
+    .demo-title h1{font-size:2rem;font-weight:800;color:#111827;margin:0 0 .5rem}
+    .demo-title p{color:#6b7280;font-size:1rem}
+    .variant-label{font-size:.85rem;font-weight:600;color:#4f46e5;text-transform:uppercase;letter-spacing:.05em;margin:2.5rem 0 1rem;padding-left:.5rem;border-left:3px solid #4f46e5}
+
+    /* ══════ GRID DEMOS ══════ */
+    .grid-demo{margin-bottom:1.5rem}
+    .grid{display:grid;gap:1rem}
+    .grid--2{grid-template-columns:repeat(2,1fr)}
+    .grid--3{grid-template-columns:repeat(3,1fr)}
+    .grid--4{grid-template-columns:repeat(4,1fr)}
+    .grid--6{grid-template-columns:repeat(6,1fr)}
+    .grid--12{grid-template-columns:repeat(12,1fr)}
+    .grid--auto{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+    .grid--sidebar{grid-template-columns:260px 1fr}
+    .grid--sidebar-right{grid-template-columns:1fr 300px}
+    .grid--holy-grail{grid-template-columns:220px 1fr 260px}
+    .grid--featured{grid-template-columns:2fr 1fr;grid-template-rows:auto auto}
+
+    .grid-cell{background:#eff6ff;border:1px solid #c7d2fe;border-radius:.5rem;padding:1rem;font-size:.8rem;color:#4f46e5;text-align:center;font-weight:600;transition:all .2s;min-height:60px;display:flex;align-items:center;justify-content:center}
+    .grid-cell:hover{background:#e0e7ff;border-color:#a5b4fc}
+    .grid-cell--accent{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-color:transparent}
+    .grid-cell--span-2{grid-column:span 2}
+    .grid-cell--span-3{grid-column:span 3}
+    .grid-cell--span-4{grid-column:span 4}
+    .grid-cell--span-6{grid-column:span 6}
+    .grid-cell--span-8{grid-column:span 8}
+    .grid-cell--row-2{grid-row:span 2}
+    .grid-cell--featured{grid-row:span 2}
+
+    /* Gap variants */
+    .grid--gap-sm{gap:.5rem}
+    .grid--gap-lg{gap:1.5rem}
+    .grid--gap-xl{gap:2rem}
+
+    /* ── USE CASE: DASHBOARD ── */
+    .dashboard-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto auto;gap:1rem}
+    .dash-card{background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;padding:1.25rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .dash-card h4{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#9ca3af;margin:0 0 .5rem}
+    .dash-card .value{font-size:1.5rem;font-weight:800;color:#111827;margin:0}
+    .dash-card .change{font-size:.75rem;margin:.25rem 0 0;display:flex;align-items:center;gap:.25rem}
+    .dash-card .change--up{color:#10b981}
+    .dash-card .change--down{color:#ef4444}
+    .dash-card--wide{grid-column:span 2}
+    .dash-card--chart{grid-column:span 3;min-height:200px;display:flex;align-items:center;justify-content:center;color:#9ca3af}
+    .dash-card--sidebar-widget{grid-column:span 1}
+
+    /* ── USE CASE: GALLERY ── */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:180px;gap:.75rem}
+    .gallery-item{background:linear-gradient(135deg,#e0e7ff,#c7d2fe);border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#4f46e5;font-size:1.5rem;overflow:hidden;transition:all .3s;cursor:pointer}
+    .gallery-item:hover{transform:scale(1.02);box-shadow:0 8px 24px rgba(79,70,229,.15)}
+    .gallery-item--tall{grid-row:span 2}
+    .gallery-item--wide{grid-column:span 2}
+
+    @media(max-width:768px){
+      .grid--2,.grid--3,.grid--4,.grid--6{grid-template-columns:1fr}
+      .grid--12{grid-template-columns:repeat(4,1fr)}
+      .grid--sidebar,.grid--sidebar-right,.grid--holy-grail{grid-template-columns:1fr}
+      .grid-cell--span-2,.grid-cell--span-3,.grid-cell--span-4,.grid-cell--span-6,.grid-cell--span-8{grid-column:span 1}
+      .dashboard-grid{grid-template-columns:repeat(2,1fr)}
+      .dash-card--wide,.dash-card--chart,.dash-card--sidebar-widget{grid-column:span 1}
+      .gallery-grid{grid-template-columns:1fr 1fr}
+      .gallery-item--wide{grid-column:span 1}
+    }
+  </style>
+</head>
+<body>
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Grid System</h1>
+    <p>Système de grille flexible pour créer des layouts responsive</p>
+  </div>
+
+  <!-- Basic Columns -->
+  <div class="variant-label">Basic Columns</div>
+  <div class="grid-demo">
+    <div class="grid grid--2"><div class="grid-cell">1/2</div><div class="grid-cell">1/2</div></div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--3"><div class="grid-cell">1/3</div><div class="grid-cell">1/3</div><div class="grid-cell">1/3</div></div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--4"><div class="grid-cell">1/4</div><div class="grid-cell">1/4</div><div class="grid-cell">1/4</div><div class="grid-cell">1/4</div></div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--6"><div class="grid-cell">1/6</div><div class="grid-cell">1/6</div><div class="grid-cell">1/6</div><div class="grid-cell">1/6</div><div class="grid-cell">1/6</div><div class="grid-cell">1/6</div></div>
+  </div>
+
+  <!-- 12-Column Grid -->
+  <div class="variant-label">12-Column Grid</div>
+  <div class="grid-demo">
+    <div class="grid grid--12">
+      <div class="grid-cell grid-cell--accent grid-cell--span-8">span 8</div><div class="grid-cell grid-cell--span-4">span 4</div>
+    </div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--12">
+      <div class="grid-cell grid-cell--span-4">span 4</div><div class="grid-cell grid-cell--accent grid-cell--span-4">span 4</div><div class="grid-cell grid-cell--span-4">span 4</div>
+    </div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--12">
+      <div class="grid-cell grid-cell--span-3">3</div><div class="grid-cell grid-cell--span-6 grid-cell--accent">6</div><div class="grid-cell grid-cell--span-3">3</div>
+    </div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--12">
+      <div class="grid-cell grid-cell--span-2">2</div><div class="grid-cell grid-cell--span-2">2</div><div class="grid-cell grid-cell--span-2">2</div><div class="grid-cell grid-cell--span-2">2</div><div class="grid-cell grid-cell--span-2">2</div><div class="grid-cell grid-cell--span-2">2</div>
+    </div>
+  </div>
+
+  <!-- Layout Patterns -->
+  <div class="variant-label">Layout Patterns</div>
+  <div class="grid-demo">
+    <div class="grid grid--sidebar"><div class="grid-cell grid-cell--accent">Sidebar (260px)</div><div class="grid-cell">Content (1fr)</div></div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--sidebar-right"><div class="grid-cell">Content (1fr)</div><div class="grid-cell grid-cell--accent">Aside (300px)</div></div>
+  </div>
+  <div class="grid-demo">
+    <div class="grid grid--holy-grail"><div class="grid-cell grid-cell--accent">Nav (220px)</div><div class="grid-cell">Main (1fr)</div><div class="grid-cell grid-cell--accent">Aside (260px)</div></div>
+  </div>
+
+  <!-- Auto-Fill Grid -->
+  <div class="variant-label">Auto-Fill Grid — min 200px</div>
+  <div class="grid-demo">
+    <div class="grid grid--auto">
+      <div class="grid-cell">Auto</div><div class="grid-cell">Auto</div><div class="grid-cell">Auto</div><div class="grid-cell">Auto</div><div class="grid-cell">Auto</div><div class="grid-cell">Auto</div>
+    </div>
+  </div>
+
+  <!-- Use Case: Dashboard -->
+  <div class="variant-label">Use Case — Dashboard Grid</div>
+  <div class="dashboard-grid">
+    <div class="dash-card"><h4>Revenus</h4><div class="value">€24,580</div><p class="change change--up"><i class="bi bi-arrow-up-short"></i>+12.5%</p></div>
+    <div class="dash-card"><h4>Utilisateurs</h4><div class="value">2,847</div><p class="change change--up"><i class="bi bi-arrow-up-short"></i>+8.3%</p></div>
+    <div class="dash-card"><h4>Commandes</h4><div class="value">486</div><p class="change change--down"><i class="bi bi-arrow-down-short"></i>-2.1%</p></div>
+    <div class="dash-card"><h4>Conversion</h4><div class="value">3.24%</div><p class="change change--up"><i class="bi bi-arrow-up-short"></i>+0.8%</p></div>
+    <div class="dash-card dash-card--chart"><i class="bi bi-bar-chart" style="font-size:2rem;margin-right:.5rem"></i> Graphique des revenus (span 3)</div>
+    <div class="dash-card dash-card--sidebar-widget"><h4>Top Pages</h4><div style="font-size:.8rem;color:#6b7280;line-height:1.8">/dashboard<br>/products<br>/analytics<br>/settings</div></div>
+  </div>
+
+  <!-- Use Case: Gallery -->
+  <div class="variant-label">Use Case — Gallery Grid</div>
+  <div class="gallery-grid">
+    <div class="gallery-item gallery-item--tall"><i class="bi bi-image"></i></div>
+    <div class="gallery-item"><i class="bi bi-image"></i></div>
+    <div class="gallery-item"><i class="bi bi-image"></i></div>
+    <div class="gallery-item gallery-item--wide"><i class="bi bi-image"></i></div>
+    <div class="gallery-item"><i class="bi bi-image"></i></div>
+    <div class="gallery-item"><i class="bi bi-image"></i></div>
+    <div class="gallery-item gallery-item--tall"><i class="bi bi-image"></i></div>
+    <div class="gallery-item gallery-item--wide"><i class="bi bi-image"></i></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DOWNLOAD FILES COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="download-files-showcase">
+  <h2 class="section-title">Fichiers disponibles</h2>
+
+  <div class="downloads-grid">
+    <div *ngFor="let file of availableDownloads" class="file-card">
+      <div class="file-header">
+        <div class="file-icon">
+          <i class="bi" [ngClass]="getFileIcon(file.type)"></i>
+        </div>
+        <span class="file-version">v{{ file.version }}</span>
+      </div>
+      <h3 class="file-name">{{ file.name }}</h3>
+      <p class="file-description">{{ file.description }}</p>
+      <div class="file-meta">
+        <span><i class="bi bi-hdd"></i> {{ file.size }}</span>
+        <span><i class="bi bi-download"></i> {{ formatDownloads(file.downloads) }}</span>
+      </div>
+      <button class="download-btn" (click)="startDownload(file)">
+        <i class="bi bi-download"></i>
+        Télécharger
+      </button>
+    </div>
+  </div>
+</div>

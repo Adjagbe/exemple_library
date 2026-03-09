@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidebar - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f9fafb;color:#374151;min-height:100vh}
+
+    .demo-page{max-width:1300px;margin:0 auto;padding:2rem}
+    .demo-title{text-align:center;margin-bottom:3rem}
+    .demo-title h1{font-size:2rem;font-weight:800;color:#111827;margin:0 0 .5rem}
+    .demo-title p{color:#6b7280;font-size:1rem}
+    .variant-label{font-size:.85rem;font-weight:600;color:#4f46e5;text-transform:uppercase;letter-spacing:.05em;margin:2.5rem 0 1rem;padding-left:.5rem;border-left:3px solid #4f46e5}
+    .sidebars-row{display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+
+    /* ══════ SIDEBAR BASE ══════ */
+    .sidebar{width:260px;background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+
+    /* Brand */
+    .sidebar-brand{display:flex;align-items:center;gap:.75rem;padding:1.25rem 1.25rem .75rem;text-decoration:none}
+    .sidebar-brand .logo{width:36px;height:36px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:.5rem;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1rem}
+    .sidebar-brand .brand-name{font-size:1.05rem;font-weight:700;color:#111827}
+
+    /* Search */
+    .sidebar-search{margin:0 1rem .75rem;display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;background:#f3f4f6;border-radius:.5rem;border:1px solid transparent;transition:all .2s}
+    .sidebar-search:focus-within{background:#fff;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+    .sidebar-search i{color:#9ca3af;font-size:.8rem}
+    .sidebar-search input{border:none;background:none;font-size:.8rem;color:#374151;width:100%;outline:none}
+    .sidebar-search input::placeholder{color:#9ca3af}
+
+    /* Section */
+    .sidebar-section{padding:.5rem .75rem}
+    .sidebar-section-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#9ca3af;padding:.5rem .5rem .375rem;margin:0}
+
+    /* Nav Item */
+    .sidebar-item{display:flex;align-items:center;gap:.625rem;padding:.625rem .75rem;font-size:.85rem;font-weight:500;color:#6b7280;border-radius:.5rem;cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;width:100%;text-align:left}
+    .sidebar-item:hover{background:#f3f4f6;color:#374151}
+    .sidebar-item.active{background:#eff6ff;color:#4f46e5;font-weight:600}
+    .sidebar-item i{width:20px;text-align:center;font-size:1rem}
+    .sidebar-item .item-label{flex:1}
+    .sidebar-item .item-badge{font-size:.65rem;padding:.125rem .4rem;background:#ef4444;color:#fff;border-radius:9999px;font-weight:600;min-width:18px;text-align:center}
+    .sidebar-item .item-badge--info{background:#4f46e5}
+    .sidebar-item .item-badge--success{background:#10b981}
+    .sidebar-item .chevron{font-size:.7rem;color:#9ca3af;transition:transform .2s}
+    .sidebar-item.expanded .chevron{transform:rotate(90deg)}
+
+    /* Submenu */
+    .sidebar-submenu{padding:0 .75rem .25rem 2.75rem;display:none}
+    .sidebar-submenu.open{display:block}
+    .sidebar-submenu .sidebar-item{padding:.4rem .5rem;font-size:.8rem}
+
+    /* Divider */
+    .sidebar-divider{height:1px;background:#f3f4f6;margin:.5rem 1rem}
+
+    /* User */
+    .sidebar-user{display:flex;align-items:center;gap:.625rem;padding:1rem 1.25rem;border-top:1px solid #f3f4f6;margin-top:.5rem}
+    .sidebar-user .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:700;flex-shrink:0}
+    .sidebar-user .user-info{flex:1;min-width:0}
+    .sidebar-user .user-name{font-size:.85rem;font-weight:600;color:#111827;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sidebar-user .user-email{font-size:.7rem;color:#9ca3af;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sidebar-user .logout-btn{background:none;border:none;color:#9ca3af;cursor:pointer;padding:.375rem;border-radius:.375rem;transition:all .2s;font-size:1rem}
+    .sidebar-user .logout-btn:hover{color:#ef4444;background:#fef2f2}
+
+    /* ── DARK VARIANT ── */
+    .sidebar--dark{background:#111827;border-color:#1f2937}
+    .sidebar--dark .sidebar-brand .brand-name{color:#f9fafb}
+    .sidebar--dark .sidebar-search{background:rgba(255,255,255,.06);border-color:transparent}
+    .sidebar--dark .sidebar-search:focus-within{background:rgba(255,255,255,.1);border-color:#4f46e5}
+    .sidebar--dark .sidebar-search i,.sidebar--dark .sidebar-search input::placeholder{color:#6b7280}
+    .sidebar--dark .sidebar-search input{color:#e5e7eb}
+    .sidebar--dark .sidebar-section-label{color:#6b7280}
+    .sidebar--dark .sidebar-item{color:#9ca3af}
+    .sidebar--dark .sidebar-item:hover{background:rgba(255,255,255,.06);color:#e5e7eb}
+    .sidebar--dark .sidebar-item.active{background:rgba(79,70,229,.15);color:#818cf8}
+    .sidebar--dark .sidebar-divider{background:rgba(255,255,255,.06)}
+    .sidebar--dark .sidebar-user{border-top-color:rgba(255,255,255,.06)}
+    .sidebar--dark .sidebar-user .user-name{color:#f9fafb}
+
+    /* ── COLLAPSED ── */
+    .sidebar--collapsed{width:64px}
+    .sidebar--collapsed .sidebar-brand .brand-name,
+    .sidebar--collapsed .sidebar-search,
+    .sidebar--collapsed .sidebar-section-label,
+    .sidebar--collapsed .sidebar-item .item-label,
+    .sidebar--collapsed .sidebar-item .item-badge,
+    .sidebar--collapsed .sidebar-item .chevron,
+    .sidebar--collapsed .sidebar-submenu,
+    .sidebar--collapsed .sidebar-user .user-info{display:none}
+    .sidebar--collapsed .sidebar-brand{justify-content:center;padding:1.25rem .75rem .75rem}
+    .sidebar--collapsed .sidebar-item{justify-content:center;padding:.75rem}
+    .sidebar--collapsed .sidebar-item i{width:auto}
+    .sidebar--collapsed .sidebar-user{justify-content:center;padding:.75rem}
+    .sidebar--collapsed .sidebar-user .logout-btn{display:none}
+
+    .sidebar-toggle{display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:#f3f4f6;border:none;border-radius:.375rem;color:#6b7280;cursor:pointer;position:absolute;right:-14px;top:20px;font-size:.75rem;transition:all .2s;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+    .sidebar-toggle:hover{background:#e5e7eb;color:#374151}
+  </style>
+</head>
+<body>
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Sidebar Component</h1>
+    <p>Variantes de barres latérales pour applications SaaS</p>
+  </div>
+
+  <div class="variant-label">Variantes</div>
+  <div class="sidebars-row">
+
+    <!-- Default Sidebar -->
+    <nav class="sidebar" id="sidebar1">
+      <a href="#" class="sidebar-brand"><div class="logo">P</div><span class="brand-name">Platform</span></a>
+      <div class="sidebar-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Principal</p>
+        <a href="#" class="sidebar-item active"><i class="bi bi-grid-1x2"></i><span class="item-label">Dashboard</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-bar-chart"></i><span class="item-label">Analytics</span><span class="item-badge--info item-badge">New</span></a>
+        <button class="sidebar-item expanded" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')"><i class="bi bi-folder2"></i><span class="item-label">Projets</span><i class="bi bi-chevron-right chevron"></i></button>
+        <div class="sidebar-submenu open">
+          <a href="#" class="sidebar-item active"><i class="bi bi-circle"></i><span class="item-label">En cours</span><span class="item-badge">5</span></a>
+          <a href="#" class="sidebar-item"><i class="bi bi-circle"></i><span class="item-label">Terminés</span></a>
+          <a href="#" class="sidebar-item"><i class="bi bi-circle"></i><span class="item-label">Archivés</span></a>
+        </div>
+        <a href="#" class="sidebar-item"><i class="bi bi-people"></i><span class="item-label">Équipe</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-chat-dots"></i><span class="item-label">Messages</span><span class="item-badge">3</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Autres</p>
+        <a href="#" class="sidebar-item"><i class="bi bi-gear"></i><span class="item-label">Paramètres</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-question-circle"></i><span class="item-label">Aide</span></a>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><p class="user-name">Jean Dupont</p><p class="user-email">jean@example.com</p></div>
+        <button class="logout-btn" title="Déconnexion"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </nav>
+
+    <!-- Dark Sidebar -->
+    <nav class="sidebar sidebar--dark">
+      <a href="#" class="sidebar-brand"><div class="logo">P</div><span class="brand-name">Platform</span></a>
+      <div class="sidebar-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Principal</p>
+        <a href="#" class="sidebar-item active"><i class="bi bi-grid-1x2"></i><span class="item-label">Dashboard</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-bar-chart"></i><span class="item-label">Analytics</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-folder2"></i><span class="item-label">Projets</span><span class="item-badge--success item-badge">12</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-people"></i><span class="item-label">Équipe</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-chat-dots"></i><span class="item-label">Messages</span><span class="item-badge">7</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-calendar3"></i><span class="item-label">Calendrier</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Autres</p>
+        <a href="#" class="sidebar-item"><i class="bi bi-gear"></i><span class="item-label">Paramètres</span></a>
+        <a href="#" class="sidebar-item"><i class="bi bi-question-circle"></i><span class="item-label">Aide</span></a>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-avatar">ML</div>
+        <div class="user-info"><p class="user-name">Marie Laurent</p><p class="user-email">marie@example.com</p></div>
+        <button class="logout-btn" title="Déconnexion"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </nav>
+
+    <!-- Collapsed Sidebar -->
+    <nav class="sidebar sidebar--collapsed">
+      <a href="#" class="sidebar-brand"><div class="logo">P</div><span class="brand-name">Platform</span></a>
+      <div class="sidebar-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Principal</p>
+        <a href="#" class="sidebar-item active" title="Dashboard"><i class="bi bi-grid-1x2"></i><span class="item-label">Dashboard</span></a>
+        <a href="#" class="sidebar-item" title="Analytics"><i class="bi bi-bar-chart"></i><span class="item-label">Analytics</span></a>
+        <a href="#" class="sidebar-item" title="Projets"><i class="bi bi-folder2"></i><span class="item-label">Projets</span></a>
+        <a href="#" class="sidebar-item" title="Équipe"><i class="bi bi-people"></i><span class="item-label">Équipe</span></a>
+        <a href="#" class="sidebar-item" title="Messages"><i class="bi bi-chat-dots"></i><span class="item-label">Messages</span></a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Autres</p>
+        <a href="#" class="sidebar-item" title="Paramètres"><i class="bi bi-gear"></i><span class="item-label">Paramètres</span></a>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><p class="user-name">Jean Dupont</p></div>
+        <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </nav>
+
+  </div>
+</div>
+</body>
+</html>

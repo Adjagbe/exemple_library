@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f9fafb;min-height:100vh}
+
+    .profile-page{max-width:1000px;margin:0 auto;padding:2rem}
+
+    /* HEADER */
+    .profile-header{background:#fff;border-radius:1rem;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.06);margin-bottom:1.5rem}
+    .header-bg{height:120px;background:linear-gradient(135deg,#4f46e5,#7c3aed 50%,#a855f7)}
+    .header-content{padding:0 2rem 1.5rem;display:flex;align-items:flex-end;gap:1.5rem;margin-top:-40px;position:relative}
+    .avatar-section{position:relative;flex-shrink:0}
+    .avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .avatar-text{color:#fff;font-size:2rem;font-weight:700}
+    .avatar-edit{position:absolute;bottom:4px;right:4px;width:32px;height:32px;background:#4f46e5;color:#fff;border:3px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;transition:background .2s}
+    .avatar-edit:hover{background:#4338ca}
+    .user-info{flex:1;padding-bottom:.5rem}
+    .user-info h1{font-size:1.5rem;font-weight:700;color:#111827;margin:0 0 .25rem}
+    .user-info .user-role{font-size:.95rem;color:#4f46e5;font-weight:500;margin:0 0 .5rem}
+    .user-info .user-meta{display:flex;gap:1.5rem;flex-wrap:wrap}
+    .user-info .user-meta span{font-size:.8rem;color:#6b7280;display:flex;align-items:center;gap:.375rem}
+    .header-actions{display:flex;gap:.75rem;margin-left:auto;align-self:flex-start;padding-top:3rem}
+
+    /* STATS BAR */
+    .profile-stats{display:flex;justify-content:center;gap:0;padding:.75rem 2rem;border-top:1px solid #f3f4f6}
+    .stat-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:.5rem 1rem}
+    .stat-item:not(:last-child){border-right:1px solid #e5e7eb}
+    .stat-value{font-size:1.25rem;font-weight:700;color:#111827}
+    .stat-label{font-size:.75rem;color:#6b7280}
+
+    /* SOCIAL LINKS */
+    .social-links{display:flex;justify-content:center;gap:.75rem;padding:.75rem 2rem;border-top:1px solid #f3f4f6}
+    .social-link{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border-radius:50%;color:#6b7280;text-decoration:none;transition:all .2s}
+    .social-link:hover{background:#4f46e5;color:#fff}
+
+    /* TABS */
+    .profile-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .tab-btn{padding:.625rem 1.25rem;background:#fff;border:2px solid #e5e7eb;border-radius:9999px;font-size:.875rem;font-weight:500;color:#6b7280;cursor:pointer;transition:all .2s}
+    .tab-btn:hover{border-color:#4f46e5;color:#4f46e5}
+    .tab-btn.active{background:#4f46e5;border-color:#4f46e5;color:#fff}
+
+    /* CONTENT */
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+    .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+    /* CARDS */
+    .info-card,.settings-card,.security-card{background:#fff;border-radius:1rem;box-shadow:0 4px 20px rgba(0,0,0,.06);overflow:hidden}
+    .card-header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid #f3f4f6}
+    .card-header h3{font-size:1rem;font-weight:600;color:#111827;margin:0;display:flex;align-items:center;gap:.5rem}
+    .card-header h3 i{color:#4f46e5}
+    .card-body{padding:1.25rem 1.5rem}
+
+    /* ABOUT */
+    .about-text{font-size:.9rem;color:#6b7280;line-height:1.7}
+    .info-list{list-style:none;padding:0}
+    .info-list li{display:flex;align-items:center;gap:.75rem;padding:.75rem 0;font-size:.875rem;border-bottom:1px solid #f3f4f6}
+    .info-list li:last-child{border-bottom:none}
+    .info-list li i{color:#4f46e5;width:20px;text-align:center}
+    .info-label{color:#6b7280;min-width:100px}
+    .info-value{color:#111827;font-weight:500}
+
+    /* FORM */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:.375rem}
+    .form-group.full-width{grid-column:span 2}
+    .form-group label{font-size:.8rem;font-weight:600;color:#374151}
+    .form-group input,.form-group textarea,.form-group select{padding:.625rem 1rem;border:2px solid #e5e7eb;border-radius:.5rem;font-size:.875rem;color:#374151;transition:border-color .2s;font-family:inherit}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+    .form-group textarea{resize:vertical;min-height:100px}
+    .form-actions{display:flex;gap:.75rem;justify-content:flex-end;padding-top:1rem}
+
+    /* SECURITY */
+    .security-section{padding:1.25rem 0;border-bottom:1px solid #f3f4f6}
+    .security-section:last-child{border-bottom:none}
+    .security-section h4{font-size:.95rem;font-weight:600;color:#111827;margin:0 0 .5rem}
+    .security-section p{font-size:.8rem;color:#6b7280;margin:0 0 .75rem}
+    .two-fa-row{display:flex;justify-content:space-between;align-items:center}
+    .two-fa-status{display:flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500}
+    .two-fa-status.enabled{color:#10b981}
+    .two-fa-status.disabled{color:#ef4444}
+
+    /* SESSIONS */
+    .sessions-list{display:flex;flex-direction:column;gap:.75rem}
+    .session-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background:#f9fafb;border-radius:.5rem}
+    .session-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#eff6ff;border-radius:.5rem;color:#4f46e5}
+    .session-info{flex:1}
+    .session-device{font-size:.875rem;font-weight:600;color:#111827}
+    .session-meta{font-size:.75rem;color:#6b7280}
+    .session-current{font-size:.7rem;color:#10b981;font-weight:600;background:#dcfce7;padding:.125rem .5rem;border-radius:9999px}
+
+    /* NOTIFICATIONS */
+    .notification-item{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid #f3f4f6}
+    .notification-item:last-child{border-bottom:none}
+    .notification-label h4{font-size:.9rem;font-weight:600;color:#111827;margin:0 0 .125rem}
+    .notification-label p{font-size:.8rem;color:#6b7280;margin:0}
+    .toggle-switch{position:relative;width:48px;height:26px;flex-shrink:0}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;top:0;left:0;right:0;bottom:0;background:#e5e7eb;border-radius:13px;cursor:pointer;transition:all .3s}
+    .toggle-slider::before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:all .3s;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+    .toggle-switch input:checked + .toggle-slider{background:#4f46e5}
+    .toggle-switch input:checked + .toggle-slider::before{transform:translateX(22px)}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;border:none;border-radius:.5rem;font-size:.875rem;font-weight:600;cursor:pointer;transition:all .2s}
+    .btn--sm{padding:.5rem 1rem;font-size:.8rem}
+    .btn--primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+    .btn--primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,70,229,.4)}
+    .btn--outline{background:#fff;border:2px solid #e5e7eb;color:#374151}
+    .btn--outline:hover{border-color:#4f46e5;color:#4f46e5}
+    .btn--danger{background:#fee2e2;color:#dc2626}
+    .btn--danger:hover{background:#fecaca}
+
+    @media(max-width:768px){
+      .profile-page{padding:1rem}
+      .header-content{padding:0 1rem 1rem;flex-direction:column;align-items:center}
+      .user-info{text-align:center}
+      .header-actions{width:100%;justify-content:center;padding-top:0}
+      .content-grid,.form-grid{grid-template-columns:1fr}
+      .form-group.full-width{grid-column:span 1}
+      .profile-stats{flex-wrap:wrap}
+      .stat-item{flex:1 0 33%}
+    }
+  </style>
+</head>
+<body>
+<div class="profile-page">
+  <!-- HEADER -->
+  <div class="profile-header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <div class="avatar-section">
+        <div class="avatar"><span class="avatar-text">JD</span></div>
+        <div class="avatar-edit" title="Changer la photo"><i class="bi bi-camera"></i></div>
+      </div>
+      <div class="user-info">
+        <h1>Jean Dupont</h1>
+        <p class="user-role">Administrateur</p>
+        <div class="user-meta">
+          <span><i class="bi bi-building"></i> Développement</span>
+          <span><i class="bi bi-geo-alt"></i> Paris, France</span>
+          <span><i class="bi bi-calendar3"></i> Membre depuis Jan 2023</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn--primary" id="editBtn"><i class="bi bi-pencil"></i> Modifier</button>
+        <button class="btn btn--outline"><i class="bi bi-share"></i> Partager</button>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <div class="stat-item"><span class="stat-value">24</span><span class="stat-label">Projets</span></div>
+      <div class="stat-item"><span class="stat-value">156</span><span class="stat-label">Tâches</span></div>
+      <div class="stat-item"><span class="stat-value">3</span><span class="stat-label">Équipes</span></div>
+    </div>
+    <div class="social-links">
+      <a class="social-link" href="#"><i class="bi bi-linkedin"></i></a>
+      <a class="social-link" href="#"><i class="bi bi-twitter-x"></i></a>
+      <a class="social-link" href="#"><i class="bi bi-github"></i></a>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="profile-tabs" id="profileTabs"></div>
+
+  <!-- TAB: OVERVIEW -->
+  <div class="tab-content active" id="tab-overview">
+    <div class="content-grid">
+      <div class="info-card">
+        <div class="card-header"><h3><i class="bi bi-person"></i> À propos</h3></div>
+        <div class="card-body"><p class="about-text">Développeur Full-Stack passionné avec plus de 8 ans d'expérience dans le développement d'applications web modernes. Spécialisé en Angular, Node.js et les architectures cloud.</p></div>
+      </div>
+      <div class="info-card">
+        <div class="card-header"><h3><i class="bi bi-info-circle"></i> Informations</h3></div>
+        <div class="card-body">
+          <ul class="info-list">
+            <li><i class="bi bi-envelope"></i><span class="info-label">Email</span><span class="info-value">jean.dupont@email.com</span></li>
+            <li><i class="bi bi-telephone"></i><span class="info-label">Téléphone</span><span class="info-value">+33 6 12 34 56 78</span></li>
+            <li><i class="bi bi-building"></i><span class="info-label">Département</span><span class="info-value">Développement</span></li>
+            <li><i class="bi bi-geo-alt"></i><span class="info-label">Localisation</span><span class="info-value">Paris, France</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SETTINGS -->
+  <div class="tab-content" id="tab-settings">
+    <div class="settings-card info-card">
+      <div class="card-header"><h3><i class="bi bi-gear"></i> Paramètres du profil</h3></div>
+      <div class="card-body">
+        <div class="form-grid" id="settingsForm">
+          <div class="form-group"><label>Prénom</label><input type="text" id="firstName" value="Jean"></div>
+          <div class="form-group"><label>Nom</label><input type="text" id="lastName" value="Dupont"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="email" value="jean.dupont@email.com"></div>
+          <div class="form-group"><label>Téléphone</label><input type="tel" id="phone" value="+33 6 12 34 56 78"></div>
+          <div class="form-group full-width"><label>Bio</label><textarea id="bio">Développeur Full-Stack passionné avec plus de 8 ans d'expérience dans le développement d'applications web modernes.</textarea></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--outline" onclick="resetForm()">Annuler</button>
+          <button class="btn btn--primary" onclick="saveProfile()"><i class="bi bi-check-lg"></i> Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SECURITY -->
+  <div class="tab-content" id="tab-security">
+    <div class="security-card info-card">
+      <div class="card-header"><h3><i class="bi bi-shield-lock"></i> Sécurité</h3></div>
+      <div class="card-body">
+        <div class="security-section">
+          <h4>Mot de passe</h4>
+          <p>Dernière modification il y a 30 jours</p>
+          <button class="btn btn--outline btn--sm" onclick="alert('Formulaire de changement de mot de passe')"><i class="bi bi-key"></i> Changer le mot de passe</button>
+        </div>
+        <div class="security-section">
+          <h4>Authentification à deux facteurs</h4>
+          <div class="two-fa-row">
+            <span class="two-fa-status disabled"><i class="bi bi-x-circle"></i> Désactivée</span>
+            <button class="btn btn--primary btn--sm" onclick="alert('Configuration 2FA')"><i class="bi bi-shield-check"></i> Activer</button>
+          </div>
+        </div>
+        <div class="security-section">
+          <h4>Sessions actives</h4>
+          <div class="sessions-list">
+            <div class="session-item">
+              <div class="session-icon"><i class="bi bi-laptop"></i></div>
+              <div class="session-info"><div class="session-device">MacBook Pro — Chrome</div><div class="session-meta">Paris, France • Connecté maintenant</div></div>
+              <span class="session-current">Actuelle</span>
+            </div>
+            <div class="session-item">
+              <div class="session-icon"><i class="bi bi-phone"></i></div>
+              <div class="session-info"><div class="session-device">iPhone 15 — Safari</div><div class="session-meta">Lyon, France • Il y a 2 heures</div></div>
+              <button class="btn btn--danger btn--sm">Révoquer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: NOTIFICATIONS -->
+  <div class="tab-content" id="tab-notifications">
+    <div class="info-card">
+      <div class="card-header"><h3><i class="bi bi-bell"></i> Notifications</h3></div>
+      <div class="card-body">
+        <div class="notification-item">
+          <div class="notification-label"><h4>Notifications par email</h4><p>Recevoir des notifications par email pour les mises à jour importantes</p></div>
+          <label class="toggle-switch"><input type="checkbox" checked data-key="email"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notification-item">
+          <div class="notification-label"><h4>Notifications push</h4><p>Recevoir des notifications push sur votre navigateur</p></div>
+          <label class="toggle-switch"><input type="checkbox" checked data-key="push"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notification-item">
+          <div class="notification-label"><h4>Notifications SMS</h4><p>Recevoir des alertes par SMS pour les événements critiques</p></div>
+          <label class="toggle-switch"><input type="checkbox" data-key="sms"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notification-item">
+          <div class="notification-label"><h4>Newsletter</h4><p>Recevoir notre newsletter hebdomadaire avec les dernières actualités</p></div>
+          <label class="toggle-switch"><input type="checkbox" checked data-key="newsletter"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const tabs = [
+  { id:'overview', label:'Vue d\'ensemble', icon:'bi-person' },
+  { id:'settings', label:'Paramètres', icon:'bi-gear' },
+  { id:'security', label:'Sécurité', icon:'bi-shield-lock' },
+  { id:'notifications', label:'Notifications', icon:'bi-bell' }
+];
+
+let activeTab = 'overview';
+
+function renderTabs() {
+  const container = document.getElementById('profileTabs');
+  container.innerHTML = tabs.map(t =>
+    `<button class="tab-btn${t.id===activeTab?' active':''}" data-tab="${t.id}"><i class="bi ${t.icon}"></i> ${t.label}</button>`
+  ).join('');
+  container.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTab = btn.dataset.tab;
+      renderTabs();
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + activeTab).classList.add('active');
+    });
+  });
+}
+
+function saveProfile() {
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  document.querySelector('.profile-header .user-info h1').textContent = `${firstName} ${lastName}`;
+  const initials = (firstName[0] || '') + (lastName[0] || '');
+  document.querySelector('.avatar-text').textContent = initials.toUpperCase();
+  alert('Profil enregistré avec succès !');
+}
+
+function resetForm() {
+  document.getElementById('firstName').value = 'Jean';
+  document.getElementById('lastName').value = 'Dupont';
+  document.getElementById('email').value = 'jean.dupont@email.com';
+  document.getElementById('phone').value = '+33 6 12 34 56 78';
+  document.getElementById('bio').value = "Développeur Full-Stack passionné avec plus de 8 ans d'expérience dans le développement d'applications web modernes.";
+}
+
+// Edit button toggles to Settings tab
+document.getElementById('editBtn').addEventListener('click', () => {
+  activeTab = 'settings';
+  renderTabs();
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-settings').classList.add('active');
+});
+
+renderTabs();
+</script>
+</body>
+</html>

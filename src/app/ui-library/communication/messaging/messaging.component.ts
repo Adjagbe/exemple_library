@@ -1,7 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// MESSAGING COMPONENT - Premium UI Library
-// Chat/messaging interface
-// ═══════════════════════════════════════════════════════════════
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';

@@ -1,7 +1,4 @@
-// ═══════════════════════════════════════════════════════════════
-// CUSTOMER REVIEWS COMPONENT - Premium UI Library
-// Review form and display with ratings
-// ═══════════════════════════════════════════════════════════════
+
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';

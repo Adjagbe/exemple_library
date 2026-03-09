@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f9fafb;color:#374151}
+
+    .demo-page{padding:2rem}
+    .demo-title{text-align:center;margin-bottom:3rem;max-width:800px;margin-left:auto;margin-right:auto}
+    .demo-title h1{font-size:2rem;font-weight:800;color:#111827;margin:0 0 .5rem}
+    .demo-title p{color:#6b7280;font-size:1rem}
+    .variant-label{font-size:.85rem;font-weight:600;color:#4f46e5;text-transform:uppercase;letter-spacing:.05em;margin:2.5rem 0 1rem;padding-left:.5rem;border-left:3px solid #4f46e5;max-width:1200px;margin-left:auto;margin-right:auto}
+
+    /* ══════ CONTAINER VARIANTS ══════ */
+
+    /* Visualization helper */
+    .container-demo{border:2px dashed #d1d5db;border-radius:.75rem;padding:1.5rem;margin-bottom:1.5rem;position:relative}
+    .container-demo::before{content:attr(data-label);position:absolute;top:-.625rem;left:1rem;padding:0 .5rem;background:#f9fafb;font-size:.7rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em}
+    .container-demo .inner{background:#eff6ff;border:1px solid #c7d2fe;border-radius:.5rem;padding:1rem;font-size:.85rem;color:#4f46e5;text-align:center;font-weight:500}
+
+    /* Container - Fluid */
+    .container-fluid{width:100%;padding:0 1.5rem}
+
+    /* Container - Default */
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+    /* Container - Narrow */
+    .container-narrow{width:100%;max-width:768px;margin:0 auto;padding:0 1.5rem}
+
+    /* Container - Wide */
+    .container-wide{width:100%;max-width:1400px;margin:0 auto;padding:0 1.5rem}
+
+    /* Container - Small */
+    .container-sm{width:100%;max-width:640px;margin:0 auto;padding:0 1.5rem}
+
+    /* ── USE CASE: PAGE CONTENT ── */
+    .page-container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+    .page-example{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;margin-bottom:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    .page-header-bar{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid #e5e7eb}
+    .page-header-bar .brand{display:flex;align-items:center;gap:.5rem}
+    .page-header-bar .logo{width:28px;height:28px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:.375rem;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.7rem}
+    .page-header-bar .brand-name{font-size:.9rem;font-weight:700;color:#111827}
+    .page-header-bar nav a{font-size:.8rem;color:#6b7280;text-decoration:none;margin-left:1rem;transition:color .2s}
+    .page-header-bar nav a:hover{color:#4f46e5}
+
+    .page-body{padding:2rem 1.5rem}
+    .page-body h2{font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 .5rem}
+    .page-body p{font-size:.875rem;color:#6b7280;line-height:1.7;margin:0 0 1.5rem;max-width:640px}
+    .page-body .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .page-body .card{padding:1.25rem;background:#f9fafb;border:1px solid #e5e7eb;border-radius:.75rem}
+    .page-body .card h4{font-size:.85rem;font-weight:600;color:#111827;margin:0 0 .25rem}
+    .page-body .card p{font-size:.8rem;color:#6b7280;margin:0}
+
+    .page-footer-bar{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-top:1px solid #e5e7eb;font-size:.75rem;color:#9ca3af}
+
+    /* ── BREAKPOINTS INDICATOR ── */
+    .breakpoints{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+    .bp-grid{display:flex;gap:1px;background:#e5e7eb;border-radius:.75rem;overflow:hidden}
+    .bp-item{flex:1;background:#fff;padding:1rem;text-align:center}
+    .bp-item .bp-name{font-size:.7rem;font-weight:600;text-transform:uppercase;color:#9ca3af;letter-spacing:.05em;margin:0 0 .25rem}
+    .bp-item .bp-value{font-size:1.1rem;font-weight:700;color:#111827;margin:0 0 .125rem}
+    .bp-item .bp-max{font-size:.7rem;color:#6b7280;margin:0}
+    .bp-item .bp-bar{height:4px;background:#e5e7eb;border-radius:2px;margin-top:.625rem}
+    .bp-item .bp-bar-fill{height:100%;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:2px}
+
+    @media(max-width:768px){
+      .page-body .card-grid{grid-template-columns:1fr}
+      .bp-grid{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Container Component</h1>
+    <p>Conteneurs responsive pour contrôler la largeur du contenu</p>
+  </div>
+
+  <!-- Fluid Container -->
+  <div class="variant-label">Container Fluid — 100% width</div>
+  <div class="container-fluid">
+    <div class="container-demo" data-label="container-fluid: 100%">
+      <div class="inner">Contenu pleine largeur — s'adapte à la fenêtre</div>
+    </div>
+  </div>
+
+  <!-- Wide Container -->
+  <div class="variant-label">Container Wide — max-width: 1400px</div>
+  <div class="container-wide">
+    <div class="container-demo" data-label="container-wide: 1400px">
+      <div class="inner">Contenu large — idéal pour dashboards et tables de données</div>
+    </div>
+  </div>
+
+  <!-- Default Container -->
+  <div class="variant-label">Container Default — max-width: 1200px</div>
+  <div class="container">
+    <div class="container-demo" data-label="container: 1200px">
+      <div class="inner">Contenu standard — adapté pour la plupart des pages</div>
+    </div>
+  </div>
+
+  <!-- Narrow Container -->
+  <div class="variant-label">Container Narrow — max-width: 768px</div>
+  <div class="container-narrow">
+    <div class="container-demo" data-label="container-narrow: 768px">
+      <div class="inner">Contenu étroit — idéal pour articles, formulaires, settings</div>
+    </div>
+  </div>
+
+  <!-- Small Container -->
+  <div class="variant-label">Container Small — max-width: 640px</div>
+  <div class="container-sm">
+    <div class="container-demo" data-label="container-sm: 640px">
+      <div class="inner">Contenu compact — login, modals, cartes</div>
+    </div>
+  </div>
+
+  <!-- Use Case: Full Page -->
+  <div class="variant-label">Use Case — Page complète avec container</div>
+  <div class="page-container">
+    <div class="page-example">
+      <div class="page-header-bar">
+        <div class="brand"><div class="logo">P</div><span class="brand-name">Platform</span></div>
+        <nav><a href="#">Dashboard</a><a href="#">Projets</a><a href="#">Équipe</a><a href="#">Paramètres</a></nav>
+      </div>
+      <div class="page-body">
+        <h2>Bienvenue sur votre dashboard</h2>
+        <p>Voici un aperçu de vos métriques clés. Le contenu est centré dans un container de 1200px avec un padding horizontal.</p>
+        <div class="card-grid">
+          <div class="card"><h4>Utilisateurs</h4><p>2,847 actifs aujourd'hui</p></div>
+          <div class="card"><h4>Revenus</h4><p>€24,580 ce mois-ci</p></div>
+          <div class="card"><h4>Projets</h4><p>12 en cours</p></div>
+        </div>
+      </div>
+      <div class="page-footer-bar">
+        <span>© 2026 Platform</span>
+        <span>Container: max-width 1200px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breakpoints -->
+  <div class="variant-label">Breakpoints de référence</div>
+  <div class="breakpoints">
+    <div class="bp-grid">
+      <div class="bp-item"><p class="bp-name">SM</p><p class="bp-value">640px</p><p class="bp-max">container-sm</p><div class="bp-bar"><div class="bp-bar-fill" style="width:23%"></div></div></div>
+      <div class="bp-item"><p class="bp-name">MD</p><p class="bp-value">768px</p><p class="bp-max">container-narrow</p><div class="bp-bar"><div class="bp-bar-fill" style="width:36%"></div></div></div>
+      <div class="bp-item"><p class="bp-name">LG</p><p class="bp-value">1024px</p><p class="bp-max">—</p><div class="bp-bar"><div class="bp-bar-fill" style="width:55%"></div></div></div>
+      <div class="bp-item"><p class="bp-name">XL</p><p class="bp-value">1200px</p><p class="bp-max">container</p><div class="bp-bar"><div class="bp-bar-fill" style="width:73%"></div></div></div>
+      <div class="bp-item"><p class="bp-name">2XL</p><p class="bp-value">1400px</p><p class="bp-max">container-wide</p><div class="bp-bar"><div class="bp-bar-fill" style="width:100%"></div></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

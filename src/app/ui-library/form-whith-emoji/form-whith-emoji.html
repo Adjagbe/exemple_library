@@ -1,0 +1,33 @@
+ <!-- Icon Selection -->
+      <div class="form-group">
+        <label class="form-label">Icône</label>
+        <div class="icon-selector">
+          <div class="selected-icon">{{ formData.icon }}</div>
+          <div class="icon-options">
+            <button 
+              type="button"
+              *ngFor="let icon of commonIcons"
+              class="icon-btn"
+              [class.active]="formData.icon === icon"
+              (click)="selectIcon(icon)">
+              {{ icon }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label class="form-label">
+          Nom du composant <span class="required">*</span>
+        </label>
+        <input 
+          type="text" 
+          class="form-input"
+          [(ngModel)]="formData.name"
+          name="name"
+          placeholder="Ex: Shopping Cart"
+          
+          required
+        />
+      </div>

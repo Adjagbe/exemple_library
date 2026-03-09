@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #f9fafb; }
+
+    .product-detail-page { max-width: 1400px; margin: 0 auto; padding: 2rem; min-height: 100vh; }
+
+    /* BREADCRUMB */
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; margin-bottom: 2rem; }
+    .breadcrumb a { color: #6b7280; text-decoration: none; }
+    .breadcrumb a:hover { color: #4f46e5; }
+    .breadcrumb i { font-size: 0.7rem; color: #9ca3af; }
+    .breadcrumb > span { color: #374151; font-weight: 500; }
+
+    /* PRODUCT CONTAINER */
+    .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+
+    /* GALLERY */
+    .product-gallery { display: flex; flex-direction: column; gap: 1rem; }
+    .gallery-main { position: relative; aspect-ratio: 1; background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+    .discount-badge { position: absolute; top: 1rem; left: 1rem; padding: 0.5rem 0.875rem; background: #dc2626; color: white; font-size: 0.875rem; font-weight: 600; border-radius: 0.5rem; }
+    .gallery-thumbs { display: flex; gap: 0.75rem; }
+    .thumb { width: 80px; height: 80px; border: 2px solid transparent; border-radius: 0.5rem; overflow: hidden; cursor: pointer; transition: all 0.2s ease; padding: 0; background: white; }
+    .thumb:hover { border-color: #d1d5db; }
+    .thumb.active { border-color: #4f46e5; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* PRODUCT INFO */
+    .product-info { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .product-brand { font-size: 0.875rem; color: #4f46e5; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .product-title { font-size: 2rem; font-weight: 700; color: #111827; margin: 0.5rem 0 1rem 0; }
+    .product-rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .stars { display: flex; gap: 0.125rem; color: #fbbf24; }
+    .rating-value { font-weight: 600; color: #111827; }
+    .reviews-link { color: #6b7280; text-decoration: none; }
+    .reviews-link:hover { color: #4f46e5; text-decoration: underline; }
+    .product-price { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .price-current { font-size: 2rem; font-weight: 700; color: #111827; }
+    .price-original { font-size: 1.25rem; color: #9ca3af; text-decoration: line-through; }
+    .price-discount { padding: 0.25rem 0.5rem; background: #fee2e2; color: #dc2626; font-size: 0.875rem; font-weight: 600; border-radius: 0.25rem; }
+    .product-description { font-size: 0.95rem; color: #6b7280; line-height: 1.7; margin: 0 0 1.5rem 0; }
+    .stock-status { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem; }
+    .stock-status.in-stock { background: #f0fdf4; color: #16a34a; }
+    .stock-status.out-of-stock { background: #fef2f2; color: #dc2626; }
+
+    /* VARIANTS */
+    .variant-section { margin-bottom: 1.5rem; }
+    .variant-label { display: block; font-size: 0.875rem; color: #374151; margin-bottom: 0.75rem; }
+    .variant-label strong { color: #111827; }
+    .color-options { display: flex; gap: 0.75rem; }
+    .color-option { width: 40px; height: 40px; border: 2px solid transparent; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+    .color-option:hover:not(.disabled) { transform: scale(1.1); }
+    .color-option.active { border-color: #4f46e5; box-shadow: 0 0 0 2px white, 0 0 0 4px #4f46e5; }
+    .color-option.disabled { opacity: 0.3; cursor: not-allowed; }
+    .color-option i { color: white; font-size: 1rem; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+    .storage-options { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .storage-option { padding: 0.75rem 1.25rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; transition: all 0.2s ease; }
+    .storage-option:hover:not(.disabled) { border-color: #4f46e5; }
+    .storage-option.active { background: #eef2ff; border-color: #4f46e5; color: #4f46e5; font-weight: 500; }
+    .storage-option.disabled { opacity: 0.5; cursor: not-allowed; background: #f3f4f6; }
+    .storage-option .unavailable { font-size: 0.75rem; color: #9ca3af; display: block; }
+    .quantity-selector { display: inline-flex; align-items: center; border: 1px solid #e5e7eb; border-radius: 0.5rem; overflow: hidden; }
+    .qty-btn { width: 44px; height: 44px; background: white; border: none; color: #374151; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; }
+    .qty-btn:hover:not(:disabled) { background: #f3f4f6; }
+    .qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .qty-value { width: 60px; text-align: center; font-weight: 600; border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; line-height: 44px; }
+
+    /* ACTIONS */
+    .product-actions { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 0.9rem; font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s ease; }
+    .btn--primary { background: #4f46e5; color: white; flex: 1; }
+    .btn--primary:hover:not(:disabled) { background: #4338ca; }
+    .btn--secondary { background: white; color: #374151; border: 1px solid #e5e7eb; flex: 1; }
+    .btn--secondary:hover:not(:disabled) { background: #f9fafb; border-color: #d1d5db; }
+    .btn--lg { padding: 1rem 1.5rem; }
+    .btn--icon { width: 52px; height: 52px; padding: 0; background: white; border: 1px solid #e5e7eb; color: #6b7280; flex: none; }
+    .btn--icon:hover { border-color: #dc2626; color: #dc2626; }
+    .btn--icon.wishlisted { background: #fef2f2; border-color: #dc2626; color: #dc2626; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .product-sku { font-size: 0.8rem; color: #9ca3af; margin: 0 0 1.5rem 0; }
+
+    .product-features { background: #f9fafb; border-radius: 0.75rem; padding: 1.25rem; }
+    .product-features h4 { font-size: 0.9rem; font-weight: 600; color: #111827; margin: 0 0 0.75rem 0; }
+    .product-features ul { list-style: none; margin: 0; padding: 0; }
+    .product-features li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.875rem; color: #374151; padding: 0.375rem 0; }
+    .product-features li i { color: #10b981; margin-top: 0.125rem; }
+
+    /* TABS */
+    .product-tabs { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .tabs-header { display: flex; border-bottom: 1px solid #e5e7eb; }
+    .tab-btn { flex: 1; padding: 1rem 1.5rem; background: transparent; border: none; font-size: 0.95rem; font-weight: 500; color: #6b7280; cursor: pointer; transition: all 0.2s ease; position: relative; }
+    .tab-btn:hover { color: #374151; background: #f9fafb; }
+    .tab-btn.active { color: #4f46e5; }
+    .tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: #4f46e5; }
+    .tabs-content { padding: 2rem; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .tab-panel h3 { font-size: 1.25rem; font-weight: 600; color: #111827; margin: 0 0 1rem 0; }
+    .tab-panel p { font-size: 0.95rem; color: #6b7280; line-height: 1.7; margin: 0 0 1rem 0; }
+    .specs-table { width: 100%; border-collapse: collapse; }
+    .specs-table tr { border-bottom: 1px solid #f3f4f6; }
+    .specs-table tr:last-child { border-bottom: none; }
+    .specs-table td { padding: 0.875rem 0; font-size: 0.9rem; }
+    .specs-table td:first-child { font-weight: 500; color: #374151; width: 40%; }
+    .specs-table td:last-child { color: #6b7280; }
+
+    /* REVIEWS */
+    .reviews-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e5e7eb; }
+    .reviews-summary { text-align: center; }
+    .rating-big { font-size: 3rem; font-weight: 700; color: #111827; }
+    .reviews-summary .stars { display: flex; justify-content: center; gap: 0.25rem; color: #fbbf24; font-size: 1.25rem; margin: 0.5rem 0; }
+    .reviews-summary p { font-size: 0.875rem; color: #6b7280; margin: 0; }
+    .reviews-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .review-card { padding: 1.5rem; background: #f9fafb; border-radius: 0.75rem; }
+    .review-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .review-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .review-meta { flex: 1; }
+    .review-meta strong { display: block; color: #111827; margin-bottom: 0.25rem; }
+    .review-meta .stars.small { font-size: 0.875rem; color: #fbbf24; display: flex; gap: 0.125rem; }
+    .review-date { font-size: 0.8rem; color: #9ca3af; }
+    .review-title { font-size: 1rem; font-weight: 600; color: #111827; margin: 0 0 0.5rem 0; }
+    .review-content { font-size: 0.9rem; color: #6b7280; line-height: 1.6; margin: 0 0 1rem 0; }
+    .helpful-btn { display: flex; align-items: center; gap: 0.375rem; padding: 0.5rem 0.75rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.375rem; font-size: 0.8rem; color: #6b7280; cursor: pointer; transition: all 0.2s ease; }
+    .helpful-btn:hover { border-color: #4f46e5; color: #4f46e5; }
+
+    @media (max-width: 1024px) { .product-container { grid-template-columns: 1fr; gap: 2rem; } }
+    @media (max-width: 768px) {
+      .product-detail-page { padding: 1rem; }
+      .product-title { font-size: 1.5rem; }
+      .price-current { font-size: 1.5rem; }
+      .product-actions { flex-direction: column; }
+      .btn--icon { width: 100%; height: auto; padding: 0.75rem; }
+      .tabs-header { overflow-x: auto; }
+      .tab-btn { white-space: nowrap; flex: none; padding: 1rem; }
+      .reviews-header { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="product-detail-page">
+  <nav class="breadcrumb">
+    <a href="#">Accueil</a><i class="bi bi-chevron-right"></i>
+    <a href="#">Électronique</a><i class="bi bi-chevron-right"></i>
+    <span id="breadcrumbName">MacBook Pro 16"</span>
+  </nav>
+
+  <div class="product-container">
+    <div class="product-gallery">
+      <div class="gallery-main">
+        <img id="mainImage" src="https://picsum.photos/800/800?random=1" alt="Vue principale">
+        <span class="discount-badge" id="discountBadge">-7%</span>
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <div class="product-info">
+      <span class="product-brand" id="productBrand">Apple</span>
+      <h1 class="product-title" id="productName">MacBook Pro 16"</h1>
+
+      <div class="product-rating">
+        <div class="stars" id="ratingStars"></div>
+        <span class="rating-value" id="ratingValue">4.9</span>
+        <a href="#reviews" class="reviews-link" id="reviewsLink">(234 avis)</a>
+      </div>
+
+      <div class="product-price">
+        <span class="price-current" id="priceCurrentEl"></span>
+        <span class="price-original" id="priceOriginalEl"></span>
+        <span class="price-discount" id="priceDiscountEl"></span>
+      </div>
+
+      <p class="product-description" id="productDesc"></p>
+
+      <div class="stock-status in-stock" id="stockStatus">
+        <i class="bi bi-check-circle-fill"></i>
+        <span id="stockText">En stock (12 disponibles)</span>
+      </div>
+
+      <div class="variant-section">
+        <label class="variant-label">Couleur : <strong id="colorName">Noir sidéral</strong></label>
+        <div class="color-options" id="colorOptions"></div>
+      </div>
+
+      <div class="variant-section">
+        <label class="variant-label">Stockage</label>
+        <div class="storage-options" id="storageOptions"></div>
+      </div>
+
+      <div class="variant-section">
+        <label class="variant-label">Quantité</label>
+        <div class="quantity-selector">
+          <button class="qty-btn" id="qtyMinus" onclick="changeQty(-1)"><i class="bi bi-dash"></i></button>
+          <span class="qty-value" id="qtyValue">1</span>
+          <button class="qty-btn" id="qtyPlus" onclick="changeQty(1)"><i class="bi bi-plus"></i></button>
+        </div>
+      </div>
+
+      <div class="product-actions">
+        <button class="btn btn--primary btn--lg" onclick="addToCart()"><i class="bi bi-cart-plus"></i> Ajouter au panier</button>
+        <button class="btn btn--secondary btn--lg" onclick="buyNow()">Acheter maintenant</button>
+        <button class="btn btn--icon" id="wishlistBtn" onclick="toggleWishlist()"><i class="bi bi-heart" id="wishlistIcon"></i></button>
+      </div>
+
+      <p class="product-sku" id="productSku">SKU : MBP16-M3PRO-512</p>
+
+      <div class="product-features">
+        <h4>Points clés</h4>
+        <ul id="featuresList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-tabs">
+    <div class="tabs-header">
+      <button class="tab-btn active" onclick="switchTab('description')">Description</button>
+      <button class="tab-btn" onclick="switchTab('specs')">Spécifications</button>
+      <button class="tab-btn" onclick="switchTab('reviews')" id="reviewsTabBtn">Avis (234)</button>
+    </div>
+    <div class="tabs-content">
+      <div class="tab-panel active" id="tabDescription">
+        <h3>À propos de ce produit</h3>
+        <p id="tabDescText"></p>
+        <p>Avec la puce Apple M3 Pro, ce MacBook Pro repousse les limites de ce qui est possible sur un ordinateur portable. La puce dispose d'un CPU 12 cœurs et d'un GPU 18 cœurs pour des performances graphiques exceptionnelles.</p>
+      </div>
+      <div class="tab-panel" id="tabSpecs">
+        <h3>Spécifications techniques</h3>
+        <table class="specs-table">
+          <tr><td>Processeur</td><td>Apple M3 Pro</td></tr>
+          <tr><td>Mémoire</td><td>18 Go unifiée</td></tr>
+          <tr><td>Stockage</td><td>512 Go SSD</td></tr>
+          <tr><td>Écran</td><td>16,2" Liquid Retina XDR</td></tr>
+          <tr><td>Résolution</td><td>3456 x 2234 pixels</td></tr>
+          <tr><td>Batterie</td><td>Jusqu'à 22 heures</td></tr>
+          <tr><td>Poids</td><td>2,14 kg</td></tr>
+        </table>
+      </div>
+      <div class="tab-panel" id="tabReviews">
+        <div class="reviews-header">
+          <div class="reviews-summary">
+            <div class="rating-big" id="reviewRatingBig">4.9</div>
+            <div class="stars" id="reviewStarsBig"></div>
+            <p id="reviewCountText">Basé sur 234 avis</p>
+          </div>
+          <button class="btn btn--primary"><i class="bi bi-pencil"></i> Écrire un avis</button>
+        </div>
+        <div class="reviews-list" id="reviewsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const product = {
+    name:'MacBook Pro 16"', brand:'Apple',
+    description:"Le MacBook Pro 16 pouces avec puce M3 Pro offre des performances exceptionnelles pour les professionnels. Avec son écran Liquid Retina XDR, sa batterie longue durée et son système audio haute fidélité, c'est l'outil idéal pour la création.",
+    price:2799, originalPrice:2999, discount:7, rating:4.9, reviewsCount:234,
+    sku:'MBP16-M3PRO-512', inStock:true, stockCount:12,
+    features:['Puce Apple M3 Pro avec CPU 12 cœurs','GPU 18 cœurs','18 Go de mémoire unifiée','SSD de 512 Go','Écran Liquid Retina XDR 16,2 pouces','Autonomie jusqu\'à 22 heures']
+  };
+  const images=[{id:'1',url:'https://picsum.photos/800/800?random=1',alt:'Vue principale'},{id:'2',url:'https://picsum.photos/800/800?random=2',alt:'Vue latérale'},{id:'3',url:'https://picsum.photos/800/800?random=3',alt:'Vue clavier'},{id:'4',url:'https://picsum.photos/800/800?random=4',alt:'Vue écran'}];
+  const colors=[{id:'space-black',name:'Noir sidéral',available:true},{id:'silver',name:'Argent',available:true}];
+  const storageOpts=[{id:'512',name:'512 Go',available:true},{id:'1tb',name:'1 To',available:true},{id:'2tb',name:'2 To',available:false}];
+  const reviews=[
+    {id:'1',author:'Marie D.',avatar:'https://i.pravatar.cc/100?img=1',rating:5,date:'2024-01-10',title:'Excellent produit !',content:'Performances incroyables, l\'écran est magnifique et la batterie tient vraiment longtemps. Je recommande !',helpful:23},
+    {id:'2',author:'Thomas B.',avatar:'https://i.pravatar.cc/100?img=2',rating:4,date:'2024-01-08',title:'Très satisfait',content:'Excellent MacBook, juste un peu cher mais la qualité est au rendez-vous.',helpful:15}
+  ];
+
+  let selectedImage=images[0], selectedColor=colors[0], selectedStorage=storageOpts[0], quantity=1, isWishlisted=false;
+
+  function fmt(n){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(n);}
+  function fmtDate(d){return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}
+  function getStars(r){return Array(5).fill(0).map((_,i)=>i<Math.floor(r)?1:(i<r?0.5:0));}
+  function starsHtml(r,cls){return getStars(r).map(s=>`<i class="bi ${s===1?'bi-star-fill':(s===0.5?'bi-star-half':'bi-star')}"></i>`).join('');}
+
+  function render() {
+    document.getElementById('breadcrumbName').textContent=product.name;
+    document.getElementById('productBrand').textContent=product.brand;
+    document.getElementById('productName').textContent=product.name;
+    document.getElementById('ratingStars').innerHTML=starsHtml(product.rating);
+    document.getElementById('ratingValue').textContent=product.rating;
+    document.getElementById('reviewsLink').textContent=`(${product.reviewsCount} avis)`;
+    document.getElementById('priceCurrentEl').textContent=fmt(product.price);
+    document.getElementById('priceOriginalEl').textContent=product.originalPrice?fmt(product.originalPrice):'';
+    document.getElementById('priceOriginalEl').style.display=product.originalPrice?'':'none';
+    document.getElementById('priceDiscountEl').textContent=product.discount?`-${product.discount}%`:'';
+    document.getElementById('priceDiscountEl').style.display=product.discount?'':'none';
+    document.getElementById('discountBadge').style.display=product.discount?'':'none';
+    document.getElementById('discountBadge').textContent=`-${product.discount}%`;
+    document.getElementById('productDesc').textContent=product.description;
+    document.getElementById('tabDescText').textContent=product.description;
+    document.getElementById('productSku').textContent=`SKU : ${product.sku}`;
+    const ss=document.getElementById('stockStatus');
+    ss.className='stock-status '+(product.inStock?'in-stock':'out-of-stock');
+    ss.querySelector('i').className='bi '+(product.inStock?'bi-check-circle-fill':'bi-x-circle-fill');
+    document.getElementById('stockText').textContent=product.inStock?`En stock (${product.stockCount} disponibles)`:'Rupture de stock';
+
+    document.getElementById('mainImage').src=selectedImage.url;
+    document.getElementById('mainImage').alt=selectedImage.alt;
+    document.getElementById('galleryThumbs').innerHTML=images.map(img=>`<button class="thumb ${selectedImage.id===img.id?'active':''}" onclick="selectImage('${img.id}')"><img src="${img.url}" alt="${img.alt}"></button>`).join('');
+    document.getElementById('colorName').textContent=selectedColor.name;
+    document.getElementById('colorOptions').innerHTML=colors.map(c=>`<button class="color-option ${selectedColor.id===c.id?'active':''} ${!c.available?'disabled':''}" style="background:${c.id==='space-black'?'#1d1d1f':'#e5e5e5'}" onclick="selectColor('${c.id}')">${selectedColor.id===c.id?'<i class="bi bi-check"></i>':''}</button>`).join('');
+    document.getElementById('storageOptions').innerHTML=storageOpts.map(s=>`<button class="storage-option ${selectedStorage.id===s.id?'active':''} ${!s.available?'disabled':''}" onclick="selectStorage('${s.id}')">${s.name}${!s.available?'<span class="unavailable">(Indisponible)</span>':''}</button>`).join('');
+    document.getElementById('qtyValue').textContent=quantity;
+    document.getElementById('qtyMinus').disabled=quantity<=1;
+    document.getElementById('qtyPlus').disabled=quantity>=product.stockCount;
+    document.getElementById('featuresList').innerHTML=product.features.map(f=>`<li><i class="bi bi-check-lg"></i>${f}</li>`).join('');
+    document.getElementById('reviewsTabBtn').textContent=`Avis (${product.reviewsCount})`;
+    document.getElementById('reviewRatingBig').textContent=product.rating;
+    document.getElementById('reviewStarsBig').innerHTML=starsHtml(product.rating);
+    document.getElementById('reviewCountText').textContent=`Basé sur ${product.reviewsCount} avis`;
+    document.getElementById('reviewsList').innerHTML=reviews.map(r=>`<div class="review-card"><div class="review-header"><img src="${r.avatar}" alt="${r.author}" class="review-avatar"><div class="review-meta"><strong>${r.author}</strong><div class="stars small">${starsHtml(r.rating)}</div></div><span class="review-date">${fmtDate(r.date)}</span></div><h4 class="review-title">${r.title}</h4><p class="review-content">${r.content}</p><div class="review-actions"><button class="helpful-btn"><i class="bi bi-hand-thumbs-up"></i> Utile (${r.helpful})</button></div></div>`).join('');
+  }
+
+  function selectImage(id){selectedImage=images.find(i=>i.id===id);render();}
+  function selectColor(id){const c=colors.find(x=>x.id===id);if(c&&c.available){selectedColor=c;render();}}
+  function selectStorage(id){const s=storageOpts.find(x=>x.id===id);if(s&&s.available){selectedStorage=s;render();}}
+  function changeQty(d){const nq=quantity+d;if(nq>=1&&nq<=product.stockCount){quantity=nq;render();}}
+  function toggleWishlist(){isWishlisted=!isWishlisted;const b=document.getElementById('wishlistBtn');b.classList.toggle('wishlisted',isWishlisted);document.getElementById('wishlistIcon').className='bi '+(isWishlisted?'bi-heart-fill':'bi-heart');}
+  function addToCart(){alert('Ajouté au panier !');}
+  function buyNow(){alert('Achat immédiat !');}
+
+  function switchTab(tab){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+    document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
+  }
+
+  render();
+</script>
+</body>
+</html>

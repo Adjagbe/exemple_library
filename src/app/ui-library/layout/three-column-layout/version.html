@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three Column Layout - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f9fafb;color:#374151;min-height:100vh}
+
+    .demo-page{max-width:1400px;margin:0 auto;padding:2rem}
+    .demo-title{text-align:center;margin-bottom:3rem}
+    .demo-title h1{font-size:2rem;font-weight:800;color:#111827;margin:0 0 .5rem}
+    .demo-title p{color:#6b7280;font-size:1rem}
+    .variant-label{font-size:.85rem;font-weight:600;color:#4f46e5;text-transform:uppercase;letter-spacing:.05em;margin:2.5rem 0 1rem;padding-left:.5rem;border-left:3px solid #4f46e5}
+
+    /* ══════ LAYOUT FRAME ══════ */
+    .layout-frame{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+
+    /* ── THREE COLUMN: SIDEBAR + CONTENT + RIGHT ── */
+    .layout-3col{display:grid;grid-template-columns:220px 1fr 280px;min-height:560px}
+
+    /* Left Sidebar */
+    .col-left{background:#111827;padding:1.25rem .875rem;display:flex;flex-direction:column}
+    .col-left .brand{display:flex;align-items:center;gap:.625rem;padding:.5rem .625rem;margin-bottom:1rem}
+    .col-left .brand-logo{width:30px;height:30px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:.375rem;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.8rem}
+    .col-left .brand-name{font-size:.95rem;font-weight:700;color:#f9fafb}
+    .col-left .nav-label{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;padding:.625rem .625rem .375rem}
+    .col-left .nav-item{display:flex;align-items:center;gap:.5rem;padding:.5rem .625rem;font-size:.8rem;color:#9ca3af;border-radius:.375rem;cursor:pointer;transition:all .15s;text-decoration:none}
+    .col-left .nav-item:hover{background:rgba(255,255,255,.06);color:#e5e7eb}
+    .col-left .nav-item.active{background:rgba(79,70,229,.15);color:#818cf8}
+    .col-left .nav-item i{width:18px;text-align:center;font-size:.9rem}
+    .col-left .nav-badge{margin-left:auto;font-size:.6rem;padding:.1rem .375rem;background:#ef4444;color:#fff;border-radius:9999px;font-weight:600}
+    .col-left .nav-divider{height:1px;background:rgba(255,255,255,.06);margin:.5rem 0}
+    .col-left .user-block{margin-top:auto;display:flex;align-items:center;gap:.5rem;padding:.625rem;border-top:1px solid rgba(255,255,255,.06);padding-top:.875rem}
+    .col-left .user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem;font-weight:700}
+    .col-left .user-name{font-size:.8rem;font-weight:600;color:#f9fafb}
+    .col-left .user-role{font-size:.65rem;color:#6b7280}
+
+    /* Center Content */
+    .col-center{padding:1.5rem;background:#f9fafb;overflow-y:auto}
+    .col-center .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .col-center .page-header h2{font-size:1.25rem;font-weight:700;color:#111827;margin:0}
+    .col-center .btn-sm{display:inline-flex;align-items:center;gap:.375rem;padding:.5rem 1rem;background:#4f46e5;color:#fff;border:none;border-radius:.5rem;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+    .col-center .btn-sm:hover{background:#4338ca}
+
+    /* Cards in center */
+    .task-list{display:flex;flex-direction:column;gap:.625rem}
+    .task-card{display:flex;align-items:center;gap:.75rem;padding:.875rem 1rem;background:#fff;border:1px solid #e5e7eb;border-radius:.625rem;transition:all .2s}
+    .task-card:hover{border-color:#d1d5db;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+    .task-check{width:20px;height:20px;border:2px solid #d1d5db;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+    .task-check.done{background:#10b981;border-color:#10b981;color:#fff;font-size:.65rem}
+    .task-info{flex:1;min-width:0}
+    .task-info .task-name{font-size:.85rem;font-weight:600;color:#111827;margin:0}
+    .task-info .task-name.done-text{text-decoration:line-through;color:#9ca3af}
+    .task-info .task-meta{font-size:.7rem;color:#9ca3af;margin:.125rem 0 0}
+    .task-priority{font-size:.65rem;padding:.15rem .5rem;border-radius:9999px;font-weight:600}
+    .priority-high{background:#fef2f2;color:#ef4444}
+    .priority-medium{background:#fffbeb;color:#f59e0b}
+    .priority-low{background:#f0fdf4;color:#10b981}
+
+    /* Right Sidebar */
+    .col-right{padding:1.25rem;background:#fff;border-left:1px solid #e5e7eb;display:flex;flex-direction:column;gap:1.25rem}
+    .col-right .widget-title{font-size:.8rem;font-weight:700;color:#111827;margin:0 0 .75rem;display:flex;align-items:center;gap:.375rem}
+    .col-right .widget-title i{color:#4f46e5}
+
+    /* Activity feed */
+    .activity-feed{display:flex;flex-direction:column;gap:.75rem}
+    .activity-item{display:flex;gap:.5rem;font-size:.75rem;line-height:1.5}
+    .activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+    .activity-dot--blue{background:#4f46e5}
+    .activity-dot--green{background:#10b981}
+    .activity-dot--yellow{background:#f59e0b}
+    .activity-dot--red{background:#ef4444}
+    .activity-text{color:#6b7280}
+    .activity-text strong{color:#374151}
+    .activity-time{font-size:.65rem;color:#9ca3af;margin-top:.125rem}
+
+    /* Progress widget */
+    .progress-item{margin-bottom:.75rem}
+    .progress-item .progress-label{display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.25rem}
+    .progress-item .progress-name{color:#374151;font-weight:500}
+    .progress-item .progress-pct{color:#6b7280}
+    .progress-bar{height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden}
+    .progress-fill{height:100%;border-radius:3px;transition:width .3s}
+    .progress-fill--indigo{background:#4f46e5}
+    .progress-fill--green{background:#10b981}
+    .progress-fill--yellow{background:#f59e0b}
+
+    /* Calendar mini */
+    .calendar-mini{display:grid;grid-template-columns:repeat(7,1fr);gap:.25rem;text-align:center;font-size:.65rem}
+    .cal-header{font-weight:600;color:#9ca3af;padding:.25rem 0}
+    .cal-day{padding:.25rem;border-radius:.25rem;color:#6b7280;cursor:pointer;transition:all .15s}
+    .cal-day:hover{background:#eff6ff}
+    .cal-day.today{background:#4f46e5;color:#fff;font-weight:600;border-radius:50%;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+    .cal-day.has-event{position:relative}
+    .cal-day.has-event::after{content:'';position:absolute;bottom:1px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:#4f46e5;border-radius:50%}
+    .cal-day.other-month{color:#d1d5db}
+
+    /* ── VARIANT 2: EQUAL COLUMNS ── */
+    .layout-3equal{display:grid;grid-template-columns:repeat(3,1fr);min-height:400px;gap:1px;background:#e5e7eb}
+    .equal-col{background:#fff;padding:2rem;display:flex;flex-direction:column}
+    .equal-col .col-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#eff6ff;border-radius:.75rem;color:#4f46e5;font-size:1.25rem;margin-bottom:1.25rem}
+    .equal-col h3{font-size:1.1rem;font-weight:700;color:#111827;margin:0 0 .5rem}
+    .equal-col p{font-size:.875rem;color:#6b7280;line-height:1.7;margin:0 0 1rem}
+    .equal-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .equal-col li{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:#374151}
+    .equal-col li i{color:#10b981;font-size:.85rem}
+
+    @media(max-width:1024px){
+      .layout-3col{grid-template-columns:1fr;min-height:auto}
+      .col-left{padding:1rem;flex-direction:row;flex-wrap:wrap;gap:.5rem}
+      .col-left .brand{width:100%}
+      .col-left .nav-label{display:none}
+      .col-left .nav-divider{display:none}
+      .col-left .user-block{width:100%;border-top:1px solid rgba(255,255,255,.06);margin-top:.5rem;padding-top:.75rem}
+      .col-right{border-left:none;border-top:1px solid #e5e7eb}
+      .layout-3equal{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Three Column Layout</h1>
+    <p>Mises en page à trois colonnes pour applications SaaS</p>
+  </div>
+
+  <!-- App Layout: Sidebar + Content + Right Panel -->
+  <div class="variant-label">App Layout — Sidebar + Content + Details Panel</div>
+  <div class="layout-frame">
+    <div class="layout-3col">
+      <!-- Left -->
+      <div class="col-left">
+        <div class="brand"><div class="brand-logo">P</div><span class="brand-name">Platform</span></div>
+        <p class="nav-label">Principal</p>
+        <a href="#" class="nav-item active"><i class="bi bi-grid-1x2"></i> Dashboard</a>
+        <a href="#" class="nav-item"><i class="bi bi-check2-square"></i> Tâches <span class="nav-badge">12</span></a>
+        <a href="#" class="nav-item"><i class="bi bi-folder2"></i> Projets</a>
+        <a href="#" class="nav-item"><i class="bi bi-people"></i> Équipe</a>
+        <a href="#" class="nav-item"><i class="bi bi-chat-dots"></i> Messages <span class="nav-badge">3</span></a>
+        <div class="nav-divider"></div>
+        <p class="nav-label">Système</p>
+        <a href="#" class="nav-item"><i class="bi bi-gear"></i> Paramètres</a>
+        <a href="#" class="nav-item"><i class="bi bi-question-circle"></i> Aide</a>
+        <div class="user-block">
+          <div class="user-av">JD</div>
+          <div><div class="user-name">Jean Dupont</div><div class="user-role">Admin</div></div>
+        </div>
+      </div>
+
+      <!-- Center -->
+      <div class="col-center">
+        <div class="page-header">
+          <h2>Mes tâches</h2>
+          <button class="btn-sm"><i class="bi bi-plus-lg"></i> Nouvelle tâche</button>
+        </div>
+        <div class="task-list">
+          <div class="task-card"><div class="task-check done"><i class="bi bi-check"></i></div><div class="task-info"><p class="task-name done-text">Mettre à jour le design system</p><p class="task-meta">Design · Terminé hier</p></div><span class="task-priority priority-high">Haute</span></div>
+          <div class="task-card"><div class="task-check"></div><div class="task-info"><p class="task-name">Implémenter la page de facturation</p><p class="task-meta">Frontend · Échéance dans 2 jours</p></div><span class="task-priority priority-high">Haute</span></div>
+          <div class="task-card"><div class="task-check"></div><div class="task-info"><p class="task-name">Revoir les maquettes du dashboard</p><p class="task-meta">Design · Échéance dans 3 jours</p></div><span class="task-priority priority-medium">Moyenne</span></div>
+          <div class="task-card"><div class="task-check"></div><div class="task-info"><p class="task-name">Écrire les tests unitaires</p><p class="task-meta">Backend · Échéance dans 5 jours</p></div><span class="task-priority priority-medium">Moyenne</span></div>
+          <div class="task-card"><div class="task-check done"><i class="bi bi-check"></i></div><div class="task-info"><p class="task-name done-text">Configurer le CI/CD</p><p class="task-meta">DevOps · Terminé il y a 3 jours</p></div><span class="task-priority priority-low">Basse</span></div>
+          <div class="task-card"><div class="task-check"></div><div class="task-info"><p class="task-name">Optimiser les requêtes API</p><p class="task-meta">Backend · Échéance dans 1 semaine</p></div><span class="task-priority priority-low">Basse</span></div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="col-right">
+        <div>
+          <h4 class="widget-title"><i class="bi bi-activity"></i> Activité récente</h4>
+          <div class="activity-feed">
+            <div class="activity-item"><div class="activity-dot activity-dot--blue"></div><div><div class="activity-text"><strong>Marie</strong> a commenté la tâche "Design system"</div><div class="activity-time">Il y a 15 min</div></div></div>
+            <div class="activity-item"><div class="activity-dot activity-dot--green"></div><div><div class="activity-text"><strong>Thomas</strong> a terminé "Config CI/CD"</div><div class="activity-time">Il y a 1h</div></div></div>
+            <div class="activity-item"><div class="activity-dot activity-dot--yellow"></div><div><div class="activity-text"><strong>Sophie</strong> a créé un nouveau projet</div><div class="activity-time">Il y a 3h</div></div></div>
+            <div class="activity-item"><div class="activity-dot activity-dot--red"></div><div><div class="activity-text"><strong>Lucas</strong> a signalé un bug critique</div><div class="activity-time">Il y a 5h</div></div></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="widget-title"><i class="bi bi-bar-chart"></i> Progression</h4>
+          <div class="progress-item"><div class="progress-label"><span class="progress-name">Design</span><span class="progress-pct">85%</span></div><div class="progress-bar"><div class="progress-fill progress-fill--indigo" style="width:85%"></div></div></div>
+          <div class="progress-item"><div class="progress-label"><span class="progress-name">Frontend</span><span class="progress-pct">62%</span></div><div class="progress-bar"><div class="progress-fill progress-fill--green" style="width:62%"></div></div></div>
+          <div class="progress-item"><div class="progress-label"><span class="progress-name">Backend</span><span class="progress-pct">40%</span></div><div class="progress-bar"><div class="progress-fill progress-fill--yellow" style="width:40%"></div></div></div>
+        </div>
+        <div>
+          <h4 class="widget-title"><i class="bi bi-calendar3"></i> Mars 2026</h4>
+          <div class="calendar-mini">
+            <div class="cal-header">L</div><div class="cal-header">M</div><div class="cal-header">M</div><div class="cal-header">J</div><div class="cal-header">V</div><div class="cal-header">S</div><div class="cal-header">D</div>
+            <div class="cal-day other-month">23</div><div class="cal-day other-month">24</div><div class="cal-day other-month">25</div><div class="cal-day other-month">26</div><div class="cal-day other-month">27</div><div class="cal-day other-month">28</div><div class="cal-day">1</div>
+            <div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day has-event">5</div><div class="cal-day">6</div><div class="cal-day">7</div><div class="cal-day">8</div>
+            <div class="cal-day today">9</div><div class="cal-day">10</div><div class="cal-day has-event">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day has-event">15</div>
+            <div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div>
+            <div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div>
+            <div class="cal-day">30</div><div class="cal-day has-event">31</div><div class="cal-day other-month">1</div><div class="cal-day other-month">2</div><div class="cal-day other-month">3</div><div class="cal-day other-month">4</div><div class="cal-day other-month">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equal 3 Columns -->
+  <div class="variant-label">Equal Three Columns — Pricing/Features</div>
+  <div class="layout-frame">
+    <div class="layout-3equal">
+      <div class="equal-col">
+        <div class="col-icon"><i class="bi bi-rocket-takeoff"></i></div>
+        <h3>Starter</h3>
+        <p>Idéal pour les petites équipes qui démarrent leur aventure.</p>
+        <ul>
+          <li><i class="bi bi-check-circle-fill"></i> 5 utilisateurs max</li>
+          <li><i class="bi bi-check-circle-fill"></i> 10 Go de stockage</li>
+          <li><i class="bi bi-check-circle-fill"></i> Support email</li>
+          <li><i class="bi bi-check-circle-fill"></i> Analytics basiques</li>
+        </ul>
+      </div>
+      <div class="equal-col" style="background:#f8fafc">
+        <div class="col-icon" style="background:#e0e7ff"><i class="bi bi-lightning-charge"></i></div>
+        <h3>Business</h3>
+        <p>Pour les équipes en croissance qui ont besoin de plus de puissance.</p>
+        <ul>
+          <li><i class="bi bi-check-circle-fill"></i> 25 utilisateurs max</li>
+          <li><i class="bi bi-check-circle-fill"></i> 100 Go de stockage</li>
+          <li><i class="bi bi-check-circle-fill"></i> Support prioritaire</li>
+          <li><i class="bi bi-check-circle-fill"></i> Analytics avancés</li>
+          <li><i class="bi bi-check-circle-fill"></i> Intégrations API</li>
+        </ul>
+      </div>
+      <div class="equal-col">
+        <div class="col-icon"><i class="bi bi-building"></i></div>
+        <h3>Enterprise</h3>
+        <p>Solution sur mesure pour les grandes organisations.</p>
+        <ul>
+          <li><i class="bi bi-check-circle-fill"></i> Utilisateurs illimités</li>
+          <li><i class="bi bi-check-circle-fill"></i> Stockage illimité</li>
+          <li><i class="bi bi-check-circle-fill"></i> Support dédié 24/7</li>
+          <li><i class="bi bi-check-circle-fill"></i> SLA garanti 99.99%</li>
+          <li><i class="bi bi-check-circle-fill"></i> SSO & SAML</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

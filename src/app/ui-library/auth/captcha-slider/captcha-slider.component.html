@@ -1,0 +1,72 @@
+<div class="captcha-container">
+  <div class="captcha-card">
+    @if (!isVerified) {
+      <!-- Header -->
+      <div class="captcha-header">
+        <div class="captcha-header__icon">
+          <i class="bi bi-arrows"></i>
+        </div>
+        <div>
+          <h3 class="captcha-header__title">Vérification de sécurité</h3>
+          <p class="captcha-header__subtitle">Faites glisser le curseur</p>
+        </div>
+      </div>
+
+      <!-- Erreur -->
+      @if (error) {
+        <div class="alert alert--error">
+          <i class="bi bi-exclamation-circle"></i>
+          <span>{{ error }}</span>
+        </div>
+      }
+
+      <!-- Slider CAPTCHA -->
+      <div class="slider-captcha">
+        <div class="slider-instruction">
+          <i class="bi bi-arrows-move"></i>
+          <span>Faites glisser le curseur jusqu'à la position indiquée</span>
+        </div>
+
+        <div class="slider-visual">
+          <div class="slider-image">
+            <div class="slider-target" [style.left.px]="targetPosition"></div>
+          </div>
+        </div>
+
+        <div
+          class="slider-track"
+          (mousemove)="onSliderMove($event)"
+          (touchmove)="onSliderMove($event)"
+          (mouseup)="onSliderEnd()"
+          (touchend)="onSliderEnd()"
+          (mouseleave)="onSliderEnd()"
+        >
+          <div class="slider-progress" [style.width.px]="sliderPosition + 25"></div>
+          <div
+            class="slider-handle"
+            [style.left.px]="sliderPosition"
+            (mousedown)="onSliderStart($event)"
+            (touchstart)="onSliderStart($event)"
+          >
+            <i class="bi bi-arrows"></i>
+          </div>
+        </div>
+
+        <p class="slider-hint">Glissez vers la droite pour aligner avec le repère</p>
+      </div>
+    } @else {
+      <!-- Succès -->
+      <div class="success-state">
+        <div class="success-icon">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h3 class="success-title">Vérification réussie</h3>
+        <p class="success-text">Vous avez prouvé que vous n'êtes pas un robot.</p>
+        <div class="verified-badge">
+          <i class="bi bi-shield-fill-check"></i>
+          <span>Vérifié</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

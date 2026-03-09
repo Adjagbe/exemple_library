@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captcha Text - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:whitesmoke;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+
+    .captcha-card{width:100%;max-width:420px;background:#fff;border-radius:1rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);overflow:hidden}
+
+    .captcha-header{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+    .captcha-header__icon{width:48px;height:48px;background:rgba(255,255,255,.2);border-radius:.75rem;display:flex;align-items:center;justify-content:center}
+    .captcha-header__icon i{font-size:1.5rem}
+    .captcha-header__title{font-size:1rem;font-weight:600;margin:0 0 .25rem}
+    .captcha-header__subtitle{font-size:.8rem;margin:0;opacity:.9}
+
+    .alert{display:none;align-items:center;gap:.5rem;margin:.75rem;padding:.75rem;border-radius:.5rem;font-size:.8rem}
+    .alert.show{display:flex}
+    .alert--error{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+
+    .text-captcha{padding:1.5rem}
+    .text-captcha__display{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.5rem;background:linear-gradient(135deg,#f3f4f6,#e5e7eb);border-radius:.5rem;margin-bottom:1rem}
+    .captcha-text{font-size:2rem;font-weight:700;font-family:'Courier New',monospace;letter-spacing:.5rem;color:#374151;text-decoration:line-through;font-style:italic;user-select:none}
+    .text-captcha__input{margin-bottom:1rem}
+    .form-input{width:100%;padding:.75rem 1rem;font-size:1rem;text-align:center;letter-spacing:.25rem;border:2px solid #e5e7eb;border-radius:.5rem;transition:all .2s;font-family:inherit}
+    .form-input:focus{outline:none;border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+
+    .refresh-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border:none;border-radius:.5rem;color:#6b7280;cursor:pointer;transition:all .2s}
+    .refresh-btn:hover{background:#e5e7eb;color:#4f46e5}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.625rem 1.25rem;font-size:.875rem;font-weight:600;border:none;border-radius:.5rem;cursor:pointer;transition:all .2s}
+    .btn--primary{background:#4f46e5;color:#fff}
+    .btn--primary:hover:not(:disabled){background:#4338ca}
+    .btn--full{width:100%}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+
+    .captcha-content{display:block}.captcha-content.hidden{display:none}
+    .success-state{display:none;padding:2.5rem;text-align:center}
+    .success-state.show{display:block}
+    .success-icon{width:80px;height:80px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center}
+    .success-icon i{font-size:5rem;color:#10b981}
+    .success-title{font-size:1.25rem;font-weight:700;color:#111827;margin:0 0 .5rem}
+    .success-text{font-size:.9rem;color:#6b7280;margin:0 0 1.5rem}
+    .verified-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;background:#d1fae5;border-radius:9999px;color:#059669;font-size:.875rem;font-weight:600}
+  </style>
+</head>
+<body>
+<div class="captcha-card">
+  <div class="captcha-content" id="captchaContent">
+    <div class="captcha-header">
+      <div class="captcha-header__icon"><i class="bi bi-fonts"></i></div>
+      <div><h3 class="captcha-header__title">Vérification de sécurité</h3><p class="captcha-header__subtitle">Reproduisez le texte affiché</p></div>
+    </div>
+
+    <div class="alert alert--error" id="alertError"><i class="bi bi-exclamation-circle"></i><span id="errorText"></span></div>
+
+    <div class="text-captcha">
+      <div class="text-captcha__display">
+        <span class="captcha-text" id="captchaText"></span>
+        <button class="refresh-btn" onclick="generateCaptcha()"><i class="bi bi-arrow-clockwise"></i></button>
+      </div>
+      <div class="text-captcha__input">
+        <input type="text" class="form-input" placeholder="Entrez le texte ci-dessus" id="textInput" onkeydown="if(event.key==='Enter')verify()">
+      </div>
+      <button class="btn btn--primary btn--full" onclick="verify()" id="verifyBtn">Vérifier</button>
+    </div>
+  </div>
+
+  <div class="success-state" id="successState">
+    <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
+    <h3 class="success-title">Vérification réussie</h3>
+    <p class="success-text">Vous avez prouvé que vous n'êtes pas un robot.</p>
+    <div class="verified-badge"><i class="bi bi-shield-fill-check"></i><span>Vérifié</span></div>
+  </div>
+</div>
+
+<script>
+(function(){
+var captchaText = '';
+var attemptsText = 0;
+
+function generateCaptcha() {
+  document.getElementById('alertError').classList.remove('show');
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  captchaText = Array.from({length:6}, function() { return chars[Math.floor(Math.random()*chars.length)]; }).join('');
+  document.getElementById('captchaText').textContent = captchaText;
+  document.getElementById('textInput').value = '';
+}
+
+function verify() {
+  document.getElementById('alertError').classList.remove('show');
+  var input = document.getElementById('textInput').value;
+  if (!input) return;
+
+  var valid = input.toLowerCase() === captchaText.toLowerCase();
+
+  if (valid) {
+    document.getElementById('captchaContent').classList.add('hidden');
+    document.getElementById('successState').classList.add('show');
+  } else {
+    attemptsText++;
+    if (attemptsText >= 3) {
+      showError('Trop de tentatives. Veuillez réessayer.');
+      attemptsText = 0;
+    } else {
+      showError('Vérification échouée. Réessayez.');
+    }
+    generateCaptcha();
+  }
+}
+
+function showError(msg) {
+  document.getElementById('errorText').textContent = msg;
+  document.getElementById('alertError').classList.add('show');
+}
+
+window.generateCaptcha = generateCaptcha;
+window.verify = verify;
+
+generateCaptcha();
+})();
+</script>
+</body>
+</html>

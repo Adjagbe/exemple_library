@@ -1,7 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// VERSIONING COMPONENT - Premium UI Library
-// Version history display
-// ═══════════════════════════════════════════════════════════════
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';

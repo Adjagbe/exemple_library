@@ -8,33 +8,8 @@
         </div>
         <div class="captcha-header__text">
           <h3 class="captcha-header__title">Vérification de sécurité</h3>
-          <p class="captcha-header__subtitle">Prouvez que vous n'êtes pas un robot</p>
+          <p class="captcha-header__subtitle">Sélectionnez les images correspondantes</p>
         </div>
-      </div>
-
-      <!-- Mode Selector -->
-      <div class="mode-selector">
-        <button 
-          class="mode-btn"
-          [class.active]="captchaMode === 'image'"
-          (click)="setMode('image')">
-          <i class="bi bi-grid-3x3"></i>
-          Images
-        </button>
-        <button 
-          class="mode-btn"
-          [class.active]="captchaMode === 'text'"
-          (click)="setMode('text')">
-          <i class="bi bi-fonts"></i>
-          Texte
-        </button>
-        <button 
-          class="mode-btn"
-          [class.active]="captchaMode === 'slider'"
-          (click)="setMode('slider')">
-          <i class="bi bi-arrows"></i>
-          Slider
-        </button>
       </div>
 
       @if (error) {
@@ -45,120 +20,47 @@
       }
 
       <!-- Image CAPTCHA -->
-      @if (captchaMode === 'image') {
-        <div class="image-captcha">
-          <div class="image-captcha__instruction">
-            <i class="bi bi-hand-index"></i>
-            <span>Sélectionnez toutes les images contenant des <strong>{{ targetObject }}</strong></span>
-          </div>
-          
-          <div class="image-grid">
-            @for (image of images; track image.id) {
-              <button 
-                class="image-item"
-                [class.selected]="image.selected"
-                (click)="toggleImageSelection(image)">
-                <img [src]="image.src" alt="Image CAPTCHA">
-                @if (image.selected) {
-                  <div class="image-item__check">
-                    <i class="bi bi-check-lg"></i>
-                  </div>
-                }
-              </button>
-            }
-          </div>
-
-          <div class="captcha-footer">
-            <span class="selected-count">{{ selectedCount }} sélectionnée(s)</span>
-            <div class="captcha-actions">
-              <button class="refresh-btn" (click)="generateCaptcha()" [disabled]="isLoading">
-                <i class="bi bi-arrow-clockwise"></i>
-              </button>
-              <button 
-                class="btn btn--primary" 
-                (click)="verify()"
-                [disabled]="isLoading || selectedCount === 0">
-                @if (isLoading) {
-                  <span class="spinner"></span>
-                } @else {
-                  Vérifier
-                }
-              </button>
-            </div>
-          </div>
+      <div class="image-captcha">
+        <div class="image-captcha__instruction">
+          <i class="bi bi-hand-index"></i>
+          <span>Sélectionnez toutes les images contenant des <strong>{{ targetObject }}</strong></span>
         </div>
-      }
+        
+        <div class="image-grid">
+          @for (image of images; track image.id) {
+            <button 
+              class="image-item"
+              [class.selected]="image.selected"
+              (click)="toggleImageSelection(image)">
+              <img [src]="image.src" alt="Image CAPTCHA">
+              @if (image.selected) {
+                <div class="image-item__check">
+                  <i class="bi bi-check-lg"></i>
+                </div>
+              }
+            </button>
+          }
+        </div>
 
-      <!-- Text CAPTCHA -->
-      @if (captchaMode === 'text') {
-        <div class="text-captcha">
-          <div class="text-captcha__display">
-            <span class="captcha-text">{{ captchaText }}</span>
-            <button class="refresh-btn" (click)="generateCaptcha()">
+        <div class="captcha-footer">
+          <span class="selected-count">{{ selectedCount }} sélectionnée(s)</span>
+          <div class="captcha-actions">
+            <button class="refresh-btn" (click)="generateCaptcha()" [disabled]="isLoading">
               <i class="bi bi-arrow-clockwise"></i>
             </button>
+            <button 
+              class="btn btn--primary" 
+              (click)="verify()"
+              [disabled]="isLoading || selectedCount === 0">
+              @if (isLoading) {
+                <span class="spinner"></span>
+              } @else {
+                Vérifier
+              }
+            </button>
           </div>
-          
-          <div class="text-captcha__input">
-            <input 
-              type="text" 
-              class="form-input"
-              placeholder="Entrez le texte ci-dessus"
-              [(ngModel)]="userInput"
-              (keydown.enter)="verify()">
-          </div>
-
-          <button 
-            class="btn btn--primary btn--full" 
-            (click)="verify()"
-            [disabled]="isLoading || !userInput">
-            @if (isLoading) {
-              <span class="spinner"></span>
-              <span>Vérification...</span>
-            } @else {
-              <span>Vérifier</span>
-            }
-          </button>
         </div>
-      }
-
-      <!-- Slider CAPTCHA -->
-      @if (captchaMode === 'slider') {
-        <div class="slider-captcha">
-          <div class="slider-instruction">
-            <i class="bi bi-arrows-move"></i>
-            <span>Faites glisser le curseur jusqu'à la position indiquée</span>
-          </div>
-
-          <div class="slider-visual">
-            <div class="slider-image">
-              <div 
-                class="slider-target" 
-                [style.left.px]="targetPosition">
-              </div>
-            </div>
-          </div>
-
-          <div 
-            class="slider-track"
-            (mousemove)="onSliderMove($event)"
-            (touchmove)="onSliderMove($event)"
-            (mouseup)="onSliderEnd()"
-            (touchend)="onSliderEnd()"
-            (mouseleave)="onSliderEnd()">
-            <div class="slider-progress" [style.width.px]="sliderPosition + 25"></div>
-            <div 
-              class="slider-handle"
-              [style.left.px]="sliderPosition"
-              (mousedown)="onSliderStart($event)"
-              (touchstart)="onSliderStart($event)">
-              <i class="bi bi-arrows"></i>
-            </div>
-          </div>
-
-          <p class="slider-hint">Glissez vers la droite pour aligner avec le repère</p>
-        </div>
-      }
+      </div>
     } @else {
       <!-- Success State -->
       <div class="success-state">

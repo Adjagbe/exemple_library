@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Confirmation - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:whitesmoke;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem}
+
+    .confirmation-card{width:100%;max-width:480px;background:#fff;border-radius:1.5rem;padding:3rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+    .state-container{text-align:center;display:none}
+    .state-container.active{display:block}
+    .state-title{font-size:1.5rem;font-weight:700;color:#111827;margin:0 0 .75rem}
+    .state-text{font-size:.9rem;color:#6b7280;line-height:1.6;margin:0 0 1.5rem}
+    .state-text strong{color:#111827}
+
+    /* LOADING */
+    .loading-spinner{position:relative;width:100px;height:100px;margin:0 auto 2rem;display:flex;align-items:center;justify-content:center}
+    .loading-spinner i{font-size:2.5rem;color:#4f46e5;animation:pulse 1.5s ease-in-out infinite}
+    .spinner-ring{position:absolute;inset:0;border:4px solid #e5e7eb;border-top-color:#4f46e5;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:.8}}
+
+    /* SUCCESS */
+    .success-icon{position:relative;width:100px;height:100px;margin:0 auto 2rem}
+    .success-circle{width:100%;height:100%;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:scaleIn .5s ease}
+    .success-circle i{font-size:3rem;color:#fff}
+    @keyframes scaleIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+    .success-particles{position:absolute;inset:0;pointer-events:none}
+    .particle{position:absolute;width:8px;height:8px;background:#10b981;border-radius:50%;top:50%;left:50%;animation:particleFly .8s ease-out forwards}
+    .particle:nth-child(1){--angle:0deg;animation-delay:.05s}
+    .particle:nth-child(2){--angle:60deg;animation-delay:.1s}
+    .particle:nth-child(3){--angle:120deg;animation-delay:.15s}
+    .particle:nth-child(4){--angle:180deg;animation-delay:.2s}
+    .particle:nth-child(5){--angle:240deg;animation-delay:.25s}
+    .particle:nth-child(6){--angle:300deg;animation-delay:.3s}
+    @keyframes particleFly{from{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(0) scale(1);opacity:1}to{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-60px) scale(0);opacity:0}}
+    .success-features{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem;padding:1.25rem;background:#f0fdf4;border-radius:.75rem}
+    .feature-item{display:flex;flex-direction:column;align-items:center;gap:.375rem;font-size:.75rem;color:#059669}
+    .feature-item i{font-size:1.25rem}
+
+    /* EXPIRED */
+    .expired-icon{width:100px;height:100px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem}
+    .expired-icon i{font-size:3rem;color:#d97706}
+
+    /* ERROR */
+    .error-icon{width:100px;height:100px;background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem}
+    .error-icon i{font-size:3rem;color:#dc2626}
+    .error-actions{display:flex;gap:.75rem;margin-bottom:1.5rem;justify-content:center}
+
+    .alert{display:none;align-items:center;gap:.75rem;padding:.875rem 1rem;border-radius:.5rem;margin-bottom:1.25rem;font-size:.8rem;text-align:left}
+    .alert.show{display:flex}
+    .alert--success{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;font-size:.9rem;font-weight:600;border:none;border-radius:.5rem;cursor:pointer;transition:all .2s;text-decoration:none}
+    .btn--primary{background:#4f46e5;color:#fff}
+    .btn--primary:hover:not(:disabled){background:#4338ca}
+    .btn--secondary{background:#fff;color:#374151;border:1px solid #e5e7eb}
+    .btn--secondary:hover{background:#f9fafb;border-color:#d1d5db}
+    .btn--full{width:100%}
+    .btn:disabled{opacity:.7;cursor:not-allowed}
+    .spinner-btn{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;font-size:.875rem;color:#6b7280;text-decoration:none;transition:color .2s}
+    .back-link:hover{color:#4f46e5}
+
+    .page-footer{margin-top:2rem;text-align:center}
+    .page-footer p{font-size:.8rem;color:#6b7280;margin:0}
+    .page-footer a{color:#4f46e5;text-decoration:underline}
+    .page-footer a:hover{text-decoration:none}
+  </style>
+</head>
+<body>
+<div class="confirmation-card">
+  <!-- Loading -->
+  <div class="state-container active" id="stateLoading">
+    <div class="loading-spinner"><div class="spinner-ring"></div><i class="bi bi-envelope-check"></i></div>
+    <h2 class="state-title">Vérification en cours...</h2>
+    <p class="state-text">Nous vérifions votre adresse email, veuillez patienter.</p>
+  </div>
+
+  <!-- Success -->
+  <div class="state-container" id="stateSuccess">
+    <div class="success-icon">
+      <div class="success-circle"><i class="bi bi-check-lg"></i></div>
+      <div class="success-particles"><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div></div>
+    </div>
+    <h2 class="state-title">Email confirmé !</h2>
+    <p class="state-text">Votre adresse email <strong>utilisateur@exemple.com</strong> a été vérifiée avec succès.</p>
+    <div class="success-features">
+      <div class="feature-item"><i class="bi bi-shield-check"></i><span>Compte sécurisé</span></div>
+      <div class="feature-item"><i class="bi bi-bell"></i><span>Notifications activées</span></div>
+      <div class="feature-item"><i class="bi bi-unlock"></i><span>Accès complet</span></div>
+    </div>
+    <a href="#" class="btn btn--primary btn--full"><span>Accéder à mon compte</span><i class="bi bi-arrow-right"></i></a>
+  </div>
+
+  <!-- Expired -->
+  <div class="state-container" id="stateExpired">
+    <div class="expired-icon"><i class="bi bi-clock-history"></i></div>
+    <h2 class="state-title">Lien expiré</h2>
+    <p class="state-text">Ce lien de confirmation a expiré. Demandez un nouveau lien pour confirmer votre adresse email.</p>
+    <div class="alert alert--success" id="resendAlert"><i class="bi bi-check-circle"></i><span>Un nouveau lien a été envoyé à utilisateur@exemple.com</span></div>
+    <button class="btn btn--primary btn--full" id="resendBtn" onclick="resendEmail()"><span class="spinner-btn" id="resendSpinner"></span><i class="bi bi-envelope" id="resendIcon"></i><span id="resendText">Renvoyer le lien</span></button>
+    <a href="#" class="back-link"><i class="bi bi-arrow-left"></i>Retour à la connexion</a>
+  </div>
+
+  <!-- Error -->
+  <div class="state-container" id="stateError">
+    <div class="error-icon"><i class="bi bi-x-circle"></i></div>
+    <h2 class="state-title">Erreur de vérification</h2>
+    <p class="state-text">Une erreur s'est produite lors de la vérification de votre email. Veuillez réessayer ou contacter le support.</p>
+    <div class="error-actions">
+      <button class="btn btn--primary" onclick="retry()"><i class="bi bi-arrow-clockwise"></i><span>Réessayer</span></button>
+      <a href="#" class="btn btn--secondary"><i class="bi bi-headset"></i><span>Contacter le support</span></a>
+    </div>
+    <a href="#" class="back-link"><i class="bi bi-arrow-left"></i>Retour à la connexion</a>
+  </div>
+</div>
+
+<div class="page-footer"><p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p></div>
+
+<script>
+function showState(id) {
+  document.querySelectorAll('.state-container').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+async function verifyEmail() {
+  showState('stateLoading');
+  await new Promise(r => setTimeout(r, 2000));
+  // Random result for demo
+  const rand = Math.random();
+  if (rand > 0.3) showState('stateSuccess');
+  else if (rand > 0.15) showState('stateExpired');
+  else showState('stateError');
+}
+
+async function resendEmail() {
+  const btn = document.getElementById('resendBtn');
+  btn.disabled = true;
+  document.getElementById('resendSpinner').style.display = 'block';
+  document.getElementById('resendIcon').style.display = 'none';
+  document.getElementById('resendText').textContent = 'Envoi en cours...';
+  document.getElementById('resendAlert').classList.remove('show');
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  btn.disabled = false;
+  document.getElementById('resendSpinner').style.display = 'none';
+  document.getElementById('resendIcon').style.display = '';
+  document.getElementById('resendText').textContent = 'Renvoyer le lien';
+  document.getElementById('resendAlert').classList.add('show');
+}
+
+function retry() { verifyEmail(); }
+
+verifyEmail();
+</script>
+</body>
+</html>

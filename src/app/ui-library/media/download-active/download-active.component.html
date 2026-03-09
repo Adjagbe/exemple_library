@@ -1,0 +1,76 @@
+
+
+<div class="download-active-showcase">
+  <h2 class="section-title">Téléchargements actifs</h2>
+
+  <div class="active-downloads" *ngIf="activeDownloads.length > 0">
+    <div
+      *ngFor="let download of activeDownloads"
+      class="download-item"
+      [class.completed]="download.status === 'completed'"
+      [class.paused]="download.status === 'paused'"
+    >
+      <div class="download-icon">
+        <i class="bi" [ngClass]="download.status === 'completed' ? 'bi-check-circle-fill' : 'bi-file-earmark-arrow-down'"></i>
+      </div>
+      <div class="download-info">
+        <div class="download-header">
+          <span class="download-name">{{ download.name }}</span>
+          <span class="download-speed" *ngIf="download.status === 'downloading'">
+            {{ download.speed }}
+          </span>
+        </div>
+        <div class="download-progress">
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              [class.completed]="download.status === 'completed'"
+              [class.paused]="download.status === 'paused'"
+              [style.width.%]="getProgress(download)"
+            ></div>
+          </div>
+          <span class="progress-text">
+            {{ formatSize(download.downloaded) }} / {{ formatSize(download.size) }}
+          </span>
+        </div>
+      </div>
+      <div class="download-actions">
+        <button
+          class="action-btn"
+          *ngIf="download.status === 'downloading'"
+          (click)="pauseDownload(download)"
+          title="Pause"
+        >
+          <i class="bi bi-pause-fill"></i>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="download.status === 'paused'"
+          (click)="resumeDownload(download)"
+          title="Reprendre"
+        >
+          <i class="bi bi-play-fill"></i>
+        </button>
+        <button
+          class="action-btn"
+          *ngIf="download.status === 'completed'"
+          title="Ouvrir le dossier"
+        >
+          <i class="bi bi-folder2-open"></i>
+        </button>
+        <button
+          class="action-btn action-btn--danger"
+          (click)="cancelDownload(download.id)"
+          title="Annuler"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="activeDownloads.length === 0">
+    <i class="bi bi-cloud-check"></i>
+    <p>Aucun téléchargement en cours</p>
+  </div>
+</div>

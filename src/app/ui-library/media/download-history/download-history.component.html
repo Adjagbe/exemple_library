@@ -1,0 +1,28 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DOWNLOAD HISTORY COMPONENT - Premium UI Library -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="download-history-showcase">
+  <h2 class="section-title">Historique</h2>
+
+  <div class="history-list" *ngIf="downloadHistory.length > 0">
+    <div *ngFor="let item of downloadHistory" class="history-item">
+      <div class="history-icon">
+        <i class="bi bi-file-earmark-check"></i>
+      </div>
+      <div class="history-info">
+        <span class="history-name">{{ item.name }}</span>
+        <span class="history-date">{{ formatDate(item.date) }}</span>
+      </div>
+      <span class="history-size">{{ item.size }}</span>
+      <button class="action-btn" title="Retélécharger">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="downloadHistory.length === 0">
+    <i class="bi bi-clock-history"></i>
+    <p>Aucun historique de téléchargement</p>
+  </div>
+</div>

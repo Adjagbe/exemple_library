@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupon - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #f9fafb; }
+
+    .coupon-page { min-height: 100vh; background: #f9fafb; padding: 2rem; }
+    .coupon-container { max-width: 1100px; margin: 0 auto; }
+    .coupon-header { margin-bottom: 2rem; }
+    .page-title { display: flex; align-items: center; gap: 0.75rem; font-size: 1.75rem; font-weight: 700; color: #111827; margin: 0; }
+    .page-subtitle { color: #6b7280; margin: 0.5rem 0 0 0; }
+
+    .coupon-content { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; }
+
+    .apply-coupon-card { background: white; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .card-title { font-size: 1rem; font-weight: 600; color: #111827; margin: 0 0 1rem 0; }
+    .coupon-form { display: flex; gap: 0.75rem; }
+    .input-group { flex: 1; position: relative; }
+    .input-group i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #9ca3af; font-size: 1.125rem; }
+    .coupon-input { width: 100%; padding: 0.875rem 1rem 0.875rem 3rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s ease; }
+    .coupon-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .coupon-input::placeholder { text-transform: none; letter-spacing: normal; color: #9ca3af; }
+    .coupon-input:disabled { background: #f9fafb; }
+    .apply-btn { padding: 0.875rem 1.5rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; min-width: 100px; }
+    .apply-btn:hover:not(:disabled) { background: #4338ca; }
+    .apply-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .spin { animation: spin 1s linear infinite; display: inline-block; }
+
+    .message { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; }
+    .message.error { background: #fef2f2; color: #dc2626; }
+    .message.success { background: #f0fdf4; color: #16a34a; }
+
+    .applied-coupon { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #86efac; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.5rem; display: none; }
+    .applied-header h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; color: #16a34a; margin: 0 0 0.75rem 0; }
+    .applied-content { display: flex; align-items: center; gap: 1rem; }
+    .coupon-visual { flex: 1; display: flex; align-items: center; gap: 1rem; }
+    .coupon-badge { width: 48px; height: 48px; background: #16a34a; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
+    .coupon-badge i { font-size: 1.5rem; color: white; }
+    .coupon-details { flex: 1; }
+    .coupon-details .coupon-code { display: block; font-weight: 700; color: #111827; font-size: 1.125rem; letter-spacing: 0.05em; }
+    .coupon-details .coupon-desc { font-size: 0.8rem; color: #6b7280; }
+    .coupon-value .discount-amount { font-size: 1.25rem; font-weight: 700; color: #16a34a; }
+    .remove-btn { display: flex; align-items: center; gap: 0.375rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.8rem; color: #6b7280; cursor: pointer; transition: all 0.2s ease; }
+    .remove-btn:hover { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+
+    .section-title { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; font-weight: 600; color: #111827; margin: 0 0 1.25rem 0; }
+    .coupons-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+    .coupon-card { position: relative; background: white; border-radius: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.2s ease; }
+    .coupon-card:hover:not(.disabled) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+    .coupon-card.disabled { opacity: 0.6; }
+    .coupon-card.applied { border: 2px solid #16a34a; }
+
+    .coupon-ticket { display: flex; min-height: 140px; }
+    .ticket-left { flex: 0 0 140px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); padding: 1.25rem; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
+    .coupon-type-badge { display: flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.5rem; background: rgba(255,255,255,0.2); border-radius: 0.25rem; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .coupon-type-badge i { font-size: 0.75rem; }
+    .coupon-type-badge.fixed { background: rgba(16,185,129,0.3); }
+    .coupon-type-badge.free_shipping { background: rgba(245,158,11,0.3); }
+    .coupon-type-badge.bogo { background: rgba(236,72,153,0.3); }
+    .coupon-value-display { text-align: center; }
+    .coupon-value-display .value-number { display: block; font-size: 2.5rem; font-weight: 800; line-height: 1; }
+    .coupon-value-display .value-label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; opacity: 0.9; }
+
+    .ticket-divider { position: relative; width: 20px; display: flex; flex-direction: column; align-items: center; }
+    .divider-circle { width: 20px; height: 10px; background: #f9fafb; }
+    .divider-circle.top { border-radius: 0 0 20px 20px; }
+    .divider-circle.bottom { border-radius: 20px 20px 0 0; }
+    .divider-line { flex: 1; width: 0; border-left: 2px dashed #e5e7eb; }
+
+    .ticket-right { flex: 1; padding: 1.25rem; display: flex; flex-direction: column; }
+    .coupon-code-display { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .code-label { font-size: 0.65rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; }
+    .code-value { font-size: 1.125rem; font-weight: 700; color: #111827; letter-spacing: 0.05em; }
+    .copy-btn { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: #f3f4f6; border: none; border-radius: 0.375rem; color: #6b7280; cursor: pointer; transition: all 0.2s ease; }
+    .copy-btn:hover { background: #e5e7eb; color: #4f46e5; }
+    .coupon-description { flex: 1; font-size: 0.875rem; color: #374151; margin: 0 0 0.75rem 0; line-height: 1.4; }
+    .coupon-meta { display: flex; gap: 1rem; }
+    .meta-item { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: #6b7280; }
+    .meta-item i { font-size: 0.875rem; }
+    .meta-item.expiring { color: #dc2626; font-weight: 600; }
+
+    .use-coupon-btn { width: 100%; padding: 0.875rem; background: #f3f4f6; border: none; border-top: 1px solid #e5e7eb; font-size: 0.875rem; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .use-coupon-btn:hover:not(:disabled) { background: #e5e7eb; color: #4f46e5; }
+    .use-coupon-btn:disabled { cursor: not-allowed; color: #9ca3af; }
+    .coupon-card.applied .use-coupon-btn { background: #d1fae5; color: #16a34a; }
+    .applied-badge { position: absolute; top: 0.75rem; right: 0.75rem; color: #16a34a; font-size: 1.25rem; }
+
+    /* Sidebar */
+    .coupon-sidebar {}
+    .order-summary { background: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: sticky; top: 1rem; }
+    .summary-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin: 0 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
+    .summary-lines { margin-bottom: 1rem; }
+    .summary-line { display: flex; justify-content: space-between; padding: 0.625rem 0; font-size: 0.9rem; color: #6b7280; }
+    .summary-line.discount { color: #16a34a; }
+    .summary-line.discount span:first-child { display: flex; align-items: center; gap: 0.375rem; }
+    .strikethrough { text-decoration: line-through; color: #9ca3af; }
+    .summary-total { display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid #e5e7eb; font-size: 1.25rem; font-weight: 700; color: #111827; }
+    .savings-badge { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #16a34a; margin-bottom: 1rem; }
+    .savings-badge i { font-size: 1.25rem; }
+    .checkout-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s ease; }
+    .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(79,70,229,0.4); }
+
+    .coupon-help { margin-top: 1.5rem; padding: 1.25rem; background: #f9fafb; border-radius: 0.75rem; }
+    .coupon-help h4 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0 0 0.75rem 0; }
+    .coupon-help h4 i { color: #6b7280; }
+    .coupon-help ul { margin: 0; padding-left: 1.25rem; }
+    .coupon-help li { font-size: 0.8rem; color: #6b7280; line-height: 1.6; margin-bottom: 0.375rem; }
+
+    @media (max-width: 1024px) { .coupon-content { grid-template-columns: 1fr; } .coupon-sidebar { order: -1; } }
+    @media (max-width: 768px) {
+      .coupon-page { padding: 1rem; }
+      .coupon-form { flex-direction: column; }
+      .apply-btn { width: 100%; }
+      .ticket-left { flex: 0 0 100px; }
+      .coupon-value-display .value-number { font-size: 2rem; }
+      .applied-content { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .coupon-visual { flex-wrap: wrap; }
+      .remove-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="coupon-page">
+  <div class="coupon-container">
+    <header class="coupon-header">
+      <h1 class="page-title">Coupons & Discounts</h1>
+      <p class="page-subtitle">Apply coupons to save on your order</p>
+    </header>
+
+    <div class="coupon-content">
+      <div class="coupon-main">
+        <!-- Apply Coupon Form -->
+        <div class="apply-coupon-card">
+          <h2 class="card-title">Have a coupon code?</h2>
+          <div class="coupon-form">
+            <div class="input-group">
+              <i class="bi bi-ticket-perforated"></i>
+              <input type="text" class="coupon-input" id="couponInput" placeholder="Enter coupon code">
+            </div>
+            <button class="apply-btn" id="applyBtn" disabled>Apply</button>
+          </div>
+          <div class="message error" id="errorMsg" style="display:none;"></div>
+          <div class="message success" id="successMsg" style="display:none;"></div>
+        </div>
+
+        <!-- Applied Coupon -->
+        <div class="applied-coupon" id="appliedCouponEl">
+          <div class="applied-header"><h3><i class="bi bi-check-circle-fill"></i> Applied Coupon</h3></div>
+          <div class="applied-content">
+            <div class="coupon-visual">
+              <div class="coupon-badge" id="appliedBadge"><i class="bi bi-percent" id="appliedBadgeIcon"></i></div>
+              <div class="coupon-details"><span class="coupon-code" id="appliedCode"></span><span class="coupon-desc" id="appliedDesc"></span></div>
+              <div class="coupon-value"><span class="discount-amount" id="appliedAmount"></span></div>
+            </div>
+            <button class="remove-btn" id="removeBtn"><i class="bi bi-x"></i> Remove</button>
+          </div>
+        </div>
+
+        <!-- Available Coupons -->
+        <div class="available-coupons">
+          <h2 class="section-title">Available Coupons</h2>
+          <div class="coupons-grid" id="couponsGrid"></div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="coupon-sidebar">
+        <div class="order-summary">
+          <h3 class="summary-title">Order Summary</h3>
+          <div class="summary-lines" id="summaryLines"></div>
+          <div class="summary-total"><span>Total</span><span id="totalDisplay"></span></div>
+          <div class="savings-badge" id="savingsBadge" style="display:none;"><i class="bi bi-piggy-bank"></i><span id="savingsText"></span></div>
+          <button class="checkout-btn"><i class="bi bi-lock"></i> Proceed to Checkout</button>
+        </div>
+        <div class="coupon-help">
+          <h4><i class="bi bi-question-circle"></i> How to use coupons</h4>
+          <ul>
+            <li>Enter your code in the field above or click "Use Coupon" on any available coupon</li>
+            <li>Only one coupon can be applied per order</li>
+            <li>Some coupons have minimum purchase requirements</li>
+            <li>Coupons cannot be combined with other offers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const availableCoupons = [
+    { id:'1', code:'SAVE20', type:'percentage', value:20, description:'20% off your entire purchase', minPurchase:50, maxDiscount:100, expiresAt:new Date('2024-02-28'), usedCount:0, usageLimit:null, isActive:true },
+    { id:'2', code:'FLAT50', type:'fixed', value:50, description:'$50 off orders over $200', minPurchase:200, expiresAt:new Date('2024-03-15'), usedCount:0, usageLimit:null, isActive:true },
+    { id:'3', code:'FREESHIP', type:'free_shipping', value:0, description:'Free shipping on all orders', expiresAt:new Date('2024-02-20'), usedCount:0, usageLimit:null, isActive:true },
+    { id:'4', code:'BOGO50', type:'bogo', value:50, description:'Buy one get one 50% off on selected items', categories:['Electronics','Accessories'], expiresAt:new Date('2024-01-31'), usedCount:0, usageLimit:null, isActive:true },
+    { id:'5', code:'NEWUSER', type:'percentage', value:15, description:'15% off your first order', maxDiscount:50, expiresAt:new Date('2024-12-31'), usageLimit:1, usedCount:1, isActive:false }
+  ];
+
+  let appliedCoupon = null;
+  let errorMessage = '';
+  let successMessage = '';
+  const cartSubtotal = 175.00;
+  const shippingCost = 9.99;
+
+  function fmt(n) { return '$' + n.toFixed(2); }
+
+  function getCouponTypeIcon(type) {
+    return { percentage:'bi-percent', fixed:'bi-currency-dollar', free_shipping:'bi-truck', bogo:'bi-gift' }[type] || 'bi-tag';
+  }
+  function getCouponTypeLabel(type) {
+    return { percentage:'Percentage Off', fixed:'Fixed Amount', free_shipping:'Free Shipping', bogo:'Buy One Get One' }[type] || type;
+  }
+  function getDaysUntilExpiry(date) {
+    return Math.ceil((new Date(date).getTime() - Date.now()) / (1000*60*60*24));
+  }
+  function isExpiringSoon(date) { return getDaysUntilExpiry(date) <= 7; }
+  function isEligible(c) {
+    if (!c.isActive) return false;
+    if (c.minPurchase && cartSubtotal < c.minPurchase) return false;
+    if (c.usageLimit && c.usedCount >= c.usageLimit) return false;
+    return true;
+  }
+  function getDiscountAmount() {
+    if (!appliedCoupon) return 0;
+    if (appliedCoupon.type === 'percentage') { let d = cartSubtotal*(appliedCoupon.value/100); if(appliedCoupon.maxDiscount) d=Math.min(d,appliedCoupon.maxDiscount); return d; }
+    if (appliedCoupon.type === 'fixed') return appliedCoupon.value;
+    if (appliedCoupon.type === 'free_shipping') return shippingCost;
+    return 0;
+  }
+  function getTotal() {
+    let t = cartSubtotal + shippingCost - getDiscountAmount();
+    if (appliedCoupon?.type === 'free_shipping') t = cartSubtotal;
+    return Math.max(0, t);
+  }
+
+  function showMsg(type, text) {
+    const errEl = document.getElementById('errorMsg');
+    const sucEl = document.getElementById('successMsg');
+    errEl.style.display = 'none'; sucEl.style.display = 'none';
+    if (type === 'error') { errEl.innerHTML = `<i class="bi bi-exclamation-circle"></i> ${text}`; errEl.style.display = ''; }
+    if (type === 'success') { sucEl.innerHTML = `<i class="bi bi-check-circle"></i> ${text}`; sucEl.style.display = ''; }
+  }
+
+  function render() {
+    // Applied coupon
+    const appliedEl = document.getElementById('appliedCouponEl');
+    if (appliedCoupon) {
+      appliedEl.style.display = '';
+      document.getElementById('appliedBadgeIcon').className = 'bi ' + getCouponTypeIcon(appliedCoupon.type);
+      document.getElementById('appliedCode').textContent = appliedCoupon.code;
+      document.getElementById('appliedDesc').textContent = appliedCoupon.description;
+      document.getElementById('appliedAmount').textContent = '-' + fmt(getDiscountAmount());
+    } else { appliedEl.style.display = 'none'; }
+
+    // Coupons grid
+    const grid = document.getElementById('couponsGrid');
+    grid.innerHTML = availableCoupons.map(c => {
+      const eligible = isEligible(c);
+      const isApplied = appliedCoupon?.id === c.id;
+      const days = getDaysUntilExpiry(c.expiresAt);
+      const expiring = isExpiringSoon(c.expiresAt);
+      let valueNum, valueLbl;
+      if (c.type==='percentage') { valueNum=c.value+'%'; valueLbl='OFF'; }
+      else if (c.type==='fixed') { valueNum='$'+c.value; valueLbl='OFF'; }
+      else if (c.type==='free_shipping') { valueNum='FREE'; valueLbl='SHIPPING'; }
+      else { valueNum=c.value+'%'; valueLbl='OFF 2ND'; }
+
+      let btnText;
+      if (isApplied) btnText = '<i class="bi bi-check-lg"></i> Applied';
+      else if (!c.isActive) btnText = 'Expired';
+      else if (c.usageLimit && c.usedCount >= c.usageLimit) btnText = 'Already Used';
+      else if (c.minPurchase && cartSubtotal < c.minPurchase) btnText = 'Add $'+(c.minPurchase - cartSubtotal).toFixed(2)+' more';
+      else btnText = '<i class="bi bi-tag"></i> Use Coupon';
+
+      return `<div class="coupon-card ${!eligible?'disabled':''} ${isApplied?'applied':''}">
+        <div class="coupon-ticket">
+          <div class="ticket-left">
+            <div class="coupon-type-badge ${c.type}"><i class="bi ${getCouponTypeIcon(c.type)}"></i><span>${getCouponTypeLabel(c.type)}</span></div>
+            <div class="coupon-value-display"><span class="value-number">${valueNum}</span><span class="value-label">${valueLbl}</span></div>
+          </div>
+          <div class="ticket-divider"><div class="divider-circle top"></div><div class="divider-line"></div><div class="divider-circle bottom"></div></div>
+          <div class="ticket-right">
+            <div class="coupon-code-display"><span class="code-label">CODE</span><span class="code-value">${c.code}</span><button class="copy-btn" onclick="event.stopPropagation(); copyCoupon('${c.code}')"><i class="bi bi-clipboard"></i></button></div>
+            <p class="coupon-description">${c.description}</p>
+            <div class="coupon-meta">
+              ${c.minPurchase ? `<span class="meta-item"><i class="bi bi-cart"></i> Min. $${c.minPurchase}</span>` : ''}
+              <span class="meta-item ${expiring?'expiring':''}"><i class="bi bi-clock"></i> ${days>0?days+' days left':'Expired'}</span>
+            </div>
+          </div>
+        </div>
+        <button class="use-coupon-btn" onclick="selectCoupon('${c.id}')" ${!eligible||isApplied?'disabled':''}>${btnText}</button>
+        ${isApplied?'<div class="applied-badge"><i class="bi bi-check-circle-fill"></i></div>':''}
+      </div>`;
+    }).join('');
+
+    // Summary
+    const lines = document.getElementById('summaryLines');
+    let html = `<div class="summary-line"><span>Subtotal</span><span>${fmt(cartSubtotal)}</span></div>`;
+    html += `<div class="summary-line"><span>Shipping</span><span ${appliedCoupon?.type==='free_shipping'?'class="strikethrough"':''}>${fmt(shippingCost)}</span></div>`;
+    if (appliedCoupon) html += `<div class="summary-line discount"><span><i class="bi bi-tag-fill"></i> ${appliedCoupon.code}</span><span>-${fmt(getDiscountAmount())}</span></div>`;
+    lines.innerHTML = html;
+    document.getElementById('totalDisplay').textContent = fmt(getTotal());
+
+    const savings = document.getElementById('savingsBadge');
+    if (appliedCoupon) { savings.style.display = ''; document.getElementById('savingsText').textContent = "You're saving "+fmt(getDiscountAmount())+" on this order!"; }
+    else savings.style.display = 'none';
+  }
+
+  function selectCoupon(id) {
+    const c = availableCoupons.find(x => x.id === id);
+    if (!c || !c.isActive) return;
+    if (c.minPurchase && cartSubtotal < c.minPurchase) { showMsg('error', `Add $${(c.minPurchase-cartSubtotal).toFixed(2)} more to use this coupon`); return; }
+    appliedCoupon = c;
+    showMsg('success', `Coupon "${c.code}" applied!`);
+    render();
+  }
+
+  function copyCoupon(code) {
+    navigator.clipboard.writeText(code);
+    showMsg('success', `Code "${code}" copied to clipboard!`);
+    setTimeout(() => { const el = document.getElementById('successMsg'); if(el.textContent.includes('copied')) el.style.display='none'; }, 2000);
+  }
+
+  // Input
+  const inp = document.getElementById('couponInput');
+  const btn = document.getElementById('applyBtn');
+  inp.addEventListener('input', () => { btn.disabled = !inp.value.trim(); });
+  inp.addEventListener('keydown', e => { if(e.key==='Enter') applyCoupon(); });
+  btn.addEventListener('click', applyCoupon);
+
+  function applyCoupon() {
+    if (!inp.value.trim()) { showMsg('error','Please enter a coupon code'); return; }
+    btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i>';
+    btn.disabled = true; inp.disabled = true;
+    setTimeout(() => {
+      const c = availableCoupons.find(x => x.code.toLowerCase() === inp.value.trim().toLowerCase() && x.isActive);
+      if (!c) { showMsg('error','Invalid or expired coupon code'); btn.textContent='Apply'; btn.disabled=false; inp.disabled=false; return; }
+      if (c.minPurchase && cartSubtotal < c.minPurchase) { showMsg('error',`Minimum purchase of $${c.minPurchase} required`); btn.textContent='Apply'; btn.disabled=false; inp.disabled=false; return; }
+      if (c.usageLimit && c.usedCount >= c.usageLimit) { showMsg('error','This coupon has already been used'); btn.textContent='Apply'; btn.disabled=false; inp.disabled=false; return; }
+      appliedCoupon = c;
+      showMsg('success','Coupon applied successfully!');
+      inp.value = ''; inp.disabled = false; btn.textContent='Apply'; btn.disabled=true;
+      render();
+    }, 1000);
+  }
+
+  document.getElementById('removeBtn').addEventListener('click', () => {
+    appliedCoupon = null;
+    document.getElementById('successMsg').style.display='none';
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

@@ -1,15 +1,9 @@
-// ═══════════════════════════════════════════════════════════════
-// DASHBOARD COMPONENT - Premium UI Library
-// Main dashboard layout with KPIs, charts, and activity
-// ═══════════════════════════════════════════════════════════════
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
 // INTERFACES
-// ─────────────────────────────────────────────────────────────────
 export interface DashboardKPI {
   id: string;
   label: string;
@@ -56,9 +50,9 @@ export interface ChartData {
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent {
-  // ─────────────────────────────────────────────────────────────────
+
   // KPIs
-  // ─────────────────────────────────────────────────────────────────
+
   kpis: DashboardKPI[] = [
     {
       id: 'revenue',
@@ -106,9 +100,9 @@ export class DashboardComponent {
     }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // CHART DATA
-  // ─────────────────────────────────────────────────────────────────
+
   revenueChart: ChartData = {
     labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
     values: [12500, 18200, 15800, 22400, 19600, 24500],
@@ -122,9 +116,9 @@ export class DashboardComponent {
     { name: 'Sports', value: 12, color: '#ef4444' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // ACTIVITIES
-  // ─────────────────────────────────────────────────────────────────
+
   activities: DashboardActivity[] = [
     { id: 1, user: 'Marie Martin', avatar: 'MM', action: 'a créé', target: 'une nouvelle commande #1234', time: 'Il y a 5 min', type: 'create' },
     { id: 2, user: 'Jean Dupont', avatar: 'JD', action: 'a modifié', target: 'le produit "iPhone 15"', time: 'Il y a 15 min', type: 'update' },
@@ -133,9 +127,9 @@ export class DashboardComponent {
     { id: 5, user: 'Emma Petit', avatar: 'EP', action: 'a supprimé', target: 'le client inactif #789', time: 'Il y a 2h', type: 'delete' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // TASKS
-  // ─────────────────────────────────────────────────────────────────
+
   tasks: DashboardTask[] = [
     { id: 1, title: 'Finaliser la présentation Q2', status: 'in-progress', priority: 'high', dueDate: '2024-05-10', assignee: 'JD' },
     { id: 2, title: 'Réviser les stocks produits', status: 'todo', priority: 'medium', dueDate: '2024-05-12', assignee: 'MM' },
@@ -143,9 +137,9 @@ export class DashboardComponent {
     { id: 4, title: 'Mise à jour documentation', status: 'in-progress', priority: 'medium', dueDate: '2024-05-15', assignee: 'LM' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // TIME RANGE
-  // ─────────────────────────────────────────────────────────────────
+
   selectedTimeRange: string = '30days';
   timeRanges = [
     { value: '7days', label: '7 jours' },
@@ -154,9 +148,9 @@ export class DashboardComponent {
     { value: 'year', label: '1 an' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // HELPERS
-  // ─────────────────────────────────────────────────────────────────
+
   formatKPIValue(kpi: DashboardKPI): string {
     if (kpi.format === 'currency') {
       return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(kpi.value as number);

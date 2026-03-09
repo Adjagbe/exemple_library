@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #f9fafb; }
+
+    .product-list-page { min-height: 100vh; background: #f9fafb; }
+
+    /* HEADER */
+    .page-header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #e5e7eb; }
+    .page-header__title { font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0; }
+    .page-header__count { font-size: 0.875rem; color: #6b7280; margin: 0.25rem 0 0 0; }
+    .page-header__actions { display: flex; align-items: center; gap: 1rem; }
+    .filter-toggle { display: flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.875rem; color: #374151; cursor: pointer; position: relative; }
+    .filter-toggle:hover { background: #f9fafb; border-color: #d1d5db; }
+    .filter-toggle .filter-badge { position: absolute; top: -2px; right: -2px; font-size: 0.5rem; color: #4f46e5; }
+    .view-toggle { display: flex; background: #f3f4f6; border-radius: 0.5rem; padding: 0.25rem; }
+    .view-btn { padding: 0.5rem 0.75rem; background: transparent; border: none; border-radius: 0.375rem; color: #6b7280; cursor: pointer; transition: all 0.2s ease; }
+    .view-btn:hover { color: #374151; }
+    .view-btn.active { background: white; color: #4f46e5; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+    /* CONTENT */
+    .page-content { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; padding: 2rem; max-width: 1600px; margin: 0 auto; }
+
+    /* FILTERS */
+    .filters-sidebar { background: white; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #e5e7eb; height: fit-content; position: sticky; top: 1rem; }
+    .filters-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .filters-header h3 { font-size: 1.125rem; font-weight: 600; color: #111827; margin: 0; }
+    .close-filters { display: none; background: none; border: none; color: #6b7280; cursor: pointer; }
+    .filter-section { margin-bottom: 1.5rem; }
+    .filter-section:last-child { margin-bottom: 0; }
+    .filter-label { display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .search-input { position: relative; }
+    .search-input i { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+    .search-input input { width: 100%; padding: 0.625rem 0.875rem 0.625rem 2.5rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.875rem; }
+    .search-input input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .category-list { display: flex; flex-direction: column; gap: 0.375rem; }
+    .category-btn { text-align: left; padding: 0.5rem 0.75rem; background: transparent; border: none; border-radius: 0.375rem; font-size: 0.875rem; color: #6b7280; cursor: pointer; transition: all 0.15s ease; }
+    .category-btn:hover { background: #f3f4f6; color: #374151; }
+    .category-btn.active { background: #eef2ff; color: #4f46e5; font-weight: 500; }
+    .price-inputs { display: flex; align-items: center; gap: 0.5rem; }
+    .price-inputs input { flex: 1; padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 0.375rem; font-size: 0.875rem; text-align: center; width: 10%; }
+    .price-inputs input:focus { outline: none; border-color: #4f46e5; }
+    .price-inputs span { color: #9ca3af; }
+    .sort-select { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.875rem; background: white; cursor: pointer; }
+    .sort-select:focus { outline: none; border-color: #4f46e5; }
+
+    /* PRODUCTS */
+    .products-container { flex: 1; }
+    .products--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .products--list { display: flex; flex-direction: column; gap: 1rem; }
+    .products--list .product-card { display: grid; grid-template-columns: 200px 1fr; gap: 1.5rem; }
+    .products--list .product-card__image { aspect-ratio: 1; }
+
+    .product-card { background: white; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e5e7eb; transition: all 0.2s ease; }
+    .product-card:hover { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .product-card:hover .product-card__actions { opacity: 1; }
+    .product-card.out-of-stock { opacity: 0.7; }
+    .product-card__image { position: relative; aspect-ratio: 1; overflow: hidden; background: #f9fafb; }
+    .product-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .product-card__image:hover img { transform: scale(1.05); }
+    .product-card__badges { position: absolute; top: 0.75rem; left: 0.75rem; display: flex; flex-direction: column; gap: 0.375rem; }
+    .product-card__actions { position: absolute; top: 0.75rem; right: 0.75rem; display: flex; flex-direction: column; gap: 0.375rem; opacity: 0; transition: opacity 0.2s ease; }
+    .product-card__info { padding: 1.25rem; }
+    .product-card__category { font-size: 0.75rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+    .product-card__name { font-size: 1rem; font-weight: 600; color: #111827; margin: 0.375rem 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-card__description { font-size: 0.8rem; color: #6b7280; margin: 0 0 0.75rem 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-card__rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .product-card__rating .stars { display: flex; gap: 0.125rem; color: #fbbf24; font-size: 0.875rem; }
+    .product-card__rating .rating-text { font-size: 0.75rem; color: #6b7280; }
+    .product-card__price { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .product-card__price .price-current { font-size: 1.25rem; font-weight: 700; color: #111827; }
+    .product-card__price .price-original { font-size: 0.9rem; color: #9ca3af; text-decoration: line-through; }
+
+    .badge { display: inline-block; padding: 0.25rem 0.5rem; font-size: 0.7rem; font-weight: 600; border-radius: 0.25rem; text-transform: uppercase; }
+    .badge--new { background: #dbeafe; color: #1d4ed8; }
+    .badge--bestseller { background: #fef3c7; color: #d97706; }
+    .badge--discount { background: #fee2e2; color: #dc2626; }
+
+    .action-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: white; border: none; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #6b7280; cursor: pointer; transition: all 0.2s ease; }
+    .action-btn:hover { background: #4f46e5; color: white; }
+
+    .out-of-stock-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center; }
+    .out-of-stock-overlay span { padding: 0.5rem 1rem; background: #374151; color: white; font-size: 0.75rem; font-weight: 600; border-radius: 0.25rem; text-transform: uppercase; }
+
+    .add-to-cart-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .add-to-cart-btn:hover:not(:disabled) { background: #4338ca; }
+    .add-to-cart-btn:disabled { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; }
+
+    .empty-state { text-align: center; padding: 4rem 2rem; }
+    .empty-state i { font-size: 4rem; color: #d1d5db; margin-bottom: 1rem; display: block; }
+    .empty-state h3 { font-size: 1.25rem; color: #374151; margin: 0 0 0.5rem 0; }
+    .empty-state p { color: #6b7280; margin: 0; }
+
+    @media (max-width: 1024px) {
+      .page-content { grid-template-columns: 1fr; }
+      .filters-sidebar { display: none; }
+      .filters-sidebar.open { display: block; position: fixed; top: 0; left: 0; width: 320px; height: 100vh; z-index: 100; border-radius: 0; overflow-y: auto; }
+      .close-filters { display: block; }
+    }
+    @media (max-width: 640px) {
+      .page-header { padding: 1rem; flex-direction: column; gap: 1rem; align-items: stretch; }
+      .page-header__actions { justify-content: space-between; }
+      .page-content { padding: 1rem; }
+      .products--grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .product-card__info { padding: 0.875rem; }
+      .product-card__name { font-size: 0.9rem; }
+      .product-card__price .price-current { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="product-list-page">
+  <header class="page-header">
+    <div class="page-header__left">
+      <h1 class="page-header__title">Nos Produits</h1>
+      <p class="page-header__count" id="productCount">8 produits trouvés</p>
+    </div>
+    <div class="page-header__actions">
+      <button class="filter-toggle" onclick="toggleFilters()">
+        <i class="bi bi-funnel"></i> Filtres
+        <span class="filter-badge" id="filterBadge" style="display:none">●</span>
+      </button>
+      <div class="view-toggle">
+        <button class="view-btn active" id="viewGrid" onclick="setView('grid')"><i class="bi bi-grid-3x3-gap"></i></button>
+        <button class="view-btn" id="viewList" onclick="setView('list')"><i class="bi bi-list"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <aside class="filters-sidebar" id="filtersSidebar">
+      <div class="filters-header">
+        <h3>Filtres</h3>
+        <button class="close-filters" onclick="toggleFilters()"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="filter-section">
+        <label class="filter-label">Rechercher</label>
+        <div class="search-input"><i class="bi bi-search"></i><input type="text" id="searchInput" placeholder="Nom du produit..." oninput="renderProducts()"></div>
+      </div>
+      <div class="filter-section">
+        <label class="filter-label">Catégorie</label>
+        <div class="category-list" id="categoryList"></div>
+      </div>
+      <div class="filter-section">
+        <label class="filter-label">Prix</label>
+        <div class="price-inputs">
+          <input type="number" id="priceMin" placeholder="Min" value="0" oninput="renderProducts()">
+          <span>—</span>
+          <input type="number" id="priceMax" placeholder="Max" value="5000" oninput="renderProducts()">
+        </div>
+      </div>
+      <div class="filter-section">
+        <label class="filter-label">Trier par</label>
+        <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+          <option value="featured">En vedette</option>
+          <option value="newest">Plus récents</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="rating">Mieux notés</option>
+        </select>
+      </div>
+    </aside>
+
+    <main class="products-container" id="productsContainer"></main>
+  </div>
+</div>
+
+<script>
+  const categories=[{id:'',name:'Toutes les catégories'},{id:'electronics',name:'Électronique'},{id:'clothing',name:'Vêtements'},{id:'home',name:'Maison'},{id:'sports',name:'Sports'}];
+  const products=[
+    {id:'1',name:'MacBook Pro 16"',description:'Puce M3 Pro, 18 Go RAM, 512 Go SSD',price:2799,originalPrice:2999,image:'https://picsum.photos/400/400?random=1',category:'electronics',rating:4.9,reviewsCount:234,inStock:true,isNew:true,discount:7},
+    {id:'2',name:'iPhone 15 Pro Max',description:'256 Go, Titane naturel',price:1479,image:'https://picsum.photos/400/400?random=2',category:'electronics',rating:4.8,reviewsCount:567,inStock:true,isBestSeller:true},
+    {id:'3',name:'Nike Air Max 270',description:'Chaussures de running, Noir/Blanc',price:159,originalPrice:189,image:'https://picsum.photos/400/400?random=3',category:'sports',rating:4.6,reviewsCount:892,inStock:true,discount:16},
+    {id:'4',name:'Sony WH-1000XM5',description:'Casque sans fil à réduction de bruit',price:379,image:'https://picsum.photos/400/400?random=4',category:'electronics',rating:4.7,reviewsCount:1203,inStock:true,isBestSeller:true},
+    {id:'5',name:'Canapé 3 places Milano',description:'Tissu bouclette, Gris clair',price:899,originalPrice:1099,image:'https://picsum.photos/400/400?random=5',category:'home',rating:4.5,reviewsCount:78,inStock:true,discount:18},
+    {id:'6',name:'Veste en cuir Premium',description:'Cuir véritable, Noir',price:299,image:'https://picsum.photos/400/400?random=6',category:'clothing',rating:4.4,reviewsCount:156,inStock:false},
+    {id:'7',name:'Apple Watch Ultra 2',description:'GPS + Cellular, 49mm, Titane',price:899,image:'https://picsum.photos/400/400?random=7',category:'electronics',rating:4.8,reviewsCount:345,inStock:true,isNew:true},
+    {id:'8',name:'Lampe de bureau LED',description:'Réglable, USB, Blanc',price:49,originalPrice:69,image:'https://picsum.photos/400/400?random=8',category:'home',rating:4.3,reviewsCount:423,inStock:true,discount:29}
+  ];
+
+  let viewMode='grid', selectedCategory='', filtersOpen=false;
+
+  function fmt(n){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(n);}
+  function getStars(r){return Array(5).fill(0).map((_,i)=>i<Math.floor(r)?1:(i<r?0.5:0));}
+  function starsHtml(r){return getStars(r).map(s=>`<i class="bi ${s===1?'bi-star-fill':(s===0.5?'bi-star-half':'bi-star')}"></i>`).join('');}
+
+  function getFiltered(){
+    const q=(document.getElementById('searchInput').value||'').toLowerCase();
+    const pmin=parseFloat(document.getElementById('priceMin').value)||0;
+    const pmax=parseFloat(document.getElementById('priceMax').value)||Infinity;
+    const sort=document.getElementById('sortSelect').value;
+    return products
+      .filter(p=>{
+        const ms=p.name.toLowerCase().includes(q)||p.description.toLowerCase().includes(q);
+        const mc=!selectedCategory||p.category===selectedCategory;
+        const mp=p.price>=pmin&&p.price<=pmax;
+        return ms&&mc&&mp;
+      })
+      .sort((a,b)=>{
+        switch(sort){
+          case 'price-asc':return a.price-b.price;
+          case 'price-desc':return b.price-a.price;
+          case 'rating':return b.rating-a.rating;
+          case 'newest':return (a.isNew?-1:1);
+          default:return (b.isBestSeller?1:0)-(a.isBestSeller?1:0);
+        }
+      });
+  }
+
+  function renderCategories(){
+    document.getElementById('categoryList').innerHTML=categories.map(c=>
+      `<button class="category-btn ${selectedCategory===c.id?'active':''}" onclick="selectCategory('${c.id}')">${c.name}</button>`
+    ).join('');
+  }
+
+  function renderProducts(){
+    const filtered=getFiltered();
+    document.getElementById('productCount').textContent=`${filtered.length} produits trouvés`;
+    document.getElementById('filterBadge').style.display=(selectedCategory||document.getElementById('searchInput').value)?'':'none';
+
+    const container=document.getElementById('productsContainer');
+    if(filtered.length===0){
+      container.innerHTML=`<div class="empty-state"><i class="bi bi-search"></i><h3>Aucun produit trouvé</h3><p>Essayez de modifier vos filtres de recherche</p></div>`;
+      return;
+    }
+
+    container.innerHTML=`<div class="products ${viewMode==='grid'?'products--grid':'products--list'}">${filtered.map(p=>`
+      <article class="product-card ${!p.inStock?'out-of-stock':''}">
+        <div class="product-card__image">
+          <img src="${p.image}" alt="${p.name}">
+          <div class="product-card__badges">
+            ${p.isNew?'<span class="badge badge--new">Nouveau</span>':''}
+            ${p.isBestSeller?'<span class="badge badge--bestseller">Best-seller</span>':''}
+            ${p.discount?`<span class="badge badge--discount">-${p.discount}%</span>`:''}
+          </div>
+          <div class="product-card__actions">
+            <button class="action-btn" title="Ajouter aux favoris"><i class="bi bi-heart"></i></button>
+            <button class="action-btn" title="Aperçu"><i class="bi bi-eye"></i></button>
+          </div>
+          ${!p.inStock?'<div class="out-of-stock-overlay"><span>Rupture de stock</span></div>':''}
+        </div>
+        <div class="product-card__info">
+          <span class="product-card__category">${p.category}</span>
+          <h3 class="product-card__name">${p.name}</h3>
+          <p class="product-card__description">${p.description}</p>
+          <div class="product-card__rating"><div class="stars">${starsHtml(p.rating)}</div><span class="rating-text">${p.rating} (${p.reviewsCount})</span></div>
+          <div class="product-card__price"><span class="price-current">${fmt(p.price)}</span>${p.originalPrice?`<span class="price-original">${fmt(p.originalPrice)}</span>`:''}</div>
+          <button class="add-to-cart-btn" ${!p.inStock?'disabled':''}><i class="bi bi-cart-plus"></i><span>Ajouter au panier</span></button>
+        </div>
+      </article>`).join('')}</div>`;
+  }
+
+  function selectCategory(id){selectedCategory=id;renderCategories();renderProducts();}
+  function setView(mode){viewMode=mode;document.getElementById('viewGrid').classList.toggle('active',mode==='grid');document.getElementById('viewList').classList.toggle('active',mode==='list');renderProducts();}
+  function toggleFilters(){filtersOpen=!filtersOpen;document.getElementById('filtersSidebar').classList.toggle('open',filtersOpen);}
+
+  renderCategories();
+  renderProducts();
+</script>
+</body>
+</html>

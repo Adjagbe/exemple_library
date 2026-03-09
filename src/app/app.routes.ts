@@ -60,9 +60,12 @@ import { FilePreviewComponent } from './ui-library/media/file-preview/file-previ
 import { DragDropComponent } from './ui-library/media/drag-drop/drag-drop.component';
 import { WysiwygComponent } from './ui-library/forms/wysiwyg/wysiwyg.component';
 import { CaptchaComponent } from './ui-library/auth/captcha/captcha.component';
+import { CaptchaTextComponent } from './ui-library/auth/captcha-text/captcha-text.component';
+import { CaptchaSliderComponent } from './ui-library/auth/captcha-slider/captcha-slider.component';
+import { DownloadActiveComponent } from './ui-library/media/download-active/download-active.component';
 
 export const routes: Routes = [
     {
-        path: '', component:InvoiceComponent
+        path: '', component:DownloadActiveComponent
     }
 ];

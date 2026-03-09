@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fichiers disponibles - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f3f4f6;min-height:100vh}
+
+    .download-files-showcase{max-width:900px;margin:0 auto;padding:2rem}
+    .section-title{font-size:1.125rem;font-weight:600;color:#374151;margin:0 0 1rem}
+
+    .downloads-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .file-card{padding:1.5rem;background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;transition:all .2s}
+    .file-card:hover{border-color:#c7d2fe;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+    .file-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+    .file-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#eef2ff;border-radius:.75rem;color:#4f46e5}
+    .file-icon i{font-size:1.25rem}
+    .file-version{padding:.25rem .625rem;background:#f3f4f6;border-radius:2rem;font-size:.75rem;font-weight:600;color:#6b7280}
+    .file-name{margin:0 0 .375rem;font-size:1.0625rem;font-weight:600;color:#111827}
+    .file-description{margin:0 0 1rem;font-size:.8125rem;color:#6b7280;line-height:1.5}
+    .file-meta{display:flex;gap:1rem;margin-bottom:1rem;font-size:.75rem;color:#9ca3af}
+    .file-meta span{display:flex;align-items:center;gap:.25rem}
+    .download-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.25rem;background:#4f46e5;border:none;border-radius:.5rem;font-weight:600;font-size:.9375rem;color:#fff;cursor:pointer;transition:all .2s}
+    .download-btn:hover{background:#4338ca;transform:translateY(-2px);box-shadow:0 4px 15px rgba(79,70,229,.3)}
+
+    @media(max-width:768px){.downloads-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<div class="download-files-showcase">
+  <h2 class="section-title">Fichiers disponibles</h2>
+  <div class="downloads-grid" id="downloadsGrid"></div>
+</div>
+
+<script>
+(function(){
+var availableDownloads = [
+  { id: '1', name: 'Application Desktop', version: '2.4.0', size: '124 MB', type: 'installer', downloads: 12450, description: 'Application complète pour Windows, Mac et Linux' },
+  { id: '2', name: 'Documentation PDF', version: '2.4.0', size: '8.5 MB', type: 'pdf', downloads: 5680, description: "Guide complet d'utilisation" },
+  { id: '3', name: 'Plugin Chrome', version: '1.2.3', size: '2.1 MB', type: 'extension', downloads: 8920, description: 'Extension pour navigateur Chrome' },
+  { id: '4', name: 'SDK Développeur', version: '3.1.0', size: '45 MB', type: 'sdk', downloads: 3240, description: 'Kit de développement avec API et exemples' }
+];
+
+function getFileIcon(type) {
+  var icons = { installer: 'bi-box-seam', pdf: 'bi-file-earmark-pdf', extension: 'bi-puzzle', sdk: 'bi-code-slash' };
+  return icons[type] || 'bi-file-earmark';
+}
+
+function formatDownloads(num) {
+  return num >= 1000 ? (num / 1000).toFixed(1) + 'k' : num;
+}
+
+function startDownload(id) {
+  var file = availableDownloads.find(function(f){return f.id===id});
+  if (file) alert('Téléchargement de ' + file.name + ' lancé !');
+}
+
+document.getElementById('downloadsGrid').innerHTML = availableDownloads.map(function(f) {
+  return '<div class="file-card">' +
+    '<div class="file-header">' +
+      '<div class="file-icon"><i class="bi '+getFileIcon(f.type)+'"></i></div>' +
+      '<span class="file-version">v'+f.version+'</span>' +
+    '</div>' +
+    '<h3 class="file-name">'+f.name+'</h3>' +
+    '<p class="file-description">'+f.description+'</p>' +
+    '<div class="file-meta">' +
+      '<span><i class="bi bi-hdd"></i> '+f.size+'</span>' +
+      '<span><i class="bi bi-download"></i> '+formatDownloads(f.downloads)+'</span>' +
+    '</div>' +
+    '<button class="download-btn" onclick="startDownload(\''+f.id+'\')"><i class="bi bi-download"></i> Télécharger</button>' +
+  '</div>';
+}).join('');
+
+window.startDownload = startDownload;
+})();
+</script>
+
+</body>
+</html>
