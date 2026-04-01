@@ -1,0 +1,31 @@
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Liste triable</h1>
+  <p class="page-subtitle">Réorganisez les éléments par glisser-déposer</p>
+
+  <div class="sortable-container">
+    <div class="sortable-list">
+      <div
+        *ngFor="let item of sortableItems; let i = index"
+        class="sortable-item"
+        [class.dragging]="draggedSortableIndex === i"
+        draggable="true"
+        (dragstart)="onSortableDragStart(i)"
+        (dragover)="onSortableDragOver($event, i)"
+        (dragend)="onSortableDragEnd()"
+      >
+        <div class="item-handle">
+          <i class="bi bi-grip-vertical"></i>
+        </div>
+        <div class="item-icon">
+          <i class="bi" [ngClass]="item.icon"></i>
+        </div>
+        <span class="item-title">{{ item.title }}</span>
+        <span class="item-position">Position: {{ i + 1 }}</span>
+      </div>
+    </div>
+    <div class="sortable-result">
+      <h4>Ordre actuel :</h4>
+      <p>{{ sortableItems | json }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<section class="pr1">
+  <div class="pr1__header"><span class="pr1__badge">Tarifs</span><h2>Des prix simples et transparents</h2><p>Choisissez le plan qui correspond à vos besoins. Changez à tout moment.</p></div>
+  <div class="pr1__grid">
+    <div *ngFor="let plan of plans" class="pr1__card" [class.highlight]="plan.highlight">
+      <div class="pr1__card-top">
+        <span *ngIf="plan.highlight" class="pr1__popular">⭐ Plus populaire</span>
+        <h3>{{ plan.name }}</h3>
+        <p>{{ plan.desc }}</p>
+        <div class="pr1__price"><span class="pr1__currency">€</span><span class="pr1__amount">{{ plan.price }}</span><span class="pr1__period">{{ plan.period }}</span></div>
+      </div>
+      <ul class="pr1__features">
+        <li *ngFor="let f of plan.features"><i class="bi bi-check-circle-fill"></i>{{ f }}</li>
+      </ul>
+      <button class="pr1__cta" [class.pr1__cta--alt]="!plan.highlight">{{ plan.cta }}</button>
+    </div>
+  </div>
+</section>

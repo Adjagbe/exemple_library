@@ -1,0 +1,12 @@
+.nl3 { background: #f8fafc; padding: 5rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.nl3__inner { max-width: 560px; margin: 0 auto; text-align: center; }
+.nl3__inner h2 { font-size: 2rem; font-weight: 800; color: #111827; margin: 0 0 .875rem; }
+.nl3__inner > p { font-size: .9rem; color: #6b7280; margin: 0 0 2.5rem; line-height: 1.8; }
+.nl3__freqs { display: flex; justify-content: center; gap: .75rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+.nl3__freq { display: flex; align-items: center; gap: .5rem; padding: .75rem 1.25rem; background: #fff; border: 2px solid #e5e7eb; border-radius: .875rem; font-size: .8rem; font-weight: 600; color: #374151; cursor: pointer; transition: all .15s; }
+.nl3__freq.active { background: #eef2ff; border-color: #4f46e5; color: #4f46e5; }
+.nl3__form { display: flex; gap: .625rem; background: #fff; border: 1px solid #e5e7eb; border-radius: .875rem; padding: .375rem .375rem .375rem 1.25rem; box-shadow: 0 4px 16px rgba(0,0,0,.06); margin-bottom: 1.5rem; }
+.nl3__form input { flex: 1; border: none; outline: none; font-size: .875rem; background: transparent; color: #111827; }
+.nl3__form input::placeholder { color: #9ca3af; }
+.nl3__form button { padding: .75rem 1.5rem; background: #4f46e5; color: #fff; border: none; border-radius: .625rem; font-weight: 700; cursor: pointer; font-size: .8rem; white-space: nowrap; }
+.nl3__ok { padding: 1.25rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 1rem; color: #065f46; font-weight: 600; font-size: .9rem; display: flex; align-items: center; justify-content: center; gap: .75rem; }

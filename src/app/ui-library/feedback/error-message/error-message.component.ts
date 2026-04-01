@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// ERROR MESSAGE COMPONENT - Premium UI Library
-// Error notification and message displays
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

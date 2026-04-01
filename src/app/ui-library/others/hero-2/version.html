@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; height: 500px; }
+.hero2 { display: grid; grid-template-columns: 1fr 1fr; height: 450px; }
+.hero2__left { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; background: #fff; }
+.hero2__tag { display: inline-flex; align-items: center; gap: .4rem; background: #f0fdf4; color: #16a34a; font-size: .78rem; font-weight: 600; padding: .375rem .875rem; border-radius: 9999px; margin-bottom: 2rem; width: fit-content; }
+.hero2__left h1 { font-size: 3rem; font-weight: 900; color: #111827; line-height: 1.1; margin-bottom: 1.5rem; }
+.hero2__left h1 em { font-style: normal; color: #4f46e5; }
+.hero2__left p { font-size: 1rem; color: #6b7280; line-height: 1.75; margin-bottom: 2rem; }
+.hero2__form { display: flex; gap: .75rem; margin-bottom: 1rem; }
+.hero2__form input { flex: 1; padding: .75rem 1.125rem; border: 1.5px solid #e5e7eb; border-radius: .75rem; font-size: .9rem; outline: none; }
+.hero2__form button { background: #4f46e5; color: #fff; border: none; padding: .75rem 1.5rem; border-radius: .75rem; font-size: .875rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.hero2__note { font-size: .75rem; color: #6b7280; display: flex; align-items: center; gap: .4rem; margin-bottom: 2.5rem; }
+.hero2__note i { color: #10b981; }
+.hero2__avatars { display: flex; align-items: center; gap: .75rem; }
+.hero2__avatar-stack { display: flex; }
+.hero2__avatar-stack .av { width: 36px; height: 36px; border-radius: 50%; color: #fff; font-size: .7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; margin-left: -8px; }
+.hero2__avatar-stack .av:first-child { margin-left: 0; }
+.hero2__avatars span { font-size: .8rem; color: #6b7280; }
+.hero2__right { background: linear-gradient(135deg, #4f46e5, #7c3aed); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.hero2__right-bg { position: absolute; inset: 0; }
+.hero2__right-rect { position: absolute; top: 10%; left: 10%; right: 10%; bottom: 10%; background: rgba(255,255,255,.07); border-radius: 2rem; }
+.hero2__card { background: #fff; border-radius: 1rem; padding: 1rem 1.25rem; box-shadow: 0 8px 24px rgba(0,0,0,.15); position: absolute; }
+.hero2__card-top { top: 2rem; right: 2rem; display: flex; align-items: center; gap: .625rem; }
+.hero2__card-top i { color: #10b981; font-size: 1.25rem; }
+.hero2__card-top span { font-size: .8rem; font-weight: 700; color: #111827; }
+.hero2__card-bottom { bottom: 2rem; left: 2rem; display: flex; align-items: center; gap: .625rem; }
+.hero2__card-bottom i { color: #4f46e5; font-size: 1.25rem; }
+.hero2__card-bottom span { font-size: .8rem; font-weight: 700; color: #111827; }
+</style>
+</head>
+<body>
+<div class="hero2">
+  <div class="hero2__left">
+    <div class="hero2__tag">Rejoignez 50,000 équipes</div>
+    <h1>La plateforme qui <em>accélère</em> votre croissance</h1>
+    <p>Centralisez vos projets, collaborez en temps réel et livrez plus vite. Tout ce dont votre équipe a besoin, dans un seul espace de travail.</p>
+    <div class="hero2__form">
+      <input type="email" placeholder="Votre adresse email">
+      <button>Essayer gratuitement</button>
+    </div>
+    <div class="hero2__note"><i class="bi bi-shield-check"></i> Pas de carte bancaire. 14 jours gratuits. Annulation simple.</div>
+    <div class="hero2__avatars">
+      <div class="hero2__avatar-stack">
+        <div class="av" style="background:#4f46e5;">JD</div>
+        <div class="av" style="background:#0ea5e9;">ML</div>
+        <div class="av" style="background:#10b981;">TP</div>
+        <div class="av" style="background:#f59e0b;">NL</div>
+      </div>
+      <span>+2,400 équipes nous font confiance</span>
+    </div>
+  </div>
+  <div class="hero2__right">
+    <div class="hero2__right-rect"></div>
+    <div class="hero2__card hero2__card-top">
+      <i class="bi bi-check-circle-fill"></i>
+      <span>Tâche livrée Redesign Dashboard</span>
+    </div>
+    <div class="hero2__card hero2__card-bottom">
+      <i class="bi bi-graph-up-arrow"></i>
+      <span>+32% de productivité ce mois</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

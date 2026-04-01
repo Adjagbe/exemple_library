@@ -1,0 +1,12 @@
+<div class="cu3">
+  <h2>Prenez contact</h2>
+  <p class="cu3__sub">Choisissez le canal qui vous convient le mieux.</p>
+  <div class="cu3__grid">
+    <div *ngFor="let c of channels" class="cu3__card">
+      <div class="cu3__icon" [style.background]="c.bg"><i class="bi" [ngClass]="c.icon" [style.color]="c.color"></i></div>
+      <h3>{{ c.label }}</h3>
+      <p>{{ c.desc }}</p>
+      <a [href]="c.link" class="cu3__btn">{{ c.cta }}</a>
+    </div>
+  </div>
+</div>

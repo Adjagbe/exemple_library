@@ -1,0 +1,31 @@
+<div class="skeleton-showcase">
+  <h2 class="section-title">Tableau</h2>
+  <div class="toggle-control">
+    <button class="btn" (click)="toggleLoading()">{{ isLoading ? 'Afficher le contenu' : 'Afficher les skeletons' }}</button>
+  </div>
+  <div class="skeleton-table" *ngIf="isLoading">
+    <div class="table-header">
+      <div class="skeleton skeleton--cell"></div>
+      <div class="skeleton skeleton--cell"></div>
+      <div class="skeleton skeleton--cell"></div>
+      <div class="skeleton skeleton--cell skeleton--short"></div>
+    </div>
+    <div class="table-row" *ngFor="let i of [1, 2, 3, 4, 5]">
+      <div class="skeleton skeleton--cell"></div>
+      <div class="skeleton skeleton--cell"></div>
+      <div class="skeleton skeleton--cell"></div>
+      <div class="skeleton skeleton--cell skeleton--short"></div>
+    </div>
+  </div>
+  <table class="real-table" *ngIf="!isLoading">
+    <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Actions</th></tr></thead>
+    <tbody>
+      <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+        <td>Utilisateur {{ i }}</td>
+        <td>user{{ i }}&#64;example.com</td>
+        <td>Admin</td>
+        <td><button>Modifier</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

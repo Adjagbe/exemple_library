@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erreur de vérification - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:whitesmoke;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem}
+
+    .confirmation-card{width:100%;max-width:480px;background:#fff;border-radius:1.5rem;padding:3rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+    .state-container{text-align:center}
+    .state-title{font-size:1.5rem;font-weight:700;color:#111827;margin:0 0 .75rem}
+    .state-text{font-size:.9rem;color:#6b7280;line-height:1.6;margin:0 0 1.5rem}
+
+    .error-icon{width:100px;height:100px;background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem}
+    .error-icon i{font-size:3rem;color:#dc2626}
+    .error-actions{display:flex;gap:.75rem;margin-bottom:1.5rem;justify-content:center}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;font-size:.9rem;font-weight:600;border:none;border-radius:.5rem;cursor:pointer;transition:all .2s;text-decoration:none}
+    .btn--primary{background:#4f46e5;color:#fff}
+    .btn--primary:hover:not(:disabled){background:#4338ca}
+    .btn--secondary{background:#fff;color:#374151;border:1px solid #e5e7eb}
+    .btn--secondary:hover{background:#f9fafb;border-color:#d1d5db}
+    .btn:disabled{opacity:.7;cursor:not-allowed}
+
+    .spinner-btn{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;font-size:.875rem;color:#6b7280;text-decoration:none;transition:color .2s}
+    .back-link:hover{color:#4f46e5}
+
+    .page-footer{margin-top:2rem;text-align:center}
+    .page-footer p{font-size:.8rem;color:#6b7280;margin:0}
+    .page-footer a{color:#4f46e5;text-decoration:underline}
+    .page-footer a:hover{text-decoration:none}
+  </style>
+</head>
+<body>
+
+<div class="confirmation-card">
+  <div class="state-container">
+    <div class="error-icon"><i class="bi bi-x-circle"></i></div>
+    <h2 class="state-title">Erreur de vérification</h2>
+    <p class="state-text">Une erreur s'est produite lors de la vérification de votre email. Veuillez réessayer ou contacter le support.</p>
+    <div class="error-actions">
+      <button class="btn btn--primary" id="retryBtn" onclick="retryVerification()">
+        <span class="spinner-btn" id="retrySpinner"></span>
+        <i class="bi bi-arrow-clockwise" id="retryIcon"></i>
+        <span id="retryText">Réessayer</span>
+      </button>
+      <a href="#" class="btn btn--secondary"><i class="bi bi-headset"></i><span>Contacter le support</span></a>
+    </div>
+    <a href="#" class="back-link"><i class="bi bi-arrow-left"></i>Retour à la connexion</a>
+  </div>
+</div>
+
+<div class="page-footer"><p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p></div>
+
+<script>
+(function() {
+  window.retryVerification = async function() {
+    var btn = document.getElementById('retryBtn');
+    btn.disabled = true;
+    document.getElementById('retrySpinner').style.display = 'block';
+    document.getElementById('retryIcon').style.display = 'none';
+    document.getElementById('retryText').textContent = 'Vérification...';
+
+    await new Promise(function(r) { setTimeout(r, 2000); });
+
+    btn.disabled = false;
+    document.getElementById('retrySpinner').style.display = 'none';
+    document.getElementById('retryIcon').style.display = '';
+    document.getElementById('retryText').textContent = 'Réessayer';
+  };
+})();
+</script>
+
+</body>
+</html>

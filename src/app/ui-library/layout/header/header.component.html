@@ -1,0 +1,84 @@
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Header Component</h1>
+    <p>Variantes de headers pour applications SaaS modernes</p>
+  </div>
+
+  <!-- Default -->
+  <div class="variant-label">Default Header</div>
+  <header class="header">
+    <a href="#" class="header-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+    <nav class="header-nav">
+      <a *ngFor="let link of navLinks" href="#" [class.active]="link.active">{{ link.label }}</a>
+    </nav>
+    <div class="header-actions">
+      <button class="header-icon-btn"><i class="bi bi-bell"></i><span class="badge"></span></button>
+      <button class="header-icon-btn"><i class="bi bi-gear"></i></button>
+      <div class="header-avatar">{{ avatarInitials }}</div>
+    </div>
+  </header>
+
+  <!-- Dark -->
+  <div class="variant-label">Dark Header</div>
+  <header class="header header--dark">
+    <a href="#" class="header-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+    <nav class="header-nav">
+      <a *ngFor="let link of navLinks" href="#" [class.active]="link.active">{{ link.label }}</a>
+    </nav>
+    <div class="header-actions">
+      <button class="header-icon-btn"><i class="bi bi-bell"></i><span class="badge"></span></button>
+      <button class="header-icon-btn"><i class="bi bi-gear"></i></button>
+      <div class="header-avatar">{{ avatarInitials }}</div>
+    </div>
+  </header>
+
+  <!-- With Search -->
+  <div class="variant-label">Header with Search</div>
+  <header class="header">
+    <a href="#" class="header-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+    <div class="header-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+    <div class="header-actions">
+      <button class="header-icon-btn"><i class="bi bi-bell"></i><span class="badge"></span></button>
+      <button class="header-icon-btn"><i class="bi bi-chat-dots"></i></button>
+      <button class="header-icon-btn"><i class="bi bi-gear"></i></button>
+      <div class="header-avatar">{{ avatarInitials }}</div>
+    </div>
+  </header>
+
+  <!-- With Breadcrumb -->
+  <div class="variant-label">Header with Breadcrumb</div>
+  <header class="header header--stacked">
+    <div class="header-top">
+      <a href="#" class="header-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+      <div class="header-actions">
+        <button class="header-icon-btn"><i class="bi bi-bell"></i><span class="badge"></span></button>
+        <div class="header-avatar">{{ avatarInitials }}</div>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <ng-container *ngFor="let bc of breadcrumbs">
+        <a [href]="bc.href">{{ bc.label }}</a>
+        <i class="bi bi-chevron-right separator"></i>
+      </ng-container>
+      <span class="current">{{ breadcrumbCurrent }}</span>
+    </div>
+  </header>
+
+  <!-- With Announcement Bar -->
+  <div class="variant-label">Header with Announcement Bar</div>
+  <div class="announcement-group">
+    <div class="announcement-bar">
+      🎉 Nouvelle version 3.0 disponible ! <a href="#">Découvrir les nouveautés →</a>
+    </div>
+    <header class="header">
+      <a href="#" class="header-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+      <nav class="header-nav">
+        <a *ngFor="let link of navLinks.slice(0, 3)" href="#" [class.active]="link.active">{{ link.label }}</a>
+      </nav>
+      <div class="header-actions">
+        <button class="header-icon-btn"><i class="bi bi-bell"></i><span class="badge"></span></button>
+        <div class="header-avatar">{{ avatarInitials }}</div>
+      </div>
+    </header>
+  </div>
+</div>

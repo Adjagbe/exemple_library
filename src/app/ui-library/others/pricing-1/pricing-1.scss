@@ -1,0 +1,26 @@
+.pr1 { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.pr1__header { text-align: center; margin-bottom: 3.5rem; }
+.pr1__badge { display: inline-block; padding: .25rem .875rem; background: #eef2ff; color: #4f46e5; border-radius: 9999px; font-size: .75rem; font-weight: 700; margin-bottom: 1rem; }
+.pr1__header h2 { font-size: 2.25rem; font-weight: 800; color: #111827; margin: 0 0 .75rem; }
+.pr1__header p { font-size: 1rem; color: #6b7280; margin: 0; }
+.pr1__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; align-items: start; }
+.pr1__card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; padding: 2.5rem; position: relative; }
+.pr1__card.highlight { background: linear-gradient(135deg, #4f46e5, #7c3aed); border-color: transparent; box-shadow: 0 16px 40px rgba(79,70,229,.3); transform: scale(1.04); }
+.pr1__card.highlight h3, .pr1__card.highlight p, .pr1__card.highlight li, .pr1__card.highlight .pr1__currency, .pr1__card.highlight .pr1__amount, .pr1__card.highlight .pr1__period { color: #fff !important; }
+.pr1__popular { display: inline-block; background: rgba(255,255,255,.2); color: #fff; font-size: .7rem; font-weight: 700; padding: .25rem .75rem; border-radius: 9999px; margin-bottom: 1rem; }
+.pr1__card h3 { font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 .375rem; }
+.pr1__card p { font-size: .85rem; color: #6b7280; margin: 0 0 1.5rem; }
+.pr1__price { display: flex; align-items: baseline; gap: .125rem; margin-bottom: 2rem; }
+.pr1__currency { font-size: 1.25rem; font-weight: 700; color: #111827; }
+.pr1__amount { font-size: 3rem; font-weight: 800; color: #111827; }
+.pr1__period { font-size: .875rem; color: #9ca3af; }
+.pr1__features { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-direction: column; gap: .75rem; }
+.pr1__features li { display: flex; align-items: center; gap: .625rem; font-size: .875rem; color: #374151; }
+.pr1__features li i { color: #10b981; font-size: .9rem; flex-shrink: 0; }
+.pr1__card.highlight .pr1__features li i { color: #a7f3d0; }
+.pr1__cta { width: 100%; padding: .875rem; background: #4f46e5; color: #fff; border: none; border-radius: .875rem; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .2s; }
+.pr1__cta:hover { background: #4338ca; transform: translateY(-1px); }
+.pr1__cta--alt { background: #f3f4f6; color: #374151; }
+.pr1__cta--alt:hover { background: #e5e7eb; }
+.pr1__card.highlight .pr1__cta { background: #fff; color: #4f46e5; }
+@media (max-width:768px) { .pr1__grid { grid-template-columns: 1fr; } .pr1__card.highlight { transform: none; } }

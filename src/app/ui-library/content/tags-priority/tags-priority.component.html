@@ -1,0 +1,14 @@
+<div class="tags-showcase">
+  <h2 class="section-title">Tags de priorité</h2>
+  <div class="tags-row">
+    <span
+      *ngFor="let tag of priorityTags"
+      class="tag tag--priority"
+      [style.background-color]="tag.color"
+      [style.color]="getTextColor(tag.color)"
+    >
+      <i class="bi bi-flag-fill"></i>
+      {{ tag.label }}
+    </span>
+  </div>
+</div>

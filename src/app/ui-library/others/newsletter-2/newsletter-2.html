@@ -1,0 +1,24 @@
+<section class="nl2">
+  <div class="nl2__inner">
+    <div class="nl2__left">
+      <h2>Notre newsletter</h2>
+      <p>Des ressources soigneusement sélectionnées, deux fois par mois, directement dans votre boîte mail.</p>
+      <ul class="nl2__perks">
+        <li><i class="bi bi-lightning-charge-fill"></i> Conseils exclusifs d'experts</li>
+        <li><i class="bi bi-bookmark-check-fill"></i> Ressources téléchargeables gratuites</li>
+        <li><i class="bi bi-shield-check"></i> Zéro spam, garanti</li>
+      </ul>
+    </div>
+    <div class="nl2__right">
+      <div *ngIf="!subscribed" class="nl2__form">
+        <div class="nl2__field"><label>Prénom</label><input type="text" [(ngModel)]="name" placeholder="Jean"></div>
+        <div class="nl2__field"><label>Email</label><input type="email" [(ngModel)]="email" placeholder="jean@example.com"></div>
+        <button (click)="subscribe()">Rejoindre la communauté</button>
+      </div>
+      <div *ngIf="subscribed" class="nl2__ok">
+        <i class="bi bi-check-circle-fill"></i>
+        <p>Bienvenue {{ name }} ! Vous êtes bien inscrit(e).</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+<section class="tl3">
+  <div class="tl3__head"><h2>Comment démarrer</h2><p>Suivez ces 4 étapes simples pour commencer.</p></div>
+  <div class="tl3__steps">
+    <div *ngFor="let s of steps; let i = index" class="tl3__step" [class.active]="active === i" (click)="select(i)">
+      <div class="tl3__num">{{ i + 1 }}</div>
+      <div class="tl3__step-info">
+        <h4>{{ s.title }}</h4>
+        <p *ngIf="active === i">{{ s.desc }}</p>
+      </div>
+      <i class="bi" [ngClass]="s.icon + ' tl3__icon'"></i>
+    </div>
+  </div>
+</section>

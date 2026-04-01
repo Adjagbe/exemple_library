@@ -1,0 +1,69 @@
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Zones de dépôt</h1>
+  <p class="page-subtitle">Glissez les fichiers vers les zones cibles pour les organiser</p>
+
+  <div class="dropzone-demo">
+    <!-- Source -->
+    <div
+      class="dropzone-source"
+      [class.dragover]="dragOverZoneId === 'source'"
+      (dragover)="onSourceDragOver($event)"
+      (dragleave)="onSourceDragLeave()"
+      (drop)="onSourceDrop($event)"
+    >
+      <h4>Éléments disponibles</h4>
+      <div class="draggable-items">
+        <div
+          *ngFor="let chip of sourceChips"
+          class="draggable-chip"
+          [class.dragging]="draggedChip?.id === chip.id"
+          draggable="true"
+          (dragstart)="onChipDragStart(chip, 'source')"
+          (dragend)="onChipDragEnd()"
+        >
+          <i class="bi" [ngClass]="chip.icon"></i>
+          {{ chip.name }}
+        </div>
+        <div class="empty-source" *ngIf="sourceChips.length === 0">
+          <i class="bi bi-inbox"></i>
+          <span>Aucun fichier</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Targets -->
+    <div class="dropzone-targets">
+      <div
+        *ngFor="let zone of targetZones"
+        class="dropzone-target"
+        [ngClass]="{
+          'dropzone-target--secondary': zone.variant === 'secondary',
+          'dropzone-target--danger': zone.variant === 'danger',
+          'dragover': dragOverZoneId === zone.id
+        }"
+        (dragover)="onZoneDragOver($event, zone.id)"
+        (dragleave)="onZoneDragLeave(zone.id)"
+        (drop)="onZoneDrop($event, zone.id)"
+      >
+        <i class="bi" [ngClass]="zone.icon"></i>
+        <span>{{ zone.title }}</span>
+        <small>{{ zone.subtitle }}</small>
+
+        <!-- Dropped items in zone -->
+        <div class="zone-items" *ngIf="zone.items.length > 0">
+          <div
+            *ngFor="let chip of zone.items"
+            class="zone-chip"
+            [class.dragging]="draggedChip?.id === chip.id"
+            draggable="true"
+            (dragstart)="onChipDragStart(chip, zone.id)"
+            (dragend)="onChipDragEnd()"
+          >
+            <i class="bi" [ngClass]="chip.icon"></i>
+            {{ chip.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -72,14 +72,14 @@ export class FilePreviewComponent {
       author: 'Marie Lambert',
       content: `import { Component } from '@angular/core';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrls: ['./app.scss']
-})
-export class AppComponent {
-  title = 'Premium UI Library';
-}`
+      @Component({
+        selector: 'app-root',
+        templateUrl: './app.html',
+        styleUrls: ['./app.scss']
+      })
+      export class AppComponent {
+        title = 'Premium UI Library';
+      }`
     },
     {
       id: '6',

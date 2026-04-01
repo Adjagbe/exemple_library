@@ -1,0 +1,13 @@
+<div class="bpp1">
+  <div class="bpp1__hero"><h1>Notre Blog</h1><p>Insights, tutoriels et tendances du monde digital.</p><div class="bpp1__search"><i class="bi bi-search"></i><input placeholder="Rechercher un article..."></div></div>
+  <div class="bpp1__featured">
+    <div class="bpp1__feat-img" [style.background]="featured.color"></div>
+    <div class="bpp1__feat-body"><span class="bpp1__cat">{{ featured.category }}</span><h2>{{ featured.title }}</h2><div class="bpp1__meta">{{ featured.date }} · {{ featured.readTime }} min de lecture</div><a href="#" class="bpp1__btn">Lire l'article <i class="bi bi-arrow-right"></i></a></div>
+  </div>
+  <div class="bpp1__grid">
+    <article *ngFor="let p of rest" class="bpp1__card">
+      <div class="bpp1__thumb" [style.background]="p.color"><span class="bpp1__cat bpp1__cat--sm">{{ p.category }}</span></div>
+      <div class="bpp1__body"><h3>{{ p.title }}</h3><span class="bpp1__meta">{{ p.date }} · {{ p.readTime }} min</span></div>
+    </article>
+  </div>
+</div>

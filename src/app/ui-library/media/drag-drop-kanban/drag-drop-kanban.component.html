@@ -1,0 +1,54 @@
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Tableau Kanban</h1>
+  <p class="page-subtitle">Organisez vos tâches par colonnes avec le glisser-déposer</p>
+
+  <div class="kanban-board">
+    <div
+      *ngFor="let column of columns"
+      class="kanban-column"
+      [class.dragover]="draggedItem && draggedFromZone !== column.id"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop(column.id)"
+    >
+      <div class="column-header">
+        <h3>
+          {{ column.title }}
+          <span class="item-count">{{ column.items.length }}</span>
+        </h3>
+        <button class="column-add">
+          <i class="bi bi-plus"></i>
+        </button>
+      </div>
+      <div class="column-content">
+        <div
+          *ngFor="let item of column.items"
+          class="kanban-card"
+          [class.dragging]="draggedItem?.id === item.id"
+          draggable="true"
+          (dragstart)="onDragStart(item, column.id)"
+          (dragend)="onDragEnd()"
+        >
+          <div class="card-indicator" [style.background-color]="item.color"></div>
+          <div class="card-content">
+            <div class="card-icon" [style.color]="item.color">
+              <i class="bi" [ngClass]="item.icon"></i>
+            </div>
+            <div class="card-info">
+              <h4>{{ item.title }}</h4>
+              <p *ngIf="item.description">{{ item.description }}</p>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="card-action">
+              <i class="bi bi-three-dots"></i>
+            </button>
+          </div>
+        </div>
+        <div class="empty-column" *ngIf="column.items.length === 0">
+          <i class="bi bi-inbox"></i>
+          <span>Aucune tâche</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

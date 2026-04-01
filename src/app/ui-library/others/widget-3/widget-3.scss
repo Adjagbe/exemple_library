@@ -1,0 +1,16 @@
+.w3 { max-width: 480px; margin: 2rem auto; background: linear-gradient(135deg, #0ea5e9, #0284c7); border-radius: 1.75rem; padding: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #fff; box-shadow: 0 12px 40px rgba(14,165,233,.3); }
+.w3__main { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,.2); }
+.w3__current { display: flex; align-items: center; gap: 1rem; }
+.w3__weather-icon { font-size: 4rem; }
+.w3__temp { font-size: 4rem; font-weight: 900; line-height: 1; display: block; }
+.w3__feels { font-size: .75rem; color: rgba(255,255,255,.75); }
+.w3__details h3 { font-size: 1.1rem; font-weight: 700; margin: 0 0 .25rem; }
+.w3__details p { font-size: .8rem; color: rgba(255,255,255,.8); margin: 0 0 .875rem; }
+.w3__meta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.w3__meta span { font-size: .75rem; color: rgba(255,255,255,.9); display: flex; align-items: center; gap: .375rem; }
+.w3__forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: .5rem; }
+.w3__day { display: flex; flex-direction: column; align-items: center; gap: .375rem; background: rgba(255,255,255,.12); border-radius: 1rem; padding: .875rem .5rem; }
+.w3__day-name { font-size: .7rem; font-weight: 700; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: .05em; }
+.w3__day i { font-size: 1.25rem; }
+.w3__high { font-size: .875rem; font-weight: 700; }
+.w3__low { font-size: .75rem; color: rgba(255,255,255,.6); }

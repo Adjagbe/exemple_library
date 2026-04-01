@@ -1,0 +1,11 @@
+<div class="bpp2">
+  <div class="bpp2__filters">
+    <button *ngFor="let c of categories" class="bpp2__cat" [class.active]="active === c" (click)="select(c)">{{ c }}</button>
+  </div>
+  <div class="bpp2__grid">
+    <article *ngFor="let p of filtered" class="bpp2__card">
+      <div class="bpp2__img" [style.background]="p.color"></div>
+      <div class="bpp2__body"><span class="bpp2__badge">{{ p.category }}</span><h3>{{ p.title }}</h3><div class="bpp2__meta"><i class="bi bi-calendar3"></i> {{ p.date }} &nbsp;·&nbsp; <i class="bi bi-clock"></i> {{ p.readTime }} min</div></div>
+    </article>
+  </div>
+</div>

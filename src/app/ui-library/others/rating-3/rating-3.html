@@ -1,0 +1,17 @@
+<div class="r3">
+  <div *ngIf="!submitted">
+    <p class="r3__question">Comment évaluez-vous votre expérience ?</p>
+    <div class="r3__stars">
+      <i *ngFor="let s of stars" class="bi" [ngClass]="(hover || rating) >= s ? 'bi-star-fill' : 'bi-star'"
+         (mouseenter)="hover = s" (mouseleave)="hover = 0" (click)="set(s)"></i>
+    </div>
+    <div *ngIf="rating" class="r3__label">{{ labels[rating] }}</div>
+    <textarea *ngIf="rating" rows="4" [(ngModel)]="comment" placeholder="Votre commentaire (optionnel)..." class="r3__textarea"></textarea>
+    <button *ngIf="rating" class="r3__submit" (click)="submit()">Envoyer mon avis</button>
+  </div>
+  <div *ngIf="submitted" class="r3__thanks">
+    <i class="bi bi-star-fill r3__big-star"></i>
+    <h3>Merci pour votre avis !</h3>
+    <p>Votre retour nous aide à nous améliorer continuellement.</p>
+  </div>
+</div>

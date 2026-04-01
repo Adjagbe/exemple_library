@@ -1,0 +1,23 @@
+<div class="checkbox-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Nested Selection</h3>
+    <div class="checkbox-tree">
+      <label class="checkbox-label checkbox-parent" [class.indeterminate]="isIndeterminate()">
+        <input type="checkbox" [(ngModel)]="parentChecked" (change)="toggleParent()">
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text"><strong>Select All Files</strong></span>
+      </label>
+      <div class="checkbox-children">
+        <label class="checkbox-label" *ngFor="let child of childCheckboxes">
+          <input type="checkbox" [(ngModel)]="child.checked" (change)="updateParent()">
+          <span class="checkbox-custom">
+            <i class="bi bi-check"></i>
+          </span>
+          <span class="checkbox-text">{{ child.label }}</span>
+        </label>
+      </div>
+    </div>
+  </section>
+</div>

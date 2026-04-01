@@ -1,0 +1,15 @@
+<div class="radio-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Rate Your Experience</h3>
+    <div class="selected-value">Rating: {{ selectedRating }}/5</div>
+    <div class="rating-options">
+      <label class="rating-option" *ngFor="let star of ['1','2','3','4','5']">
+        <input type="radio" name="rating" [value]="star" [(ngModel)]="selectedRating">
+        <div class="rating-content" [class.selected]="selectedRating === star">
+          <i class="bi bi-star-fill"></i>
+          <span class="rating-number">{{ star }}</span>
+        </div>
+      </label>
+    </div>
+  </section>
+</div>

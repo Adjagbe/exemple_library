@@ -1,0 +1,19 @@
+<section class="pr2">
+  <div class="pr2__header"><h2>Choisissez votre plan</h2>
+    <div class="pr2__toggle">
+      <span [class.active]="!annual">Mensuel</span>
+      <button class="pr2__switch" (click)="annual = !annual" [class.on]="annual"><span></span></button>
+      <span [class.active]="annual">Annuel <em>-20%</em></span>
+    </div>
+  </div>
+  <div class="pr2__grid">
+    <div *ngFor="let plan of plans; let i = index" class="pr2__card" [class.featured]="i===1">
+      <h3>{{ plan.name }}</h3>
+      <div class="pr2__price"><strong>€{{ price(plan) }}</strong><span>/mois</span></div>
+      <ul>
+        <li *ngFor="let f of plan.features"><i class="bi bi-check2"></i>{{ f }}</li>
+      </ul>
+      <button [class.pr2__btn--main]="i===1">{{ i === 0 ? 'Commencer' : 'Essayer 14 jours' }}</button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Details 1</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; }
+.bd1 { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+.bd1__hero { margin-bottom: 1.5rem; }
+.bd1__cat { display: inline-block; padding: .25rem .875rem; background: #eef2ff; color: #4f46e5; border-radius: 9999px; font-size: .7rem; font-weight: 700; margin-bottom: 1.25rem; }
+.bd1__hero h1 { font-size: 2rem; font-weight: 800; color: #111827; margin: 0 0 1.25rem; line-height: 1.25; }
+.bd1__meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.bd1__avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; font-size: .7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.bd1__meta-text { font-size: .85rem; color: #6b7280; }
+.bd1__meta-text strong { color: #111827; }
+.bd1__actions { margin-left: auto; display: flex; gap: .75rem; }
+.bd1__actions button { width: 38px; height: 38px; border: 1px solid #e5e7eb; border-radius: 50%; background: #fff; color: #374151; font-size: .95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.bd1__cover { height: 400px; background: linear-gradient(135deg, #4f46e5, #7c3aed); border-radius: 1.25rem; margin: 1.5rem 2rem; }
+.bd1__layout { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; }
+.bd1__content { font-size: .9rem; color: #374151; line-height: 1.9; }
+.bd1__content h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2rem 0 1rem; }
+.bd1__content p { margin: 0 0 1.25rem; }
+.bd1__content blockquote { border-left: 4px solid #4f46e5; background: #f5f3ff; padding: 1.25rem 1.5rem; border-radius: 0 .75rem .75rem 0; margin: 1.5rem 0; font-style: italic; color: #4f46e5; }
+.bd1__tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 2rem; }
+.bd1__tag { padding: .25rem .75rem; background: #f3f4f6; color: #374151; border-radius: 9999px; font-size: .75rem; font-weight: 600; }
+.bd1__sidebar { display: flex; flex-direction: column; gap: 2rem; }
+.bd1__toc { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.5rem; }
+.bd1__toc h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; margin: 0 0 1rem; }
+.bd1__toc ul { list-style: none; display: flex; flex-direction: column; gap: .625rem; }
+.bd1__toc a { font-size: .85rem; color: #374151; text-decoration: none; }
+.bd1__toc a:hover { color: #4f46e5; }
+.bd1__related { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.5rem; }
+.bd1__related h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; margin: 0 0 1.25rem; }
+.bd1__rel-item { display: flex; gap: .75rem; padding: .875rem 0; border-bottom: 1px solid #f3f4f6; align-items: center; }
+.bd1__rel-item:last-child { border-bottom: none; }
+.bd1__rel-thumb { width: 52px; height: 40px; border-radius: .5rem; flex-shrink: 0; }
+.bd1__rel-title { font-size: .8rem; font-weight: 600; color: #111827; display: block; margin-bottom: .2rem; }
+.bd1__rel-date { font-size: .7rem; color: #9ca3af; }
+</style>
+</head>
+<body>
+<article class="bd1">
+  <div class="bd1__hero">
+    <span class="bd1__cat">Design System</span>
+    <h1>Construire un Design System scalable avec Angular et Storybook</h1>
+    <div class="bd1__meta">
+      <div class="bd1__avatar">SM</div>
+      <div class="bd1__meta-text"><strong>Sophie Martin</strong><br>28 mars 2026 &middot; 8 min de lecture</div>
+      <div class="bd1__actions">
+        <button><i class="bi bi-bookmark"></i></button>
+        <button><i class="bi bi-share"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="bd1__cover"></div>
+  <div class="bd1__layout">
+    <div class="bd1__content">
+      <h2>Pourquoi un Design System ?</h2>
+      <p>Un Design System bien conçu est l'épine dorsale de toute application scalable. Il garantit la cohérence visuelle, accélère le développement et facilite la collaboration entre designers et développeurs.</p>
+      <blockquote>« Un bon Design System réduit le temps de développement de 40% et améliore drastiquement la cohérence de l'interface. »</blockquote>
+      <h2>Les fondations techniques</h2>
+      <p>Avec Angular et Storybook, vous bénéficiez d'un écosystème robuste pour créer, documenter et tester vos composants. Angular Signals en v19 apporte une réactivité fine-grained qui révolutionne la gestion d'état.</p>
+      <p>La combinaison des Design Tokens avec CSS Custom Properties offre une flexibilité maximale pour les thèmes clair/sombre et les personnalisations client.</p>
+      <h2>Structure recommandée</h2>
+      <p>Organisez vos composants en trois niveaux : Atoms (boutons, inputs), Molecules (formulaires, cards) et Organisms (headers, sections complètes). Cette approche Atomic Design reste la référence en 2026.</p>
+      <div class="bd1__tags">
+        <span class="bd1__tag">Angular</span>
+        <span class="bd1__tag">Design System</span>
+        <span class="bd1__tag">TypeScript</span>
+        <span class="bd1__tag">UX</span>
+      </div>
+    </div>
+    <aside class="bd1__sidebar">
+      <div class="bd1__toc">
+        <h4>Table des matières</h4>
+        <ul>
+          <li><a href="#">Pourquoi un Design System ?</a></li>
+          <li><a href="#">Les fondations techniques</a></li>
+          <li><a href="#">Structure recommandée</a></li>
+          <li><a href="#">Déploiement et maintenance</a></li>
+        </ul>
+      </div>
+      <div class="bd1__related">
+        <h4>Articles similaires</h4>
+        <div class="bd1__rel-item">
+          <div class="bd1__rel-thumb" style="background:#4f46e5"></div>
+          <div><span class="bd1__rel-title">Angular 19 : Nouveautés</span><span class="bd1__rel-date">25 mars 2026</span></div>
+        </div>
+        <div class="bd1__rel-item">
+          <div class="bd1__rel-thumb" style="background:#0ea5e9"></div>
+          <div><span class="bd1__rel-title">Core Web Vitals 2026</span><span class="bd1__rel-date">20 mars 2026</span></div>
+        </div>
+        <div class="bd1__rel-item">
+          <div class="bd1__rel-thumb" style="background:#10b981"></div>
+          <div><span class="bd1__rel-title">TypeScript 5.5 : Guide</span><span class="bd1__rel-date">15 mars 2026</span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</article>
+</body>
+</html>

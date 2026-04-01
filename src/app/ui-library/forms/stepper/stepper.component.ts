@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// STEPPER (WIZARD) COMPONENT - Premium UI Library
-// Multi-step form wizard with progress tracking
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

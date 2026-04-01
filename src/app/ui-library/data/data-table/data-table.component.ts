@@ -1,15 +1,8 @@
-// ═══════════════════════════════════════════════════════════════
-// DATA TABLE COMPONENT - Premium UI Library
-// Advanced data table with pagination, search, and filters
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface DataTableColumn {
   key: string;
   label: string;
@@ -50,9 +43,7 @@ export interface FilterConfig {
   encapsulation: ViewEncapsulation.None
 })
 export class DataTableComponent implements OnInit {
-  // ─────────────────────────────────────────────────────────────────
-  // COLUMNS CONFIGURATION
-  // ─────────────────────────────────────────────────────────────────
+
   columns: DataTableColumn[] = [
     { key: 'id', label: 'ID', sortable: true, width: '80px', align: 'center' },
     { key: 'product', label: 'Produit', sortable: true },
@@ -73,9 +64,7 @@ export class DataTableComponent implements OnInit {
     { key: 'actions', label: '', type: 'actions', width: '100px', align: 'center' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // DATA
-  // ─────────────────────────────────────────────────────────────────
+
   allData: DataTableRow[] = [
     { id: 1, product: 'MacBook Pro 16"', category: 'Électronique', price: 2499.99, stock: 85, status: 'En stock', lastUpdate: '2024-05-01' },
     { id: 2, product: 'iPhone 15 Pro', category: 'Électronique', price: 1199.99, stock: 120, status: 'En stock', lastUpdate: '2024-05-02' },
@@ -97,9 +86,8 @@ export class DataTableComponent implements OnInit {
   filteredData: DataTableRow[] = [];
   displayedData: DataTableRow[] = [];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // SEARCH & FILTERS
-  // ─────────────────────────────────────────────────────────────────
   searchQuery: string = '';
   
   filters: FilterConfig[] = [
@@ -130,9 +118,8 @@ export class DataTableComponent implements OnInit {
     }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
+
   // PAGINATION
-  // ─────────────────────────────────────────────────────────────────
   pagination: PaginationConfig = {
     currentPage: 1,
     pageSize: 5,
@@ -140,24 +127,18 @@ export class DataTableComponent implements OnInit {
     totalItems: 0
   };
 
-  // ─────────────────────────────────────────────────────────────────
   // SORTING
-  // ─────────────────────────────────────────────────────────────────
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  // ─────────────────────────────────────────────────────────────────
   // SELECTION
-  // ─────────────────────────────────────────────────────────────────
   selectAll: boolean = false;
 
   ngOnInit(): void {
     this.applyFilters();
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // FILTERING & SEARCH
-  // ─────────────────────────────────────────────────────────────────
   applyFilters(): void {
     let result = [...this.allData];
 
@@ -213,9 +194,7 @@ export class DataTableComponent implements OnInit {
     return this.filters.some(f => f.value !== '');
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // SORTING
-  // ─────────────────────────────────────────────────────────────────
   sortBy(column: DataTableColumn): void {
     if (!column.sortable) return;
 
@@ -235,9 +214,7 @@ export class DataTableComponent implements OnInit {
     return this.sortDirection === 'asc' ? 'bi-chevron-up' : 'bi-chevron-down';
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // PAGINATION
-  // ─────────────────────────────────────────────────────────────────
   updateDisplayedData(): void {
     const start = (this.pagination.currentPage - 1) * this.pagination.pageSize;
     const end = start + this.pagination.pageSize;
@@ -289,9 +266,7 @@ export class DataTableComponent implements OnInit {
     return Math.min(this.pagination.currentPage * this.pagination.pageSize, this.pagination.totalItems);
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // SELECTION
-  // ─────────────────────────────────────────────────────────────────
   toggleSelectAll(): void {
     this.displayedData.forEach(row => row.selected = this.selectAll);
   }
@@ -308,9 +283,7 @@ export class DataTableComponent implements OnInit {
     return this.filteredData.filter(row => row.selected).length;
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // HELPERS
-  // ─────────────────────────────────────────────────────────────────
   getBadgeClass(column: DataTableColumn, value: string): string {
     const color = column.badgeColors?.[value] || 'secondary';
     return `badge badge--${color}`;
@@ -341,9 +314,7 @@ export class DataTableComponent implements OnInit {
     return '#10b981';
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // ACTIONS
-  // ─────────────────────────────────────────────────────────────────
   onView(row: DataTableRow): void {
     console.log('View:', row);
   }

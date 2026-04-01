@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste triable - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .dragdrop-showcase {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    .sortable-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .sortable-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sortable-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      cursor: grab;
+      transition: all 0.2s;
+    }
+
+    .sortable-item:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .sortable-item.dragging {
+      opacity: 0.5;
+      background: #eef2ff;
+    }
+
+    .sortable-item:active { cursor: grabbing; }
+
+    .item-handle {
+      color: #d1d5db;
+      cursor: grab;
+    }
+
+    .item-handle:active { cursor: grabbing; }
+
+    .item-icon { color: #4f46e5; }
+
+    .item-title {
+      flex: 1;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .item-position {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      padding: 0.25rem 0.5rem;
+      background: #f3f4f6;
+      border-radius: 0.25rem;
+    }
+
+    .sortable-result {
+      padding: 1rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+    }
+
+    .sortable-result h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .sortable-result p {
+      margin: 0;
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: #6b7280;
+      word-break: break-all;
+    }
+
+    @media (max-width: 768px) {
+      .dragdrop-showcase { padding: 1rem; }
+      .sortable-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Liste triable</h1>
+  <p class="page-subtitle">Réorganisez les éléments par glisser-déposer</p>
+
+  <div class="sortable-container">
+    <div class="sortable-list" id="sortableList">
+      <div class="sortable-item" draggable="true" data-id="s1">
+        <div class="item-handle"><i class="bi bi-grip-vertical"></i></div>
+        <div class="item-icon"><i class="bi bi-1-circle"></i></div>
+        <span class="item-title">Premier élément</span>
+        <span class="item-position">Position: 1</span>
+      </div>
+      <div class="sortable-item" draggable="true" data-id="s2">
+        <div class="item-handle"><i class="bi bi-grip-vertical"></i></div>
+        <div class="item-icon"><i class="bi bi-2-circle"></i></div>
+        <span class="item-title">Deuxième élément</span>
+        <span class="item-position">Position: 2</span>
+      </div>
+      <div class="sortable-item" draggable="true" data-id="s3">
+        <div class="item-handle"><i class="bi bi-grip-vertical"></i></div>
+        <div class="item-icon"><i class="bi bi-3-circle"></i></div>
+        <span class="item-title">Troisième élément</span>
+        <span class="item-position">Position: 3</span>
+      </div>
+      <div class="sortable-item" draggable="true" data-id="s4">
+        <div class="item-handle"><i class="bi bi-grip-vertical"></i></div>
+        <div class="item-icon"><i class="bi bi-4-circle"></i></div>
+        <span class="item-title">Quatrième élément</span>
+        <span class="item-position">Position: 4</span>
+      </div>
+      <div class="sortable-item" draggable="true" data-id="s5">
+        <div class="item-handle"><i class="bi bi-grip-vertical"></i></div>
+        <div class="item-icon"><i class="bi bi-5-circle"></i></div>
+        <span class="item-title">Cinquième élément</span>
+        <span class="item-position">Position: 5</span>
+      </div>
+    </div>
+    <div class="sortable-result">
+      <h4>Ordre actuel :</h4>
+      <p id="sortableResult">[{"id":"s1","title":"Premier élément"},{"id":"s2","title":"Deuxième élément"},{"id":"s3","title":"Troisième élément"},{"id":"s4","title":"Quatrième élément"},{"id":"s5","title":"Cinquième élément"}]</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var sortableList = document.getElementById('sortableList');
+  var draggedItem = null;
+
+  var sortableItems = sortableList.querySelectorAll('.sortable-item');
+  sortableItems.forEach(function(item) {
+    item.addEventListener('dragstart', function(e) {
+      draggedItem = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    item.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      draggedItem = null;
+      updatePositions();
+      updateSortableResult();
+    });
+
+    item.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      if (draggedItem && draggedItem !== this) {
+        var rect = this.getBoundingClientRect();
+        var midY = rect.top + rect.height / 2;
+        if (e.clientY < midY) {
+          this.parentNode.insertBefore(draggedItem, this);
+        } else {
+          this.parentNode.insertBefore(draggedItem, this.nextSibling);
+        }
+      }
+    });
+  });
+
+  function updatePositions() {
+    var items = sortableList.querySelectorAll('.sortable-item');
+    items.forEach(function(item, index) {
+      item.querySelector('.item-position').textContent = 'Position: ' + (index + 1);
+    });
+  }
+
+  function updateSortableResult() {
+    var items = sortableList.querySelectorAll('.sortable-item');
+    var result = Array.from(items).map(function(item) {
+      return {
+        id: item.dataset.id,
+        title: item.querySelector('.item-title').textContent
+      };
+    });
+    document.getElementById('sortableResult').textContent = JSON.stringify(result);
+  }
+})();
+</script>
+
+</body>
+</html>

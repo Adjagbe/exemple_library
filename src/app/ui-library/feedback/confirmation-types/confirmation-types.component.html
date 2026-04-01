@@ -1,0 +1,33 @@
+<div class="confirmation-showcase">
+  <h2 class="section-title">Types de Confirmation</h2>
+  <div class="button-grid">
+    <button *ngFor="let dialog of dialogs"
+            class="trigger-btn"
+            [ngClass]="'trigger-btn--' + dialog.type"
+            (click)="openDialog(dialog.id)">
+      <i class="bi" [ngClass]="dialog.icon"></i>
+      {{ dialog.title }}
+    </button>
+  </div>
+
+  <div class="dialog-overlay" *ngIf="activeDialog" (click)="closeDialog()">
+    <div class="dialog"
+         [ngClass]="'dialog--' + getActiveDialog()?.type"
+         (click)="$event.stopPropagation()">
+      <div class="dialog-icon">
+        <i class="bi" [ngClass]="getActiveDialog()?.icon || 'bi-question-circle'"></i>
+      </div>
+      <div class="dialog-content">
+        <h3 class="dialog-title">{{ getActiveDialog()?.title }}</h3>
+        <p class="dialog-message">{{ getActiveDialog()?.message }}</p>
+        <div class="dialog-input" *ngIf="getActiveDialog()?.requireInput">
+          <input type="text" [placeholder]="getActiveDialog()?.inputPlaceholder || ''" [(ngModel)]="inputValue" (keyup.enter)="onConfirm()">
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn btn--cancel" (click)="onCancel()">{{ getActiveDialog()?.cancelLabel }}</button>
+        <button class="btn" [ngClass]="'btn--' + getActiveDialog()?.type" [disabled]="!canConfirm()" (click)="onConfirm()">{{ getActiveDialog()?.confirmLabel }}</button>
+      </div>
+    </div>
+  </div>
+</div>

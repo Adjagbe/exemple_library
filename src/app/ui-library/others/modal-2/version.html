@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; display: flex; align-items: center; justify-content: center; height: 500px; }
+.m2-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
+.m2-overlay.visible { display: flex; }
+.m2-card { background: #fff; border-radius: 1.5rem; padding: 2.5rem; max-width: 480px; width: 90%; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,.2); }
+.m2-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; border-radius: 50%; background: #f3f4f6; border: none; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #374151; }
+.m2-progress-bar { height: 6px; background: #f3f4f6; border-radius: 9999px; overflow: hidden; margin-bottom: 1.75rem; }
+.m2-progress-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #7c3aed); border-radius: 9999px; transition: width .3s; }
+.m2-step-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: #9ca3af; font-weight: 700; text-align: center; margin-bottom: 2rem; }
+.m2-step-body { text-align: center; margin-bottom: 2.5rem; }
+.m2-step-icon { font-size: 2.5rem; color: #4f46e5; margin-bottom: 1rem; }
+.m2-step-body h3 { font-size: 1.25rem; font-weight: 800; color: #111827; margin-bottom: .625rem; }
+.m2-step-body p { color: #6b7280; line-height: 1.7; }
+.m2-btns { display: flex; gap: .75rem; }
+.btn-outline { flex: 1; background: #fff; border: 1.5px solid #e5e7eb; color: #374151; padding: .75rem; border-radius: .875rem; font-size: .875rem; font-weight: 600; cursor: pointer; }
+.btn-outline:disabled { opacity: .4; cursor: default; }
+.btn-primary { flex: 1; background: #4f46e5; color: #fff; border: none; padding: .75rem; border-radius: .875rem; font-size: .875rem; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+<button onclick="openModal()" style="background:#111827;color:#fff;border:none;padding:.875rem 2rem;border-radius:.875rem;font-size:.95rem;font-weight:700;cursor:pointer;">Démarrer l'onboarding</button>
+
+<div class="m2-overlay" id="m2overlay" onclick="if(event.target===this)closeModal()">
+  <div class="m2-card">
+    <button class="m2-close" onclick="closeModal()"><i class="bi bi-x"></i></button>
+    <div class="m2-progress-bar"><div class="m2-progress-fill" id="prog"></div></div>
+    <div class="m2-step-label" id="stepLabel"></div>
+    <div class="m2-step-body" id="stepBody"></div>
+    <div class="m2-btns">
+      <button class="btn-outline" id="prevBtn" onclick="prevStep()">Précédent</button>
+      <button class="btn-primary" id="nextBtn" onclick="nextStep()">Suivant</button>
+    </div>
+  </div>
+</div>
+<script>
+const steps = [
+  { icon:'bi-person-circle', title:'Bienvenue !', desc:'Configurons votre espace de travail en quelques étapes simples.' },
+  { icon:'bi-gear', title:'Préférences', desc:'Personnalisez votre interface selon vos habitudes de travail.' },
+  { icon:'bi-check2-circle', title:'Tout est prêt !', desc:'Votre espace est configuré. Vous pouvez commencer à travailler.' }
+];
+let step = 1;
+function render() {
+  const s = steps[step-1];
+  document.getElementById('prog').style.width = (step/3*100) + '%';
+  document.getElementById('stepLabel').textContent = 'Étape ' + step + ' sur 3';
+  document.getElementById('stepBody').innerHTML = `<div class="m2-step-icon"><i class="bi ${s.icon}"></i></div><h3>${s.title}</h3><p>${s.desc}</p>`;
+  document.getElementById('prevBtn').disabled = step === 1;
+  document.getElementById('nextBtn').textContent = step === 3 ? 'Terminer' : 'Suivant';
+}
+function prevStep() { if(step > 1) { step--; render(); } }
+function nextStep() { if(step < 3) { step++; render(); } else closeModal(); }
+function openModal() { step=1; render(); document.getElementById('m2overlay').classList.add('visible'); }
+function closeModal() { document.getElementById('m2overlay').classList.remove('visible'); }
+</script>
+</body>
+</html>

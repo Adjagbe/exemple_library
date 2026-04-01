@@ -1,0 +1,20 @@
+<div class="acc2">
+  <div class="acc2__header"><h2>Centre d'aide</h2><p>Trouvez rapidement une réponse à vos questions.</p></div>
+  <div class="acc2__cats">
+    <div *ngFor="let cat of categories; let ci = index" class="acc2__cat">
+      <button class="acc2__cat-header" (click)="toggleCat(ci)">
+        <div class="acc2__cat-left"><div class="acc2__cat-icon"><i class="bi" [ngClass]="cat.icon"></i></div><span>{{ cat.label }}</span></div>
+        <i class="bi" [ngClass]="cat.open ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+      </button>
+      <div class="acc2__cat-body" [style.display]="cat.open ? 'block' : 'none'">
+        <div *ngFor="let item of cat.items; let ii = index" class="acc2__item" [class.open]="isItemOpen(ci, ii)">
+          <button class="acc2__trigger" (click)="toggleItem(ci, ii)">
+            <span>{{ item.q }}</span>
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          <div class="acc2__body" [style.display]="isItemOpen(ci, ii) ? 'block' : 'none'"><p>{{ item.a }}</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

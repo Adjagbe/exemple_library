@@ -1,0 +1,135 @@
+.about-3 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.about-3__hero {
+  background: #fafafa;
+  padding: 5rem 2rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.about-3__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #4f46e5;
+  margin-bottom: 1rem;
+  display: block;
+}
+.about-3__hero-content h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.2;
+  margin: 0 0 1.25rem;
+}
+.about-3__hero-content h1 em {
+  color: #4f46e5;
+  font-style: normal;
+}
+.about-3__hero-content p {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.8;
+  margin: 0;
+}
+.about-3__hero-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.about-3__hero-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.about-3__hero-card .big {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #4f46e5;
+}
+.about-3__hero-card span:last-child {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+.about-3__pillars {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.about-3__pillar {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  color: #fff;
+}
+.about-3__pillar-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+}
+.about-3__pillar h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: #fff;
+}
+.about-3__pillar p {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin: 0;
+}
+.about-3__partners {
+  background: #111827;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.about-3__partners-label {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1.5rem;
+}
+.about-3__partners-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.about-3__partner {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.05em;
+}
+@media (max-width: 768px) {
+  .about-3__hero,
+  .about-3__pillars {
+    grid-template-columns: 1fr;
+  }
+  .about-3__hero-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

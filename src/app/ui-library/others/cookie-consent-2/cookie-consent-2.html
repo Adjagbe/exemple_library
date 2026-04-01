@@ -1,0 +1,19 @@
+<div *ngIf="visible" class="cc2">
+  <div *ngIf="step === 'main'" class="cc2__main">
+    <div class="cc2__head"><i class="bi bi-shield-check cc2__shield"></i><div><h4>Gestion des cookies</h4><p>Nous utilisons des cookies pour personnaliser votre expérience.</p></div></div>
+    <div class="cc2__actions">
+      <button class="cc2__settings" (click)="step = 'settings'"><i class="bi bi-sliders"></i> Paramétrer</button>
+      <button class="cc2__accept" (click)="accept()">Tout accepter</button>
+    </div>
+  </div>
+  <div *ngIf="step === 'settings'" class="cc2__settings-panel">
+    <h4>Vos préférences</h4>
+    <div class="cc2__row"><span><strong>Fonctionnel</strong> — Essentiels au bon fonctionnement du site.</span><input type="checkbox" [(ngModel)]="prefs.functional" disabled></div>
+    <div class="cc2__row"><span><strong>Analytique</strong> — Mesure d'audience anonymisée.</span><input type="checkbox" [(ngModel)]="prefs.analytics"></div>
+    <div class="cc2__row"><span><strong>Marketing</strong> — Publicités ciblées et réseaux sociaux.</span><input type="checkbox" [(ngModel)]="prefs.marketing"></div>
+    <div class="cc2__foot">
+      <button class="cc2__back" (click)="step = 'main'">Retour</button>
+      <button class="cc2__save" (click)="save()">Enregistrer</button>
+    </div>
+  </div>
+</div>

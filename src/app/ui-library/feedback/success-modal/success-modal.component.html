@@ -1,0 +1,19 @@
+<div class="success-showcase">
+  <h2 class="section-title">Modal de Succès</h2>
+  <button class="btn btn--primary" (click)="openModal()">Afficher le modal</button>
+
+  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="success-modal" (click)="$event.stopPropagation()">
+      <div class="modal-icon">
+        <i class="bi" [ngClass]="modalData.icon || 'bi-check-circle-fill'"></i>
+        <div class="icon-rings">
+          <span class="ring ring-1"></span>
+          <span class="ring ring-2"></span>
+        </div>
+      </div>
+      <h3 class="modal-title">{{ modalData.title }}</h3>
+      <p class="modal-message">{{ modalData.message }}</p>
+      <button class="btn btn--primary btn--lg" (click)="closeModal()">{{ modalData.actionLabel }}</button>
+    </div>
+  </div>
+</div>

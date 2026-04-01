@@ -1,15 +1,7 @@
-// ═══════════════════════════════════════════════════════════════
-// TABLE COMPONENT - Premium UI Library
-// Simple data table with sorting and styling
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
 export interface TableColumn {
   key: string;
   label: string;
@@ -39,9 +31,7 @@ export interface SortConfig {
   encapsulation: ViewEncapsulation.None
 })
 export class TableComponent {
-  // ─────────────────────────────────────────────────────────────────
   // TABLE CONFIGURATION
-  // ─────────────────────────────────────────────────────────────────
   columns: TableColumn[] = [
     { key: 'id', label: 'ID', sortable: true, width: '80px', align: 'center' },
     { key: 'name', label: 'Nom', sortable: true },
@@ -75,9 +65,7 @@ export class TableComponent {
   sortConfig: SortConfig | null = null;
   selectAll: boolean = false;
 
-  // ─────────────────────────────────────────────────────────────────
   // SORTING
-  // ─────────────────────────────────────────────────────────────────
   sortBy(column: TableColumn): void {
     if (!column.sortable) return;
 
@@ -105,9 +93,7 @@ export class TableComponent {
     return this.sortConfig.direction === 'asc' ? 'bi-chevron-up' : 'bi-chevron-down';
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // SELECTION
-  // ─────────────────────────────────────────────────────────────────
   toggleSelectAll(): void {
     this.data.forEach(row => row.selected = this.selectAll);
   }
@@ -120,9 +106,7 @@ export class TableComponent {
     return this.data.filter(row => row.selected).length;
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // HELPERS
-  // ─────────────────────────────────────────────────────────────────
   getBadgeClass(column: TableColumn, value: string): string {
     const color = column.badgeColors?.[value] || 'secondary';
     return `badge badge--${color}`;
@@ -137,9 +121,7 @@ export class TableComponent {
     });
   }
 
-  // ─────────────────────────────────────────────────────────────────
   // ACTIONS
-  // ─────────────────────────────────────────────────────────────────
   onView(row: TableRow): void {
     console.log('View:', row);
   }

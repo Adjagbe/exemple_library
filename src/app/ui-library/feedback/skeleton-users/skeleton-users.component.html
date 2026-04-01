@@ -1,0 +1,28 @@
+<div class="skeleton-showcase">
+  <h2 class="section-title">Liste d'utilisateurs</h2>
+  <div class="toggle-control">
+    <button class="btn" (click)="toggleLoading()">{{ isLoading ? 'Afficher le contenu' : 'Afficher les skeletons' }}</button>
+  </div>
+  <div class="user-list">
+    <ng-container *ngIf="isLoading">
+      <div class="skeleton-user" *ngFor="let i of [1, 2, 3, 4]">
+        <div class="skeleton skeleton--avatar"></div>
+        <div class="skeleton-user-info">
+          <div class="skeleton skeleton--name"></div>
+          <div class="skeleton skeleton--email"></div>
+        </div>
+        <div class="skeleton skeleton--button"></div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+      <div class="real-user" *ngFor="let i of [1, 2, 3, 4]">
+        <div class="user-avatar">JD</div>
+        <div class="user-info">
+          <span class="user-name">Jean Dupont</span>
+          <span class="user-email">jean&#64;example.com</span>
+        </div>
+        <button class="user-btn">Voir profil</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

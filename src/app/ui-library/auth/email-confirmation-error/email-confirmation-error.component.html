@@ -1,0 +1,39 @@
+<div class="confirmation-page">
+  <div class="confirmation-card">
+    <div class="state-container">
+      <div class="error-icon">
+        <i class="bi bi-x-circle"></i>
+      </div>
+      
+      <h2 class="state-title">Erreur de vérification</h2>
+      <p class="state-text">
+        Une erreur s'est produite lors de la vérification de votre email. Veuillez réessayer ou contacter le support.
+      </p>
+
+      <div class="error-actions">
+        <button class="btn btn--primary" (click)="retry()" [disabled]="isRetrying">
+          @if (isRetrying) {
+            <span class="spinner"></span>
+            <span>Vérification...</span>
+          } @else {
+            <i class="bi bi-arrow-clockwise"></i>
+            <span>Réessayer</span>
+          }
+        </button>
+        <a href="#" class="btn btn--secondary">
+          <i class="bi bi-headset"></i>
+          <span>Contacter le support</span>
+        </a>
+      </div>
+
+      <a href="#" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Retour à la connexion
+      </a>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p>
+  </div>
+</div>

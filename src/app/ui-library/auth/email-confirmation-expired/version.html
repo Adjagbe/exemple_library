@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lien Expiré - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:whitesmoke;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem}
+
+    .confirmation-card{width:100%;max-width:480px;background:#fff;border-radius:1.5rem;padding:3rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+    .state-container{text-align:center}
+    .state-title{font-size:1.5rem;font-weight:700;color:#111827;margin:0 0 .75rem}
+    .state-text{font-size:.9rem;color:#6b7280;line-height:1.6;margin:0 0 1.5rem}
+
+    .expired-icon{width:100px;height:100px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem}
+    .expired-icon i{font-size:3rem;color:#d97706}
+
+    .alert{display:none;align-items:center;gap:.75rem;padding:.875rem 1rem;border-radius:.5rem;margin-bottom:1.25rem;font-size:.8rem;text-align:left}
+    .alert.show{display:flex}
+    .alert--success{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;font-size:.9rem;font-weight:600;border:none;border-radius:.5rem;cursor:pointer;transition:all .2s;text-decoration:none}
+    .btn--primary{background:#4f46e5;color:#fff}
+    .btn--primary:hover:not(:disabled){background:#4338ca}
+    .btn--full{width:100%}
+    .btn:disabled{opacity:.7;cursor:not-allowed}
+
+    .spinner-btn{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;font-size:.875rem;color:#6b7280;text-decoration:none;transition:color .2s}
+    .back-link:hover{color:#4f46e5}
+
+    .page-footer{margin-top:2rem;text-align:center}
+    .page-footer p{font-size:.8rem;color:#6b7280;margin:0}
+    .page-footer a{color:#4f46e5;text-decoration:underline}
+    .page-footer a:hover{text-decoration:none}
+  </style>
+</head>
+<body>
+
+<div class="confirmation-card">
+  <div class="state-container">
+    <div class="expired-icon"><i class="bi bi-clock-history"></i></div>
+    <h2 class="state-title">Lien expiré</h2>
+    <p class="state-text">Ce lien de confirmation a expiré. Demandez un nouveau lien pour confirmer votre adresse email.</p>
+    <div class="alert alert--success" id="resendAlert"><i class="bi bi-check-circle"></i><span>Un nouveau lien a été envoyé à utilisateur@exemple.com</span></div>
+    <button class="btn btn--primary btn--full" id="resendBtn" onclick="resendEmail()">
+      <span class="spinner-btn" id="resendSpinner"></span>
+      <i class="bi bi-envelope" id="resendIcon"></i>
+      <span id="resendText">Renvoyer le lien</span>
+    </button>
+    <a href="#" class="back-link"><i class="bi bi-arrow-left"></i>Retour à la connexion</a>
+  </div>
+</div>
+
+<div class="page-footer"><p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p></div>
+
+<script>
+(function() {
+  window.resendEmail = async function() {
+    var btn = document.getElementById('resendBtn');
+    btn.disabled = true;
+    document.getElementById('resendSpinner').style.display = 'block';
+    document.getElementById('resendIcon').style.display = 'none';
+    document.getElementById('resendText').textContent = 'Envoi en cours...';
+    document.getElementById('resendAlert').classList.remove('show');
+
+    await new Promise(function(r) { setTimeout(r, 1500); });
+
+    btn.disabled = false;
+    document.getElementById('resendSpinner').style.display = 'none';
+    document.getElementById('resendIcon').style.display = '';
+    document.getElementById('resendText').textContent = 'Renvoyer le lien';
+    document.getElementById('resendAlert').classList.add('show');
+  };
+})();
+</script>
+
+</body>
+</html>

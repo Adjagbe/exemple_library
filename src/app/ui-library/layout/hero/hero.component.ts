@@ -1,13 +1,7 @@
-// ═══════════════════════════════════════════════════════════════
-// HERO SECTION COMPONENT - Premium UI Library
-// Landing page hero with CTA buttons
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface HeroContent {
-  badge?: string;
   title: string;
   highlightedText?: string;
   subtitle: string;
@@ -27,7 +21,6 @@ interface HeroContent {
 })
 export class HeroComponent {
   hero: HeroContent = {
-    badge: '🚀 New Release v2.0',
     title: 'Build Amazing Products',
     highlightedText: 'Faster Than Ever',
     subtitle: 'The most powerful UI library for modern web applications. Create stunning interfaces with our premium components.',

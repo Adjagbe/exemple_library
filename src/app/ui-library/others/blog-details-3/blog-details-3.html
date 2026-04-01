@@ -1,0 +1,31 @@
+<article class="bd3">
+  <div class="bd3__cover"><div class="bd3__cover-overlay"><span class="bd3__category">Produit</span><h1>Jobs-to-be-done : le guide ultime pour 2026</h1><div class="bd3__meta"><div class="bd3__avatar">CB</div><span>Charlotte Blanc · 19 mars 2026 · 6 min</span></div></div></div>
+  <div class="bd3__layout">
+    <div class="bd3__article">
+      <h2>Qu'est-ce que le JTBD ?</h2>
+      <p>Le framework Jobs-to-be-Done part d'un principe fondamental : les utilisateurs n'achètent pas des produits, ils "embauchent" des solutions pour accomplir des tâches précises dans leur vie.</p>
+      <p>Comprendre ces jobs profonds — fonctionnels, sociaux, émotionnels — permet de créer des produits qui résonnent vraiment avec les besoins des utilisateurs.</p>
+      <h2>Les 3 types de jobs</h2>
+      <p><strong>Jobs fonctionnels :</strong> Ce que l'utilisateur cherche à accomplir concrètement. <strong>Jobs sociaux :</strong> Comment il veut être perçu par les autres. <strong>Jobs émotionnels :</strong> Comment il veut se sentir.</p>
+      <div class="bd3__comments">
+        <h3>{{ comments.length }} commentaires</h3>
+        <div *ngFor="let c of comments" class="bd3__comment">
+          <div class="bd3__c-avatar">{{ c.initials }}</div>
+          <div class="bd3__c-body"><div class="bd3__c-header"><strong>{{ c.name }}</strong><span>{{ c.date }}</span></div><p>{{ c.text }}</p></div>
+        </div>
+        <div class="bd3__comment-form">
+          <textarea placeholder="Laissez un commentaire..."></textarea>
+          <button>Publier</button>
+        </div>
+      </div>
+    </div>
+    <aside class="bd3__side">
+      <div class="bd3__author-card">
+        <div class="bd3__auth-avatar">CB</div>
+        <h4>Charlotte Blanc</h4>
+        <p>Product Manager chez Nexus. Passionnée par la psychologie des utilisateurs et les méthodes de product discovery.</p>
+        <a href="#" class="bd3__follow">Suivre</a>
+      </div>
+    </aside>
+  </div>
+</article>

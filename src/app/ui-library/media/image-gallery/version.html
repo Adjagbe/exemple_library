@@ -551,8 +551,11 @@
     document.querySelector(`[data-view="${view}"]`).classList.add('active');
 
     document.getElementById('galleryGrid').classList.toggle('active', view === 'grid');
+    document.getElementById('galleryGrid').classList.toggle('hidden', view !== 'grid');
     document.getElementById('galleryMasonry').classList.toggle('active', view === 'masonry');
+    document.getElementById('galleryMasonry').classList.toggle('hidden', view !== 'masonry');
     document.getElementById('galleryList').classList.toggle('active', view === 'list');
+    document.getElementById('galleryList').classList.toggle('hidden', view !== 'list');
   }
 
   function setCategory(category) {

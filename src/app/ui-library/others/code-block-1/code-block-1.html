@@ -1,0 +1,7 @@
+<div class="cb1">
+  <div class="cb1__header">
+    <span class="cb1__lang">TypeScript</span>
+    <button class="cb1__copy" (click)="copy()"><i class="bi" [ngClass]="copied ? 'bi-check-lg' : 'bi-clipboard'"></i> {{ copied ? 'Copié !' : 'Copier' }}</button>
+  </div>
+  <pre class="cb1__pre"><code>{{ code }}</code></pre>
+</div>

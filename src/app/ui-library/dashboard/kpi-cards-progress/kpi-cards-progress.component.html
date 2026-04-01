@@ -1,0 +1,28 @@
+<div class="kpi-showcase">
+  <h1 class="page-title">Cartes avec progression</h1>
+  <p class="page-subtitle">Indicateurs clés avec barres de progression vers les objectifs</p>
+
+  <div class="kpi-grid">
+    <div *ngFor="let kpi of progressKPIs" class="kpi-card kpi-card--progress">
+      <div class="kpi-card__row">
+        <div class="kpi-card__icon kpi-card__icon--small" [class]="'kpi-card__icon--' + kpi.iconColor">
+          <i class="bi" [ngClass]="kpi.icon"></i>
+        </div>
+        <div class="kpi-card__info">
+          <span class="kpi-card__title">{{ kpi.title }}</span>
+          <span class="kpi-card__value">{{ formatValue(kpi) }}</span>
+        </div>
+      </div>
+      <div class="kpi-card__progress-container" *ngIf="kpi.progress">
+        <div class="progress-bar">
+          <div 
+            class="progress-fill" 
+            [style.width.%]="getProgressPercentage(kpi.progress)"
+            [class]="'progress-fill--' + kpi.iconColor"
+          ></div>
+        </div>
+        <span class="progress-label">{{ kpi.progress.label }}</span>
+      </div>
+    </div>
+  </div>
+</div>

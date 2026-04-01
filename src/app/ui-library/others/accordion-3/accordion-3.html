@@ -1,0 +1,12 @@
+<div class="acc3">
+  <div class="acc3__header"><h2>Support & FAQ</h2></div>
+  <div class="acc3__list">
+    <div *ngFor="let item of items; let i = index" class="acc3__item" [class.open]="item.open" (click)="toggle(i)">
+      <div class="acc3__trigger">
+        <div class="acc3__left"><div class="acc3__icon"><i class="bi" [ngClass]="item.icon"></i></div><span>{{ item.q }}</span></div>
+        <div class="acc3__arrow"><i class="bi bi-chevron-down"></i></div>
+      </div>
+      <div class="acc3__body" [style.display]="item.open ? 'block' : 'none'"><p>{{ item.a }}</p></div>
+    </div>
+  </div>
+</div>

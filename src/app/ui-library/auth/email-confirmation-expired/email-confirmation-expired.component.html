@@ -1,0 +1,43 @@
+<div class="confirmation-page">
+  <div class="confirmation-card">
+    <div class="state-container">
+      <div class="expired-icon">
+        <i class="bi bi-clock-history"></i>
+      </div>
+      
+      <h2 class="state-title">Lien expiré</h2>
+      <p class="state-text">
+        Ce lien de confirmation a expiré. Demandez un nouveau lien pour confirmer votre adresse email.
+      </p>
+
+      @if (resendSuccess) {
+        <div class="alert alert--success">
+          <i class="bi bi-check-circle"></i>
+          <span>Un nouveau lien a été envoyé à {{ email }}</span>
+        </div>
+      }
+
+      <button 
+        class="btn btn--primary btn--full"
+        (click)="resendEmail()"
+        [disabled]="isResending">
+        @if (isResending) {
+          <span class="spinner"></span>
+          <span>Envoi en cours...</span>
+        } @else {
+          <i class="bi bi-envelope"></i>
+          <span>Renvoyer le lien</span>
+        }
+      </button>
+
+      <a href="#" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Retour à la connexion
+      </a>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p>
+  </div>
+</div>

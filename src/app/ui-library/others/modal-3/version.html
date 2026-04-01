@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; display: flex; align-items: center; justify-content: center; height: 500px; }
+.m3-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
+.m3-overlay.visible { display: flex; }
+.m3-card { background: #fff; border-radius: 1.5rem; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 24px 64px rgba(0,0,0,.2); }
+.m3-icon-wrap { width: 72px; height: 72px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+.m3-icon-wrap i { font-size: 2rem; color: #dc2626; }
+.m3-card h3 { font-size: 1.25rem; font-weight: 800; color: #111827; margin-bottom: .75rem; }
+.m3-card p { color: #6b7280; line-height: 1.7; margin-bottom: 2rem; }
+.m3-btns { display: flex; gap: .75rem; }
+.btn-cancel { flex: 1; background: #fff; border: 1.5px solid #e5e7eb; color: #374151; padding: .75rem; border-radius: .875rem; font-size: .875rem; font-weight: 600; cursor: pointer; }
+.btn-danger { flex: 1; background: #dc2626; color: #fff; border: none; padding: .75rem; border-radius: .875rem; font-size: .875rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: .4rem; }
+</style>
+</head>
+<body>
+<button onclick="document.getElementById('m3overlay').classList.add('visible')" style="background:#fee2e2;color:#dc2626;border:1.5px solid #fecaca;padding:.875rem 2rem;border-radius:.875rem;font-size:.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.5rem;"><i class="bi bi-trash3"></i> Supprimer l'élément</button>
+
+<div class="m3-overlay" id="m3overlay" onclick="if(event.target===this)this.classList.remove('visible')">
+  <div class="m3-card">
+    <div class="m3-icon-wrap"><i class="bi bi-exclamation-triangle-fill"></i></div>
+    <h3>Confirmer la suppression</h3>
+    <p>Cette action est irréversible. L'élément sera définitivement supprimé et ne pourra pas être récupéré.</p>
+    <div class="m3-btns">
+      <button class="btn-cancel" onclick="document.getElementById('m3overlay').classList.remove('visible')">Annuler</button>
+      <button class="btn-danger" onclick="document.getElementById('m3overlay').classList.remove('visible')"><i class="bi bi-trash3"></i> Supprimer</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

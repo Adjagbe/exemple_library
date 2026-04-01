@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Consent 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; height: 200px; }
+body.cc-open .demo-content {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+.demo-content { padding: 4rem 2rem; text-align: center; color: #6b7280; }
+.cc2 { position: fixed; bottom: 1.5rem; right: 1.5rem; width: min(420px, calc(100vw - 3rem)); background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; box-shadow: 0 12px 40px rgba(0,0,0,.15); z-index: 9999; overflow: hidden; }
+.cc2__panel { padding: 1.75rem; }
+.cc2__icon { width: 48px; height: 48px; border-radius: 50%; background: #eef2ff; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+.cc2__icon i { font-size: 1.25rem; color: #4f46e5; }
+.cc2__panel h4 { font-size: 1rem; font-weight: 700; color: #111827; margin: 0 0 .5rem; }
+.cc2__panel p { font-size: .825rem; color: #6b7280; margin: 0 0 1.5rem; line-height: 1.7; }
+.cc2__btns { display: flex; gap: .75rem; }
+.cc2__settings-btn { flex: 1; padding: .75rem; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: .75rem; font-weight: 600; font-size: .8rem; color: #374151; cursor: pointer; }
+.cc2__accept-btn { flex: 1; padding: .75rem; background: #4f46e5; color: #fff; border: none; border-radius: .75rem; font-weight: 700; font-size: .8rem; cursor: pointer; }
+.cc2__settings { padding: 1.75rem; }
+.cc2__settings h4 { font-size: .9rem; font-weight: 700; color: #111827; margin: 0 0 1.25rem; }
+.cc2__check-row { display: flex; align-items: center; justify-content: space-between; padding: .875rem 0; border-bottom: 1px solid #f3f4f6; }
+.cc2__check-row:last-of-type { border-bottom: none; }
+.cc2__check-info strong { font-size: .85rem; color: #111827; display: block; }
+.cc2__check-info span { font-size: .75rem; color: #9ca3af; }
+.cc2__toggle { width: 40px; height: 22px; background: #e5e7eb; border-radius: 9999px; position: relative; cursor: pointer; transition: background .2s; flex-shrink: 0; }
+.cc2__toggle.on { background: #4f46e5; }
+.cc2__toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: transform .2s; }
+.cc2__toggle.on::after { transform: translateX(18px); }
+.cc2__toggle.disabled { opacity: .5; cursor: not-allowed; }
+.cc2__settings-btns { display: flex; gap: .75rem; margin-top: 1.25rem; }
+.cc2__back-btn { flex: 1; padding: .75rem; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: .75rem; font-weight: 600; font-size: .8rem; color: #374151; cursor: pointer; }
+.cc2__save-btn { flex: 1; padding: .75rem; background: #4f46e5; color: #fff; border: none; border-radius: .75rem; font-weight: 700; font-size: .8rem; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="cc2" id="cc2">
+  <div class="cc2__panel" id="panelMain">
+    <div class="cc2__icon"><i class="bi bi-shield-check"></i></div>
+    <h4>Nous respectons votre vie privée</h4>
+    <p>Nous utilisons des cookies pour personnaliser le contenu, analyser notre trafic et améliorer votre expérience.</p>
+    <div class="cc2__btns">
+      <button class="cc2__settings-btn" onclick="showSettings()">Paramétrer</button>
+      <button class="cc2__accept-btn" onclick="hideCC()">Tout accepter</button>
+    </div>
+  </div>
+  <div class="cc2__settings" id="panelSettings" style="display:none">
+    <h4>Préférences des cookies</h4>
+    <div class="cc2__check-row">
+      <div class="cc2__check-info"><strong>Fonctionnel</strong><span>Nécessaire au fonctionnement</span></div>
+      <div class="cc2__toggle on disabled"></div>
+    </div>
+    <div class="cc2__check-row">
+      <div class="cc2__check-info"><strong>Analytique</strong><span>Mesure d'audience anonyme</span></div>
+      <div class="cc2__toggle" id="t1" onclick="toggleThis('t1')"></div>
+    </div>
+    <div class="cc2__check-row">
+      <div class="cc2__check-info"><strong>Marketing</strong><span>Publicités personnalisées</span></div>
+      <div class="cc2__toggle" id="t2" onclick="toggleThis('t2')"></div>
+    </div>
+    <div class="cc2__settings-btns">
+      <button class="cc2__back-btn" onclick="showMain()">Retour</button>
+      <button class="cc2__save-btn" onclick="hideCC()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+<script>
+function showSettings() {
+  const main = document.getElementById('panelMain');
+  const settings = document.getElementById('panelSettings');
+  if (main && settings) {
+    main.style.display = 'none';
+    settings.style.display = 'block';
+  }
+}
+
+function showMain() {
+  const main = document.getElementById('panelMain');
+  const settings = document.getElementById('panelSettings');
+  if (main && settings) {
+    settings.style.display = 'none';
+    main.style.display = 'block';
+  }
+}
+
+function toggleThis(id) {
+  const el = document.getElementById(id);
+  if (el && !el.classList.contains('disabled')) {
+    el.classList.toggle('on');
+  }
+}
+function hideCC() {
+  const el = document.getElementById('cc2');
+  if (el) el.style.display = 'none';
+
+  document.body.classList.remove('cc-open'); 
+}
+document.body.classList.add('cc-open');
+</script>
+</body>
+</html>

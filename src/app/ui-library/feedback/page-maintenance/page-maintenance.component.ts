@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// MAINTENANCE PAGE COMPONENT - Premium UI Library
-// Site maintenance and scheduled downtime page
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

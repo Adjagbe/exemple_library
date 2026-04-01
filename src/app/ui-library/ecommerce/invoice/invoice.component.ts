@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// INVOICE COMPONENT - Premium UI Library
-// Printable invoice layout with company details
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +18,6 @@ interface Invoice {
   dueDate: Date;
   status: 'draft' | 'pending' | 'paid' | 'overdue' | 'cancelled';
   
-  // Company details
   company: {
     name: string;
     address: string;
@@ -36,7 +30,7 @@ interface Invoice {
     taxId: string;
   };
   
-  // Customer details
+
   customer: {
     name: string;
     company?: string;
@@ -47,10 +41,10 @@ interface Invoice {
     phone?: string;
   };
   
-  // Items
+
   items: InvoiceItem[];
   
-  // Totals
+
   subtotal: number;
   taxRate: number;
   taxAmount: number;
@@ -59,7 +53,7 @@ interface Invoice {
   shipping: number;
   total: number;
   
-  // Payment
+
   paymentMethod: string;
   paymentTerms: string;
   notes?: string;
@@ -74,7 +68,7 @@ interface Invoice {
   encapsulation: ViewEncapsulation.None
 })
 export class InvoiceComponent {
-  // Expose Math to template
+
   Math = Math;
 
   invoice: Invoice = {

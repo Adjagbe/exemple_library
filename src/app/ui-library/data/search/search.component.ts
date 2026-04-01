@@ -1,15 +1,8 @@
-// ═══════════════════════════════════════════════════════════════
-// SEARCH COMPONENT - Premium UI Library
-// Advanced search with suggestions and filters
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface SearchSuggestion {
   id: string;
   text: string;
@@ -47,17 +40,13 @@ export interface SearchFilter {
   encapsulation: ViewEncapsulation.None
 })
 export class SearchComponent {
-  // ─────────────────────────────────────────────────────────────────
   // SEARCH STATE
-  // ─────────────────────────────────────────────────────────────────
   searchQuery: string = '';
   isSearchOpen: boolean = false;
   isLoading: boolean = false;
   activeTab: 'all' | 'products' | 'categories' | 'users' = 'all';
 
-  // ─────────────────────────────────────────────────────────────────
   // SUGGESTIONS
-  // ─────────────────────────────────────────────────────────────────
   recentSearches: SearchSuggestion[] = [
     { id: '1', text: 'MacBook Pro', type: 'recent', icon: 'bi-clock-history' },
     { id: '2', text: 'iPhone 15', type: 'recent', icon: 'bi-clock-history' },
@@ -77,9 +66,7 @@ export class SearchComponent {
     { id: '4', text: 'Accessoires Mac', type: 'category', icon: 'bi-folder' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
   // RESULTS
-  // ─────────────────────────────────────────────────────────────────
   searchResults: SearchResult[] = [
     { id: '1', title: 'MacBook Pro 16" M3 Pro', description: '36 Go RAM, 512 Go SSD, Puce M3 Pro', category: 'Électronique', price: 2999.99, rating: 4.8 },
     { id: '2', title: 'MacBook Pro 14" M3', description: '18 Go RAM, 512 Go SSD, Puce M3', category: 'Électronique', price: 2199.99, rating: 4.7 },
@@ -89,9 +76,6 @@ export class SearchComponent {
 
   totalResults: number = 156;
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
   onSearchFocus(): void {
     this.isSearchOpen = true;
   }

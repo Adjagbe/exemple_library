@@ -1,0 +1,15 @@
+<div class="demo-page">
+    <div class="section section--white">
+        <div class="section-header">
+        <span class="section-badge"><i class="bi bi-bar-chart"></i> En chiffres</span>
+        <h2>Nos résultats parlent d'eux-mêmes</h2>
+        </div>
+        <div class="stats-grid">
+        <div *ngFor="let s of stats" class="stat-card">
+            <div class="stat-value">{{ s.value }}</div>
+            <div class="stat-label">{{ s.label }}</div>
+            <div class="stat-divider"></div>
+        </div>
+        </div>
+    </div>
+</div>    

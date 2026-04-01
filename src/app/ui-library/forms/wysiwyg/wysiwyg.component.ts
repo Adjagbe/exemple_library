@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// WYSIWYG EDITOR COMPONENT - Premium UI Library
-// Rich text editor with formatting tools
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

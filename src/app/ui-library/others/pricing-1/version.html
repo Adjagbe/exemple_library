@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing 1</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; }
+.pr1 { max-width: 1100px; margin: 0 auto; }
+.pr1__header { text-align: center; margin-bottom: 3rem; }
+.pr1__badge { display: inline-block; background: #eef2ff; color: #4f46e5; font-size: .75rem; font-weight: 700; padding: .375rem 1rem; border-radius: 9999px; margin-bottom: 1rem; }
+.pr1__header h2 { font-size: 2rem; font-weight: 800; color: #111827; margin-bottom: .75rem; }
+.pr1__header p { color: #6b7280; }
+.pr1__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: center; }
+.pr1__card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 1.5rem; padding: 2rem; }
+.pr1__card--highlight { background: linear-gradient(135deg, #4f46e5, #7c3aed); border-color: transparent; transform: scale(1.04); box-shadow: 0 16px 48px rgba(79,70,229,.3); }
+.pr1__pop-badge { display: inline-block; background: rgba(255,255,255,.2); color: #fff; font-size: .72rem; font-weight: 700; padding: .25rem .75rem; border-radius: 9999px; margin-bottom: 1rem; }
+.pr1__name { font-size: .875rem; font-weight: 700; color: #6b7280; margin-bottom: .5rem; }
+.pr1__card--highlight .pr1__name { color: rgba(255,255,255,.75); }
+.pr1__price { font-size: 2.5rem; font-weight: 900; color: #111827; margin-bottom: .25rem; }
+.pr1__card--highlight .pr1__price { color: #fff; }
+.pr1__period { font-size: .78rem; color: #9ca3af; margin-bottom: 1.75rem; }
+.pr1__card--highlight .pr1__period { color: rgba(255,255,255,.6); }
+.pr1__features { list-style: none; display: flex; flex-direction: column; gap: .75rem; margin-bottom: 2rem; }
+.pr1__features li { display: flex; align-items: center; gap: .625rem; font-size: .875rem; color: #374151; }
+.pr1__card--highlight .pr1__features li { color: rgba(255,255,255,.9); }
+.pr1__features li i { color: #10b981; font-size: .9rem; }
+.pr1__card--highlight .pr1__features li i { color: #a7f3d0; }
+.pr1__cta { width: 100%; padding: .875rem; border-radius: .875rem; font-size: .95rem; font-weight: 700; cursor: pointer; border: none; background: #f3f4f6; color: #374151; }
+.pr1__cta--highlight { background: #fff; color: #4f46e5; }
+</style>
+</head>
+<body>
+<div class="pr1">
+  <div class="pr1__header">
+    <div class="pr1__badge">Tarifs</div>
+    <h2>Choisissez votre plan</h2>
+    <p>Des tarifs simples et transparents, sans surprises.</p>
+  </div>
+  <div class="pr1__grid">
+    <div class="pr1__card">
+      <div class="pr1__name">Starter</div>
+      <div class="pr1__price">€0</div>
+      <div class="pr1__period">Pour toujours</div>
+      <ul class="pr1__features">
+        <li><i class="bi bi-check-circle-fill"></i> 3 projets</li>
+        <li><i class="bi bi-check-circle-fill"></i> 1 Go de stockage</li>
+        <li><i class="bi bi-check-circle-fill"></i> Support communauté</li>
+        <li><i class="bi bi-check-circle-fill"></i> Accès aux templates</li>
+      </ul>
+      <button class="pr1__cta">Commencer</button>
+    </div>
+    <div class="pr1__card pr1__card--highlight">
+      <div class="pr1__pop-badge">⭐ Plus populaire</div>
+      <div class="pr1__name">Pro</div>
+      <div class="pr1__price">€29</div>
+      <div class="pr1__period">/mois par utilisateur</div>
+      <ul class="pr1__features">
+        <li><i class="bi bi-check-circle-fill"></i> Projets illimités</li>
+        <li><i class="bi bi-check-circle-fill"></i> 50 Go de stockage</li>
+        <li><i class="bi bi-check-circle-fill"></i> Support prioritaire</li>
+        <li><i class="bi bi-check-circle-fill"></i> Intégrations avancées</li>
+        <li><i class="bi bi-check-circle-fill"></i> Analytics avancés</li>
+        <li><i class="bi bi-check-circle-fill"></i> Accès API</li>
+      </ul>
+      <button class="pr1__cta pr1__cta--highlight">Choisir Pro</button>
+    </div>
+    <div class="pr1__card">
+      <div class="pr1__name">Enterprise</div>
+      <div class="pr1__price">€99</div>
+      <div class="pr1__period">/mois par utilisateur</div>
+      <ul class="pr1__features">
+        <li><i class="bi bi-check-circle-fill"></i> Tout Pro inclus</li>
+        <li><i class="bi bi-check-circle-fill"></i> Stockage illimité</li>
+        <li><i class="bi bi-check-circle-fill"></i> Support dédié 24/7</li>
+        <li><i class="bi bi-check-circle-fill"></i> SSO / SAML</li>
+        <li><i class="bi bi-check-circle-fill"></i> Audit logs</li>
+        <li><i class="bi bi-check-circle-fill"></i> SLA garanti</li>
+      </ul>
+      <button class="pr1__cta">Nous contacter</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

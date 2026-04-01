@@ -1,0 +1,16 @@
+<div class="bc1">
+  <div class="bc1__header"><h2>Derniers articles</h2><a href="#" class="bc1__all">Voir tout <i class="bi bi-arrow-right"></i></a></div>
+  <div class="bc1__grid">
+    <article *ngFor="let p of posts" class="bc1__card">
+      <div class="bc1__thumb" [style.background]="p.color"><span class="bc1__category">{{ p.category }}</span></div>
+      <div class="bc1__body">
+        <h3 class="bc1__title">{{ p.title }}</h3>
+        <p class="bc1__excerpt">{{ p.excerpt }}</p>
+        <div class="bc1__footer">
+          <div class="bc1__meta"><span>{{ p.author }}</span><span class="bc1__dot">·</span><span>{{ p.date }}</span></div>
+          <span class="bc1__read"><i class="bi bi-clock"></i> {{ p.readTime }} min</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

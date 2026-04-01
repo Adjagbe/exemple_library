@@ -1,0 +1,15 @@
+<section class="nl1">
+  <div class="nl1__inner">
+    <div class="nl1__badge"><i class="bi bi-envelope-heart-fill"></i> Newsletter</div>
+    <h2>Restez informé des dernières nouveautés</h2>
+    <p>Rejoignez plus de 12 000 abonnés et recevez chaque semaine nos meilleurs articles.</p>
+    <div *ngIf="!subscribed" class="nl1__form">
+      <input type="email" [(ngModel)]="email" placeholder="votre@email.com" (keyup.enter)="subscribe()">
+      <button (click)="subscribe()">S'abonner <i class="bi bi-arrow-right"></i></button>
+    </div>
+    <div *ngIf="subscribed" class="nl1__thanks">
+      <i class="bi bi-check-circle-fill"></i> Merci ! Vérifiez votre boîte mail.
+    </div>
+    <p class="nl1__note">Pas de spam. Désabonnement en 1 clic.</p>
+  </div>
+</section>

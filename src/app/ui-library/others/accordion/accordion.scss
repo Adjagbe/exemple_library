@@ -1,0 +1,109 @@
+$ink: #0d0d14;
+$cream: #f7f5f0;
+$accent: #c8ff00;
+$border: rgba(255,255,255,0.09);
+$muted: #6b6b7b;
+
+.accordion {
+  font-family: 'Syne', sans-serif;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 0;
+
+  &__heading {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: $cream;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  &__item {
+    border-bottom: 1px solid $border;
+    overflow: hidden;
+
+    &:first-of-type { border-top: 1px solid $border; }
+
+    &.is-open .accordion__icon {
+      transform: rotate(180deg);
+      color: $accent;
+    }
+
+    &.is-open .accordion__trigger-text {
+      color: $accent;
+    }
+  }
+
+  &__trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1.4rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    text-align: left;
+    color: $cream;
+    transition: color 0.2s;
+
+    &:hover .accordion__trigger-text {
+      color: rgba($cream, 0.75);
+    }
+  }
+
+  &__trigger-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.25s;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s;
+    color: $muted;
+  }
+
+  &__panel {
+    overflow: hidden;
+  }
+
+  &__panel-inner {
+    padding: 0 0 1.6rem;
+    font-family: 'DM Sans', sans-serif;
+    color: $muted;
+    font-size: 0.95rem;
+    line-height: 1.75;
+
+    p { margin: 0; }
+  }
+
+  &__link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: $accent;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  // ── Variants ────────────────────────────────────────
+  &--card {
+    .accordion__item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid $border !important;
+      border-radius: 16px;
+      margin-bottom: 0.75rem;
+
+      &.is-open { border-color: rgba($accent, 0.3) !important; }
+    }
+
+    .accordion__trigger { padding: 1.4rem 1.6rem; }
+    .accordion__panel-inner { padding: 0 1.6rem 1.4rem; }
+  }
+}

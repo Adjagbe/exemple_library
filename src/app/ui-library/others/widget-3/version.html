@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Widget 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; display: flex; justify-content: center; }
+.w3 { max-width: 480px; width: 100%; background: linear-gradient(135deg, #0ea5e9, #0284c7); border-radius: 1.5rem; padding: 2rem; box-shadow: 0 8px 32px rgba(14,165,233,.3); color: #fff; }
+.w3__main { padding-bottom: 1.75rem; border-bottom: 1px solid rgba(255,255,255,.2); margin-bottom: 1.75rem; }
+.w3__top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; }
+.w3__icon { font-size: 4rem; line-height: 1; }
+.w3__temp { text-align: right; }
+.w3__temp .val { font-size: 3rem; font-weight: 900; line-height: 1; }
+.w3__temp .feels { font-size: .8rem; color: rgba(255,255,255,.7); margin-top: .25rem; }
+.w3__city { font-size: 1.125rem; font-weight: 700; margin-bottom: .25rem; }
+.w3__condition { font-size: .875rem; color: rgba(255,255,255,.8); margin-bottom: 1.25rem; }
+.w3__meta { display: flex; gap: 1.5rem; }
+.w3__meta-item { font-size: .8rem; color: rgba(255,255,255,.8); display: flex; align-items: center; gap: .375rem; }
+.w3__forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: .5rem; text-align: center; }
+.w3__day { }
+.w3__day-name { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.7); margin-bottom: .5rem; }
+.w3__day-icon { font-size: 1.25rem; margin-bottom: .375rem; }
+.w3__day-hi { font-size: .875rem; font-weight: 700; }
+.w3__day-lo { font-size: .75rem; color: rgba(255,255,255,.6); }
+</style>
+</head>
+<body>
+<div class="w3">
+  <div class="w3__main">
+    <div class="w3__top">
+      <div class="w3__icon"><i class="bi bi-cloud-sun"></i></div>
+      <div class="w3__temp">
+        <div class="val">18°</div>
+        <div class="feels">Ressenti 16°</div>
+      </div>
+    </div>
+    <div class="w3__city">Paris, France</div>
+    <div class="w3__condition">Partiellement nuageux</div>
+    <div class="w3__meta">
+      <div class="w3__meta-item"><i class="bi bi-droplet"></i> 64%</div>
+      <div class="w3__meta-item"><i class="bi bi-wind"></i> 22 km/h</div>
+      <div class="w3__meta-item"><i class="bi bi-sun"></i> UV 4</div>
+    </div>
+  </div>
+  <div class="w3__forecast">
+    <div class="w3__day"><div class="w3__day-name">Mar</div><div class="w3__day-icon"><i class="bi bi-sun"></i></div><div class="w3__day-hi">21°</div><div class="w3__day-lo">13°</div></div>
+    <div class="w3__day"><div class="w3__day-name">Mer</div><div class="w3__day-icon"><i class="bi bi-cloud-rain"></i></div><div class="w3__day-hi">15°</div><div class="w3__day-lo">10°</div></div>
+    <div class="w3__day"><div class="w3__day-name">Jeu</div><div class="w3__day-icon"><i class="bi bi-cloud"></i></div><div class="w3__day-hi">17°</div><div class="w3__day-lo">12°</div></div>
+    <div class="w3__day"><div class="w3__day-name">Ven</div><div class="w3__day-icon"><i class="bi bi-sun"></i></div><div class="w3__day-hi">22°</div><div class="w3__day-lo">14°</div></div>
+    <div class="w3__day"><div class="w3__day-name">Sam</div><div class="w3__day-icon"><i class="bi bi-cloud-sun"></i></div><div class="w3__day-hi">20°</div><div class="w3__day-lo">13°</div></div>
+  </div>
+</div>
+</body>
+</html>

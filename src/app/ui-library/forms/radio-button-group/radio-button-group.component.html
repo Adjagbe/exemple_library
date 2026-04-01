@@ -1,0 +1,12 @@
+<div class="radio-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Button Group Style</h3>
+    <div class="selected-value">Selected: {{ selectedValue }}</div>
+    <div class="radio-button-group">
+      <label class="radio-button" *ngFor="let option of ['Daily','Weekly','Monthly','Yearly']">
+        <input type="radio" name="btngroup" [value]="option" [(ngModel)]="selectedValue">
+        <span [class.selected]="selectedValue === option">{{ option }}</span>
+      </label>
+    </div>
+  </section>
+</div>

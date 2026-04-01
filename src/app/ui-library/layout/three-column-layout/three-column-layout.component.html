@@ -1,0 +1,98 @@
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Three Column Layout</h1>
+    <p>Mises en page à trois colonnes pour applications SaaS</p>
+  </div>
+
+  <!-- App Layout -->
+  <div class="variant-label">App Layout — Sidebar + Content + Details Panel</div>
+  <div class="layout-frame">
+    <div class="layout-3col">
+      <!-- Left -->
+      <div class="col-left">
+        <div class="brand"><div class="brand-logo">P</div><span class="brand-name">Platform</span></div>
+        <p class="nav-label">Principal</p>
+        <a *ngFor="let item of navItems" href="#" class="nav-item" [class.active]="item.active">
+          <i class="bi" [ngClass]="item.icon"></i> {{ item.label }}
+          <span *ngIf="item.badge" class="nav-badge">{{ item.badge }}</span>
+        </a>
+        <div class="nav-divider"></div>
+        <p class="nav-label">Système</p>
+        <a *ngFor="let item of sysNavItems" href="#" class="nav-item">
+          <i class="bi" [ngClass]="item.icon"></i> {{ item.label }}
+        </a>
+        <div class="user-block">
+          <div class="user-av">JD</div>
+          <div><div class="user-name">Jean Dupont</div><div class="user-role">Admin</div></div>
+        </div>
+      </div>
+
+      <!-- Center -->
+      <div class="col-center">
+        <div class="page-header">
+          <h2>Mes tâches</h2>
+          <button class="btn-sm"><i class="bi bi-plus-lg"></i> Nouvelle tâche</button>
+        </div>
+        <div class="task-list">
+          <div *ngFor="let task of tasks" class="task-card">
+            <div class="task-check" [class.done]="task.done">
+              <i *ngIf="task.done" class="bi bi-check"></i>
+            </div>
+            <div class="task-info">
+              <p class="task-name" [class.done-text]="task.done">{{ task.name }}</p>
+              <p class="task-meta">{{ task.meta }}</p>
+            </div>
+            <span class="task-priority" [ngClass]="'priority-' + task.priority">
+              {{ task.priority === 'high' ? 'Haute' : task.priority === 'medium' ? 'Moyenne' : 'Basse' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="col-right">
+        <div>
+          <h4 class="widget-title"><i class="bi bi-activity"></i> Activité récente</h4>
+          <div class="activity-feed">
+            <div *ngFor="let a of activities" class="activity-item">
+              <div class="activity-dot" [ngClass]="'activity-dot--' + a.color"></div>
+              <div>
+                <div class="activity-text"><strong>{{ a.author }}</strong> {{ a.text }}</div>
+                <div class="activity-time">{{ a.time }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="widget-title"><i class="bi bi-bar-chart"></i> Progression</h4>
+          <div *ngFor="let p of progressItems" class="progress-item">
+            <div class="progress-label"><span class="progress-name">{{ p.name }}</span><span class="progress-pct">{{ p.pct }}%</span></div>
+            <div class="progress-bar"><div class="progress-fill" [ngClass]="'progress-fill--' + p.color" [style.width.%]="p.pct"></div></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="widget-title"><i class="bi bi-calendar3"></i> Mars 2026</h4>
+          <div class="calendar-mini">
+            <div class="cal-header">L</div><div class="cal-header">M</div><div class="cal-header">M</div><div class="cal-header">J</div><div class="cal-header">V</div><div class="cal-header">S</div><div class="cal-header">D</div>
+            <div *ngFor="let d of calendarDays" class="cal-day" [class.other-month]="d.other" [class.today]="d.today" [class.has-event]="d.event">{{ d.day }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Equal 3 Columns -->
+  <div class="variant-label">Equal Three Columns — Pricing/Features</div>
+  <div class="layout-frame">
+    <div class="layout-3equal">
+      <div *ngFor="let col of pricingCols" class="equal-col" [style.background]="col.highlighted ? '#f8fafc' : '#fff'">
+        <div class="col-icon" [style.background]="col.highlighted ? '#e0e7ff' : '#eff6ff'"><i class="bi" [ngClass]="col.icon"></i></div>
+        <h3>{{ col.title }}</h3>
+        <p>{{ col.description }}</p>
+        <ul>
+          <li *ngFor="let f of col.features"><i class="bi bi-check-circle-fill"></i> {{ f }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

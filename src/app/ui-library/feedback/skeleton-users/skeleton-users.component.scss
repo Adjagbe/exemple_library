@@ -1,0 +1,135 @@
+.skeleton-showcase {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1rem 0;
+}
+.toggle-control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.btn {
+  padding: 0.75rem 1.5rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    background: #4338ca;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.375rem;
+  &--avatar {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+  }
+  &--name {
+    height: 16px;
+    width: 120px;
+  }
+  &--email {
+    height: 12px;
+    width: 160px;
+  }
+  &--btn {
+    height: 36px;
+    width: 80px;
+    border-radius: 0.375rem;
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.skeleton-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.skeleton-user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.real-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  &:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4f46e5;
+  border-radius: 50%;
+  color: white;
+  font-weight: 700;
+}
+.user-info {
+  flex: 1;
+  h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #111827;
+  }
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+}
+.user-btn {
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+  cursor: pointer;
+  &:hover {
+    background: #e5e7eb;
+  }
+}

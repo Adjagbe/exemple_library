@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Block 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; display: flex; justify-content: center; padding: 4rem 2rem; }
+.cb3 { width: 100%; max-width: 760px; }
+.cb3__steps { display: flex; flex-direction: column; gap: 2rem; }
+.cb3__step { display: flex; gap: 1.5rem; }
+.cb3__num { width: 32px; height: 32px; border-radius: 50%; background: #4f46e5; color: #fff; font-size: .8rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .1rem; }
+.cb3__step-body { flex: 1; }
+.cb3__step-label { font-size: .95rem; font-weight: 700; color: #111827; margin-bottom: .875rem; display: block; }
+.cb3__code { background: #1e293b; border-radius: .875rem; overflow: hidden; position: relative; }
+.cb3__code-header { background: #0f172a; padding: .625rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+.cb3__lang { font-size: .7rem; font-weight: 700; color: #818cf8; font-family: monospace; }
+.cb3__copy-btn { display: flex; align-items: center; gap: .25rem; padding: .25rem .625rem; background: rgba(255,255,255,.08); border: none; border-radius: .375rem; color: #94a3b8; font-size: .7rem; cursor: pointer; }
+.cb3__copy-btn i { font-size: .8rem; }
+.cb3__code pre { padding: 1rem 1.25rem; font-family: 'Fira Code', Consolas, monospace; font-size: .8rem; line-height: 1.7; color: #e2e8f0; overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="cb3">
+  <div class="cb3__steps">
+    <div class="cb3__step">
+      <div class="cb3__num">1</div>
+      <div class="cb3__step-body">
+        <span class="cb3__step-label">Installation</span>
+        <div class="cb3__code">
+          <div class="cb3__code-header">
+            <span class="cb3__lang">bash</span>
+            <button class="cb3__copy-btn" onclick="copy(0, 'npm install @premium-ui/angular')"><i class="bi bi-clipboard" id="icon0"></i> <span id="txt0">Copier</span></button>
+          </div>
+          <pre>npm install @premium-ui/angular</pre>
+        </div>
+      </div>
+    </div>
+    <div class="cb3__step">
+      <div class="cb3__num">2</div>
+      <div class="cb3__step-body">
+        <span class="cb3__step-label">Import du module</span>
+        <div class="cb3__code">
+          <div class="cb3__code-header">
+            <span class="cb3__lang">TypeScript</span>
+            <button class="cb3__copy-btn" onclick="copy(1, 'import { PremiumUIModule } from \'@premium-ui/angular\';')"><i class="bi bi-clipboard" id="icon1"></i> <span id="txt1">Copier</span></button>
+          </div>
+          <pre>import { PremiumUIModule } from '@premium-ui/angular';
+
+@NgModule({
+  imports: [PremiumUIModule]
+})</pre>
+        </div>
+      </div>
+    </div>
+    <div class="cb3__step">
+      <div class="cb3__num">3</div>
+      <div class="cb3__step-body">
+        <span class="cb3__step-label">Utilisation</span>
+        <div class="cb3__code">
+          <div class="cb3__code-header">
+            <span class="cb3__lang">HTML</span>
+           <button class="cb3__copy-btn" data-code="npm install @premium-ui/angular"><i class="bi bi-clipboard" id="icon2"></i> <span id="txt2">Copier</span></button>
+          </div>
+          <pre>&lt;ui-button variant="primary"&gt;Cliquez ici&lt;/ui-button&gt;
+&lt;ui-card [title]="'Mon titre'"&gt;Contenu&lt;/ui-card&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function copy(i, text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+    } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    }
+
+    document.getElementById('icon' + i).className = 'bi bi-check-lg';
+    document.getElementById('txt' + i).textContent = 'Copié !';
+
+    document.querySelectorAll('.cb3__copy-btn').forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-code');
+        copy(i, text);
+    });
+    });
+
+    setTimeout(() => {
+        document.getElementById('icon' + i).className = 'bi bi-clipboard';
+        document.getElementById('txt' + i).textContent = 'Copier';
+    }, 2000);
+    }
+    
+</script>
+</body>
+</html>

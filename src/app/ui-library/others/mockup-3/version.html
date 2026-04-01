@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 3</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; padding: 4rem 2rem; }
+.mk3 { max-width: 1100px; margin: 0 auto; }
+.mk3__headline { text-align: center; margin-bottom: 3rem; }
+.mk3__headline h2 { font-size: 2rem; font-weight: 800; color: #111827; margin-bottom: .75rem; }
+.mk3__headline p { color: #6b7280; font-size: 1rem; }
+.mk3__devices { display: flex; align-items: flex-end; justify-content: center; gap: 2rem; }
+.mk3__laptop { background: #1e293b; border-radius: 1rem; padding: .875rem; width: 480px; box-shadow: 0 16px 48px rgba(0,0,0,.15); }
+.mk3__laptop-nav { background: #334155; border-radius: .5rem; height: 28px; margin-bottom: .625rem; }
+.mk3__laptop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.mk3__laptop-card { background: #334155; border-radius: .5rem; height: 48px; }
+.mk3__laptop-base { background: #334155; border-radius: 0 0 .5rem .5rem; height: 8px; margin-top: .625rem; }
+.mk3__laptop-stand { width: 48px; height: 8px; background: #475569; border-radius: 0 0 .25rem .25rem; margin: 0 auto; }
+.mk3__tablet { background: #1e293b; border-radius: 1rem; padding: .75rem; width: 180px; box-shadow: 0 12px 32px rgba(0,0,0,.15); }
+.mk3__tablet-nav { background: #334155; border-radius: .375rem; height: 22px; margin-bottom: .5rem; }
+.mk3__tablet-card { background: #334155; border-radius: .375rem; height: 40px; margin-bottom: .5rem; }
+.mk3__tablet-card:last-child { margin-bottom: 0; }
+.mk3__phone { background: #1e293b; border-radius: 1.25rem; padding: .625rem; width: 96px; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+.mk3__phone-nav { background: #334155; border-radius: .375rem; height: 18px; margin-bottom: .5rem; }
+.mk3__phone-card { background: #4f46e5; border-radius: .375rem; height: 48px; margin-bottom: .375rem; opacity: .7; }
+.mk3__phone-sm { background: #334155; border-radius: .375rem; height: 28px; opacity: .4; }
+</style>
+</head>
+<body>
+<div class="mk3">
+  <div class="mk3__headline">
+    <h2>Compatible avec tous vos appareils</h2>
+    <p>Une expérience parfaite sur desktop, tablette et mobile.</p>
+  </div>
+  <div class="mk3__devices">
+    <div class="mk3__laptop">
+      <div class="mk3__laptop-nav"></div>
+      <div class="mk3__laptop-grid">
+        <div class="mk3__laptop-card"></div>
+        <div class="mk3__laptop-card"></div>
+        <div class="mk3__laptop-card"></div>
+        <div class="mk3__laptop-card"></div>
+        <div class="mk3__laptop-card"></div>
+        <div class="mk3__laptop-card"></div>
+      </div>
+      <div class="mk3__laptop-base"></div>
+      <div class="mk3__laptop-stand"></div>
+    </div>
+    <div class="mk3__tablet">
+      <div class="mk3__tablet-nav"></div>
+      <div class="mk3__tablet-card"></div>
+      <div class="mk3__tablet-card"></div>
+    </div>
+    <div class="mk3__phone">
+      <div class="mk3__phone-nav"></div>
+      <div class="mk3__phone-card"></div>
+      <div class="mk3__phone-sm"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

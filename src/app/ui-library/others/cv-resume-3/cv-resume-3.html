@@ -1,0 +1,60 @@
+<div class="cv3">
+  <!-- Header -->
+  <div class="cv3__header">
+    <div class="cv3__avatar">{{ cv.initials }}</div>
+    <div class="cv3__header-info">
+      <h1>{{ cv.name }}</h1>
+      <div class="role">{{ cv.role }}</div>
+      <div class="cv3__contacts">
+        <span><i class="bi bi-envelope"></i> {{ cv.email }}</span>
+        <span><i class="bi bi-telephone"></i> {{ cv.phone }}</span>
+        <span><i class="bi bi-linkedin"></i> {{ cv.linkedin }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="cv3__metrics">
+    <div *ngFor="let m of cv.metrics" class="cv3__metric">
+      <div class="val">{{ m.val }}</div>
+      <div class="lbl">{{ m.lbl }}</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="cv3__body">
+    <!-- Experience — full width -->
+    <div class="cv3__full">
+      <div class="cv3__section">
+        <h4>Expérience</h4>
+        <div *ngFor="let ex of cv.experience" class="cv3__exp-item">
+          <h5>{{ ex.role }}</h5>
+          <div class="meta">{{ ex.meta }}</div>
+          <p>{{ ex.desc }}</p>
+          <div class="cv3__tags">
+            <span *ngFor="let t of ex.tags" class="cv3__tag">{{ t }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="cv3__section">
+      <h4>Compétences</h4>
+      <div *ngFor="let s of cv.skills" class="cv3__skill-row">
+        <span class="name">{{ s.name }}</span>
+        <span class="level">{{ s.level }}</span>
+      </div>
+    </div>
+
+    <!-- Formation -->
+    <div class="cv3__section">
+      <h4>Formation</h4>
+      <div *ngFor="let f of cv.formation" class="cv3__exp-item">
+        <h5>{{ f.degree }}</h5>
+        <div class="meta">{{ f.meta }}</div>
+        <p>{{ f.desc }}</p>
+      </div>
+    </div>
+  </div>
+</div>

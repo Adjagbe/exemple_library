@@ -1,0 +1,48 @@
+<div class="tags-showcase">
+  <h2 class="section-title">Ajouter un tag</h2>
+  <div class="tag-creator">
+    <div class="tag-form">
+      <input
+        type="text"
+        class="tag-input"
+        placeholder="Nom du tag..."
+        [(ngModel)]="newTagInput"
+        (keyup.enter)="addTag()"
+      />
+      <div class="color-preview" [style.background-color]="selectedColor"></div>
+      <button class="btn btn--primary" (click)="addTag()">
+        <i class="bi bi-plus-lg"></i>
+        Ajouter
+      </button>
+    </div>
+    <div class="color-presets">
+      <span class="color-label">Couleur:</span>
+      <button
+        *ngFor="let color of colorPresets"
+        class="color-btn"
+        [class.active]="selectedColor === color"
+        [style.background-color]="color"
+        (click)="selectColor(color)"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Added tags preview -->
+  <div class="tag-cloud" *ngIf="addedTags.length > 0" style="margin-top: 1rem;">
+    <span
+      *ngFor="let tag of addedTags"
+      class="tag tag--cloud"
+      [style.background-color]="tag.color"
+      [style.color]="getTextColor(tag.color)"
+    >
+      {{ tag.label }}
+      <button
+        class="tag-remove"
+        [style.color]="getTextColor(tag.color)"
+        (click)="removeTag(tag.id)"
+      >
+        <i class="bi bi-x"></i>
+      </button>
+    </span>
+  </div>
+</div>

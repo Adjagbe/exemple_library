@@ -1,0 +1,14 @@
+<section class="tl2">
+  <div class="tl2__head"><h2>Jalons clés</h2><p>Les moments qui ont marqué notre parcours.</p></div>
+  <div class="tl2__body">
+    <div *ngFor="let item of items" class="tl2__item" [ngClass]="'tl2__item--' + item.side">
+      <div class="tl2__card">
+        <div class="tl2__card-icon" [style.background]="item.color + '22'" [style.color]="item.color"><i class="bi" [ngClass]="item.icon"></i></div>
+        <span class="tl2__date">{{ item.date }}</span>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.desc }}</p>
+      </div>
+      <div class="tl2__dot" [style.background]="item.color"></div>
+    </div>
+  </div>
+</section>

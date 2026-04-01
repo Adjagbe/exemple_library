@@ -1,0 +1,17 @@
+.w2 { max-width: 480px; margin: 2rem auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; padding: 1.75rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; box-shadow: 0 4px 24px rgba(0,0,0,.06); }
+.w2__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.w2__header h4 { font-size: 1rem; font-weight: 700; color: #111827; margin: 0; }
+.w2__badge { font-size: .75rem; font-weight: 700; color: #4f46e5; background: #eef2ff; padding: .2rem .625rem; border-radius: 9999px; }
+.w2__progress-bar { height: 6px; background: #e5e7eb; border-radius: 9999px; overflow: hidden; margin-bottom: 1.5rem; }
+.w2__progress-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #7c3aed); border-radius: 9999px; transition: width .3s ease; }
+.w2__list { display: flex; flex-direction: column; gap: .625rem; }
+.w2__item { display: flex; align-items: center; gap: .875rem; padding: .875rem 1rem; background: #f9fafb; border-radius: .875rem; cursor: pointer; transition: background .15s; }
+.w2__item.done { opacity: .5; }
+.w2__check i { font-size: 1.1rem; color: #d1d5db; }
+.w2__item.done .w2__check i { color: #10b981; }
+.w2__task { flex: 1; font-size: .85rem; color: #374151; font-weight: 500; }
+.w2__item.done .w2__task { text-decoration: line-through; color: #9ca3af; }
+.w2__priority { font-size: .65rem; font-weight: 700; padding: .2rem .625rem; border-radius: 9999px; text-transform: uppercase; }
+.w2__priority--high { background: #fee2e2; color: #dc2626; }
+.w2__priority--medium { background: #fef3c7; color: #d97706; }
+.w2__priority--low { background: #dcfce7; color: #16a34a; }

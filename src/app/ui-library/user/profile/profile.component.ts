@@ -1,15 +1,10 @@
-// ═══════════════════════════════════════════════════════════════
-// PROFILE COMPONENT - Premium UI Library
-// User profile page with settings and info
-// ═══════════════════════════════════════════════════════════════
+
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface UserProfile {
   id: string;
   firstName: string;
@@ -36,9 +31,7 @@ export interface UserProfile {
   encapsulation: ViewEncapsulation.None
 })
 export class ProfileComponent {
-  // ─────────────────────────────────────────────────────────────────
-  // USER DATA
-  // ─────────────────────────────────────────────────────────────────
+
   user: UserProfile = {
     id: 'usr-001',
     firstName: 'Jean',
@@ -64,9 +57,7 @@ export class ProfileComponent {
     ]
   };
 
-  // ─────────────────────────────────────────────────────────────────
-  // TABS
-  // ─────────────────────────────────────────────────────────────────
+
   activeTab: 'overview' | 'settings' | 'security' | 'notifications' = 'overview';
 
   tabs = [
@@ -76,13 +67,11 @@ export class ProfileComponent {
     { id: 'notifications', label: 'Notifications', icon: 'bi-bell' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // FORM DATA
-  // ─────────────────────────────────────────────────────────────────
+
   editMode: boolean = false;
   editedUser: UserProfile = { ...this.user };
 
-  // Notification settings
+
   notifications = {
     email: true,
     push: true,
@@ -92,9 +81,7 @@ export class ProfileComponent {
     marketing: false
   };
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
+
   setActiveTab(tab: any): void {
     this.activeTab = tab.id;
   }

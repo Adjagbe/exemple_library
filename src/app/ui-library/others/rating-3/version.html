@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rating 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; display: flex; justify-content: center; }
+.rt3 { max-width: 480px; width: 100%; background: #fff; border-radius: 1.5rem; padding: 2.5rem; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.rt3 h3 { font-size: 1.125rem; font-weight: 800; color: #111827; margin-bottom: 2rem; }
+.rt3__stars { display: flex; gap: .5rem; justify-content: center; margin-bottom: .875rem; }
+.rt3__star { font-size: 2.5rem; color: #e5e7eb; cursor: pointer; transition: color .15s; }
+.rt3__star.on { color: #f59e0b; }
+.rt3__label { height: 22px; font-size: .875rem; font-weight: 600; color: #4f46e5; margin-bottom: 1.75rem; }
+.rt3 textarea { width: 100%; border: 1.5px solid #e5e7eb; border-radius: .875rem; padding: .875rem 1rem; font-size: .875rem; font-family: inherit; resize: none; outline: none; height: 100px; margin-bottom: 1.25rem; color: #374151; }
+.rt3__btn { width: 100%; background: #4f46e5; color: #fff; border: none; padding: .875rem; border-radius: .875rem; font-size: .95rem; font-weight: 700; cursor: pointer; }
+.rt3__thanks { }
+.rt3__thanks-star { font-size: 4rem; color: #f59e0b; margin-bottom: 1rem; }
+.rt3__thanks h3 { font-size: 1.25rem; font-weight: 800; color: #111827; margin-bottom: .5rem; }
+.rt3__thanks p { color: #6b7280; }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="rt3">
+  <div id="form">
+    <h3>Comment évaluez-vous votre expérience ?</h3>
+    <div class="rt3__stars" id="stars">
+      <span class="rt3__star" onmouseover="hover(1)" onmouseout="resetHover()" onclick="setRating(1)">★</span>
+      <span class="rt3__star" onmouseover="hover(2)" onmouseout="resetHover()" onclick="setRating(2)">★</span>
+      <span class="rt3__star" onmouseover="hover(3)" onmouseout="resetHover()" onclick="setRating(3)">★</span>
+      <span class="rt3__star" onmouseover="hover(4)" onmouseout="resetHover()" onclick="setRating(4)">★</span>
+      <span class="rt3__star" onmouseover="hover(5)" onmouseout="resetHover()" onclick="setRating(5)">★</span>
+    </div>
+    <div class="rt3__label" id="ratingLabel"></div>
+    <textarea placeholder="Commentaire (optionnel)"></textarea>
+    <button class="rt3__btn" onclick="submit()">Envoyer mon avis</button>
+  </div>
+  <div class="rt3__thanks hidden" id="thanks">
+    <div class="rt3__thanks-star">★</div>
+    <h3>Merci pour votre avis !</h3>
+    <p>Votre retour nous aide à améliorer notre service.</p>
+  </div>
+</div>
+<script>
+const labels = {1:'Très mauvais',2:'Mauvais',3:'Moyen',4:'Bien',5:'Excellent !'};
+let rating = 0, hoverVal = 0;
+function hover(n) { hoverVal = n; renderStars(); document.getElementById('ratingLabel').textContent = labels[n] || ''; }
+function resetHover() { hoverVal = 0; renderStars(); document.getElementById('ratingLabel').textContent = rating ? labels[rating] : ''; }
+function setRating(n) { rating = n; resetHover(); }
+function renderStars() {
+  const active = hoverVal || rating;
+  document.querySelectorAll('.rt3__star').forEach((s,i) => s.classList.toggle('on', i < active));
+}
+function submit() {
+  document.getElementById('form').classList.add('hidden');
+  document.getElementById('thanks').classList.remove('hidden');
+}
+</script>
+</body>
+</html>

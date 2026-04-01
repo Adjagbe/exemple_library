@@ -1,0 +1,14 @@
+<div class="acc1">
+  <div class="acc1__header"><h2>Questions fréquentes</h2><p>Tout ce que vous devez savoir avant de commencer.</p></div>
+  <div class="acc1__list">
+    <div *ngFor="let item of items; let i = index" class="acc1__item" [class.open]="item.open">
+      <button class="acc1__trigger" (click)="toggle(i)">
+        <span>{{ item.q }}</span>
+        <i class="bi" [ngClass]="item.open ? 'bi-dash-lg' : 'bi-plus-lg'"></i>
+      </button>
+      <div class="acc1__body" [style.display]="item.open ? 'block' : 'none'">
+        <p>{{ item.a }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<section class="ot1">
+  <div class="ot1__head"><h2>Notre équipe</h2><p>Des personnes passionnées qui donnent le meilleur chaque jour pour vous.</p></div>
+  <div class="ot1__grid">
+    <div *ngFor="let m of members" class="ot1__card">
+      <div class="ot1__avatar" [style.background]="m.color">{{ m.initials }}</div>
+      <h3>{{ m.name }}</h3>
+      <p>{{ m.role }}</p>
+      <div class="ot1__socials">
+        <a [href]="m.twitter"><i class="bi bi-twitter-x"></i></a>
+        <a [href]="m.linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</section>

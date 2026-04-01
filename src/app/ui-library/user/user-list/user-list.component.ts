@@ -1,15 +1,8 @@
-// ═══════════════════════════════════════════════════════════════
-// USER LIST COMPONENT - Premium UI Library
-// List of users with search, filters and actions
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface User {
   id: string;
   firstName: string;
@@ -32,9 +25,7 @@ export interface User {
   encapsulation: ViewEncapsulation.None
 })
 export class UserListComponent {
-  // ─────────────────────────────────────────────────────────────────
-  // USERS DATA
-  // ─────────────────────────────────────────────────────────────────
+
   users: User[] = [
     { id: '1', firstName: 'Jean', lastName: 'Dupont', email: 'jean.dupont@email.com', avatar: 'JD', role: 'admin', department: 'Direction', status: 'active', lastActive: '2024-05-10T14:30:00' },
     { id: '2', firstName: 'Marie', lastName: 'Martin', email: 'marie.martin@email.com', avatar: 'MM', role: 'manager', department: 'Marketing', status: 'active', lastActive: '2024-05-10T12:15:00' },
@@ -48,9 +39,6 @@ export class UserListComponent {
 
   filteredUsers: User[] = [...this.users];
 
-  // ─────────────────────────────────────────────────────────────────
-  // FILTERS
-  // ─────────────────────────────────────────────────────────────────
   searchQuery: string = '';
   selectedRole: string = '';
   selectedStatus: string = '';
@@ -71,9 +59,7 @@ export class UserListComponent {
     { value: 'pending', label: 'En attente' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
+
   applyFilters(): void {
     this.filteredUsers = this.users.filter(user => {
       const matchesSearch = !this.searchQuery || 

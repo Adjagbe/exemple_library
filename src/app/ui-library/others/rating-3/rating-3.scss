@@ -1,0 +1,11 @@
+.r3 { max-width: 480px; margin: 4rem auto; padding: 3rem 2rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 2rem; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; box-shadow: 0 4px 24px rgba(0,0,0,.06); }
+.r3__question { font-size: 1.15rem; font-weight: 700; color: #111827; margin: 0 0 1.75rem; }
+.r3__stars { display: flex; justify-content: center; gap: .5rem; font-size: 2.5rem; color: #f59e0b; cursor: pointer; margin-bottom: 1.25rem; }
+.r3__label { font-size: 1rem; font-weight: 700; color: #4f46e5; margin-bottom: 1.5rem; }
+.r3__textarea { width: 100%; padding: .875rem 1rem; border: 1px solid #e5e7eb; border-radius: .875rem; font-size: .875rem; font-family: inherit; resize: vertical; outline: none; margin-bottom: 1rem; }
+.r3__textarea:focus { border-color: #4f46e5; }
+.r3__submit { width: 100%; padding: 1rem; background: #4f46e5; color: #fff; border: none; border-radius: .875rem; font-weight: 700; font-size: .95rem; cursor: pointer; }
+.r3__thanks { padding: 1rem; }
+.r3__big-star { font-size: 4rem; color: #f59e0b; }
+.r3__thanks h3 { font-size: 1.5rem; font-weight: 800; color: #111827; margin: 1rem 0 .75rem; }
+.r3__thanks p { font-size: .875rem; color: #6b7280; line-height: 1.7; margin: 0; }

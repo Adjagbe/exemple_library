@@ -1,0 +1,16 @@
+<div class="success-showcase">
+  <h2 class="section-title">Banner de Succès</h2>
+  <div class="success-banner">
+    <div class="banner-icon">
+      <i class="bi" [ngClass]="banner.icon || 'bi-check-circle-fill'"></i>
+    </div>
+    <div class="banner-content">
+      <strong class="banner-title">{{ banner.title }}</strong>
+      <p class="banner-message">{{ banner.message }}</p>
+    </div>
+    <button class="banner-action" (click)="onViewOrder()">
+      Voir la commande
+      <i class="bi bi-arrow-right"></i>
+    </button>
+  </div>
+</div>

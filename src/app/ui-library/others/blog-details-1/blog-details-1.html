@@ -1,0 +1,22 @@
+<article class="bd1">
+  <div class="bd1__hero"><h1>Les 10 tendances UI/UX de 2026</h1><div class="bd1__meta"><div class="bd1__author"><div class="bd1__avatar">SM</div><div><strong>Sophie Martin</strong><span>28 mars 2026 · 5 min de lecture</span></div></div><div class="bd1__actions"><button><i class="bi bi-bookmark"></i></button><button><i class="bi bi-share"></i></button></div></div></div>
+  <div class="bd1__cover"></div>
+  <div class="bd1__layout">
+    <div class="bd1__content">
+      <h2>Introduction</h2>
+      <p>Le design digital évolue à une vitesse remarquable. En 2026, plusieurs tendances majeures transforment la manière dont nous concevons les interfaces utilisateur. De l'intelligence artificielle générative aux interfaces adaptatives, voici ce qui va dominer l'année.</p>
+      <h2>1. L'IA générative au cœur du design</h2>
+      <p>Les outils IA comme Figma AI, Adobe Firefly et d'autres intègrent désormais des capacités génératives directement dans les workflows de design. Les designers peuvent générer des maquettes entières en quelques secondes, libérant du temps pour la réflexion stratégique.</p>
+      <blockquote>« Le design n'est pas comment ça ressemble. Le design, c'est comment ça fonctionne. »  Steve Jobs</blockquote>
+      <h2>2. Les interfaces adaptatives</h2>
+      <p>Les composants qui s'adaptent automatiquement au contexte utilisateur  appareil, heure, comportement passé  deviennent la norme. Cette personnalisation profonde améliore considérablement l'engagement.</p>
+      <div class="bd1__tags"><span *ngFor="let t of tags" class="bd1__tag">{{ t }}</span></div>
+    </div>
+    <aside class="bd1__sidebar">
+      <div class="bd1__toc"><h4>Sommaire</h4><ol><li><a href="#">Introduction</a></li><li><a href="#">L'IA générative</a></li><li><a href="#">Interfaces adaptatives</a></li><li><a href="#">Conclusion</a></li></ol></div>
+      <div class="bd1__related"><h4>Articles liés</h4>
+        <a *ngFor="let r of related" href="#" class="bd1__rel-item"><div class="bd1__rel-thumb" [style.background]="r.color"></div><div><strong>{{ r.title }}</strong><span>{{ r.date }}</span></div></a>
+      </div>
+    </aside>
+  </div>
+</article>

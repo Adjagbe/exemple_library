@@ -1,0 +1,108 @@
+.acc2 {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.acc2__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.acc2__header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 0.5rem;
+}
+.acc2__header p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0;
+}
+.acc2__cat {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.acc2__cat-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: #f9fafb;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.acc2__cat-header:hover {
+  background: #f3f4f6;
+}
+.acc2__cat-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.acc2__cat-icon {
+  width: 40px;
+  height: 40px;
+  background: #eef2ff;
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4f46e5;
+  font-size: 1.1rem;
+}
+.acc2__cat-left span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+}
+.acc2__cat-header i {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+.acc2__cat-body {
+  padding: 0.5rem 1.5rem 1rem;
+}
+.acc2__item {
+  border-bottom: 1px solid #f3f4f6;
+}
+.acc2__item:last-child {
+  border-bottom: none;
+}
+.acc2__trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  text-align: left;
+  gap: 1rem;
+}
+.acc2__trigger i {
+  color: #4f46e5;
+  font-size: 0.8rem;
+  transition: transform 0.2s;
+}
+.acc2__item.open .acc2__trigger i {
+  transform: rotate(90deg);
+}
+.acc2__body {
+  padding-bottom: 0.875rem;
+}
+.acc2__body p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.8;
+}

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zones de dépôt - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+
+    .dragdrop-showcase {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin: 0 0 2rem 0;
+    }
+
+    .dropzone-demo {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1.5rem;
+    }
+
+    .dropzone-source {
+      padding: 1rem;
+      border: 2px dashed transparent;
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+    }
+
+    .dropzone-source.dragover {
+      border-color: #4f46e5;
+      background: #eef2ff;
+    }
+
+    .dropzone-source h4 {
+      margin: 0 0 1rem 0;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+
+    .draggable-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .draggable-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: grab;
+      transition: all 0.2s;
+    }
+
+    .draggable-chip:hover {
+      border-color: #4f46e5;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .draggable-chip.dragging {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+
+    .draggable-chip:active { cursor: grabbing; }
+
+    .draggable-chip i { color: #6b7280; }
+
+    .empty-source {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: #9ca3af;
+      font-size: 0.8125rem;
+    }
+
+    .empty-source i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .dropzone-targets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .dropzone-target {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background: #f9fafb;
+      border: 2px dashed #d1d5db;
+      border-radius: 0.75rem;
+      text-align: center;
+      transition: all 0.2s;
+      min-height: 180px;
+    }
+
+    .dropzone-target:hover,
+    .dropzone-target.dragover {
+      border-color: #4f46e5;
+      background: #eef2ff;
+    }
+
+    .dropzone-target > .zone-icon {
+      font-size: 2rem;
+      color: #4f46e5;
+      margin-bottom: 0.5rem;
+    }
+
+    .dropzone-target > .zone-title {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    .dropzone-target > .zone-subtitle {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .dropzone-target--secondary > .zone-icon { color: #f59e0b; }
+    .dropzone-target--secondary:hover,
+    .dropzone-target--secondary.dragover {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .dropzone-target--danger > .zone-icon { color: #ef4444; }
+    .dropzone-target--danger:hover,
+    .dropzone-target--danger.dragover {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .zone-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      margin-top: 0.75rem;
+      width: 100%;
+    }
+
+    .zone-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.375rem;
+      font-size: 0.75rem;
+      color: #374151;
+      cursor: grab;
+      transition: all 0.2s;
+    }
+
+    .zone-chip:hover {
+      border-color: #4f46e5;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .zone-chip.dragging {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+
+    .zone-chip:active { cursor: grabbing; }
+
+    .zone-chip i { color: #6b7280; font-size: 0.75rem; }
+
+    @media (max-width: 768px) {
+      .dragdrop-showcase { padding: 1rem; }
+      .dropzone-demo { grid-template-columns: 1fr; }
+      .dropzone-targets { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dragdrop-showcase">
+  <h1 class="page-title">Zones de dépôt</h1>
+  <p class="page-subtitle">Glissez les fichiers vers les zones cibles pour les organiser</p>
+
+  <div class="dropzone-demo">
+    <!-- Source -->
+    <div class="dropzone-source" id="dropSource">
+      <h4>Éléments disponibles</h4>
+      <div class="draggable-items" id="sourceItems">
+        <div class="draggable-chip" draggable="true" data-chip-id="chip1" data-chip-name="Image.png" data-chip-icon="bi-file-earmark-image">
+          <i class="bi bi-file-earmark-image"></i>
+          Image.png
+        </div>
+        <div class="draggable-chip" draggable="true" data-chip-id="chip2" data-chip-name="Document.pdf" data-chip-icon="bi-file-earmark-pdf">
+          <i class="bi bi-file-earmark-pdf"></i>
+          Document.pdf
+        </div>
+        <div class="draggable-chip" draggable="true" data-chip-id="chip3" data-chip-name="Audio.mp3" data-chip-icon="bi-file-earmark-music">
+          <i class="bi bi-file-earmark-music"></i>
+          Audio.mp3
+        </div>
+      </div>
+    </div>
+
+    <!-- Targets -->
+    <div class="dropzone-targets">
+      <div class="dropzone-target" id="zoneMain" data-zone-id="main">
+        <i class="bi bi-folder zone-icon"></i>
+        <span class="zone-title">Dossier Principal</span>
+        <small class="zone-subtitle">Déposez vos fichiers ici</small>
+        <div class="zone-items" id="zoneMainItems"></div>
+      </div>
+      <div class="dropzone-target dropzone-target--secondary" id="zoneArchive" data-zone-id="archive">
+        <i class="bi bi-archive zone-icon"></i>
+        <span class="zone-title">Archives</span>
+        <small class="zone-subtitle">Fichiers archivés</small>
+        <div class="zone-items" id="zoneArchiveItems"></div>
+      </div>
+      <div class="dropzone-target dropzone-target--danger" id="zoneTrash" data-zone-id="trash">
+        <i class="bi bi-trash zone-icon"></i>
+        <span class="zone-title">Corbeille</span>
+        <small class="zone-subtitle">Supprimer définitivement</small>
+        <div class="zone-items" id="zoneTrashItems"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var draggedChipEl = null;
+  var draggedChipData = null;
+  var draggedFromContainer = null;
+
+  var sourceContainer = document.getElementById('sourceItems');
+  var dropSource = document.getElementById('dropSource');
+  var targetZones = document.querySelectorAll('.dropzone-target');
+
+  // ── Helper: create a chip element ──
+  function createChipElement(data, isZoneChip) {
+    var el = document.createElement('div');
+    el.className = isZoneChip ? 'zone-chip' : 'draggable-chip';
+    el.draggable = true;
+    el.dataset.chipId = data.id;
+    el.dataset.chipName = data.name;
+    el.dataset.chipIcon = data.icon;
+    el.innerHTML = '<i class="bi ' + data.icon + '"></i> ' + data.name;
+    attachDragEvents(el);
+    return el;
+  }
+
+  // ── Attach drag events to a chip ──
+  function attachDragEvents(chip) {
+    chip.addEventListener('dragstart', function(e) {
+      draggedChipEl = this;
+      draggedChipData = {
+        id: this.dataset.chipId,
+        name: this.dataset.chipName,
+        icon: this.dataset.chipIcon
+      };
+      draggedFromContainer = this.parentNode;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', this.dataset.chipId);
+    });
+
+    chip.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      draggedChipEl = null;
+      draggedChipData = null;
+      draggedFromContainer = null;
+      // Clean up all dragover states
+      dropSource.classList.remove('dragover');
+      targetZones.forEach(function(zone) {
+        zone.classList.remove('dragover');
+      });
+    });
+  }
+
+  // ── Initialize existing source chips ──
+  var initialChips = sourceContainer.querySelectorAll('.draggable-chip');
+  initialChips.forEach(function(chip) {
+    attachDragEvents(chip);
+  });
+
+  // ── Source: accept drops (return items) ──
+  dropSource.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    if (draggedChipEl && draggedFromContainer !== sourceContainer) {
+      this.classList.add('dragover');
+    }
+  });
+
+  dropSource.addEventListener('dragleave', function() {
+    this.classList.remove('dragover');
+  });
+
+  dropSource.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+
+    if (!draggedChipEl || !draggedChipData) return;
+    if (draggedFromContainer === sourceContainer) return;
+
+    // Remove from old container
+    if (draggedChipEl.parentNode) {
+      draggedChipEl.parentNode.removeChild(draggedChipEl);
+    }
+
+    // Create new source chip and add to source
+    var newChip = createChipElement(draggedChipData, false);
+    sourceContainer.appendChild(newChip);
+
+    // Remove empty state if needed
+    updateSourceEmpty();
+  });
+
+  // ── Target zones: accept drops ──
+  targetZones.forEach(function(zone) {
+    var itemsContainer = zone.querySelector('.zone-items');
+
+    zone.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      if (draggedChipEl) {
+        this.classList.add('dragover');
+      }
+    });
+
+    zone.addEventListener('dragleave', function(e) {
+      // Only remove dragover if we actually left the zone
+      if (!this.contains(e.relatedTarget)) {
+        this.classList.remove('dragover');
+      }
+    });
+
+    zone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('dragover');
+
+      if (!draggedChipEl || !draggedChipData) return;
+
+      // Don't drop on same zone
+      if (draggedFromContainer === itemsContainer) return;
+
+      // Check if chip already in this zone
+      var existing = itemsContainer.querySelector('[data-chip-id="' + draggedChipData.id + '"]');
+      if (existing) return;
+
+      // Remove from old container
+      if (draggedChipEl.parentNode) {
+        draggedChipEl.parentNode.removeChild(draggedChipEl);
+      }
+
+      // Create zone chip and add
+      var newChip = createChipElement(draggedChipData, true);
+      itemsContainer.appendChild(newChip);
+
+      // Update source empty state
+      updateSourceEmpty();
+    });
+  });
+
+  function updateSourceEmpty() {
+    var chips = sourceContainer.querySelectorAll('.draggable-chip');
+    var emptyEl = sourceContainer.querySelector('.empty-source');
+
+    if (chips.length === 0 && !emptyEl) {
+      var empty = document.createElement('div');
+      empty.className = 'empty-source';
+      empty.innerHTML = '<i class="bi bi-inbox"></i><span>Aucun fichier</span>';
+      sourceContainer.appendChild(empty);
+    } else if (chips.length > 0 && emptyEl) {
+      emptyEl.parentNode.removeChild(emptyEl);
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

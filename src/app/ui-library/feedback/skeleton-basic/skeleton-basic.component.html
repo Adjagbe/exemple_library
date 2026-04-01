@@ -1,0 +1,18 @@
+<div class="skeleton-showcase">
+  <h2 class="section-title">Skeleton Loaders</h2>
+  <div class="toggle-control">
+    <button class="btn" (click)="toggleLoading()">{{ isLoading ? 'Afficher le contenu' : 'Afficher les skeletons' }}</button>
+  </div>
+  <div class="skeleton-demo">
+    <div class="skeleton-text" *ngIf="isLoading">
+      <div class="skeleton skeleton--title"></div>
+      <div class="skeleton skeleton--text"></div>
+      <div class="skeleton skeleton--text"></div>
+      <div class="skeleton skeleton--text skeleton--short"></div>
+    </div>
+    <div class="real-content" *ngIf="!isLoading">
+      <h3>Titre de l'article</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+  </div>
+</div>

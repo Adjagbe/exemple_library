@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Basic</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .radio-showcase { max-width: 800px; width: 100%; padding: 2rem; }
+    .showcase-section { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .selected-value { font-size: 0.875rem; color: #6b7280; margin-bottom: 1.5rem; }
+    .radio-group { display: flex; flex-direction: column; gap: 0.75rem; }
+    .radio-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 0.5rem; border-radius: 0.5rem; transition: background-color 0.2s; }
+    .radio-label:hover { background-color: #f9fafb; }
+    .radio-label.disabled { opacity: 0.5; cursor: not-allowed; }
+    .radio-label input[type="radio"] { display: none; }
+    .radio-custom { width: 22px; height: 22px; min-width: 22px; border: 2px solid #d1d5db; border-radius: 50%; position: relative; transition: all 0.2s; }
+    .radio-custom::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); width: 10px; height: 10px; border-radius: 50%; background: white; transition: transform 0.2s; }
+    .radio-label input[type="radio"]:checked + .radio-custom { border-color: #4f46e5; background-color: #4f46e5; }
+    .radio-label input[type="radio"]:checked + .radio-custom::after { transform: translate(-50%,-50%) scale(1); }
+    .radio-text { font-size: 0.9375rem; color: #374151; }
+  </style>
+</head>
+<body>
+  <div class="radio-showcase">
+    <section class="showcase-section">
+      <h3 class="section-title">Basic Radio Buttons</h3>
+      <div class="selected-value" id="selectedValue">Selected: option1</div>
+      <div class="radio-group" id="radioGroup"></div>
+    </section>
+  </div>
+  <script>
+    (function(){
+      var selected = 'option1';
+      var options = [
+        { id: 'basic1', label: 'Option 1', value: 'option1' },
+        { id: 'basic2', label: 'Option 2', value: 'option2' },
+        { id: 'basic3', label: 'Option 3 (Disabled)', value: 'option3', disabled: true }
+      ];
+      var group = document.getElementById('radioGroup');
+      var display = document.getElementById('selectedValue');
+      function render(){
+        group.innerHTML = '';
+        options.forEach(function(opt){
+          var label = document.createElement('label');
+          label.className = 'radio-label' + (opt.disabled ? ' disabled' : '');
+          var input = document.createElement('input');
+          input.type = 'radio'; input.name = 'basic'; input.value = opt.value;
+          if(opt.disabled) input.disabled = true;
+          if(opt.value === selected) input.checked = true;
+          input.addEventListener('change', function(){ selected = opt.value; display.textContent = 'Selected: ' + selected; render(); });
+          var custom = document.createElement('span'); custom.className = 'radio-custom';
+          var text = document.createElement('span'); text.className = 'radio-text'; text.textContent = opt.label;
+          label.appendChild(input); label.appendChild(custom); label.appendChild(text);
+          group.appendChild(label);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

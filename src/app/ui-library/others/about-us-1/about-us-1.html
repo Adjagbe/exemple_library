@@ -1,0 +1,32 @@
+<section class="about-1">
+  <div class="about-1__container">
+    <div class="about-1__hero">
+      <div class="about-1__badge">À propos de nous</div>
+      <h1 class="about-1__title">Nous construisons l'avenir <span>numérique</span></h1>
+      <p class="about-1__subtitle">Studio de conception et développement passionné par la création d'expériences digitales mémorables. Depuis 2012, nous accompagnons startups et grandes entreprises dans leur transformation.</p>
+      <div class="about-1__actions">
+        <a href="#" class="btn btn--primary">Découvrir notre histoire</a>
+        <a href="#" class="btn btn--ghost"><i class="bi bi-play-circle"></i> Voir la démo</a>
+      </div>
+    </div>
+    <div class="about-1__image">
+      <div class="about-1__img-placeholder"><i class="bi bi-building"></i></div>
+    </div>
+  </div>
+  <div class="about-1__stats">
+    <div *ngFor="let s of stats" class="about-1__stat">
+      <span class="about-1__stat-value">{{ s.value }}</span>
+      <span class="about-1__stat-label">{{ s.label }}</span>
+    </div>
+  </div>
+  <div class="about-1__values">
+    <h2 class="about-1__section-title">Nos valeurs fondamentales</h2>
+    <div class="about-1__values-grid">
+      <div *ngFor="let v of values" class="about-1__value-card">
+        <div class="about-1__value-icon"><i class="bi" [ngClass]="v.icon"></i></div>
+        <h3>{{ v.title }}</h3>
+        <p>{{ v.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

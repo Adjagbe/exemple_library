@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// ORDER HISTORY COMPONENT - Premium UI Library
-// Orders list with status tracking and details
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

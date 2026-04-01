@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion 2</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; }
+    .acc2 { max-width: 760px; margin: 0 auto; padding: 4rem 2rem; }
+    .acc2__header { text-align: center; margin-bottom: 2.5rem; }
+    .acc2__header h2 { font-size: 2rem; font-weight: 800; color: #111827; margin: 0 0 .5rem; }
+    .acc2__header p { color: #6b7280; font-size: .95rem; margin: 0; }
+    .acc2__cat { background: #fff; border: 1px solid #e5e7eb; border-radius: 1rem; margin-bottom: 1rem; overflow: hidden; }
+    .acc2__cat-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; background: #f9fafb; border: none; cursor: pointer; transition: background .15s; }
+    .acc2__cat-header:hover { background: #f3f4f6; }
+    .acc2__cat-left { display: flex; align-items: center; gap: 1rem; }
+    .acc2__cat-icon { width: 40px; height: 40px; background: #eef2ff; border-radius: .625rem; display: flex; align-items: center; justify-content: center; color: #4f46e5; font-size: 1.1rem; }
+    .acc2__cat-left span { font-size: .95rem; font-weight: 700; color: #111827; }
+    .acc2__cat-header > i { color: #9ca3af; font-size: .9rem; }
+    .acc2__cat-body { padding: .5rem 1.5rem 1rem; }
+    .acc2__item { border-bottom: 1px solid #f3f4f6; }
+    .acc2__item:last-child { border-bottom: none; }
+    .acc2__trigger { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; background: none; border: none; cursor: pointer; font-size: .875rem; font-weight: 600; color: #374151; text-align: left; gap: 1rem; }
+    .acc2__trigger i { color: #4f46e5; font-size: .8rem; transition: transform .2s; }
+    .acc2__item.open .acc2__trigger i { transform: rotate(90deg); }
+    .acc2__body { padding-bottom: .875rem; }
+    .acc2__body p { margin: 0; font-size: .8rem; color: #6b7280; line-height: 1.8; }
+  </style>
+</head>
+<body>
+<div class="acc2">
+  <div class="acc2__header"><h2>Centre d'aide</h2><p>Trouvez rapidement une réponse à vos questions.</p></div>
+  <div class="acc2__cats">
+    <div class="acc2__cat">
+      <button class="acc2__cat-header" onclick="toggleCat(this)">
+        <div class="acc2__cat-left"><div class="acc2__cat-icon"><i class="bi bi-shield-lock"></i></div><span>Compte &amp; Sécurité</span></div>
+        <i class="bi bi-chevron-up"></i>
+      </button>
+      <div class="acc2__cat-body">
+        <div class="acc2__item"><button class="acc2__trigger" onclick="toggleItem(this)"><span>Comment activer l'authentification à deux facteurs ?</span><i class="bi bi-chevron-right"></i></button><div class="acc2__body" style="display:none"><p>Allez dans Paramètres > Sécurité et activez la 2FA via votre application d'authentification préférée.</p></div></div>
+        <div class="acc2__item"><button class="acc2__trigger" onclick="toggleItem(this)"><span>Puis-je avoir plusieurs comptes ?</span><i class="bi bi-chevron-right"></i></button><div class="acc2__body" style="display:none"><p>Un seul compte par email est autorisé. Cependant, vous pouvez créer des espaces de travail distincts.</p></div></div>
+      </div>
+    </div>
+    <div class="acc2__cat">
+      <button class="acc2__cat-header" onclick="toggleCat(this)">
+        <div class="acc2__cat-left"><div class="acc2__cat-icon"><i class="bi bi-credit-card"></i></div><span>Facturation</span></div>
+        <i class="bi bi-chevron-down"></i>
+      </button>
+      <div class="acc2__cat-body" style="display:none">
+        <div class="acc2__item"><button class="acc2__trigger" onclick="toggleItem(this)"><span>Où trouver mes factures ?</span><i class="bi bi-chevron-right"></i></button><div class="acc2__body" style="display:none"><p>Dans Paramètres > Facturation, vous trouvez l'historique complet de vos factures téléchargeables en PDF.</p></div></div>
+        <div class="acc2__item"><button class="acc2__trigger" onclick="toggleItem(this)"><span>Les prix incluent-ils la TVA ?</span><i class="bi bi-chevron-right"></i></button><div class="acc2__body" style="display:none"><p>Non, les prix affichés sont HT. La TVA applicable est ajoutée au moment du paiement.</p></div></div>
+      </div>
+    </div>
+    <div class="acc2__cat">
+      <button class="acc2__cat-header" onclick="toggleCat(this)">
+        <div class="acc2__cat-left"><div class="acc2__cat-icon"><i class="bi bi-tools"></i></div><span>Support technique</span></div>
+        <i class="bi bi-chevron-down"></i>
+      </button>
+      <div class="acc2__cat-body" style="display:none">
+        <div class="acc2__item"><button class="acc2__trigger" onclick="toggleItem(this)"><span>Quel est le délai de réponse du support ?</span><i class="bi bi-chevron-right"></i></button><div class="acc2__body" style="display:none"><p>Notre équipe répond en moins de 4h en jours ouvrés pour les plans Pro et Enterprise.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function toggleCat(btn) {
+  const cat = btn.closest('.acc2__cat');
+  const body = cat.querySelector('.acc2__cat-body');
+  const icon = btn.querySelector('i:last-child');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  icon.className = 'bi ' + (isOpen ? 'bi-chevron-down' : 'bi-chevron-up');
+}
+function toggleItem(btn) {
+  const item = btn.closest('.acc2__item');
+  const body = item.querySelector('.acc2__body');
+  const isOpen = item.classList.contains('open');
+  item.classList.toggle('open', !isOpen);
+  body.style.display = isOpen ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

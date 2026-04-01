@@ -1,0 +1,24 @@
+<div class="ui-navbar-showcase">
+  <nav class="nbar nbar--default">
+    <a href="#" class="nbar-brand" (click)="$event.preventDefault()">
+      <div class="nbar-logo">P</div>
+      <span class="nbar-brand-name">Platform</span>
+    </a>
+    <div class="nbar-nav">
+      <a *ngFor="let link of links"
+         href="#"
+         class="nbar-link"
+         [class.active]="link.active"
+         (click)="$event.preventDefault(); setActive(link)">
+        {{ link.label }}
+      </a>
+    </div>
+    <div class="nbar-actions">
+      <button class="nbar-icon-btn">
+        <i class="bi bi-bell"></i>
+        <span class="nbar-notif-dot"></span>
+      </button>
+      <div class="nbar-avatar">JD</div>
+    </div>
+  </nav>
+</div>

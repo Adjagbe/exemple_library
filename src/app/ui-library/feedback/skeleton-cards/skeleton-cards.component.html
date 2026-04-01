@@ -1,0 +1,27 @@
+<div class="skeleton-showcase">
+  <h2 class="section-title">Cards</h2>
+  <div class="toggle-control">
+    <button class="btn" (click)="toggleLoading()">{{ isLoading ? 'Afficher le contenu' : 'Afficher les skeletons' }}</button>
+  </div>
+  <div class="cards-grid">
+    <ng-container *ngIf="isLoading">
+      <div class="skeleton-card" *ngFor="let i of [1, 2, 3]">
+        <div class="skeleton skeleton--image"></div>
+        <div class="skeleton-card-content">
+          <div class="skeleton skeleton--title-sm"></div>
+          <div class="skeleton skeleton--text"></div>
+          <div class="skeleton skeleton--text skeleton--short"></div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+      <div class="real-card" *ngFor="let i of [1, 2, 3]">
+        <div class="card-image"><i class="bi bi-image"></i></div>
+        <div class="card-content">
+          <h4>Titre du produit</h4>
+          <p>Description courte du produit avec quelques détails.</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

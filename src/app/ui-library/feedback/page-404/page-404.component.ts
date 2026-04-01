@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// PAGE 404 COMPONENT - Premium UI Library
-// Custom 404 Not Found error page
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

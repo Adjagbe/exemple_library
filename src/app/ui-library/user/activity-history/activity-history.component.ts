@@ -1,15 +1,10 @@
-// ═══════════════════════════════════════════════════════════════
-// ACTIVITY HISTORY COMPONENT - Premium UI Library
-// Timeline of user activities and events
-// ═══════════════════════════════════════════════════════════════
+
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface ActivityItem {
   id: string;
   type: 'login' | 'logout' | 'update' | 'create' | 'delete' | 'comment' | 'share' | 'download' | 'upload' | 'payment';
@@ -38,9 +33,7 @@ export interface ActivityItem {
   encapsulation: ViewEncapsulation.None
 })
 export class ActivityHistoryComponent {
-  // ─────────────────────────────────────────────────────────────────
-  // FILTERS
-  // ─────────────────────────────────────────────────────────────────
+
   selectedFilter: string = 'all';
   searchQuery: string = '';
 
@@ -53,9 +46,7 @@ export class ActivityHistoryComponent {
     { value: 'payment', label: 'Paiements' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // ACTIVITY DATA
-  // ─────────────────────────────────────────────────────────────────
+
   activities: ActivityItem[] = [
     {
       id: '1',
@@ -157,9 +148,7 @@ export class ActivityHistoryComponent {
     }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
+
   getFilteredActivities(): ActivityItem[] {
     return this.activities.filter(activity => {
       const matchesFilter = this.selectedFilter === 'all' || activity.type === this.selectedFilter;

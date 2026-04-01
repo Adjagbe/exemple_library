@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// CHECKOUT COMPONENT - Premium UI Library
-// Multi-step checkout process with shipping, billing, payment
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

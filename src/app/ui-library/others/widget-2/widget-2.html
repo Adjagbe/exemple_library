@@ -1,0 +1,14 @@
+<div class="w2">
+  <div class="w2__header">
+    <h4>Mes tâches</h4>
+    <span class="w2__badge">{{ done }}/{{ total }}</span>
+  </div>
+  <div class="w2__progress-bar"><div class="w2__progress-fill" [style.width.%]="pct"></div></div>
+  <div class="w2__list">
+    <div *ngFor="let t of tasks; let i = index" class="w2__item" [class.done]="t.done" (click)="toggle(i)">
+      <div class="w2__check"><i class="bi" [ngClass]="t.done ? 'bi-check-circle-fill' : 'bi-circle'"></i></div>
+      <span class="w2__task">{{ t.title }}</span>
+      <span class="w2__priority" [ngClass]="'w2__priority--' + t.priority">{{ t.priority }}</span>
+    </div>
+  </div>
+</div>

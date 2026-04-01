@@ -1,0 +1,13 @@
+<div class="r2">
+  <h3>Évaluez votre expérience</h3>
+  <div class="r2__avg-badge" *ngIf="+avg > 0">Note globale : <strong>{{ avg }} / 5</strong></div>
+  <div class="r2__grid">
+    <div *ngFor="let c of categories" class="r2__cat">
+      <div class="r2__cat-head"><i class="bi" [ngClass]="c.icon"></i><span>{{ c.label }}</span></div>
+      <div class="r2__stars">
+        <i *ngFor="let s of stars" class="bi" [ngClass]="(hover[c.key] || ratings[c.key]) >= s ? 'bi-star-fill' : 'bi-star'"
+           (mouseenter)="hover[c.key] = s" (mouseleave)="hover[c.key] = 0" (click)="set(c.key, s)"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar Tabs - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+
+    .ui-navbar-showcase { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    
+
+    .nbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 64px; border-radius: 0.75rem; transition: all 0.3s; }
+    .nbar--default { background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .nbar--tabs { flex-wrap: wrap; height: auto; padding-bottom: 0; }
+
+    .nbar-top { display: flex; align-items: center; justify-content: space-between; width: 100%; padding-bottom: 0.75rem; }
+
+    .nbar-tabs-row { display: flex; width: 100%; border-top: 1px solid #e5e7eb; gap: 0; }
+    .nbar-tab { padding: 0.75rem 1rem; font-size: 0.8rem; font-weight: 500; color: #6b7280; text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.2s; margin-bottom: -1px; cursor: pointer; }
+    .nbar-tab:hover { color: #374151; }
+    .nbar-tab.active { color: #4f46e5; border-bottom-color: #4f46e5; }
+
+    .nbar-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+    .nbar-logo { width: 36px; height: 36px; background: linear-gradient(135deg, #4f46e5, #7c3aed); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+    .nbar-brand-name { font-size: 1.1rem; font-weight: 700; color: #111827; white-space: nowrap; }
+
+    .nbar-actions { display: flex; align-items: center; gap: 0.625rem; flex-shrink: 0; }
+    .nbar-icon-btn { position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: none; border: none; border-radius: 0.5rem; color: #6b7280; cursor: pointer; transition: all 0.2s; font-size: 1.1rem; padding: 0; }
+    .nbar-icon-btn:hover { background: #f3f4f6; color: #374151; }
+    .nbar-notif-dot { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid #fff; }
+    .nbar-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+    .nbar-avatar:hover { border-color: #4f46e5; }
+  </style>
+</head>
+<body>
+  <div class="ui-navbar-showcase">
+
+    <nav class="nbar nbar--default nbar--tabs" id="navbar-tabs">
+      <div class="nbar-top">
+        <a href="#" class="nbar-brand" onclick="event.preventDefault()">
+          <div class="nbar-logo">P</div>
+          <span class="nbar-brand-name">Platform</span>
+        </a>
+        <div class="nbar-actions">
+          <button class="nbar-icon-btn">
+            <i class="bi bi-bell"></i>
+            <span class="nbar-notif-dot"></span>
+          </button>
+          <button class="nbar-icon-btn"><i class="bi bi-gear"></i></button>
+          <div class="nbar-avatar">JD</div>
+        </div>
+      </div>
+      <div class="nbar-tabs-row" id="tab-links"></div>
+    </nav>
+  </div>
+
+  <script>
+    (function () {
+      var tabs = [
+        { label: "Vue d'ensemble", active: true },
+        { label: 'Analytics', active: false },
+        { label: 'Rapports', active: false },
+        { label: 'Notifications', active: false },
+        { label: 'Paramètres', active: false }
+      ];
+
+      var container = document.getElementById('tab-links');
+
+      function render() {
+        container.innerHTML = '';
+        tabs.forEach(function (tab) {
+          var a = document.createElement('a');
+          a.href = '#';
+          a.className = 'nbar-tab' + (tab.active ? ' active' : '');
+          a.textContent = tab.label;
+          a.addEventListener('click', function (e) {
+            e.preventDefault();
+            tabs.forEach(function (t) { t.active = false; });
+            tab.active = true;
+            render();
+          });
+          container.appendChild(a);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<div class="radio-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Select Your Plan</h3>
+    <div class="selected-value">Selected: {{ selectedPlan }}</div>
+    <div class="radio-cards">
+      <label class="radio-card" *ngFor="let option of planOptions" [class.selected]="selectedPlan === option.value">
+        <input type="radio" name="plan" [value]="option.value" [(ngModel)]="selectedPlan">
+        <div class="card-icon">
+          <i [class]="'bi ' + option.icon"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">{{ option.label }}</span>
+          <span class="card-description">{{ option.description }}</span>
+          <span class="card-price">{{ option.price }}</span>
+        </div>
+        <div class="card-check">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+      </label>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,90 @@
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Sidebar Component</h1>
+    <p>Variantes de barres latérales pour applications SaaS</p>
+  </div>
+
+  <div class="variant-label">Variantes</div>
+  <div class="sidebars-row">
+
+    <!-- Default Sidebar -->
+    <nav class="sidebar">
+      <a href="#" class="sidebar-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+      <div class="sidebar-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+      <div *ngFor="let section of mainSections; let first = first" class="sidebar-section">
+        <div *ngIf="!first" class="sidebar-divider"></div>
+        <p class="sidebar-section-label">{{ section.label }}</p>
+        <ng-container *ngFor="let item of section.items">
+          <ng-container *ngIf="item.children">
+            <button class="sidebar-item" [class.expanded]="item.expanded" (click)="toggleExpanded(item)">
+              <i class="bi" [ngClass]="item.icon"></i>
+              <span class="item-label">{{ item.label }}</span>
+              <i class="bi bi-chevron-right chevron"></i>
+            </button>
+            <div class="sidebar-submenu" [class.open]="item.expanded">
+              <a *ngFor="let child of item.children" href="#" class="sidebar-item" [class.active]="child.active">
+                <i class="bi" [ngClass]="child.icon"></i>
+                <span class="item-label">{{ child.label }}</span>
+                <span *ngIf="child.badge" class="item-badge">{{ child.badge }}</span>
+              </a>
+            </div>
+          </ng-container>
+          <a *ngIf="!item.children" href="#" class="sidebar-item" [class.active]="item.active">
+            <i class="bi" [ngClass]="item.icon"></i>
+            <span class="item-label">{{ item.label }}</span>
+            <span *ngIf="item.badge" class="item-badge" [ngClass]="{'item-badge--info': item.badgeType === 'info', 'item-badge--success': item.badgeType === 'success'}">{{ item.badge }}</span>
+          </a>
+        </ng-container>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><p class="user-name">Jean Dupont</p><p class="user-email">jean&#64;example.com</p></div>
+        <button class="logout-btn" title="Déconnexion"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </nav>
+
+    <!-- Dark Sidebar -->
+    <nav class="sidebar sidebar--dark">
+      <a href="#" class="sidebar-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+      <div class="sidebar-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+      <div *ngFor="let section of darkSections; let first = first" class="sidebar-section">
+        <div *ngIf="!first" class="sidebar-divider"></div>
+        <p class="sidebar-section-label">{{ section.label }}</p>
+        <a *ngFor="let item of section.items" href="#" class="sidebar-item" [class.active]="item.active">
+          <i class="bi" [ngClass]="item.icon"></i>
+          <span class="item-label">{{ item.label }}</span>
+          <span *ngIf="item.badge" class="item-badge" [ngClass]="{'item-badge--info': item.badgeType === 'info', 'item-badge--success': item.badgeType === 'success'}">{{ item.badge }}</span>
+        </a>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-avatar">ML</div>
+        <div class="user-info"><p class="user-name">Marie Laurent</p><p class="user-email">marie&#64;example.com</p></div>
+        <button class="logout-btn" title="Déconnexion"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </nav>
+
+    <!-- Collapsed Sidebar -->
+    <nav class="sidebar sidebar--collapsed">
+      <a href="#" class="sidebar-brand"><div class="logo">{{ brandLetter }}</div><span class="brand-name">{{ brandName }}</span></a>
+      <div class="sidebar-search"><i class="bi bi-search"></i><input type="text" placeholder="Rechercher..."></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Principal</p>
+        <a *ngFor="let item of collapsedItems" href="#" class="sidebar-item" [class.active]="item.active" [attr.title]="item.label">
+          <i class="bi" [ngClass]="item.icon"></i>
+          <span class="item-label">{{ item.label }}</span>
+        </a>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-label">Autres</p>
+        <a href="#" class="sidebar-item" title="Paramètres"><i class="bi bi-gear"></i><span class="item-label">Paramètres</span></a>
+      </div>
+      <div class="sidebar-user">
+        <div class="user-avatar">JD</div>
+        <div class="user-info"><p class="user-name">Jean Dupont</p></div>
+        <button class="logout-btn"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </nav>
+
+  </div>
+</div>

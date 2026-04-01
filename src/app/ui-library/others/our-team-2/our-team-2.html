@@ -1,0 +1,13 @@
+<section class="ot2">
+  <div class="ot2__head"><h2>Une équipe pluridisciplinaire</h2><p>Organisée par pôle, unie par une même vision.</p></div>
+  <div *ngFor="let d of departments" class="ot2__dept">
+    <h3 class="ot2__dept-name">{{ d.name }}</h3>
+    <div class="ot2__row">
+      <div *ngFor="let m of d.members" class="ot2__card">
+        <div class="ot2__avatar" [style.background]="m.color">{{ m.initials }}</div>
+        <p class="ot2__name">{{ m.name }}</p>
+        <p class="ot2__role">{{ m.role }}</p>
+      </div>
+    </div>
+  </div>
+</section>

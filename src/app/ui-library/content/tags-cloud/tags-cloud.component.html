@@ -1,0 +1,27 @@
+<div class="tags-showcase">
+  <h2 class="section-title">Cloud de tags</h2>
+  <div class="tag-cloud">
+    <span
+      *ngFor="let tag of tags"
+      class="tag tag--cloud"
+      [class.selected]="isSelected(tag.id)"
+      [style.background-color]="tag.color"
+      [style.color]="getTextColor(tag.color)"
+      (click)="toggleTag(tag.id)"
+    >
+      {{ tag.label }}
+      <span class="tag-count" *ngIf="tag.count">{{ tag.count }}</span>
+      <button
+        *ngIf="tag.removable"
+        class="tag-remove"
+        [style.color]="getTextColor(tag.color)"
+        (click)="removeTag(tag.id); $event.stopPropagation()"
+      >
+        <i class="bi bi-x"></i>
+      </button>
+    </span>
+  </div>
+  <div class="selected-info" *ngIf="selectedTags.length > 0">
+    <strong>{{ selectedTags.length }}</strong> tag(s) sélectionné(s)
+  </div>
+</div>

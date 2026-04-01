@@ -1,0 +1,34 @@
+<article class="blog-card" [class]="'blog-card--' + variant">
+  <!-- Image -->
+  <div class="blog-card__image">
+    <img [src]="post.image" [alt]="post.title" loading="lazy" />
+    <span class="blog-card__category">{{ post.category }}</span>
+  </div>
+
+  <!-- Body -->
+  <div class="blog-card__body">
+    <div class="blog-card__meta">
+      <time [dateTime]="post.date">{{ post.date | date:'MMM d, yyyy' }}</time>
+      <span class="blog-card__dot">·</span>
+      <span>{{ post.readTime }} min read</span>
+    </div>
+
+    <h2 class="blog-card__title">
+      <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
+    </h2>
+
+    <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+
+    <div class="blog-card__footer">
+      <div class="blog-card__author">
+        <img class="blog-card__avatar" [src]="post.author.avatar" [alt]="post.author.name" />
+        <span class="blog-card__author-name">{{ post.author.name }}</span>
+      </div>
+      <a [routerLink]="['/blog', post.slug]" class="blog-card__cta" aria-label="Read article">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</article>

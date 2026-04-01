@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// PAYMENT COMPONENT - Premium UI Library
-// Credit card form with multiple payment methods
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

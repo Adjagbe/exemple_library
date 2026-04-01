@@ -1,0 +1,31 @@
+<div class="select-showcase">
+  <section class="showcase-section">
+    <h2 class="section-title">Grouped Select</h2>
+    <div class="form-group">
+      <label class="form-label">Select an application</label>
+      <div class="custom-select" [class.open]="groupedOpen">
+        <button class="select-trigger" (click)="groupedOpen = !groupedOpen">
+          <span class="trigger-content" *ngIf="!groupedValue">
+            <span class="placeholder">Select an application...</span>
+          </span>
+          <span class="trigger-content" *ngIf="groupedValue">
+            <span>{{ getSelectedGroupedOption()?.label }}</span>
+            <span class="option-group-badge">{{ getSelectedGroupedOption()?.group }}</span>
+          </span>
+          <i class="bi bi-chevron-down trigger-arrow"></i>
+        </button>
+        <div class="select-dropdown">
+          <div class="dropdown-options grouped">
+            <div *ngFor="let group of getGroups()" class="option-group">
+              <div class="group-header">{{ group }}</div>
+              <div *ngFor="let option of getGroupOptions(group)" class="dropdown-option" [class.selected]="groupedValue === option.value" (click)="selectGroupedOption(option)">
+                <span>{{ option.label }}</span>
+                <i *ngIf="groupedValue === option.value" class="bi bi-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

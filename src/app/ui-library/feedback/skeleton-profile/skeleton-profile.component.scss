@@ -1,0 +1,149 @@
+.skeleton-showcase {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1rem 0;
+}
+.toggle-control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.btn {
+  padding: 0.75rem 1.5rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    background: #4338ca;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.375rem;
+  &--avatar-lg {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+  &--title {
+    height: 24px;
+    width: 60%;
+  }
+  &--text {
+    height: 14px;
+    width: 100%;
+  }
+  &--short {
+    width: 40%;
+  }
+  &--stat {
+    height: 14px;
+    width: 80px;
+  }
+  &--btn {
+    height: 40px;
+    width: 100px;
+    border-radius: 0.375rem;
+  }
+  &--box {
+    height: 80px;
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.profile-skeleton,
+.profile-real {
+  padding: 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.profile-header {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.profile-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+}
+.profile-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.avatar-lg {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4f46e5;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.profile-stats .stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .profile-stats {
+    justify-content: center;
+  }
+  .profile-actions {
+    justify-content: center;
+  }
+}

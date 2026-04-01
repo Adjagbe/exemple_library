@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton Users - Premium UI Library</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #111827; line-height: 1.6; }
+    .skeleton-showcase { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+    .toggle-control { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .btn { padding: 0.75rem 1.5rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; } .btn:hover { background: #4338ca; }
+    .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 0.375rem; }
+    .skeleton--avatar { height: 48px; width: 48px; border-radius: 50%; } .skeleton--name { height: 16px; width: 120px; } .skeleton--email { height: 12px; width: 160px; } .skeleton--button { height: 36px; width: 80px; }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    .user-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .skeleton-user { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .skeleton-user-info { flex: 1; display: flex; flex-direction: column; gap: 0.375rem; }
+    .real-user { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: white; border-radius: 0.75rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.2s ease; }
+    .real-user:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .user-avatar { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #4f46e5; border-radius: 50%; color: white; font-weight: 700; }
+    .user-info { flex: 1; } .user-info h4 { margin: 0; font-size: 0.95rem; color: #111827; } .user-info p { margin: 0; font-size: 0.8rem; color: #6b7280; }
+    .user-btn { padding: 0.5rem 1rem; background: #f3f4f6; border: none; border-radius: 0.375rem; font-size: 0.8rem; color: #6b7280; cursor: pointer; } .user-btn:hover { background: #e5e7eb; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="skeleton-showcase">
+    <h2 class="section-title">Liste d'utilisateurs</h2>
+    <div class="toggle-control">
+      <button class="btn" id="toggleBtn">Afficher le contenu</button>
+    </div>
+    <div class="user-list" id="userList"></div>
+  </div>
+  <script>
+    (function(){
+      var isLoading = true;
+      var users = [
+        { initials:'JD', name:'Jean Dupont', email:'jean@example.com' },
+        { initials:'ML', name:'Marie Laurent', email:'marie@example.com' },
+        { initials:'PB', name:'Pierre Bernard', email:'pierre@example.com' },
+        { initials:'SD', name:'Sophie Durand', email:'sophie@example.com' }
+      ];
+      var list = document.getElementById('userList');
+      var btn = document.getElementById('toggleBtn');
+      function render(){
+        list.innerHTML = '';
+        users.forEach(function(u){
+          if(isLoading){
+            var el = document.createElement('div');
+            el.className = 'skeleton-user';
+            el.innerHTML = '<div class="skeleton skeleton--avatar"></div><div class="skeleton-user-info"><div class="skeleton skeleton--name"></div><div class="skeleton skeleton--email"></div></div><div class="skeleton skeleton--button"></div>';
+            list.appendChild(el);
+          } else {
+            var el = document.createElement('div');
+            el.className = 'real-user';
+            el.innerHTML = '<div class="user-avatar">' + u.initials + '</div><div class="user-info"><h4>' + u.name + '</h4><p>' + u.email + '</p></div><button class="user-btn">Voir profil</button>';
+            list.appendChild(el);
+          }
+        });
+      }
+      btn.onclick = function(){ isLoading = !isLoading; btn.textContent = isLoading ? 'Afficher le contenu' : 'Afficher les skeletons'; render(); };
+      render();
+    })();
+  </script>
+</body>
+</html>

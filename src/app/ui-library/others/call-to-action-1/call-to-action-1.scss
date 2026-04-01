@@ -1,0 +1,58 @@
+.cta1 {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  padding: 6rem 2rem;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.cta1__inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.cta1__inner h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+}
+.cta1__inner p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 2.5rem;
+  line-height: 1.8;
+}
+.cta1__btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.cta1__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 0.875rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.cta1__btn--primary {
+  background: #fff;
+  color: #4f46e5;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+.cta1__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.cta1__btn--ghost {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+}
+.cta1__btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.25);
+}

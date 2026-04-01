@@ -1,0 +1,26 @@
+<article class="bd2">
+  <div class="bd2__top">
+    <div class="bd2__breadcrumb"><a href="#">Blog</a><i class="bi bi-chevron-right"></i><a href="#">Tech</a><i class="bi bi-chevron-right"></i><span>Article</span></div>
+    <span class="bd2__badge">Tech</span>
+    <h1>Optimiser le bundle size de votre application React</h1>
+    <p class="bd2__lead">Une application lente perd ses utilisateurs. Voici notre méthode en 7 étapes pour réduire votre bundle de 60% sans sacrifier les fonctionnalités.</p>
+    <div class="bd2__byline">
+      <div class="bd2__avatar">LB</div>
+      <span>Par <strong>Lucas Bernard</strong></span>
+      <span class="bd2__sep">·</span>
+      <span>25 mars 2026</span>
+      <span class="bd2__sep">·</span>
+      <span><i class="bi bi-clock"></i> 8 min</span>
+    </div>
+  </div>
+  <div class="bd2__cover"></div>
+  <div class="bd2__body">
+    <h2>Pourquoi la taille du bundle est cruciale</h2>
+    <p>Chaque kilobyte de JavaScript supplémentaire représente du temps de parsing, de compilation et d'exécution. Sur mobile, cela peut représenter plusieurs secondes de chargement supplémentaires qui impactent directement votre taux de conversion.</p>
+    <div class="bd2__callout"><i class="bi bi-lightbulb-fill"></i><p>Une réduction de 100ms du temps de chargement peut augmenter les conversions de 1% selon une étude Deloitte.</p></div>
+    <h2>Étape 1 : Analyser votre bundle actuel</h2>
+    <p>Avant d'optimiser, il faut mesurer. Utilisez webpack-bundle-analyzer ou source-map-explorer pour visualiser exactement ce qui compose votre bundle et identifier les dépendances les plus lourdes.</p>
+    <div class="bd2__tags"><span *ngFor="let t of tags" class="bd2__tag"><i class="bi bi-hash"></i>{{ t }}</span></div>
+    <div class="bd2__share"><span>Partager :</span><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-linkedin"></i></a><a href="#"><i class="bi bi-link-45deg"></i></a></div>
+  </div>
+</article>

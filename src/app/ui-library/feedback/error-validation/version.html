@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Validation - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #111827; line-height: 1.6; }
+    .error-showcase { max-width: 800px; margin: 0 auto; padding: 2rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+    .validation-summary { background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.75rem; overflow: hidden; }
+    .summary-header { display: flex; align-items: center; gap: 0.625rem; padding: 1rem 1.25rem; background: #fee2e2; font-size: 0.95rem; font-weight: 600; color: #991b1b; }
+    .summary-header i { font-size: 1.1rem; color: #ef4444; }
+    .summary-list { margin: 0; padding: 1rem 1.25rem 1rem 2.5rem; list-style: disc; }
+    .summary-list li { padding: 0.25rem 0; color: #b91c1c; }
+    .summary-list li a { color: inherit; text-decoration: none; font-size: 0.9rem; }
+    .summary-list li a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="error-showcase">
+    <h2 class="section-title">Résumé de Validation</h2>
+    <div class="validation-summary">
+      <div class="summary-header">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>3 erreurs doivent être corrigées</span>
+      </div>
+      <ul class="summary-list">
+        <li><a href="#">Le champ "Nom" est requis</a></li>
+        <li><a href="#">L'adresse email n'est pas valide</a></li>
+        <li><a href="#">Le mot de passe doit contenir au moins 8 caractères</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

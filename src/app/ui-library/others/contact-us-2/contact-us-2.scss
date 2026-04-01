@@ -1,0 +1,88 @@
+.cu2 {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.cu2 h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 2rem;
+  text-align: center;
+}
+.cu2__topics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.cu2__topic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1.25rem 0.75rem;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 1.25rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #374151;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.cu2__topic i {
+  font-size: 1.5rem;
+}
+.cu2__topic.active {
+  background: #eef2ff;
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+.cu2__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cu2__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.cu2__form input,
+.cu2__form textarea {
+  padding: 0.875rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.875rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+.cu2__form input:focus,
+.cu2__form textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+.cu2__form button {
+  align-self: flex-end;
+  padding: 0.875rem 2rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+@media (max-width: 640px) {
+  .cu2__topics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cu2__row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,19 @@
+<div class="bc3">
+  <div class="bc3__header"><h2>Tendances & Insights</h2><p>Le meilleur du digital, chaque semaine.</p></div>
+  <div class="bc3__list">
+    <article *ngFor="let p of posts; let i = index" class="bc3__item">
+      <span class="bc3__num">{{ (i+1).toString().padStart(2,'0') }}</span>
+      <div class="bc3__thumb" [style.background]="p.color"><i class="bi bi-file-text"></i></div>
+      <div class="bc3__content">
+        <div class="bc3__top"><span class="bc3__category">{{ p.category }}</span><span class="bc3__date">{{ p.date }}</span></div>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.excerpt }}</p>
+      </div>
+      <div class="bc3__aside">
+        <span class="bc3__read"><i class="bi bi-clock"></i> {{ p.readTime }} min</span>
+        <span class="bc3__likes"><i class="bi bi-heart"></i> {{ p.likes }}</span>
+        <a href="#" class="bc3__arrow"><i class="bi bi-arrow-right"></i></a>
+      </div>
+    </article>
+  </div>
+</div>

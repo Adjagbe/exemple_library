@@ -1,0 +1,14 @@
+<div class="cb3">
+  <h3 class="cb3__title">Guide d'installation</h3>
+  <div *ngFor="let s of steps; let i = index" class="cb3__step">
+    <div class="cb3__step-num">{{ i + 1 }}</div>
+    <div class="cb3__step-body">
+      <p class="cb3__step-label">{{ s.title }}</p>
+      <div class="cb3__block">
+        <span class="cb3__lang">{{ s.lang }}</span>
+        <pre><code>{{ s.cmd }}</code></pre>
+        <button class="cb3__copy" (click)="copy(i, s.cmd)"><i class="bi" [ngClass]="copied === i ? 'bi-check-lg' : 'bi-clipboard'"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

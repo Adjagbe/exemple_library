@@ -1,0 +1,32 @@
+<section class="about-2">
+  <div class="about-2__top">
+    <div class="about-2__top-inner">
+      <h1>Notre histoire,<br><span>notre passion</span></h1>
+      <p>Née d'une conviction simple : la technologie doit être au service des humains. Nous créons des produits qui ont du sens.</p>
+    </div>
+  </div>
+  <div class="about-2__timeline">
+    <h2 class="about-2__section-title">Notre parcours</h2>
+    <div class="about-2__tl-items">
+      <div *ngFor="let t of timeline; let i = index" class="about-2__tl-item" [class.right]="i % 2 === 1">
+        <div class="about-2__tl-year">{{ t.year }}</div>
+        <div class="about-2__tl-dot"></div>
+        <div class="about-2__tl-label">{{ t.label }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-2__team">
+    <h2 class="about-2__section-title">L'équipe dirigeante</h2>
+    <div class="about-2__team-grid">
+      <div *ngFor="let m of team" class="about-2__member">
+        <div class="about-2__avatar">{{ m.initials }}</div>
+        <h3>{{ m.name }}</h3>
+        <p>{{ m.role }}</p>
+        <div class="about-2__socials">
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

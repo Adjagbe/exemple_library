@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// TEXTAREA COMPONENT - Premium UI Library
-// Comment textarea with character count and validation
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

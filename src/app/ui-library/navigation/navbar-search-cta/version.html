@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar Search &amp; CTA - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+
+    .ui-navbar-showcase { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    .nbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 64px; border-radius: 0.75rem; transition: all 0.3s; }
+    .nbar--default { background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+    .nbar-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+    .nbar-logo { width: 36px; height: 36px; background: linear-gradient(135deg, #4f46e5, #7c3aed); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+    .nbar-brand-name { font-size: 1.1rem; font-weight: 700; color: #111827; white-space: nowrap; }
+
+    .nbar-nav { display: flex; align-items: center; gap: 0.125rem; }
+    .nbar-link { display: flex; align-items: center; gap: 0.375rem; padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500; color: #6b7280; text-decoration: none; border-radius: 0.5rem; transition: all 0.2s; white-space: nowrap; cursor: pointer; }
+    .nbar-link:hover { color: #374151; background: #f3f4f6; }
+    .nbar-link.active { color: #4f46e5; background: #eff6ff; }
+    .nbar-link-badge { font-size: 0.6rem; padding: 0.1rem 0.375rem; background: #ef4444; color: #fff; border-radius: 9999px; font-weight: 600; }
+
+    .nbar-actions { display: flex; align-items: center; gap: 0.625rem; flex-shrink: 0; }
+    .nbar-search { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.875rem; background: #f3f4f6; border: 1px solid transparent; border-radius: 0.5rem; transition: all 0.2s; min-width: 220px; }
+    .nbar-search:focus-within { background: #fff; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .nbar-search i { color: #9ca3af; font-size: 0.85rem; }
+    .nbar-search input { border: none; background: none; font-size: 0.8rem; color: #374151; width: 100%; outline: none; }
+    .nbar-search input::placeholder { color: #9ca3af; }
+
+    .nbar-btn { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.5rem 1.125rem; font-size: 0.8rem; font-weight: 600; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .nbar-btn--primary { background: #4f46e5; color: #fff; }
+    .nbar-btn--primary:hover { background: #4338ca; }
+    .nbar-btn--ghost { background: none; color: #6b7280; border: 1px solid #e5e7eb; }
+    .nbar-btn--ghost:hover { background: #f3f4f6; border-color: #d1d5db; color: #374151; }
+  </style>
+</head>
+<body>
+  <div class="ui-navbar-showcase">
+
+    <nav class="nbar nbar--default" id="navbar-search-cta">
+      <a href="#" class="nbar-brand" onclick="event.preventDefault()">
+        <div class="nbar-logo">P</div>
+        <span class="nbar-brand-name">Platform</span>
+      </a>
+      <div class="nbar-nav" id="nav-links"></div>
+      <div class="nbar-actions">
+        <div class="nbar-search">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Rechercher..." />
+        </div>
+        <a href="#" class="nbar-btn nbar-btn--ghost" onclick="event.preventDefault()">Connexion</a>
+        <a href="#" class="nbar-btn nbar-btn--primary" onclick="event.preventDefault()">Essai gratuit</a>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    (function () {
+      var links = [
+        { label: 'Accueil', active: true, badge: null },
+        { label: 'Fonctionnalités', active: false, badge: null },
+        { label: 'Tarifs', active: false, badge: null },
+        { label: 'Blog', active: false, badge: 3 }
+      ];
+
+      var container = document.getElementById('nav-links');
+
+      function render() {
+        container.innerHTML = '';
+        links.forEach(function (link) {
+          var a = document.createElement('a');
+          a.href = '#';
+          a.className = 'nbar-link' + (link.active ? ' active' : '');
+          a.textContent = link.label;
+          if (link.badge) {
+            var badge = document.createElement('span');
+            badge.className = 'nbar-link-badge';
+            badge.textContent = link.badge;
+            a.appendChild(badge);
+          }
+          a.addEventListener('click', function (e) {
+            e.preventDefault();
+            links.forEach(function (l) { l.active = false; });
+            link.active = true;
+            render();
+          });
+          container.appendChild(a);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

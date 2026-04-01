@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Confirmé - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:whitesmoke;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem}
+
+    .confirmation-card{width:100%;max-width:480px;background:#fff;border-radius:1.5rem;padding:3rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+    .state-container{text-align:center}
+    .state-title{font-size:1.5rem;font-weight:700;color:#111827;margin:0 0 .75rem}
+    .state-text{font-size:.9rem;color:#6b7280;line-height:1.6;margin:0 0 1.5rem}
+    .state-text strong{color:#111827}
+
+    .success-icon{position:relative;width:100px;height:100px;margin:0 auto 2rem}
+    .success-circle{width:100%;height:100%;background:linear-gradient(135deg,#10b981,#059669);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:scaleIn .5s ease}
+    .success-circle i{font-size:3rem;color:#fff}
+    @keyframes scaleIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+    .success-particles{position:absolute;inset:0;pointer-events:none}
+    .particle{position:absolute;width:8px;height:8px;background:#10b981;border-radius:50%;top:50%;left:50%;animation:particleFly .8s ease-out forwards}
+    .particle:nth-child(1){--angle:0deg;animation-delay:.05s}
+    .particle:nth-child(2){--angle:60deg;animation-delay:.1s}
+    .particle:nth-child(3){--angle:120deg;animation-delay:.15s}
+    .particle:nth-child(4){--angle:180deg;animation-delay:.2s}
+    .particle:nth-child(5){--angle:240deg;animation-delay:.25s}
+    .particle:nth-child(6){--angle:300deg;animation-delay:.3s}
+    @keyframes particleFly{from{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(0) scale(1);opacity:1}to{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-60px) scale(0);opacity:0}}
+
+    .success-features{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem;padding:1.25rem;background:#f0fdf4;border-radius:.75rem}
+    .feature-item{display:flex;flex-direction:column;align-items:center;gap:.375rem;font-size:.75rem;color:#059669}
+    .feature-item i{font-size:1.25rem}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;font-size:.9rem;font-weight:600;border:none;border-radius:.5rem;cursor:pointer;transition:all .2s;text-decoration:none}
+    .btn--primary{background:#4f46e5;color:#fff}
+    .btn--primary:hover{background:#4338ca}
+    .btn--full{width:100%}
+
+    .page-footer{margin-top:2rem;text-align:center}
+    .page-footer p{font-size:.8rem;color:#6b7280;margin:0}
+    .page-footer a{color:#4f46e5;text-decoration:underline}
+    .page-footer a:hover{text-decoration:none}
+  </style>
+</head>
+<body>
+
+<div class="confirmation-card">
+  <div class="state-container">
+    <div class="success-icon">
+      <div class="success-circle"><i class="bi bi-check-lg"></i></div>
+      <div class="success-particles">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+      </div>
+    </div>
+    <h2 class="state-title">Email confirmé !</h2>
+    <p class="state-text">Votre adresse email <strong>utilisateur@exemple.com</strong> a été vérifiée avec succès.</p>
+    <div class="success-features">
+      <div class="feature-item"><i class="bi bi-shield-check"></i><span>Compte sécurisé</span></div>
+      <div class="feature-item"><i class="bi bi-bell"></i><span>Notifications activées</span></div>
+      <div class="feature-item"><i class="bi bi-unlock"></i><span>Accès complet</span></div>
+    </div>
+    <a href="#" class="btn btn--primary btn--full"><span>Accéder à mon compte</span><i class="bi bi-arrow-right"></i></a>
+  </div>
+</div>
+
+<div class="page-footer"><p>Vous n'avez pas demandé cette vérification ? <a href="#">Signalez-le</a></p></div>
+
+</body>
+</html>

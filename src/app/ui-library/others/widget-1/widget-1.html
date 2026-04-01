@@ -1,0 +1,22 @@
+<div class="w1">
+  <div class="w1__stats">
+    <div *ngFor="let s of stats" class="w1__stat">
+      <div class="w1__stat-icon"><i class="bi" [ngClass]="s.icon"></i></div>
+      <div class="w1__stat-info">
+        <span class="w1__val">{{ s.value }}</span>
+        <span class="w1__label">{{ s.label }}</span>
+        <span class="w1__change" [ngClass]="s.up ? 'w1__change--up' : 'w1__change--down'">
+          <i class="bi" [ngClass]="s.up ? 'bi-arrow-up-right' : 'bi-arrow-down-right'"></i>{{ s.change }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="w1__activity">
+    <h4>Activité récente</h4>
+    <div *ngFor="let a of activities" class="w1__act-item">
+      <div class="w1__act-dot" [style.background]="a.color"></div>
+      <div class="w1__act-text"><strong>{{ a.user }}</strong> {{ a.action }}</div>
+      <small>{{ a.time }}</small>
+    </div>
+  </div>
+</div>

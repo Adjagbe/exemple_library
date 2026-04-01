@@ -1,0 +1,28 @@
+<div class="r1">
+  <div class="r1__summary">
+    <div class="r1__avg">{{ avg }}</div>
+    <div class="r1__stars-disp">
+      <i *ngFor="let s of arr(5); let i = index" class="bi" [ngClass]="i < Math.floor(avg) ? 'bi-star-fill' : 'bi-star'"></i>
+    </div>
+    <p>{{ total }} avis vérifiés</p>
+    <div class="r1__dist">
+      <div *ngFor="let d of distribution" class="r1__dist-row">
+        <span>{{ d.stars }}★</span>
+        <div class="r1__bar"><div class="r1__fill" [style.width.%]="d.pct"></div></div>
+        <span>{{ d.pct }}%</span>
+      </div>
+    </div>
+  </div>
+  <div class="r1__reviews">
+    <div class="r1__leave">
+      <p>Laissez votre avis</p>
+      <div class="r1__input-stars">
+        <i *ngFor="let s of stars" class="bi" [ngClass]="(hover || rating) >= s ? 'bi-star-fill' : 'bi-star'" (mouseenter)="hover = s" (mouseleave)="hover = 0" (click)="set(s)"></i>
+      </div>
+    </div>
+    <div *ngFor="let r of reviews" class="r1__card">
+      <div class="r1__card-head"><div class="r1__avatar">{{ r.avatar }}</div><div><strong>{{ r.name }}</strong><span><i *ngFor="let s of arr(r.stars)" class="bi bi-star-fill"></i> · {{ r.date }}</span></div></div>
+      <p>{{ r.text }}</p>
+    </div>
+  </div>
+</div>

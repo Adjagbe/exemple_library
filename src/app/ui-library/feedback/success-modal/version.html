@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success Modal - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #111827; line-height: 1.6; }
+    .success-showcase { max-width: 800px; margin: 0 auto; padding: 2rem; }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #374151; margin: 0 0 1rem 0; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: none; border-radius: 0.5rem; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn--lg { padding: 1rem 2rem; font-size: 1rem; }
+    .btn--primary { background: linear-gradient(135deg, #10b981, #059669); color: white; } .btn--primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; padding: 1rem; z-index: 1000; animation: fadeIn 0.2s ease; }
+    .modal-overlay.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .success-modal { text-align: center; padding: 3rem; background: white; border-radius: 1.5rem; max-width: 420px; width: 100%; animation: scaleIn 0.3s ease; position: relative; }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    .modal-icon { width: 100px; height: 100px; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; color: white; font-size: 3rem; position: relative; }
+    .icon-rings { position: absolute; inset: -10px; }
+    .ring { position: absolute; inset: 0; border: 2px solid #10b981; border-radius: 50%; opacity: 0; animation: ring-pulse 2s ease-out infinite; }
+    .ring:nth-child(2) { animation-delay: 0.5s; }
+    .ring:nth-child(3) { animation-delay: 1s; }
+    @keyframes ring-pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.5); opacity: 0; } }
+    .modal-title { font-size: 1.5rem; font-weight: 700; color: #111827; margin: 0 0 0.75rem 0; }
+    .modal-message { font-size: 1rem; color: #6b7280; margin: 0 0 2rem 0; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="success-showcase">
+    <h2 class="section-title">Modal de Succès</h2>
+    <button class="btn btn--primary" id="openBtn">Afficher le modal</button>
+    <div class="modal-overlay" id="overlay">
+      <div class="success-modal" onclick="event.stopPropagation()">
+        <div class="modal-icon">
+          <i class="bi bi-check-circle-fill"></i>
+          <div class="icon-rings">
+            <span class="ring"></span>
+            <span class="ring"></span>
+            <span class="ring"></span>
+          </div>
+        </div>
+        <h3 class="modal-title">Inscription réussie !</h3>
+        <p class="modal-message">Bienvenue ! Votre compte a été créé avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.</p>
+        <button class="btn btn--primary btn--lg" id="closeBtn">Commencer l'aventure</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var overlay = document.getElementById('overlay');
+      document.getElementById('openBtn').onclick = function(){ overlay.classList.add('active'); };
+      document.getElementById('closeBtn').onclick = function(){ overlay.classList.remove('active'); };
+      overlay.onclick = function(){ overlay.classList.remove('active'); };
+    })();
+  </script>
+</body>
+</html>

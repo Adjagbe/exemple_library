@@ -1,0 +1,16 @@
+<div class="demo-page">
+  <div class="section section--white">
+      <div class="section-header">
+        <span class="section-badge"><i class="bi bi-stars"></i> Fonctionnalités</span>
+        <h2>Tout ce dont vous avez besoin</h2>
+        <p>Des outils puissants pour gérer votre entreprise efficacement au quotidien.</p>
+      </div>
+      <div class="features-grid">
+        <div *ngFor="let f of featuresWhite" class="feature-card">
+          <div class="feature-icon"><i class="bi" [ngClass]="f.icon"></i></div>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.description }}</p>
+        </div>
+      </div>
+  </div>
+</div>

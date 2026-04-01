@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; display: flex; justify-content: center; }
+.tl3 { max-width: 680px; width: 100%; display: flex; flex-direction: column; gap: .75rem; }
+.tl3__step { border: 1.5px solid #e5e7eb; border-radius: 1rem; padding: 1.25rem; background: #f9fafb; cursor: pointer; display: flex; align-items: center; gap: 1.25rem; transition: all .2s; }
+.tl3__step.active { background: #eef2ff; border-color: #4f46e5; }
+.tl3__num { width: 36px; height: 36px; border-radius: 50%; background: #e5e7eb; color: #6b7280; font-size: .875rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; }
+.tl3__step.active .tl3__num { background: #4f46e5; color: #fff; }
+.tl3__icon { font-size: 1.25rem; color: #d1d5db; transition: color .2s; }
+.tl3__step.active .tl3__icon { color: #4f46e5; }
+.tl3__text h4 { font-size: .95rem; font-weight: 700; color: #111827; margin-bottom: .25rem; }
+.tl3__text p { font-size: .8rem; color: #6b7280; }
+</style>
+</head>
+<body>
+<div class="tl3" id="tl3">
+  <div class="tl3__step" onclick="select(0)">
+    <div class="tl3__num">1</div>
+    <i class="tl3__icon bi bi-person-plus"></i>
+    <div class="tl3__text"><h4>Inscription</h4><p>Créez votre compte en 2 minutes.</p></div>
+  </div>
+  <div class="tl3__step" onclick="select(1)">
+    <div class="tl3__num">2</div>
+    <i class="tl3__icon bi bi-gear"></i>
+    <div class="tl3__text"><h4>Configuration</h4><p>Personnalisez votre espace de travail.</p></div>
+  </div>
+  <div class="tl3__step active" onclick="select(2)">
+    <div class="tl3__num">3</div>
+    <i class="tl3__icon bi bi-cloud-upload"></i>
+    <div class="tl3__text"><h4>Import des données</h4><p>Importez vos projets existants facilement.</p></div>
+  </div>
+  <div class="tl3__step" onclick="select(3)">
+    <div class="tl3__num">4</div>
+    <i class="tl3__icon bi bi-rocket-takeoff"></i>
+    <div class="tl3__text"><h4>Lancement</h4><p>Vous êtes prêt à démarrer avec votre équipe.</p></div>
+  </div>
+</div>
+<script>
+function select(i) {
+  document.querySelectorAll('.tl3__step').forEach((s,idx) => s.classList.toggle('active', idx === i));
+}
+</script>
+</body>
+</html>

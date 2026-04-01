@@ -1,15 +1,8 @@
-// ═══════════════════════════════════════════════════════════════
-// FILTERS COMPONENT - Premium UI Library
-// Advanced filtering with multiple filter types
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface FilterOption {
   value: string;
   label: string;
@@ -44,9 +37,7 @@ export interface ActiveFilter {
   encapsulation: ViewEncapsulation.None
 })
 export class FiltersComponent {
-  // ─────────────────────────────────────────────────────────────────
   // FILTER GROUPS
-  // ─────────────────────────────────────────────────────────────────
   filterGroups: FilterGroup[] = [
     {
       id: 'category',
@@ -117,14 +108,9 @@ export class FiltersComponent {
     }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
   // ACTIVE FILTERS
-  // ─────────────────────────────────────────────────────────────────
   activeFilters: ActiveFilter[] = [];
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
   toggleGroup(group: FilterGroup): void {
     group.expanded = !group.expanded;
   }

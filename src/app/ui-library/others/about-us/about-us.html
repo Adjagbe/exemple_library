@@ -1,0 +1,48 @@
+<section class="about-us">
+  <!-- Hero Split -->
+  <div class="about-hero">
+    <div class="about-hero__text">
+      <span class="label">Who we are</span>
+      <h1 class="about-hero__title">
+        We build<br /><em>experiences</em><br />that matter.
+      </h1>
+      <p class="about-hero__desc">
+        {{ description }}
+      </p>
+      <a class="btn-primary" [routerLink]="ctaLink">{{ ctaLabel }}</a>
+    </div>
+    <div class="about-hero__visual">
+      <div class="visual-card visual-card--1">
+        <img [src]="heroImage" [alt]="heroImageAlt" />
+      </div>
+      <div class="visual-card visual-card--2">
+        <div class="stat" *ngFor="let stat of stats">
+          <span class="stat__value">{{ stat.value }}</span>
+          <span class="stat__label">{{ stat.label }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mission -->
+  <div class="about-mission">
+    <div class="mission-line"></div>
+    <div class="mission-content">
+      <h2 class="mission-title">Our Mission</h2>
+      <p class="mission-text">{{ mission }}</p>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <div class="about-values">
+    <h2 class="section-title">Core Values</h2>
+    <div class="values-grid">
+      <div class="value-card" *ngFor="let value of values; let i = index">
+        <span class="value-card__num">0{{ i + 1 }}</span>
+        <span class="value-card__icon" [innerHTML]="value.icon"></span>
+        <h3 class="value-card__title">{{ value.title }}</h3>
+        <p class="value-card__desc">{{ value.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

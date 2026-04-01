@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Plan</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .radio-showcase { max-width: 800px; width: 100%; padding: 2rem; }
+    .showcase-section { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .selected-value { font-size: 0.875rem; color: #6b7280; margin-bottom: 1.5rem; }
+    .radio-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .radio-card { display: flex; flex-direction: column; align-items: center; padding: 1.5rem; border: 2px solid #e5e7eb; border-radius: 1rem; cursor: pointer; transition: all 0.2s; position: relative; text-align: center; }
+    .radio-card input[type="radio"] { display: none; }
+    .radio-card:hover { border-color: #a5b4fc; }
+    .radio-card.selected { border-color: #4f46e5; background-color: #eff6ff; }
+    .radio-card.selected .card-icon { background-color: #4f46e5; color: white; }
+    .radio-card.selected .card-check { opacity: 1; }
+    .card-icon { width: 56px; height: 56px; border-radius: 50%; background-color: #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #6b7280; margin-bottom: 1rem; transition: all 0.2s; }
+    .card-content { display: flex; flex-direction: column; gap: 0.25rem; }
+    .card-label { font-weight: 600; color: #111827; }
+    .card-description { font-size: 0.8125rem; color: #6b7280; }
+    .card-price { font-size: 1.25rem; font-weight: 700; color: #4f46e5; margin-top: 0.5rem; }
+    .card-check { position: absolute; top: 0.75rem; right: 0.75rem; color: #4f46e5; font-size: 1.25rem; opacity: 0; transition: opacity 0.2s; }
+  </style>
+</head>
+<body>
+  <div class="radio-showcase">
+    <section class="showcase-section">
+      <h3 class="section-title">Select Your Plan</h3>
+      <div class="selected-value" id="selectedValue">Selected: pro</div>
+      <div class="radio-cards" id="radioCards"></div>
+    </section>
+  </div>
+  <script>
+    (function(){
+      var selected = 'pro';
+      var plans = [
+        { label: 'Starter', value: 'starter', description: 'Perfect for small projects', icon: 'bi-lightning', price: '$9/mo' },
+        { label: 'Pro', value: 'pro', description: 'Best for growing businesses', icon: 'bi-rocket', price: '$29/mo' },
+        { label: 'Enterprise', value: 'enterprise', description: 'For large organizations', icon: 'bi-building', price: '$99/mo' }
+      ];
+      var container = document.getElementById('radioCards');
+      var display = document.getElementById('selectedValue');
+      function render(){
+        container.innerHTML = '';
+        plans.forEach(function(plan){
+          var label = document.createElement('label');
+          label.className = 'radio-card' + (selected === plan.value ? ' selected' : '');
+          label.innerHTML = '<input type="radio" name="plan" value="'+plan.value+'" '+(selected===plan.value?'checked':'')+'>' +
+            '<div class="card-icon"><i class="bi '+plan.icon+'"></i></div>' +
+            '<div class="card-content"><span class="card-label">'+plan.label+'</span><span class="card-description">'+plan.description+'</span><span class="card-price">'+plan.price+'</span></div>' +
+            '<div class="card-check"><i class="bi bi-check-circle-fill"></i></div>';
+          label.querySelector('input').addEventListener('change', function(){ selected = plan.value; display.textContent = 'Selected: ' + selected; render(); });
+          container.appendChild(label);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

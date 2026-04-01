@@ -1,0 +1,18 @@
+<div class="error-showcase">
+  <h2 class="section-title">Alert Boxes</h2>
+  <div class="alerts-container">
+    <div *ngFor="let alert of alerts" class="alert alert--error">
+      <div class="alert-icon">
+        <i class="bi" [ngClass]="alert.icon || 'bi-exclamation-triangle'"></i>
+      </div>
+      <div class="alert-content">
+        <strong class="alert-title">{{ alert.title }}</strong>
+        <p class="alert-message">{{ alert.message }}</p>
+        <button *ngIf="alert.actionLabel" class="alert-action" (click)="onAction(alert.id)">{{ alert.actionLabel }}</button>
+      </div>
+      <button class="alert-close" (click)="dismissAlert(alert.id)">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+</div>

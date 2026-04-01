@@ -1,0 +1,14 @@
+<div class="error-showcase">
+  <h2 class="section-title">Banner d'Erreur</h2>
+  <div class="error-banner">
+    <div class="banner-icon">
+      <i class="bi" [ngClass]="banner.icon || 'bi-x-circle-fill'"></i>
+    </div>
+    <div class="banner-content">
+      <strong class="banner-title">{{ banner.title }}</strong>
+      <p class="banner-message">{{ banner.message }}</p>
+      <code *ngIf="banner.code" class="banner-code">{{ banner.code }}</code>
+    </div>
+    <button class="banner-action" (click)="onRetry()">Réessayer</button>
+  </div>
+</div>

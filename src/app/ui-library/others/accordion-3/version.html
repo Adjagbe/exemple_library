@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion 3</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; }
+    .acc3 { max-width: 680px; margin: 0 auto; padding: 4rem 2rem; }
+    .acc3__header { margin-bottom: 2rem; }
+    .acc3__header h2 { font-size: 1.75rem; font-weight: 800; color: #111827; margin: 0; }
+    .acc3__item { background: #fff; border-left: 3px solid #e5e7eb; padding: 1.25rem 1.5rem; margin-bottom: .75rem; border-radius: 0 .75rem .75rem 0; cursor: pointer; transition: all .2s; }
+    .acc3__item:hover { border-left-color: #4f46e5; background: #fafafa; }
+    .acc3__item.open { border-left-color: #4f46e5; background: #f5f3ff; }
+    .acc3__trigger { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .acc3__left { display: flex; align-items: center; gap: 1rem; }
+    .acc3__icon { width: 36px; height: 36px; background: #eef2ff; border-radius: .5rem; display: flex; align-items: center; justify-content: center; color: #4f46e5; font-size: 1rem; flex-shrink: 0; }
+    .acc3__left span { font-size: .9rem; font-weight: 600; color: #111827; }
+    .acc3__arrow i { color: #9ca3af; transition: transform .25s; font-size: .9rem; }
+    .acc3__item.open .acc3__arrow i { transform: rotate(180deg); color: #4f46e5; }
+    .acc3__body { padding-top: .875rem; padding-left: 52px; }
+    .acc3__body p { margin: 0; font-size: .8rem; color: #6b7280; line-height: 1.8; }
+  </style>
+</head>
+<body>
+<div class="acc3">
+  <div class="acc3__header"><h2>Support &amp; FAQ</h2></div>
+  <div class="acc3__list">
+    <div class="acc3__item open" onclick="toggle(this)">
+      <div class="acc3__trigger"><div class="acc3__left"><div class="acc3__icon"><i class="bi bi-box-seam"></i></div><span>Quels sont les délais de livraison ?</span></div><div class="acc3__arrow"><i class="bi bi-chevron-down"></i></div></div>
+      <div class="acc3__body"><p>Les commandes standard sont livrées en 3-5 jours ouvrés. L'option express garantit une livraison en 24h.</p></div>
+    </div>
+    <div class="acc3__item" onclick="toggle(this)">
+      <div class="acc3__trigger"><div class="acc3__left"><div class="acc3__icon"><i class="bi bi-arrow-repeat"></i></div><span>Quelle est la politique de retour ?</span></div><div class="acc3__arrow"><i class="bi bi-chevron-down"></i></div></div>
+      <div class="acc3__body" style="display:none"><p>Retours acceptés sous 30 jours après réception, produit non ouvert dans son emballage d'origine.</p></div>
+    </div>
+    <div class="acc3__item" onclick="toggle(this)">
+      <div class="acc3__trigger"><div class="acc3__left"><div class="acc3__icon"><i class="bi bi-truck"></i></div><span>Livrez-vous à l'international ?</span></div><div class="acc3__arrow"><i class="bi bi-chevron-down"></i></div></div>
+      <div class="acc3__body" style="display:none"><p>Oui, nous livrons dans 50+ pays. Les frais et délais varient selon la destination.</p></div>
+    </div>
+    <div class="acc3__item" onclick="toggle(this)">
+      <div class="acc3__trigger"><div class="acc3__left"><div class="acc3__icon"><i class="bi bi-headset"></i></div><span>Comment contacter le service client ?</span></div><div class="acc3__arrow"><i class="bi bi-chevron-down"></i></div></div>
+      <div class="acc3__body" style="display:none"><p>Par chat en direct (9h-18h), par email ou par téléphone au 01 23 45 67 89.</p></div>
+    </div>
+  </div>
+</div>
+<script>
+function toggle(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc3__item').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.acc3__body').style.display = 'none';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    item.querySelector('.acc3__body').style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>

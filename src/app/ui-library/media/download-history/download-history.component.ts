@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// DOWNLOAD HISTORY COMPONENT - Premium UI Library
-// Historique des téléchargements
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

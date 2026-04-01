@@ -1,0 +1,94 @@
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Section Component</h1>
+    <p>Variantes de sections réutilisables pour pages SaaS</p>
+  </div>
+
+  <!-- Features White -->
+  <div class="variant-label">Features Section — White</div>
+  <div class="section section--white">
+    <div class="section-header">
+      <span class="section-badge"><i class="bi bi-stars"></i> Fonctionnalités</span>
+      <h2>Tout ce dont vous avez besoin</h2>
+      <p>Des outils puissants pour gérer votre entreprise efficacement au quotidien.</p>
+    </div>
+    <div class="features-grid">
+      <div *ngFor="let f of featuresWhite" class="feature-card">
+        <div class="feature-icon"><i class="bi" [ngClass]="f.icon"></i></div>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Dark -->
+  <div class="variant-label">Features Section — Dark</div>
+  <div class="section section--dark">
+    <div class="section-header">
+      <span class="section-badge"><i class="bi bi-rocket-takeoff"></i> Avantages</span>
+      <h2>Pourquoi nous choisir ?</h2>
+      <p>Découvrez les avantages qui nous distinguent de la concurrence.</p>
+    </div>
+    <div class="features-grid">
+      <div *ngFor="let f of featuresDark" class="feature-card">
+        <div class="feature-icon"><i class="bi" [ngClass]="f.icon"></i></div>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Gradient -->
+  <div class="variant-label">CTA Section — Gradient</div>
+  <div class="section section--gradient">
+    <div class="cta-content">
+      <h2>Prêt à commencer ?</h2>
+      <p>Rejoignez plus de 10 000 entreprises qui nous font confiance. Essai gratuit de 14 jours, aucune carte requise.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn--white">Démarrer gratuitement <i class="bi bi-arrow-right"></i></a>
+        <a href="#" class="btn btn--ghost"><i class="bi bi-play-circle"></i> Voir la démo</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="variant-label">Stats Section</div>
+  <div class="section section--white">
+    <div class="section-header">
+      <span class="section-badge"><i class="bi bi-bar-chart"></i> En chiffres</span>
+      <h2>Nos résultats parlent d'eux-mêmes</h2>
+    </div>
+    <div class="stats-grid">
+      <div *ngFor="let s of stats" class="stat-card">
+        <div class="stat-value">{{ s.value }}</div>
+        <div class="stat-label">{{ s.label }}</div>
+        <div class="stat-divider"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="variant-label">Testimonials Section</div>
+  <div class="section section--light">
+    <div class="section-header">
+      <span class="section-badge"><i class="bi bi-chat-quote"></i> Témoignages</span>
+      <h2>Ce que disent nos clients</h2>
+      <p>Découvrez les avis de ceux qui utilisent notre plateforme au quotidien.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div *ngFor="let t of testimonials" class="testimonial-card">
+        <div class="testimonial-stars">
+          <i *ngFor="let star of getStars(t.stars)" class="bi" [ngClass]="star"></i>
+        </div>
+        <p class="testimonial-text">"{{ t.text }}"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">{{ t.avatarInitials }}</div>
+          <div class="testimonial-info">
+            <p class="name">{{ t.name }}</p>
+            <p class="role">{{ t.role }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

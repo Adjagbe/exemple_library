@@ -1,0 +1,57 @@
+.cc1 {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(760px, calc(100vw - 2rem));
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  flex-wrap: wrap;
+}
+.cc1__icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+.cc1 p {
+  flex: 1;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.cc1 a {
+  color: #818cf8;
+  text-decoration: none;
+}
+.cc1__btns {
+  display: flex;
+  gap: 0.625rem;
+  flex-shrink: 0;
+}
+.cc1__accept {
+  padding: 0.625rem 1.375rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 0.875rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cc1__decline {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.875rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}

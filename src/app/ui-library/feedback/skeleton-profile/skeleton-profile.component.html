@@ -1,0 +1,42 @@
+<div class="skeleton-showcase">
+  <h2 class="section-title">Profil</h2>
+  <div class="toggle-control">
+    <button class="btn" (click)="toggleLoading()">{{ isLoading ? 'Afficher le contenu' : 'Afficher les skeletons' }}</button>
+  </div>
+  <div class="profile-skeleton" *ngIf="isLoading">
+    <div class="profile-header">
+      <div class="skeleton skeleton--avatar-lg"></div>
+      <div class="profile-info">
+        <div class="skeleton skeleton--title"></div>
+        <div class="skeleton skeleton--text skeleton--short"></div>
+        <div class="profile-stats">
+          <div class="skeleton skeleton--stat"></div>
+          <div class="skeleton skeleton--stat"></div>
+          <div class="skeleton skeleton--stat"></div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-actions">
+      <div class="skeleton skeleton--btn"></div>
+      <div class="skeleton skeleton--btn"></div>
+    </div>
+  </div>
+  <div class="profile-real" *ngIf="!isLoading">
+    <div class="profile-header">
+      <div class="avatar-lg">JD</div>
+      <div class="profile-info">
+        <h3>Jean Dupont</h3>
+        <p>Développeur Full Stack</p>
+        <div class="profile-stats">
+          <span>42 Projets</span>
+          <span>128 Followers</span>
+          <span>56 Following</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-actions">
+      <button class="btn btn--primary">Suivre</button>
+      <button class="btn btn--secondary">Message</button>
+    </div>
+  </div>
+</div>

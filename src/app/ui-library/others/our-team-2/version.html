@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Team 2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; }
+.ot2 { max-width: 1100px; margin: 0 auto; }
+.ot2__header { text-align: center; margin-bottom: 3rem; }
+.ot2__header h2 { font-size: 2rem; font-weight: 800; color: #111827; margin-bottom: .75rem; }
+.ot2__header p { color: #6b7280; }
+.ot2__dept { margin-bottom: 3rem; }
+.ot2__dept-name { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #4f46e5; margin-bottom: 1.25rem; padding-bottom: .75rem; border-bottom: 2px solid #eef2ff; }
+.ot2__dept-members { display: flex; gap: 1rem; flex-wrap: wrap; }
+.ot2__card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; min-width: 220px; box-shadow: 0 1px 4px rgba(0,0,0,.04); transition: transform .2s; }
+.ot2__card:hover { transform: translateY(-2px); }
+.ot2__avatar { width: 48px; height: 48px; border-radius: 50%; color: #fff; font-size: .8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ot2__card h4 { font-size: .875rem; font-weight: 700; color: #111827; margin: 0 0 .2rem; }
+.ot2__card span { font-size: .75rem; color: #6b7280; }
+</style>
+</head>
+<body>
+<div class="ot2">
+  <div class="ot2__header">
+    <h2>Notre équipe</h2>
+    <p>Des experts passionnés organisés par département.</p>
+  </div>
+  <div class="ot2__dept">
+    <div class="ot2__dept-name">Leadership</div>
+    <div class="ot2__dept-members">
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#4f46e5;">SM</div><div><h4>Sophie Martin</h4><span>CEO</span></div></div>
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#7c3aed;">AF</div><div><h4>Antoine Faure</h4><span>COO</span></div></div>
+    </div>
+  </div>
+  <div class="ot2__dept">
+    <div class="ot2__dept-name">Ingénierie</div>
+    <div class="ot2__dept-members">
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#0ea5e9;">JR</div><div><h4>Julie Renard</h4><span>Lead Engineer</span></div></div>
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#06b6d4;">MB</div><div><h4>Marc Bertrand</h4><span>Senior Dev</span></div></div>
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#3b82f6;">PS</div><div><h4>Paul Simon</h4><span>DevOps</span></div></div>
+    </div>
+  </div>
+  <div class="ot2__dept">
+    <div class="ot2__dept-name">Design &amp; Produit</div>
+    <div class="ot2__dept-members">
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#ec4899;">LM</div><div><h4>Léa Morel</h4><span>Product Designer</span></div></div>
+      <div class="ot2__card"><div class="ot2__avatar" style="background:#f43f5e;">TL</div><div><h4>Thomas Lebrun</h4><span>Product Manager</span></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing 3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; }
+.pr3 { max-width: 1000px; margin: 0 auto; }
+.pr3__header { text-align: center; margin-bottom: 2.5rem; }
+.pr3__header h2 { font-size: 2rem; font-weight: 800; color: #111827; margin-bottom: .75rem; }
+.pr3__header p { color: #6b7280; }
+.pr3__table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 1.25rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.pr3__table th { padding: 1.5rem 1.25rem; font-size: .875rem; font-weight: 700; text-align: left; border-bottom: 1px solid #e5e7eb; }
+.pr3__table th:first-child { color: #374151; }
+.pr3__table th:nth-child(3) { background: #f5f3ff; color: #4f46e5; }
+.pr3__table td { padding: 1rem 1.25rem; font-size: .875rem; color: #374151; border-bottom: 1px solid #f3f4f6; }
+.pr3__table td:nth-child(3) { background: #f5f3ff; }
+.pr3__table tr:last-child td { border-bottom: none; }
+.pr3__table td .check { color: #10b981; font-size: 1rem; }
+.pr3__table td .cross { color: #d1d5db; font-size: 1rem; }
+.pr3__cta { display: inline-block; padding: .625rem 1.5rem; border-radius: .75rem; font-size: .875rem; font-weight: 700; cursor: pointer; border: none; }
+.pr3__cta--outline { background: #fff; border: 1.5px solid #e5e7eb; color: #374151; }
+.pr3__cta--primary { background: #4f46e5; color: #fff; }
+.pr3__cta--ghost { background: #f3f4f6; color: #374151; }
+</style>
+</head>
+<body>
+<div class="pr3">
+  <div class="pr3__header">
+    <h2>Comparer les plans</h2>
+    <p>Trouvez le plan qui correspond à vos besoins.</p>
+  </div>
+  <table class="pr3__table">
+    <thead>
+      <tr>
+        <th>Fonctionnalité</th>
+        <th>Free</th>
+        <th>Pro</th>
+        <th>Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Nombre de projets</td>
+        <td>3</td>
+        <td>Illimité</td>
+        <td>Illimité</td>
+      </tr>
+      <tr>
+        <td>Stockage</td>
+        <td>1 Go</td>
+        <td>50 Go</td>
+        <td>Illimité</td>
+      </tr>
+      <tr>
+        <td>Membres par équipe</td>
+        <td>5</td>
+        <td>25</td>
+        <td>Illimité</td>
+      </tr>
+      <tr>
+        <td>Intégrations</td>
+        <td><i class="bi bi-x-circle cross"></i></td>
+        <td><i class="bi bi-check-circle-fill check"></i></td>
+        <td><i class="bi bi-check-circle-fill check"></i></td>
+      </tr>
+      <tr>
+        <td>Accès API</td>
+        <td><i class="bi bi-x-circle cross"></i></td>
+        <td><i class="bi bi-check-circle-fill check"></i></td>
+        <td><i class="bi bi-check-circle-fill check"></i></td>
+      </tr>
+      <tr>
+        <td>SSO / SAML</td>
+        <td><i class="bi bi-x-circle cross"></i></td>
+        <td><i class="bi bi-x-circle cross"></i></td>
+        <td><i class="bi bi-check-circle-fill check"></i></td>
+      </tr>
+      <tr>
+        <td>Support dédié</td>
+        <td><i class="bi bi-x-circle cross"></i></td>
+        <td><i class="bi bi-x-circle cross"></i></td>
+        <td><i class="bi bi-check-circle-fill check"></i></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button class="pr3__cta pr3__cta--outline">Démarrer</button></td>
+        <td><button class="pr3__cta pr3__cta--primary">Choisir Pro</button></td>
+        <td><button class="pr3__cta pr3__cta--ghost">Nous contacter</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

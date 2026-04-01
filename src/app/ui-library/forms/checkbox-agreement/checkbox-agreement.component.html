@@ -1,0 +1,17 @@
+<div class="checkbox-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Terms Agreement</h3>
+    <div class="agreement-box">
+      <label class="checkbox-label checkbox--agreement">
+        <input type="checkbox" [(ngModel)]="agreementChecked">
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">
+          I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        </span>
+      </label>
+      <button class="btn btn--primary" [disabled]="!agreementChecked">Continue</button>
+    </div>
+  </section>
+</div>

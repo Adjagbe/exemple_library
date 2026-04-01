@@ -1,0 +1,15 @@
+.ot1 { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.ot1__head { text-align: center; margin-bottom: 3.5rem; }
+.ot1__head h2 { font-size: 2.5rem; font-weight: 800; color: #111827; margin: 0 0 .875rem; }
+.ot1__head p { font-size: 1rem; color: #6b7280; margin: 0; max-width: 480px; margin: 0 auto; line-height: 1.8; }
+.ot1__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+.ot1__card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.75rem; padding: 2rem; text-align: center; transition: all .2s; }
+.ot1__card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,.08); }
+.ot1__avatar { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0 auto 1.25rem; }
+.ot1__card h3 { font-size: 1rem; font-weight: 700; color: #111827; margin: 0 0 .375rem; }
+.ot1__card p { font-size: .8rem; color: #6b7280; margin: 0 0 1.25rem; }
+.ot1__socials { display: flex; justify-content: center; gap: .75rem; }
+.ot1__socials a { width: 36px; height: 36px; border: 1px solid #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: .9rem; text-decoration: none; transition: all .15s; }
+.ot1__socials a:hover { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+@media (max-width:768px) { .ot1__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:480px) { .ot1__grid { grid-template-columns: 1fr; } }

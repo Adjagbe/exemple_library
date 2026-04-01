@@ -1,0 +1,18 @@
+.pr3 { max-width: 1000px; margin: 0 auto; padding: 5rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.pr3__header { text-align: center; margin-bottom: 2.5rem; }
+.pr3__header h2 { font-size: 2rem; font-weight: 800; color: #111827; margin: 0; }
+.pr3__table-wrap { overflow-x: auto; }
+.pr3__table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; overflow: hidden; }
+.pr3__table th, .pr3__table td { padding: 1rem 1.5rem; text-align: center; border-bottom: 1px solid #f3f4f6; font-size: .875rem; }
+.pr3__table th:first-child, .pr3__table td:first-child { text-align: left; font-weight: 600; color: #374151; }
+.pr3__table thead th { background: #f9fafb; font-size: .8rem; color: #6b7280; }
+.pr3__table tbody td { color: #374151; }
+.pr3__plan { display: flex; flex-direction: column; align-items: center; gap: .25rem; }
+.pr3__plan span { font-size: .75rem; font-weight: 700; color: #6b7280; }
+.pr3__plan--highlight { color: #4f46e5; }
+.pr3__plan--highlight span { color: #4f46e5; }
+.pr3__featured-col { background: #f5f3ff; }
+.pr3__cta-row td { padding: 1.5rem; border-bottom: none; }
+.pr3__btn { padding: .625rem 1.5rem; border: 1px solid #e5e7eb; background: #f9fafb; border-radius: .625rem; font-size: .8rem; font-weight: 600; cursor: pointer; color: #374151; }
+.pr3__btn--main { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.pr3__btn--main:hover { background: #4338ca; }

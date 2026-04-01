@@ -1,0 +1,16 @@
+<div class="car3">
+  <div class="car3__inner">
+    <div class="car3__quote"><i class="bi bi-quote"></i></div>
+    <div class="car3__stars"><i *ngFor="let s of stars(testimonials[current].stars)" class="bi bi-star-fill"></i></div>
+    <p class="car3__text">{{ testimonials[current].text }}</p>
+    <div class="car3__author">
+      <div class="car3__avatar" [style.background]="testimonials[current].color">{{ testimonials[current].initials }}</div>
+      <div><strong>{{ testimonials[current].name }}</strong><span>{{ testimonials[current].role }}</span></div>
+    </div>
+    <div class="car3__nav">
+      <button (click)="prev()"><i class="bi bi-arrow-left"></i></button>
+      <span>{{ current + 1 }} / {{ testimonials.length }}</span>
+      <button (click)="next()"><i class="bi bi-arrow-right"></i></button>
+    </div>
+  </div>
+</div>

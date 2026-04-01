@@ -1,0 +1,34 @@
+<div class="select-showcase">
+  <section class="showcase-section">
+    <h2 class="section-title">Multi-Select</h2>
+    <div class="form-group">
+      <label class="form-label">Select technologies</label>
+      <div class="custom-select multi-select" [class.open]="multiOpen">
+        <button class="select-trigger" (click)="multiOpen = !multiOpen">
+          <div class="multi-values" *ngIf="multiValue.length > 0">
+            <span *ngFor="let item of getMultiSelectedLabels()" class="multi-tag">
+              {{ item.label }}
+              <i class="bi bi-x" (click)="removeMultiOption(item.value, $event)"></i>
+            </span>
+          </div>
+          <span class="placeholder" *ngIf="multiValue.length === 0">Select technologies...</span>
+          <i class="bi bi-chevron-down trigger-arrow"></i>
+        </button>
+        <div class="select-dropdown">
+          <div class="dropdown-options">
+            <div *ngFor="let tech of technologies" class="dropdown-option" [class.selected]="isMultiSelected(tech.value)" (click)="toggleMultiOption(tech.value); $event.stopPropagation()">
+              <span class="option-checkbox">
+                <i class="bi bi-check" *ngIf="isMultiSelected(tech.value)"></i>
+              </span>
+              <i class="bi" [ngClass]="tech.icon"></i>
+              <span>{{ tech.label }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="selected-value" *ngIf="multiValue.length > 0">
+      Selected: <strong>{{ multiValue.join(', ') }}</strong>
+    </p>
+  </section>
+</div>

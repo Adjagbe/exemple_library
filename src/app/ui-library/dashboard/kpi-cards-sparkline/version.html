@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KPI Cards Sparkline - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f8fafc;line-height:1.5}
+
+    .kpi-showcase{max-width:1400px;margin:0 auto;padding:2rem}
+    .page-title{font-size:2rem;font-weight:700;color:#111827;margin:0 0 .5rem}
+    .page-subtitle{color:#6b7280;margin:0 0 2rem}
+
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+
+    .kpi-card{background:#fff;border-radius:1rem;box-shadow:0 4px 20px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s}
+    .kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+
+    .kpi-card--sparkline{padding:1.5rem;display:flex;flex-direction:column}
+
+    .kpi-card__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+    .kpi-card__title{font-size:.8rem;font-weight:500;color:#6b7280;text-transform:uppercase;letter-spacing:.05em}
+    .kpi-card__value{font-size:1.75rem;font-weight:700;color:#111827;line-height:1.2;margin:.25rem 0}
+
+    .kpi-card__change{display:flex;align-items:center;gap:.25rem;font-size:.8rem;font-weight:600}
+    .kpi-card__change i{font-size:1rem}
+    .change--increase{color:#10b981}
+    .change--decrease{color:#ef4444}
+
+    .kpi-card__sparkline{height:50px;margin:1rem 0 .75rem}
+    .kpi-card__sparkline svg{width:100%;height:100%}
+    .kpi-card__period{font-size:.75rem;color:#9ca3af}
+
+    @media(max-width:768px){.kpi-showcase{padding:1rem}.kpi-grid{grid-template-columns:1fr}.kpi-card__value{font-size:1.5rem}}
+  </style>
+</head>
+<body>
+<div class="kpi-showcase">
+  <h1 class="page-title">Cartes avec mini graphiques</h1>
+  <p class="page-subtitle">Indicateurs clés avec courbes de tendance intégrées</p>
+  <div class="kpi-grid" id="sparklineKPIsGrid"></div>
+</div>
+
+<script>
+(function() {
+  var sparklineKPIs = [
+    { id:'visitors', title:'Visiteurs', value:45280, format:'number', change:{value:15.3,type:'increase',period:'7 derniers jours'}, sparkline:[25,35,28,45,38,52,65] },
+    { id:'pageviews', title:'Pages vues', value:128450, format:'number', change:{value:7.8,type:'increase',period:'7 derniers jours'}, sparkline:[40,55,48,62,58,72,85] },
+    { id:'bounce', title:'Taux de rebond', value:32.5, format:'percentage', change:{value:-5.2,type:'decrease',period:'7 derniers jours'}, sparkline:[45,42,38,35,38,34,32] },
+    { id:'duration', title:'Durée moyenne', value:'3:42', format:'duration', change:{value:12,type:'increase',period:'7 derniers jours'}, sparkline:[180,195,210,205,218,225,222] }
+  ];
+
+  function formatValue(kpi) {
+    if (typeof kpi.value === 'string') return kpi.value;
+    switch (kpi.format) {
+      case 'currency': return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(kpi.value);
+      case 'percentage': return kpi.value + '%';
+      default: return new Intl.NumberFormat('fr-FR').format(kpi.value);
+    }
+  }
+
+  function getChangeIcon(type) {
+    if (type === 'increase') return 'bi-arrow-up-short';
+    if (type === 'decrease') return 'bi-arrow-down-short';
+    return 'bi-dash';
+  }
+
+  function getSparklinePoints(values) {
+    var max = Math.max.apply(null, values);
+    var min = Math.min.apply(null, values);
+    var range = max - min || 1;
+    return values.map(function(val, i) {
+      var x = (i / (values.length - 1)) * 100;
+      var y = 40 - ((val - min) / range) * 40;
+      return x + ',' + y;
+    }).join(' ');
+  }
+
+  function getSparklineColor(kpi) {
+    if (kpi.change && kpi.change.type === 'decrease') {
+      return kpi.id === 'bounce' ? '#10b981' : '#ef4444';
+    }
+    return '#4f46e5';
+  }
+
+  var container = document.getElementById('sparklineKPIsGrid');
+  container.innerHTML = sparklineKPIs.map(function(kpi) {
+    return '<div class="kpi-card kpi-card--sparkline">' +
+      '<div class="kpi-card__header">' +
+        '<span class="kpi-card__title">' + kpi.title + '</span>' +
+        (kpi.change ? '<div class="kpi-card__change change--' + kpi.change.type + '">' +
+          '<i class="bi ' + getChangeIcon(kpi.change.type) + '"></i>' +
+          '<span>' + (kpi.change.value > 0 ? '+' : '') + kpi.change.value + '%</span>' +
+        '</div>' : '') +
+      '</div>' +
+      '<span class="kpi-card__value">' + formatValue(kpi) + '</span>' +
+      (kpi.sparkline ? '<div class="kpi-card__sparkline">' +
+        '<svg viewBox="0 0 100 40" preserveAspectRatio="none">' +
+          '<polyline points="' + getSparklinePoints(kpi.sparkline) + '" fill="none" stroke="' + getSparklineColor(kpi) + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '</svg>' +
+      '</div>' : '') +
+      (kpi.change ? '<span class="kpi-card__period">' + kpi.change.period + '</span>' : '') +
+    '</div>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

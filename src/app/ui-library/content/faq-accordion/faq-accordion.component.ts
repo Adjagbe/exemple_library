@@ -1,15 +1,7 @@
-// ═══════════════════════════════════════════════════════════════
-// FAQ ACCORDION COMPONENT - Premium UI Library
-// Frequently Asked Questions with collapsible answers
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
 export interface FaqCategory {
   id: string;
   name: string;
@@ -34,15 +26,11 @@ export interface FaqItem {
   encapsulation: ViewEncapsulation.None
 })
 export class FaqAccordionComponent {
-  // ─────────────────────────────────────────────────────────────────
-  // SEARCH
-  // ─────────────────────────────────────────────────────────────────
+
   searchQuery: string = '';
   activeCategory: string = 'general';
 
-  // ─────────────────────────────────────────────────────────────────
-  // FAQ DATA
-  // ─────────────────────────────────────────────────────────────────
+
   categories: FaqCategory[] = [
     {
       id: 'general',
@@ -144,9 +132,7 @@ export class FaqAccordionComponent {
     }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
+
   toggleItem(category: FaqCategory, item: FaqItem): void {
     item.isOpen = !item.isOpen;
   }

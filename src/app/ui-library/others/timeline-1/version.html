@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline 1</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; display: flex; justify-content: center; }
+.tl1 { max-width: 800px; width: 100%; position: relative; }
+.tl1::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e5e7eb; }
+.tl1__item { display: flex; align-items: flex-start; gap: 1.5rem; padding-bottom: 2rem; position: relative; }
+.tl1__item:last-child { padding-bottom: 0; }
+.tl1__dot { width: 40px; height: 40px; border-radius: 50%; color: #fff; font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+.tl1__content { flex: 1; background: #fff; border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.25rem; }
+.tl1__content h4 { font-size: .95rem; font-weight: 700; color: #111827; margin-bottom: .5rem; }
+.tl1__content p { font-size: .8rem; color: #6b7280; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="tl1">
+  <div class="tl1__item">
+    <div class="tl1__dot" style="background:#4f46e5;box-shadow:0 0 0 4px #fff,0 0 0 6px #4f46e5;">2018</div>
+    <div class="tl1__content"><h4>Fondation de l'entreprise</h4><p>Lancement du projet avec une équipe de 3 personnes et une vision claire : simplifier la collaboration pour les équipes tech.</p></div>
+  </div>
+  <div class="tl1__item">
+    <div class="tl1__dot" style="background:#0ea5e9;box-shadow:0 0 0 4px #fff,0 0 0 6px #0ea5e9;">2019</div>
+    <div class="tl1__content"><h4>Premier financement</h4><p>Levée de fonds seed de 2M€. Expansion de l'équipe à 15 personnes et lancement de la beta privée.</p></div>
+  </div>
+  <div class="tl1__item">
+    <div class="tl1__dot" style="background:#10b981;box-shadow:0 0 0 4px #fff,0 0 0 6px #10b981;">2020</div>
+    <div class="tl1__content"><h4>Lancement public</h4><p>Ouverture au public avec plus de 5 000 utilisateurs inscrits le premier jour. Couverture presse nationale.</p></div>
+  </div>
+  <div class="tl1__item">
+    <div class="tl1__dot" style="background:#f59e0b;box-shadow:0 0 0 4px #fff,0 0 0 6px #f59e0b;">2022</div>
+    <div class="tl1__content"><h4>Série A — 15M€</h4><p>Nouveau tour de financement pour accélérer le développement produit et l'expansion internationale.</p></div>
+  </div>
+  <div class="tl1__item">
+    <div class="tl1__dot" style="background:#ec4899;box-shadow:0 0 0 4px #fff,0 0 0 6px #ec4899;">2024</div>
+    <div class="tl1__content"><h4>100 000 utilisateurs</h4><p>Cap symbolique franchi. Présence dans 40 pays et une équipe de 120 personnes au service de nos clients.</p></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Shipping</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .radio-showcase { max-width: 800px; width: 100%; padding: 2rem; }
+    .showcase-section { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .selected-value { font-size: 0.875rem; color: #6b7280; margin-bottom: 1.5rem; }
+    .radio-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .radio-list-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; }
+    .radio-list-item input[type="radio"] { display: none; }
+    .radio-list-item:hover { border-color: #a5b4fc; }
+    .radio-list-item.selected { border-color: #4f46e5; background-color: #eff6ff; }
+    .radio-list-item.selected .radio-custom { border-color: #4f46e5; background-color: #4f46e5; }
+    .radio-list-item.selected .radio-custom::after { transform: translate(-50%,-50%) scale(1); }
+    .radio-custom { width: 22px; height: 22px; min-width: 22px; border: 2px solid #d1d5db; border-radius: 50%; position: relative; transition: all 0.2s; }
+    .radio-custom::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); width: 10px; height: 10px; border-radius: 50%; background: white; transition: transform 0.2s; }
+    .item-content { display: flex; flex-direction: column; flex: 1; }
+    .item-label { font-weight: 600; color: #111827; }
+    .item-description { font-size: 0.8125rem; color: #6b7280; }
+    .item-price { font-weight: 600; color: #111827; white-space: nowrap; }
+    .item-price.free { color: #10b981; }
+  </style>
+</head>
+<body>
+  <div class="radio-showcase">
+    <section class="showcase-section">
+      <h3 class="section-title">Shipping Method</h3>
+      <div class="selected-value" id="selectedValue">Selected: standard</div>
+      <div class="radio-list" id="radioList"></div>
+    </section>
+  </div>
+  <script>
+    (function(){
+      var selected = 'standard';
+      var options = [
+        { label: 'Standard Shipping', value: 'standard', description: '5-7 business days', price: 'Free' },
+        { label: 'Express Shipping', value: 'express', description: '2-3 business days', price: '$9.99' },
+        { label: 'Next Day Delivery', value: 'nextday', description: 'Next business day', price: '$19.99' }
+      ];
+      var container = document.getElementById('radioList');
+      var display = document.getElementById('selectedValue');
+      function render(){
+        container.innerHTML = '';
+        options.forEach(function(opt){
+          var label = document.createElement('label');
+          label.className = 'radio-list-item' + (selected === opt.value ? ' selected' : '');
+          label.innerHTML = '<input type="radio" name="shipping" value="'+opt.value+'" '+(selected===opt.value?'checked':'')+'>' +
+            '<span class="radio-custom"></span>' +
+            '<div class="item-content"><span class="item-label">'+opt.label+'</span><span class="item-description">'+opt.description+'</span></div>' +
+            '<span class="item-price'+(opt.price==='Free'?' free':'')+'">'+opt.price+'</span>';
+          label.querySelector('input').addEventListener('change', function(){ selected = opt.value; display.textContent = 'Selected: ' + selected; render(); });
+          container.appendChild(label);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

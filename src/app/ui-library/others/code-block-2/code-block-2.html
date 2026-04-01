@@ -1,0 +1,8 @@
+<div class="cb2">
+  <div class="cb2__tabs">
+    <button *ngFor="let t of tabs; let i = index" class="cb2__tab" [class.active]="active === i" (click)="active = i">{{ t }}</button>
+    <div class="cb2__tab-spacer"></div>
+    <span class="cb2__dot"></span><span class="cb2__dot"></span><span class="cb2__dot"></span>
+  </div>
+  <pre class="cb2__pre"><code>{{ codes[active] }}</code></pre>
+</div>

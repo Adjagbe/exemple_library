@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// IMAGE GALLERY COMPONENT - Premium UI Library
-// Image gallery with lightbox
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,20 +23,20 @@ interface GalleryImage {
   encapsulation: ViewEncapsulation.None
 })
 export class ImageGalleryComponent {
-  // View mode
+
   viewMode: 'grid' | 'masonry' | 'list' = 'grid';
 
-  // Active category
+
   activeCategory: string = 'all';
 
-  // Lightbox
+
   lightboxOpen: boolean = false;
   currentImageIndex: number = 0;
 
-  // Categories
+
   categories: string[] = ['all', 'Nature', 'Architecture', 'Portrait', 'Abstract'];
 
-  // Sample images (using placeholder colors)
+
   images: GalleryImage[] = [
     {
       id: '1',
@@ -139,23 +134,23 @@ export class ImageGalleryComponent {
     return this.images.filter(img => img.category === this.activeCategory);
   }
 
-  // Set view mode
+
   setViewMode(mode: 'grid' | 'masonry' | 'list'): void {
     this.viewMode = mode;
   }
 
-  // Set category
+
   setCategory(category: string): void {
     this.activeCategory = category;
   }
 
-  // Open lightbox
+
   openLightbox(index: number): void {
     this.currentImageIndex = index;
     this.lightboxOpen = true;
   }
 
-  // Close lightbox
+
   closeLightbox(): void {
     this.lightboxOpen = false;
   }
@@ -188,12 +183,12 @@ export class ImageGalleryComponent {
     image.likes++;
   }
 
-  // Format date
+
   formatDate(date: Date): string {
     return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  // Format number
+
   formatNumber(num: number): string {
     if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
     return num.toString();

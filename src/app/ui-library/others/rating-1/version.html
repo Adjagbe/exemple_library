@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rating 1</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; }
+.rt1 { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 2rem; }
+.rt1__summary { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.75rem; text-align: center; }
+.rt1__avg { font-size: 4rem; font-weight: 900; color: #111827; line-height: 1; margin-bottom: .5rem; }
+.rt1__stars { color: #f59e0b; font-size: 1.25rem; margin-bottom: .5rem; }
+.rt1__count { font-size: .8rem; color: #6b7280; margin-bottom: 1.5rem; }
+.rt1__bar-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+.rt1__bar-label { font-size: .75rem; color: #374151; width: 32px; text-align: right; flex-shrink: 0; }
+.rt1__bar { flex: 1; height: 8px; background: #f3f4f6; border-radius: 9999px; overflow: hidden; }
+.rt1__bar-fill { height: 100%; background: #f59e0b; border-radius: 9999px; }
+.rt1__bar-pct { font-size: .72rem; color: #9ca3af; width: 32px; flex-shrink: 0; }
+.rt1__main { }
+.rt1__input-area { background: #eef2ff; border-radius: 1.25rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+.rt1__input-area p { font-size: .875rem; font-weight: 600; color: #374151; margin-bottom: .75rem; }
+.rt1__input-stars { display: flex; gap: .25rem; }
+.rt1__star { font-size: 1.75rem; color: #e5e7eb; cursor: pointer; transition: color .15s; }
+.rt1__star.hover, .rt1__star.active { color: #f59e0b; }
+.rt1__reviews { display: flex; flex-direction: column; gap: 1rem; }
+.rt1__review { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.25rem; }
+.rt1__review-header { display: flex; align-items: center; gap: .875rem; margin-bottom: .75rem; }
+.rt1__review-av { width: 40px; height: 40px; border-radius: 50%; background: #4f46e5; color: #fff; font-size: .8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rt1__review-name { font-size: .875rem; font-weight: 700; color: #111827; }
+.rt1__review-stars { color: #f59e0b; font-size: .875rem; }
+.rt1__review p { font-size: .8rem; color: #6b7280; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="rt1">
+  <div class="rt1__summary">
+    <div class="rt1__avg">4.7</div>
+    <div class="rt1__stars">★★★★★</div>
+    <div class="rt1__count">128 avis</div>
+    <div class="rt1__bar-row"><span class="rt1__bar-label">5 ★</span><div class="rt1__bar"><div class="rt1__bar-fill" style="width:73%"></div></div><span class="rt1__bar-pct">73%</span></div>
+    <div class="rt1__bar-row"><span class="rt1__bar-label">4 ★</span><div class="rt1__bar"><div class="rt1__bar-fill" style="width:18%"></div></div><span class="rt1__bar-pct">18%</span></div>
+    <div class="rt1__bar-row"><span class="rt1__bar-label">3 ★</span><div class="rt1__bar"><div class="rt1__bar-fill" style="width:5%"></div></div><span class="rt1__bar-pct">5%</span></div>
+    <div class="rt1__bar-row"><span class="rt1__bar-label">2 ★</span><div class="rt1__bar"><div class="rt1__bar-fill" style="width:2%"></div></div><span class="rt1__bar-pct">2%</span></div>
+    <div class="rt1__bar-row"><span class="rt1__bar-label">1 ★</span><div class="rt1__bar"><div class="rt1__bar-fill" style="width:2%"></div></div><span class="rt1__bar-pct">2%</span></div>
+  </div>
+  <div class="rt1__main">
+    <div class="rt1__input-area">
+      <p>Donnez votre avis</p>
+      <div class="rt1__input-stars" id="stars">
+        <span class="rt1__star" onmouseover="hover(1)" onmouseout="resetHover()" onclick="setRating(1)">★</span>
+        <span class="rt1__star" onmouseover="hover(2)" onmouseout="resetHover()" onclick="setRating(2)">★</span>
+        <span class="rt1__star" onmouseover="hover(3)" onmouseout="resetHover()" onclick="setRating(3)">★</span>
+        <span class="rt1__star" onmouseover="hover(4)" onmouseout="resetHover()" onclick="setRating(4)">★</span>
+        <span class="rt1__star" onmouseover="hover(5)" onmouseout="resetHover()" onclick="setRating(5)">★</span>
+      </div>
+    </div>
+    <div class="rt1__reviews">
+      <div class="rt1__review">
+        <div class="rt1__review-header"><div class="rt1__review-av">S</div><div><div class="rt1__review-name">Sophie M.</div><div class="rt1__review-stars">★★★★★</div></div></div>
+        <p>Excellent produit, exactement ce dont j'avais besoin. Interface intuitive et support réactif.</p>
+      </div>
+      <div class="rt1__review">
+        <div class="rt1__review-header"><div class="rt1__review-av">M</div><div><div class="rt1__review-name">Marc D.</div><div class="rt1__review-stars">★★★★☆</div></div></div>
+        <p>Très bon outil dans l'ensemble. Quelques petits ajustements seraient les bienvenus mais rien de bloquant.</p>
+      </div>
+      <div class="rt1__review">
+        <div class="rt1__review-header"><div class="rt1__review-av">L</div><div><div class="rt1__review-name">Lucie K.</div><div class="rt1__review-stars">★★★★★</div></div></div>
+        <p>Transformé notre workflow d'équipe. La collaboration temps réel est impressionnante.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let rating = 0;
+function hover(n) { document.querySelectorAll('.rt1__star').forEach((s,i) => s.classList.toggle('hover', i < n)); }
+function resetHover() { document.querySelectorAll('.rt1__star').forEach((s,i) => { s.classList.remove('hover'); s.classList.toggle('active', i < rating); }); }
+function setRating(n) { rating = n; resetHover(); }
+</script>
+</body>
+</html>

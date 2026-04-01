@@ -1,0 +1,17 @@
+<div class="success-showcase">
+  <h2 class="section-title">Toast Notifications</h2>
+  <div class="toast-container">
+    <div *ngFor="let toast of toasts" class="toast toast--success">
+      <div class="toast-icon">
+        <i class="bi" [ngClass]="toast.icon || 'bi-check-circle-fill'"></i>
+      </div>
+      <div class="toast-content">
+        <strong class="toast-title">{{ toast.title }}</strong>
+        <p class="toast-message">{{ toast.message }}</p>
+      </div>
+      <button *ngIf="toast.dismissible" class="toast-close" (click)="dismissToast(toast.id)">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+</div>

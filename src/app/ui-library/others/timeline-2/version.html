@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; }
+.tl2 { max-width: 1000px; margin: 0 auto; position: relative; }
+.tl2::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 2px; background: #e5e7eb; }
+.tl2__item { display: flex; align-items: center; margin-bottom: 2.5rem; position: relative; }
+.tl2__item:last-child { margin-bottom: 0; }
+.tl2__item--left { flex-direction: row-reverse; }
+.tl2__card { width: calc(50% - 2.5rem); background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,.05); }
+.tl2__item--left .tl2__card { text-align: right; }
+.tl2__icon-box { width: 44px; height: 44px; border-radius: .875rem; display: flex; align-items: center; justify-content: center; font-size: 1.125rem; color: #fff; margin-bottom: .75rem; }
+.tl2__item--left .tl2__icon-box { margin-left: auto; }
+.tl2__card .date { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: #9ca3af; font-weight: 700; margin-bottom: .5rem; }
+.tl2__card h4 { font-size: .95rem; font-weight: 700; color: #111827; margin-bottom: .375rem; }
+.tl2__card p { font-size: .8rem; color: #6b7280; line-height: 1.7; }
+.tl2__dot { position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 3px currentColor; z-index: 1; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="tl2">
+  <div class="tl2__item">
+    <div class="tl2__card">
+      <div class="tl2__icon-box" style="background:#4f46e5;"><i class="bi bi-rocket-takeoff"></i></div>
+      <div class="date">Janvier 2018</div>
+      <h4>Fondation</h4>
+      <p>Naissance de l'aventure avec 3 co-fondateurs passionnés.</p>
+    </div>
+    <div class="tl2__dot" style="background:#4f46e5;color:#4f46e5;"></div>
+    <div style="width:calc(50% - 2.5rem);"></div>
+  </div>
+  <div class="tl2__item tl2__item--left">
+    <div class="tl2__card">
+      <div class="tl2__icon-box" style="background:#0ea5e9;"><i class="bi bi-handshake"></i></div>
+      <div class="date">Juin 2019</div>
+      <h4>Premier partenariat</h4>
+      <p>Signature d'un accord stratégique avec un leader du secteur.</p>
+    </div>
+    <div class="tl2__dot" style="background:#0ea5e9;color:#0ea5e9;"></div>
+    <div style="width:calc(50% - 2.5rem);"></div>
+  </div>
+  <div class="tl2__item">
+    <div class="tl2__card">
+      <div class="tl2__icon-box" style="background:#10b981;"><i class="bi bi-arrow-repeat"></i></div>
+      <div class="date">Mars 2020</div>
+      <h4>Pivot produit</h4>
+      <p>Refonte complète basée sur les retours utilisateurs. Croissance x3 en 6 mois.</p>
+    </div>
+    <div class="tl2__dot" style="background:#10b981;color:#10b981;"></div>
+    <div style="width:calc(50% - 2.5rem);"></div>
+  </div>
+  <div class="tl2__item tl2__item--left">
+    <div class="tl2__card">
+      <div class="tl2__icon-box" style="background:#f59e0b;"><i class="bi bi-trophy"></i></div>
+      <div class="date">Novembre 2022</div>
+      <h4>Prix de l'innovation</h4>
+      <p>Récompensé par le Grand Prix Startup de l'année.</p>
+    </div>
+    <div class="tl2__dot" style="background:#f59e0b;color:#f59e0b;"></div>
+    <div style="width:calc(50% - 2.5rem);"></div>
+  </div>
+  <div class="tl2__item">
+    <div class="tl2__card">
+      <div class="tl2__icon-box" style="background:#ec4899;"><i class="bi bi-graph-up-arrow"></i></div>
+      <div class="date">2024</div>
+      <h4>Hypercroissance</h4>
+      <p>100k utilisateurs, 40 pays, 120 employés. La barre symbolique franchie.</p>
+    </div>
+    <div class="tl2__dot" style="background:#ec4899;color:#ec4899;"></div>
+    <div style="width:calc(50% - 2.5rem);"></div>
+  </div>
+</div>
+</body>
+</html>

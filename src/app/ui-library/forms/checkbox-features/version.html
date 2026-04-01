@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkbox Features</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .checkbox-showcase { max-width: 800px; width: 100%; padding: 2rem; }
+    .showcase-section { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.25rem; }
+    .section-subtitle { font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem; }
+    .checkbox-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; }
+    .checkbox-card { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.25rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; }
+    .checkbox-card input[type="checkbox"] { display: none; }
+    .checkbox-card:hover { border-color: #a5b4fc; }
+    .checkbox-card.checked { border-color: #4f46e5; background-color: #eff6ff; }
+    .checkbox-card.checked .card-checkbox { background-color: #4f46e5; border-color: #4f46e5; }
+    .checkbox-card.checked .card-checkbox i { display: block; }
+    .card-checkbox { width: 22px; height: 22px; min-width: 22px; border: 2px solid #d1d5db; border-radius: 0.375rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 0.125rem; }
+    .card-checkbox i { display: none; color: white; font-size: 0.875rem; }
+    .card-content { display: flex; flex-direction: column; gap: 0.125rem; }
+    .card-label { font-weight: 600; color: #111827; font-size: 0.9375rem; }
+    .card-description { font-size: 0.8125rem; color: #6b7280; }
+  </style>
+</head>
+<body>
+  <div class="checkbox-showcase">
+    <section class="showcase-section">
+      <h3 class="section-title">Feature Selection</h3>
+      <p class="section-subtitle" id="subtitle">2 of 4 selected</p>
+      <div class="checkbox-cards" id="featureCards"></div>
+    </section>
+  </div>
+  <script>
+    (function(){
+      var features = [
+        { label: 'Analytics & Reporting', description: 'Get detailed insights and performance metrics', checked: true },
+        { label: 'Push Notifications', description: 'Receive real-time alerts and updates', checked: true },
+        { label: 'API Access', description: 'Full access to REST API endpoints', checked: false },
+        { label: 'Priority Support', description: '24/7 dedicated customer support', checked: false }
+      ];
+      var container = document.getElementById('featureCards');
+      var subtitle = document.getElementById('subtitle');
+      function render(){
+        container.innerHTML = '';
+        var count = features.filter(function(f){ return f.checked; }).length;
+        subtitle.textContent = count + ' of ' + features.length + ' selected';
+        features.forEach(function(f){
+          var label = document.createElement('label');
+          label.className = 'checkbox-card' + (f.checked ? ' checked' : '');
+          label.innerHTML = '<input type="checkbox" '+(f.checked?'checked':'')+'>' +
+            '<div class="card-checkbox"><i class="bi bi-check"></i></div>' +
+            '<div class="card-content"><span class="card-label">'+f.label+'</span><span class="card-description">'+f.description+'</span></div>';
+          label.querySelector('input').addEventListener('change', function(){ f.checked = !f.checked; render(); });
+          container.appendChild(label);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

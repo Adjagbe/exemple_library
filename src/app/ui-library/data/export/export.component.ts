@@ -1,15 +1,8 @@
-// ═══════════════════════════════════════════════════════════════
-// EXPORT COMPONENT - Premium UI Library
-// Export data to CSV, PDF, Excel with preview
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// ─────────────────────────────────────────────────────────────────
-// INTERFACES
-// ─────────────────────────────────────────────────────────────────
+
 export interface ExportFormat {
   id: string;
   name: string;
@@ -42,9 +35,7 @@ export interface ExportOptions {
   encapsulation: ViewEncapsulation.None
 })
 export class ExportComponent {
-  // ─────────────────────────────────────────────────────────────────
   // EXPORT FORMATS
-  // ─────────────────────────────────────────────────────────────────
   formats: ExportFormat[] = [
     { id: 'csv', name: 'CSV', extension: '.csv', icon: 'bi-filetype-csv', description: 'Fichier texte avec valeurs séparées par des virgules', available: true },
     { id: 'excel', name: 'Excel', extension: '.xlsx', icon: 'bi-file-earmark-excel', description: 'Tableur Microsoft Excel', available: true },
@@ -54,9 +45,7 @@ export class ExportComponent {
 
   selectedFormat: string = 'csv';
 
-  // ─────────────────────────────────────────────────────────────────
   // COLUMNS
-  // ─────────────────────────────────────────────────────────────────
   columns: ExportColumn[] = [
     { key: 'id', label: 'ID', selected: true },
     { key: 'name', label: 'Nom', selected: true },
@@ -69,35 +58,27 @@ export class ExportComponent {
     { key: 'department', label: 'Département', selected: false }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
   // OPTIONS
-  // ─────────────────────────────────────────────────────────────────
   includeHeaders: boolean = true;
   filename: string = 'export-data';
   dateStart: string = '';
   dateEnd: string = '';
 
-  // ─────────────────────────────────────────────────────────────────
   // STATE
-  // ─────────────────────────────────────────────────────────────────
   isExporting: boolean = false;
   exportProgress: number = 0;
   isModalOpen: boolean = false;
   previewData: any[] = [];
   totalRecords: number = 1547;
 
-  // ─────────────────────────────────────────────────────────────────
   // SAMPLE DATA
-  // ─────────────────────────────────────────────────────────────────
   sampleData = [
     { id: 1, name: 'Jean Dupont', email: 'jean.dupont@email.com', phone: '+33 6 12 34 56 78', status: 'Actif', createdAt: '2024-01-15', role: 'Admin' },
     { id: 2, name: 'Marie Martin', email: 'marie.martin@email.com', phone: '+33 6 23 45 67 89', status: 'Actif', createdAt: '2024-02-20', role: 'User' },
     { id: 3, name: 'Pierre Bernard', email: 'pierre.bernard@email.com', phone: '+33 6 34 56 78 90', status: 'Inactif', createdAt: '2024-03-10', role: 'User' }
   ];
 
-  // ─────────────────────────────────────────────────────────────────
-  // METHODS
-  // ─────────────────────────────────────────────────────────────────
+
   selectFormat(formatId: string): void {
     this.selectedFormat = formatId;
   }

@@ -1,0 +1,35 @@
+<div class="cv2">
+  <div class="cv2__header">
+    <div class="cv2__avatar">{{ getInitials(cv.name) }}</div>
+    <div class="cv2__identity">
+      <h2>{{ cv.name }}</h2>
+      <p>{{ cv.title }}</p>
+      <div class="cv2__meta">
+        <span><i class="bi bi-envelope"></i>{{ cv.email }}</span>
+        <span><i class="bi bi-globe"></i>{{ cv.site }}</span>
+        <span><i class="bi bi-geo-alt"></i>{{ cv.location }}</span>
+      </div>
+    </div>
+  </div>
+  <p class="cv2__bio">{{ cv.bio }}</p>
+  <div class="cv2__body">
+    <div class="cv2__col">
+      <h4>Compétences</h4>
+      <div *ngFor="let s of cv.skills" class="cv2__skill">
+        <div class="cv2__skill-row"><span>{{ s.name }}</span><span>{{ s.pct }}%</span></div>
+        <div class="cv2__skill-bar"><div [style.width.%]="s.pct"></div></div>
+      </div>
+      <h4 style="margin-top:2rem">Langues</h4>
+      <div *ngFor="let l of cv.languages" class="cv2__lang">{{ l }}</div>
+    </div>
+    <div class="cv2__col">
+      <h4>Expériences</h4>
+      <div *ngFor="let ex of cv.experience" class="cv2__exp">
+        <span class="cv2__period">{{ ex.period }}</span>
+        <strong>{{ ex.role }}</strong>
+        <span class="cv2__company">{{ ex.company }}</span>
+        <p>{{ ex.desc }}</p>
+      </div>
+    </div>
+  </div>
+</div>

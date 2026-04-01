@@ -1,0 +1,17 @@
+<div class="error-showcase">
+  <h2 class="section-title">Toast Notifications</h2>
+  <div class="toast-container">
+    <div *ngFor="let toast of toasts" class="toast toast--error">
+      <div class="toast-icon">
+        <i class="bi" [ngClass]="toast.icon || 'bi-x-circle-fill'"></i>
+      </div>
+      <div class="toast-content">
+        <strong class="toast-title">{{ toast.title }}</strong>
+        <p class="toast-message">{{ toast.message }}</p>
+      </div>
+      <button *ngIf="toast.dismissible" class="toast-close" (click)="dismissToast(toast.id)">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// MEGA MENU COMPONENT - Premium UI Library
-// Large navigation menu with categories and featured items
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

@@ -1,0 +1,16 @@
+<section class="nl3">
+  <div class="nl3__inner">
+    <h2>Choisissez votre fréquence</h2>
+    <p>Abonnez-vous à notre newsletter et personnalisez vos préférences de réception.</p>
+    <div class="nl3__freqs">
+      <button class="nl3__freq" [class.active]="freq === 'daily'" (click)="freq = 'daily'"><i class="bi bi-calendar-day"></i>Quotidienne</button>
+      <button class="nl3__freq" [class.active]="freq === 'weekly'" (click)="freq = 'weekly'"><i class="bi bi-calendar-week"></i>Hebdomadaire</button>
+      <button class="nl3__freq" [class.active]="freq === 'monthly'" (click)="freq = 'monthly'"><i class="bi bi-calendar-month"></i>Mensuelle</button>
+    </div>
+    <div *ngIf="!subscribed" class="nl3__form">
+      <input type="email" [(ngModel)]="email" placeholder="Votre adresse email">
+      <button (click)="subscribe()">S'abonner maintenant</button>
+    </div>
+    <div *ngIf="subscribed" class="nl3__ok"><i class="bi bi-envelope-check-fill"></i> Abonnement confirmé ({{ freq }}) !</div>
+  </div>
+</section>

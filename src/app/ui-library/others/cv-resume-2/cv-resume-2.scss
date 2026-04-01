@@ -1,0 +1,151 @@
+.cv2 {
+  max-width: 920px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.cv2__header {
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.cv2__avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+.cv2__identity h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.25rem;
+}
+.cv2__identity p {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 0.875rem;
+}
+.cv2__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cv2__meta span {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+.cv2__meta i {
+  font-size: 0.875rem;
+}
+.cv2__bio {
+  padding: 1.5rem 2.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.8;
+  margin: 0;
+  background: #fdf2f8;
+  border-bottom: 1px solid #fce7f3;
+}
+.cv2__body {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 0;
+}
+.cv2__col {
+  padding: 2rem 2.5rem;
+}
+.cv2__col:first-child {
+  border-right: 1px solid #f3f4f6;
+}
+.cv2__col h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #ec4899;
+  margin: 0 0 1.25rem;
+}
+.cv2__skill {
+  margin-bottom: 0.875rem;
+}
+.cv2__skill-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #374151;
+  margin-bottom: 0.375rem;
+  font-weight: 500;
+}
+.cv2__skill-bar {
+  height: 8px;
+  background: #fce7f3;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.cv2__skill-bar div {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899, #f43f5e);
+  border-radius: 9999px;
+}
+.cv2__lang {
+  font-size: 0.8rem;
+  color: #374151;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.cv2__exp {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.cv2__period {
+  font-size: 0.7rem;
+  color: #ec4899;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.cv2__exp strong {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111827;
+  display: block;
+  margin-bottom: 0.125rem;
+}
+.cv2__company {
+  font-size: 0.8rem;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.cv2__exp p {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .cv2__body {
+    grid-template-columns: 1fr;
+  }
+  .cv2__col:first-child {
+    border-right: none;
+    border-bottom: 1px solid #f3f4f6;
+  }
+}

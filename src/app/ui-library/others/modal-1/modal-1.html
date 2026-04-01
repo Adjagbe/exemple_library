@@ -1,0 +1,15 @@
+<div class="modal1-demo">
+  <button class="modal1-open-btn" (click)="open = true">Ouvrir la modal</button>
+</div>
+<div *ngIf="open" class="modal1-backdrop" (click)="open = false">
+  <div class="modal1" (click)="$event.stopPropagation()">
+    <button class="modal1__close" (click)="open = false"><i class="bi bi-x-lg"></i></button>
+    <div class="modal1__icon"><i class="bi bi-check-circle-fill"></i></div>
+    <h3>Opération réussie !</h3>
+    <p>Votre fichier a été sauvegardé avec succès. Vous pouvez continuer à travailler normalement.</p>
+    <div class="modal1__btns">
+      <button class="modal1__cancel" (click)="open = false">Fermer</button>
+      <button class="modal1__confirm" (click)="open = false">Continuer</button>
+    </div>
+  </div>
+</div>

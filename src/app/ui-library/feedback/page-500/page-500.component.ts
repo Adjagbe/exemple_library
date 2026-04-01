@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// PAGE 500 COMPONENT - Premium UI Library
-// Custom 500 Internal Server Error page
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

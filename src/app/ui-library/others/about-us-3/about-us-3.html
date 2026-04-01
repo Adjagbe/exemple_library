@@ -1,0 +1,27 @@
+<section class="about-3">
+  <div class="about-3__hero">
+    <div class="about-3__hero-content">
+      <span class="about-3__eyebrow">À propos</span>
+      <h1>Façonner le monde <em>numérique de demain</em></h1>
+      <p>Une équipe de 45 experts dévoués à créer des produits digitaux qui transforment les entreprises et enrichissent les vies.</p>
+    </div>
+    <div class="about-3__hero-cards">
+      <div class="about-3__hero-card"><span class="big">2012</span><span>Fondée</span></div>
+      <div class="about-3__hero-card"><span class="big">340+</span><span>Projets</span></div>
+      <div class="about-3__hero-card"><span class="big">25</span><span>Pays</span></div>
+    </div>
+  </div>
+  <div class="about-3__pillars">
+    <div *ngFor="let p of pillars" class="about-3__pillar">
+      <div class="about-3__pillar-icon"><i class="bi" [ngClass]="p.icon"></i></div>
+      <h3>{{ p.title }}</h3>
+      <p>{{ p.text }}</p>
+    </div>
+  </div>
+  <div class="about-3__partners">
+    <p class="about-3__partners-label">Ils nous font confiance</p>
+    <div class="about-3__partners-list">
+      <span *ngFor="let p of partners" class="about-3__partner">{{ p }}</span>
+    </div>
+  </div>
+</section>

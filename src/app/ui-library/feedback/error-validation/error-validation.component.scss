@@ -1,0 +1,49 @@
+.error-showcase {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1rem 0;
+}
+
+.validation-summary {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1rem 1.25rem;
+  background: #fee2e2;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #991b1b;
+  i {
+    font-size: 1.1rem;
+    color: #ef4444;
+  }
+}
+.summary-list {
+  margin: 0;
+  padding: 1rem 1.25rem 1rem 2.5rem;
+  list-style: disc;
+  li {
+    padding: 0.25rem 0;
+    color: #b91c1c;
+    a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 0.9rem;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NAVBAR COMPONENT - Premium UI Library                          -->
+<!-- Variantes de barres de navigation pour applications SaaS       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="ui-navbar-demo">
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Navbar Component</h1>
+    <p>Variantes de barres de navigation pour applications SaaS modernes</p>
+  </div>
+
+  <ng-container *ngFor="let nav of navbars">
+    <div class="variant-label">{{ nav.label }}</div>
+
+    <!-- ── Standard navbars (default, dark, gradient, search-cta, centered) ── -->
+    <nav
+      *ngIf="nav.variant !== 'tabs'"
+      class="navbar"
+      [ngClass]="{
+        'navbar--default': nav.variant === 'default',
+        'navbar--dark': nav.variant === 'dark',
+        'navbar--gradient': nav.variant === 'gradient',
+        'navbar--centered': nav.variant === 'centered'
+      }"
+    >
+      <a href="#" class="navbar-brand" (click)="$event.preventDefault()">
+        <div class="logo" [style.background]="nav.variant === 'gradient' ? 'rgba(255,255,255,.15)' : ''">{{ nav.brandLetter }}</div>
+        <span class="brand-name">{{ nav.brandName }}</span>
+      </a>
+
+      <div class="navbar-nav">
+        <a
+          *ngFor="let link of nav.links"
+          href="#"
+          class="nav-link"
+          [class.active]="link.active"
+          (click)="$event.preventDefault(); setActiveLink(nav, link)"
+        >
+          {{ link.label }}
+          <span *ngIf="link.badge" class="link-badge">{{ link.badge }}</span>
+        </a>
+      </div>
+
+      <div class="navbar-actions">
+        <div *ngIf="nav.showSearch" class="navbar-search">
+          <i class="bi bi-search"></i>
+          <input type="text" [placeholder]="nav.searchPlaceholder || 'Rechercher...'">
+          <kbd *ngIf="nav.showShortcut">⌘K</kbd>
+        </div>
+        <button *ngIf="nav.showNotif" class="nav-icon-btn">
+          <i class="bi bi-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <button *ngIf="nav.showSettings" class="nav-icon-btn">
+          <i class="bi bi-gear"></i>
+        </button>
+        <div *ngIf="nav.avatarInitials" class="nav-avatar">{{ nav.avatarInitials }}</div>
+        <a *ngIf="nav.ctaGhost" href="#" class="nav-btn nav-btn--ghost" (click)="$event.preventDefault()">{{ nav.ctaGhost }}</a>
+        <a *ngIf="nav.ctaPrimary" href="#" class="nav-btn nav-btn--primary" (click)="$event.preventDefault()">{{ nav.ctaPrimary }}</a>
+      </div>
+    </nav>
+
+    <!-- ── Tabs variant ── -->
+    <nav
+      *ngIf="nav.variant === 'tabs'"
+      class="navbar navbar--default navbar--tabs"
+    >
+      <div class="navbar-top">
+        <a href="#" class="navbar-brand" (click)="$event.preventDefault()">
+          <div class="logo">{{ nav.brandLetter }}</div>
+          <span class="brand-name">{{ nav.brandName }}</span>
+        </a>
+        <div class="navbar-actions">
+          <button *ngIf="nav.showNotif" class="nav-icon-btn">
+            <i class="bi bi-bell"></i>
+            <span class="notif-dot"></span>
+          </button>
+          <button *ngIf="nav.showSettings" class="nav-icon-btn">
+            <i class="bi bi-gear"></i>
+          </button>
+          <div *ngIf="nav.avatarInitials" class="nav-avatar">{{ nav.avatarInitials }}</div>
+        </div>
+      </div>
+      <div class="navbar-tabs">
+        <a
+          *ngFor="let tab of nav.tabs"
+          href="#"
+          class="tab-link"
+          [class.active]="tab.active"
+          (click)="$event.preventDefault(); setActiveTab(nav, tab)"
+        >
+          {{ tab.label }}
+        </a>
+      </div>
+    </nav>
+  </ng-container>
+</div>
+</div>

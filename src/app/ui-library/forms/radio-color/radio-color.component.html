@@ -1,0 +1,12 @@
+<div class="radio-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Select Color</h3>
+    <div class="selected-value">Selected: {{ selectedColor }}</div>
+    <div class="color-options">
+      <label class="color-option" *ngFor="let option of colorOptions">
+        <input type="radio" name="color" [value]="option.value" [(ngModel)]="selectedColor">
+        <span class="color-swatch" [style.background-color]="option.color" [style.color]="option.color" [class.selected]="selectedColor === option.value"></span>
+      </label>
+    </div>
+  </section>
+</div>

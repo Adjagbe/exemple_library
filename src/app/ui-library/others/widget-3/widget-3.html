@@ -1,0 +1,28 @@
+<div class="w3">
+  <div class="w3__main">
+    <div class="w3__current">
+      <i class="bi w3__weather-icon" [ngClass]="weather.icon"></i>
+      <div class="w3__temp-block">
+        <span class="w3__temp">{{ weather.temp }}°</span>
+        <span class="w3__feels">Ressenti {{ weather.feels }}°</span>
+      </div>
+    </div>
+    <div class="w3__details">
+      <h3>{{ weather.city }}</h3>
+      <p>{{ weather.condition }}</p>
+      <div class="w3__meta">
+        <span><i class="bi bi-droplet-half"></i> {{ weather.humidity }}%</span>
+        <span><i class="bi bi-wind"></i> {{ weather.wind }} km/h</span>
+        <span><i class="bi bi-sun"></i> UV {{ weather.uv }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="w3__forecast">
+    <div *ngFor="let f of forecast" class="w3__day">
+      <span class="w3__day-name">{{ f.day }}</span>
+      <i class="bi" [ngClass]="f.icon"></i>
+      <span class="w3__high">{{ f.high }}°</span>
+      <span class="w3__low">{{ f.low }}°</span>
+    </div>
+  </div>
+</div>

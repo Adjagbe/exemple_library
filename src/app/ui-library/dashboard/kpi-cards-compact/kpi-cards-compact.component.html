@@ -1,0 +1,20 @@
+<div class="kpi-showcase">
+  <h1 class="page-title">Cartes compactes</h1>
+  <p class="page-subtitle">Indicateurs clés en format condensé pour tableaux de bord denses</p>
+
+  <div class="kpi-compact-grid">
+    <div *ngFor="let kpi of compactKPIs" class="kpi-card kpi-card--compact">
+      <div class="kpi-card__mini-icon" [ngClass]="'icon--' + kpi.iconColor">
+        <i class="bi" [ngClass]="kpi.icon"></i>
+      </div>
+      <div class="kpi-card__compact-content">
+        <span class="kpi-card__value">{{ formatValue(kpi) }}</span>
+        <span class="kpi-card__title">{{ kpi.title }}</span>
+      </div>
+      <div *ngIf="kpi.change" class="kpi-card__change--badge" [ngClass]="getChangeClass(kpi.change.type)">
+        <i class="bi" [ngClass]="getChangeIcon(kpi.change.type)"></i>
+        {{ kpi.change.value > 0 ? '+' : '' }}{{ kpi.change.value }}%
+      </div>
+    </div>
+  </div>
+</div>

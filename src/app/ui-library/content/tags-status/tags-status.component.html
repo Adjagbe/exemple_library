@@ -1,0 +1,15 @@
+<div class="tags-showcase">
+  <h2 class="section-title">Tags de statut</h2>
+  <div class="tags-row">
+    <span
+      *ngFor="let tag of statusTags"
+      class="tag tag--status"
+      [style.background-color]="tag.color + '20'"
+      [style.color]="tag.color"
+      [style.border-color]="tag.color"
+    >
+      <span class="tag-dot" [style.background-color]="tag.color"></span>
+      {{ tag.label }}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="success-showcase">
+  <h2 class="section-title">Messages Inline</h2>
+  <div class="inline-messages">
+    <div *ngFor="let msg of inlineMessages" class="inline-success">
+      <i class="bi" [ngClass]="msg.icon || 'bi-check-circle'"></i>
+      <span *ngIf="msg.title" class="inline-title">{{ msg.title }}</span>
+      <span class="inline-text">{{ msg.message }}</span>
+    </div>
+  </div>
+</div>

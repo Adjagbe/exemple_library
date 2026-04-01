@@ -1,0 +1,219 @@
+.dragdrop-showcase {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+}
+
+.page-subtitle {
+  color: #6b7280;
+  margin: 0 0 2rem 0;
+}
+
+// DROP ZONES
+.dropzone-demo {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+.dropzone-source {
+  padding: 1rem;
+  border: 2px dashed transparent;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+
+  &.dragover {
+    border-color: #4f46e5;
+    background: #eef2ff;
+  }
+
+  h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #374151;
+  }
+}
+
+.draggable-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.draggable-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: grab;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &.dragging {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  i {
+    color: #6b7280;
+  }
+}
+
+.empty-source {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  color: #9ca3af;
+  font-size: 0.8125rem;
+
+  i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.dropzone-targets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.dropzone-target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #f9fafb;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.75rem;
+  text-align: center;
+  transition: all 0.2s;
+  min-height: 180px;
+
+  &:hover,
+  &.dragover {
+    border-color: #4f46e5;
+    background: #eef2ff;
+  }
+
+  > i {
+    font-size: 2rem;
+    color: #4f46e5;
+    margin-bottom: 0.5rem;
+  }
+
+  > span {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+  }
+
+  > small {
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+
+  &--secondary {
+    > i {
+      color: #f59e0b;
+    }
+
+    &:hover,
+    &.dragover {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+  }
+
+  &--danger {
+    > i {
+      color: #ef4444;
+    }
+
+    &:hover,
+    &.dragover {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+  }
+}
+
+// Dropped items inside zones
+.zone-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.zone-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  color: #374151;
+  cursor: grab;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  &.dragging {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  i {
+    color: #6b7280;
+    font-size: 0.75rem;
+  }
+}
+
+// RESPONSIVE
+@media (max-width: 768px) {
+  .dragdrop-showcase {
+    padding: 1rem;
+  }
+
+  .dropzone-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .dropzone-targets {
+    grid-template-columns: 1fr;
+  }
+}

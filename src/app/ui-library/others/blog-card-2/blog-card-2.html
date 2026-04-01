@@ -1,0 +1,26 @@
+<div class="bc2">
+  <!-- Featured -->
+  <article class="bc2__featured">
+    <div class="bc2__feat-img" [style.background]="featured.color"></div>
+    <div class="bc2__feat-body">
+      <span class="bc2__category">{{ featured.category }}</span>
+      <h2>{{ featured.title }}</h2>
+      <p>{{ featured.excerpt }}</p>
+      <div class="bc2__feat-footer">
+        <div class="bc2__author"><div class="bc2__avatar">{{ featured.initials }}</div><div><strong>{{ featured.author }}</strong><span>{{ featured.date }} · {{ featured.readTime }} min</span></div></div>
+        <a href="#" class="bc2__btn">Lire l'article</a>
+      </div>
+    </div>
+  </article>
+  <!-- Grid -->
+  <div class="bc2__grid">
+    <article *ngFor="let p of posts" class="bc2__card">
+      <div class="bc2__thumb" [style.background]="p.color"><span class="bc2__category">{{ p.category }}</span></div>
+      <div class="bc2__body">
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.excerpt }}</p>
+        <div class="bc2__meta"><div class="bc2__avatar bc2__avatar--sm">{{ p.initials }}</div><span>{{ p.author }}</span><span class="bc2__sep">·</span><span>{{ p.date }}</span><span class="bc2__sep">·</span><span>{{ p.readTime }} min</span></div>
+      </div>
+    </article>
+  </div>
+</div>

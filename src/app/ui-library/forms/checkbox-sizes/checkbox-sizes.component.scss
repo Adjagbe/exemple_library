@@ -1,0 +1,84 @@
+.checkbox-showcase {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.showcase-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+
+  &:hover { background-color: #f9fafb; }
+
+  input[type="checkbox"] { display: none; }
+
+  input[type="checkbox"]:checked + .checkbox-custom {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    i { display: block; }
+  }
+}
+
+.checkbox-custom {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid #d1d5db;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  i { display: none; color: white; font-size: 0.875rem; }
+}
+
+.checkbox-text {
+  font-size: 0.9375rem;
+  color: #374151;
+}
+
+.checkbox-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.checkbox--sm .checkbox-custom {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  i { font-size: 0.625rem; }
+}
+
+.checkbox--md .checkbox-custom {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+}
+
+.checkbox--lg .checkbox-custom {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  i { font-size: 1.125rem; }
+}

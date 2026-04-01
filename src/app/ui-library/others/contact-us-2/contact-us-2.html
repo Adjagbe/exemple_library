@@ -1,0 +1,17 @@
+<div class="cu2">
+  <h2>Quel est votre sujet ?</h2>
+  <div class="cu2__topics">
+    <button *ngFor="let t of topics" class="cu2__topic" [class.active]="selected === t.label" (click)="selected = t.label">
+      <i class="bi" [ngClass]="t.icon"></i>
+      <span>{{ t.label }}</span>
+    </button>
+  </div>
+  <div class="cu2__form">
+    <div class="cu2__row">
+      <input type="text" [(ngModel)]="form.name" placeholder="Votre nom">
+      <input type="email" [(ngModel)]="form.email" placeholder="Votre email">
+    </div>
+    <textarea rows="5" [(ngModel)]="form.message" [placeholder]="'Décrivez votre demande à propos de : ' + (selected || '...')" ></textarea>
+    <button (click)="submit()">Envoyer <i class="bi bi-send-fill"></i></button>
+  </div>
+</div>

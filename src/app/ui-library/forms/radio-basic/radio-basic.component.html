@@ -1,0 +1,13 @@
+<div class="radio-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Basic Radio Buttons</h3>
+    <div class="selected-value">Selected: {{ selectedBasic }}</div>
+    <div class="radio-group">
+      <label class="radio-label" *ngFor="let option of basicOptions" [class.disabled]="option.disabled">
+        <input type="radio" name="basic" [value]="option.value" [(ngModel)]="selectedBasic" [disabled]="option.disabled || false">
+        <span class="radio-custom"></span>
+        <span class="radio-text">{{ option.label }}</span>
+      </label>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,105 @@
+.modal2-demo {
+  padding: 6rem 2rem;
+  display: flex;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.modal2-open-btn {
+  padding: 0.875rem 2rem;
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.modal2-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.modal2 {
+  background: #fff;
+  border-radius: 1.75rem;
+  padding: 2rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+.modal2__progress {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  margin-bottom: 1.25rem;
+}
+.modal2__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+.modal2__step-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 2rem;
+}
+.modal2__body {
+  text-align: center;
+  padding: 0 1rem 2rem;
+}
+.modal2__icon {
+  font-size: 3rem;
+  color: #4f46e5;
+  margin-bottom: 1rem;
+}
+.modal2__body h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 0.875rem;
+}
+.modal2__body p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin: 0;
+}
+.modal2__btns {
+  display: flex;
+  gap: 0.75rem;
+}
+.modal2__prev {
+  flex: 1;
+  padding: 0.875rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+}
+.modal2__prev:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.modal2__next {
+  flex: 2;
+  padding: 0.875rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}

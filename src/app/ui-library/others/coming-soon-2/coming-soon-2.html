@@ -1,0 +1,20 @@
+<div class="cs2">
+  <div class="cs2__inner">
+    <div class="cs2__logo"><i class="bi bi-rocket-takeoff-fill"></i></div>
+    <h1>Nous construisons quelque chose de grand</h1>
+    <p>Le lancement approche. Voici où nous en sommes :</p>
+    <div class="cs2__progress-wrap">
+      <div class="cs2__progress-info"><span>Avancement global</span><span class="cs2__pct">{{ progress }}%</span></div>
+      <div class="cs2__bar"><div class="cs2__fill" [style.width.%]="progress"></div></div>
+    </div>
+    <div class="cs2__countdown">
+      <div class="cs2__unit"><span>{{ pad(days) }}</span>Jours</div>
+      <span class="cs2__sep">:</span>
+      <div class="cs2__unit"><span>{{ pad(hours) }}</span>Heures</div>
+      <span class="cs2__sep">:</span>
+      <div class="cs2__unit"><span>{{ pad(minutes) }}</span>Minutes</div>
+      <span class="cs2__sep">:</span>
+      <div class="cs2__unit"><span>{{ pad(seconds) }}</span>Secondes</div>
+    </div>
+  </div>
+</div>

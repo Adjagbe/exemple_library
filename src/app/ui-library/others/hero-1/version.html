@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero 1</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fafafa; }
+.hero1 { padding: 6rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.hero1__badge { display: inline-flex; align-items: center; gap: .5rem; background: #eef2ff; color: #4f46e5; font-size: .78rem; font-weight: 600; padding: .375rem 1rem; border-radius: 9999px; margin-bottom: 1.75rem; }
+.hero1__badge i { font-size: .8rem; }
+.hero1 h1 { font-size: 3.5rem; font-weight: 900; line-height: 1.1; background: linear-gradient(135deg, #111827 0%, #4f46e5 60%, #7c3aed 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; max-width: 700px; margin-bottom: 1.5rem; }
+.hero1 p { font-size: 1.125rem; color: #6b7280; max-width: 580px; line-height: 1.75; margin-bottom: 2.5rem; }
+.hero1__btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3.5rem; }
+.btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border: none; padding: .875rem 2.25rem; border-radius: .875rem; font-size: .95rem; font-weight: 700; cursor: pointer; box-shadow: 0 8px 24px rgba(79,70,229,.35); }
+.btn-ghost { background: transparent; color: #374151; border: 2px solid #e5e7eb; padding: .875rem 2.25rem; border-radius: .875rem; font-size: .95rem; font-weight: 600; cursor: pointer; }
+.hero1__stats { display: flex; align-items: center; gap: 2.5rem; margin-bottom: 4rem; }
+.hero1__stat { text-align: center; }
+.hero1__stat .val { font-size: 1.35rem; font-weight: 800; color: #111827; }
+.hero1__stat .lbl { font-size: .78rem; color: #6b7280; }
+.hero1__sep { width: 1px; height: 40px; background: #e5e7eb; }
+.hero1__mockup { background: #1e293b; border-radius: 1.25rem; padding: 1rem; box-shadow: 0 24px 64px rgba(0,0,0,.2); max-width: 680px; width: 100%; }
+.mockup-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .875rem; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ef4444; }
+.dot-y { background: #f59e0b; }
+.dot-g { background: #10b981; }
+.mockup-screen { background: #0f172a; border-radius: .75rem; height: 340px; }
+</style>
+</head>
+<body>
+<div class="hero1">
+  <div class="hero1__badge"><i class="bi bi-stars"></i> Nouveau Version 2.0 disponible</div>
+  <h1>Construisez des produits qui changent la donne</h1>
+  <p>Une plateforme moderne pour concevoir, tester et déployer vos applications avec une vitesse et une qualité inégalées.</p>
+  <div class="hero1__btns">
+    <button class="btn-primary">Commencer gratuitement</button>
+    <button class="btn-ghost">Voir la démo</button>
+  </div>
+  <div class="hero1__stats">
+    <div class="hero1__stat"><div class="val">50k+</div><div class="lbl">Utilisateurs actifs</div></div>
+    <div class="hero1__sep"></div>
+    <div class="hero1__stat"><div class="val">300+</div><div class="lbl">Composants</div></div>
+    <div class="hero1__sep"></div>
+    <div class="hero1__stat"><div class="val">4.9 ★</div><div class="lbl">Note moyenne</div></div>
+  </div>
+  <div class="hero1__mockup">
+    <div class="mockup-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+    </div>
+    <div class="mockup-screen"></div>
+  </div>
+</div>
+</body>
+</html>

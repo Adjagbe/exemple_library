@@ -1,0 +1,16 @@
+<div class="demo-page">
+ <div class="section section--dark">
+    <div class="section-header">
+      <span class="section-badge"><i class="bi bi-rocket-takeoff"></i> Avantages</span>
+      <h2>Pourquoi nous choisir ?</h2>
+      <p>Découvrez les avantages qui nous distinguent de la concurrence.</p>
+    </div>
+    <div class="features-grid">
+      <div *ngFor="let f of featuresDark" class="feature-card">
+        <div class="feature-icon"><i class="bi" [ngClass]="f.icon"></i></div>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

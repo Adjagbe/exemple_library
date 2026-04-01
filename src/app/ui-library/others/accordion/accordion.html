@@ -1,0 +1,32 @@
+<div class="accordion" [class.accordion--minimal]="variant === 'minimal'" [class.accordion--card]="variant === 'card'">
+  <h2 class="accordion__heading" *ngIf="heading">{{ heading }}</h2>
+
+  <div class="accordion__item"
+       *ngFor="let item of items; let i = index"
+       [class.is-open]="openIndex === i">
+
+    <button class="accordion__trigger"
+            (click)="toggle(i)"
+            [attr.aria-expanded]="openIndex === i"
+            [attr.aria-controls]="'panel-' + i">
+      <span class="accordion__trigger-text">{{ item.question }}</span>
+      <span class="accordion__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="accordion__panel"
+         [id]="'panel-' + i"
+         role="region"
+         [@expandCollapse]="openIndex === i ? 'open' : 'closed'">
+      <div class="accordion__panel-inner">
+        <p>{{ item.answer }}</p>
+        <a *ngIf="item.link" [href]="item.link.url" class="accordion__link">
+          {{ item.link.label }} →
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="ui-navbar-showcase">
+
+  <nav class="nbar nbar--default">
+    <a href="#" class="nbar-brand" (click)="$event.preventDefault()">
+      <div class="nbar-logo">P</div>
+      <span class="nbar-brand-name">Platform</span>
+    </a>
+    <div class="nbar-nav">
+      <a *ngFor="let link of links"
+         href="#"
+         class="nbar-link"
+         [class.active]="link.active"
+         (click)="$event.preventDefault(); setActive(link)">
+        {{ link.label }}
+        <span *ngIf="link.badge" class="nbar-link-badge">{{ link.badge }}</span>
+      </a>
+    </div>
+    <div class="nbar-actions">
+      <div class="nbar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Rechercher...">
+      </div>
+      <a href="#" class="nbar-btn nbar-btn--ghost" (click)="$event.preventDefault()">Connexion</a>
+      <a href="#" class="nbar-btn nbar-btn--primary" (click)="$event.preventDefault()">Essai gratuit</a>
+    </div>
+  </nav>
+</div>

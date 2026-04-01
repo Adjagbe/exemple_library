@@ -1,0 +1,52 @@
+.cc3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.cc3__bar {
+  background: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.cc3__text {
+  font-size: 0.8rem;
+  color: #d1d5db;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex: 1;
+}
+.cc3__text i {
+  font-size: 1rem;
+}
+.cc3__text a {
+  color: #818cf8;
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+.cc3__btns {
+  display: flex;
+  gap: 0.625rem;
+}
+.cc3__btns button {
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.cc3__ok {
+  background: #4f46e5 !important;
+  color: #fff !important;
+  border-color: #4f46e5 !important;
+}

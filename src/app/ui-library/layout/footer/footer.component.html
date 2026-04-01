@@ -1,0 +1,70 @@
+<div class="demo-page">
+  <div class="demo-title">
+    <h1>Footer Component</h1>
+    <p>Variantes de footers pour applications SaaS modernes</p>
+  </div>
+
+  <!-- Full Footer -->
+  <div class="variant-label">Full Footer</div>
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="logo-row">
+          <div class="logo">{{ brandLetter }}</div>
+          <span class="brand-name">{{ brandName }}</span>
+        </div>
+        <p>{{ description }}</p>
+        <div class="footer-social">
+          <a *ngFor="let s of socialLinks" [href]="s.href"><i class="bi" [ngClass]="s.icon"></i></a>
+        </div>
+      </div>
+      <div *ngFor="let col of columns" class="footer-col">
+        <h4>{{ col.title }}</h4>
+        <ul>
+          <li *ngFor="let link of col.links">
+            <a [href]="link.href">
+              {{ link.label }}
+              <span *ngIf="link.badge" class="new-badge">{{ link.badge }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <div class="newsletter-text">
+        <h4>Restez informé</h4>
+        <p>Recevez nos dernières actualités et mises à jour directement dans votre boîte mail.</p>
+      </div>
+      <form class="newsletter-form" (submit)="onSubscribe(); $event.preventDefault()">
+        <input type="email" placeholder="votre@email.com" [(ngModel)]="newsletterEmail" name="newsletterEmail">
+        <button type="submit">S'abonner</button>
+      </form>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 {{ brandName }}. Tous droits réservés.</span>
+      <div class="footer-bottom-links">
+        <a *ngFor="let link of bottomLinks" [href]="link.href">{{ link.label }}</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Simple Footer -->
+  <div class="variant-label">Simple Footer</div>
+  <footer class="footer footer--simple">
+    <div class="simple-top">
+      <div class="logo-row">
+        <div class="logo">{{ brandLetter }}</div>
+        <span class="brand-name" style="color:#f9fafb">{{ brandName }}</span>
+      </div>
+      <div class="simple-links">
+        <a *ngFor="let link of simpleLinks" [href]="link.href">{{ link.label }}</a>
+      </div>
+    </div>
+    <div class="simple-bottom">
+      <span>© 2026 {{ brandName }}. Tous droits réservés.</span>
+      <div class="footer-social">
+        <a *ngFor="let s of socialLinks.slice(0, 3)" [href]="s.href"><i class="bi" [ngClass]="s.icon"></i></a>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// DOWNLOAD FILES COMPONENT - Premium UI Library
-// Fichiers disponibles
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

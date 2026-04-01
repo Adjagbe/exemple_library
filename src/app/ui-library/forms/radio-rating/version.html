@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Rating</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .radio-showcase { max-width: 800px; width: 100%; padding: 2rem; }
+    .showcase-section { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .selected-value { font-size: 0.875rem; color: #6b7280; margin-bottom: 1.5rem; }
+    .rating-options { display: flex; gap: 0.75rem; }
+    .rating-option { cursor: pointer; }
+    .rating-option input[type="radio"] { display: none; }
+    .rating-content { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; transition: all 0.2s; color: #9ca3af; }
+    .rating-content:hover { border-color: #fbbf24; color: #f59e0b; }
+    .rating-content.selected { border-color: #f59e0b; background-color: #fffbeb; color: #f59e0b; }
+    .rating-content i { font-size: 1.25rem; }
+    .rating-number { font-size: 0.75rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="radio-showcase">
+    <section class="showcase-section">
+      <h3 class="section-title">Rate Your Experience</h3>
+      <div class="selected-value" id="selectedValue">Rating: 5/5</div>
+      <div class="rating-options" id="ratingOptions"></div>
+    </section>
+  </div>
+  <script>
+    (function(){
+      var selected = '5';
+      var container = document.getElementById('ratingOptions');
+      var display = document.getElementById('selectedValue');
+      function render(){
+        container.innerHTML = '';
+        ['1','2','3','4','5'].forEach(function(star){
+          var label = document.createElement('label');
+          label.className = 'rating-option';
+          label.innerHTML = '<input type="radio" name="rating" value="'+star+'" '+(selected===star?'checked':'')+'>' +
+            '<div class="rating-content'+(selected===star?' selected':'')+'"><i class="bi bi-star-fill"></i><span class="rating-number">'+star+'</span></div>';
+          label.querySelector('input').addEventListener('change', function(){ selected = star; display.textContent = 'Rating: ' + selected + '/5'; render(); });
+          container.appendChild(label);
+        });
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>

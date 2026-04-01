@@ -1,0 +1,29 @@
+<section class="pr3">
+  <div class="pr3__header"><h2>Comparaison des plans</h2></div>
+  <div class="pr3__table-wrap">
+    <table class="pr3__table">
+      <thead>
+        <tr>
+          <th>Fonctionnalité</th>
+          <th><div class="pr3__plan">Free<span>€0/mois</span></div></th>
+          <th class="pr3__featured-col"><div class="pr3__plan pr3__plan--highlight">Pro<span>€29/mois</span></div></th>
+          <th><div class="pr3__plan">Enterprise<span>€99/mois</span></div></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of rows">
+          <td>{{ r.feature }}</td>
+          <td>{{ r.free }}</td>
+          <td class="pr3__featured-col">{{ r.pro }}</td>
+          <td>{{ r.enterprise }}</td>
+        </tr>
+        <tr class="pr3__cta-row">
+          <td></td>
+          <td><button class="pr3__btn">Démarrer</button></td>
+          <td class="pr3__featured-col"><button class="pr3__btn pr3__btn--main">Choisir Pro</button></td>
+          <td><button class="pr3__btn">Nous contacter</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

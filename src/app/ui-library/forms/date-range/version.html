@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Range Picker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .datepicker-showcase { max-width: 600px; width: 100%; padding: 2rem; }
+    .showcase-section { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .selected-value { font-size: 0.875rem; color: #6b7280; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+    .datepicker { position: relative; }
+    .datepicker-input { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; background: white; }
+    .datepicker-input:hover { border-color: #a5b4fc; }
+    .datepicker-input.open { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .datepicker-input i { color: #6b7280; }
+    .datepicker-input span { flex: 1; color: #374151; font-size: 0.9375rem; }
+    .clear-btn { background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0.25rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .clear-btn:hover { color: #ef4444; background-color: #fef2f2; }
+    .datepicker-dropdown { position: absolute; top: calc(100% + 0.5rem); left: 0; width: auto; background: white; border-radius: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: 1rem; z-index: 100; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s; display: flex; gap: 0; }
+    .datepicker-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .preset-ranges { display: flex; flex-direction: column; border-right: 1px solid #e5e7eb; padding-right: 1rem; min-width: 140px; }
+    .preset-btn { background: none; border: none; padding: 0.5rem 0.75rem; text-align: left; font-size: 0.8125rem; color: #6b7280; cursor: pointer; border-radius: 0.375rem; white-space: nowrap; }
+    .preset-btn:hover { background-color: #f3f4f6; color: #4f46e5; }
+    .range-calendar { padding-left: 1rem; }
+    .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .nav-btn { background: none; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #374151; }
+    .nav-btn:hover { background-color: #f3f4f6; }
+    .month-year { font-weight: 600; color: #111827; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .weekday { text-align: center; font-size: 0.75rem; font-weight: 600; color: #9ca3af; padding: 0.5rem 0; }
+    .calendar-day { text-align: center; width: 36px; height: 36px; line-height: 36px; border-radius: 50%; cursor: pointer; font-size: 0.875rem; color: #374151; transition: all 0.15s; margin: 0 auto; }
+    .calendar-day:hover { background-color: #f3f4f6; }
+    .calendar-day.empty { cursor: default; }
+    .calendar-day.today { font-weight: 700; color: #4f46e5; }
+    .calendar-day.range-start, .calendar-day.range-end { background-color: #4f46e5; color: white; font-weight: 600; }
+    .calendar-day.in-range { background-color: #eff6ff; color: #4f46e5; border-radius: 0; }
+  </style>
+</head>
+<body>
+  <div class="datepicker-showcase">
+    <section class="showcase-section">
+      <h3 class="section-title">Date Range Picker</h3>
+      <div class="selected-value" id="selectedValue">Range: Start - End</div>
+      <div class="form-group">
+        <label class="form-label">Select Date Range</label>
+        <div class="datepicker" id="datepicker">
+          <div class="datepicker-input" id="dpInput">
+            <i class="bi bi-calendar-range"></i>
+            <span id="dpText">Select range</span>
+            <button class="clear-btn" id="clearBtn" style="display:none"><i class="bi bi-x"></i></button>
+          </div>
+          <div class="datepicker-dropdown" id="dpDropdown">
+            <div class="preset-ranges" id="presetRanges"></div>
+            <div class="range-calendar">
+              <div class="calendar-header">
+                <button class="nav-btn" id="prevMonth"><i class="bi bi-chevron-left"></i></button>
+                <span class="month-year" id="monthYear"></span>
+                <button class="nav-btn" id="nextMonth"><i class="bi bi-chevron-right"></i></button>
+              </div>
+              <div class="calendar-grid" id="calGrid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    (function(){
+      var startDate=null, endDate=null, isOpen=false, selectingEnd=false;
+      var currentMonth = new Date();
+      var weekDays = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+      function formatDate(d){ return d ? d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : ''; }
+      function getMonthYear(d){ return d.toLocaleDateString('en-US',{month:'long',year:'numeric'}); }
+      function isSameDay(a,b){ return a.getDate()===b.getDate()&&a.getMonth()===b.getMonth()&&a.getFullYear()===b.getFullYear(); }
+      function isToday(d){ return isSameDay(d, new Date()); }
+
+      var presets = [
+        { label:'Today', fn:function(){ var t=new Date(); return {start:t,end:t}; }},
+        { label:'Yesterday', fn:function(){ var d=new Date(); d.setDate(d.getDate()-1); return {start:d,end:d}; }},
+        { label:'Last 7 days', fn:function(){ var e=new Date(),s=new Date(); s.setDate(s.getDate()-6); return {start:s,end:e}; }},
+        { label:'Last 30 days', fn:function(){ var e=new Date(),s=new Date(); s.setDate(s.getDate()-29); return {start:s,end:e}; }},
+        { label:'This month', fn:function(){ var n=new Date(); return {start:new Date(n.getFullYear(),n.getMonth(),1),end:new Date(n.getFullYear(),n.getMonth()+1,0)}; }},
+        { label:'Last month', fn:function(){ var n=new Date(); return {start:new Date(n.getFullYear(),n.getMonth()-1,1),end:new Date(n.getFullYear(),n.getMonth(),0)}; }}
+      ];
+
+      var presetContainer = document.getElementById('presetRanges');
+      presets.forEach(function(p){
+        var btn = document.createElement('button'); btn.className='preset-btn'; btn.textContent=p.label;
+        btn.addEventListener('click', function(e){ e.stopPropagation(); var r=p.fn(); startDate=r.start; endDate=r.end; selectingEnd=false; isOpen=false; update(); render(); });
+        presetContainer.appendChild(btn);
+      });
+
+      function getDays(){
+        var y=currentMonth.getFullYear(), m=currentMonth.getMonth();
+        var first=new Date(y,m,1), last=new Date(y,m+1,0);
+        var days=[];
+        for(var i=0;i<first.getDay();i++) days.push(null);
+        for(var i=1;i<=last.getDate();i++) days.push(new Date(y,m,i));
+        return days;
+      }
+
+      function render(){
+        document.getElementById('monthYear').textContent = getMonthYear(currentMonth);
+        var grid = document.getElementById('calGrid');
+        grid.innerHTML = '';
+        weekDays.forEach(function(wd){ var div=document.createElement('div'); div.className='weekday'; div.textContent=wd; grid.appendChild(div); });
+        getDays().forEach(function(day){
+          var div = document.createElement('div');
+          div.className = 'calendar-day';
+          if(!day){ div.classList.add('empty'); }
+          else {
+            div.textContent = day.getDate();
+            if(isToday(day)) div.classList.add('today');
+            if(startDate && isSameDay(day,startDate)) div.classList.add('range-start');
+            if(endDate && isSameDay(day,endDate)) div.classList.add('range-end');
+            if(startDate && endDate && day>startDate && day<endDate) div.classList.add('in-range');
+            div.addEventListener('click', function(e){
+              e.stopPropagation();
+              if(!selectingEnd || !startDate){ startDate=day; endDate=null; selectingEnd=true; }
+              else { if(day<startDate){ endDate=startDate; startDate=day; } else { endDate=day; } selectingEnd=false; }
+              update(); render();
+            });
+          }
+          grid.appendChild(div);
+        });
+      }
+
+      function update(){
+        document.getElementById('dpInput').className = 'datepicker-input' + (isOpen?' open':'');
+        document.getElementById('dpDropdown').className = 'datepicker-dropdown' + (isOpen?' open':'');
+        document.getElementById('dpText').textContent = startDate ? formatDate(startDate)+' - '+(endDate?formatDate(endDate):'...') : 'Select range';
+        document.getElementById('clearBtn').style.display = startDate ? '' : 'none';
+        document.getElementById('selectedValue').textContent = 'Range: '+(startDate?formatDate(startDate):'Start')+' - '+(endDate?formatDate(endDate):'End');
+      }
+
+      document.getElementById('dpInput').addEventListener('click', function(e){ e.stopPropagation(); isOpen=!isOpen; update(); render(); });
+      document.getElementById('clearBtn').addEventListener('click', function(e){ e.stopPropagation(); startDate=null; endDate=null; selectingEnd=false; update(); });
+      document.getElementById('prevMonth').addEventListener('click', function(e){ e.stopPropagation(); currentMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()-1,1); render(); });
+      document.getElementById('nextMonth').addEventListener('click', function(e){ e.stopPropagation(); currentMonth=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+1,1); render(); });
+      document.addEventListener('click', function(e){ if(!document.getElementById('datepicker').contains(e.target)){ isOpen=false; update(); } });
+      update(); render();
+    })();
+  </script>
+</body>
+</html>

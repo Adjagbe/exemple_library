@@ -1,0 +1,12 @@
+<div class="car1">
+  <div class="car1__track" [style.transform]="'translateX(-' + current*100 + '%)'">
+    <div *ngFor="let s of slides" class="car1__slide" [style.background]="s.color">
+      <div class="car1__slide-content"><h2>{{ s.title }}</h2><p>{{ s.subtitle }}</p></div>
+    </div>
+  </div>
+  <button class="car1__btn car1__btn--prev" (click)="prev()"><i class="bi bi-chevron-left"></i></button>
+  <button class="car1__btn car1__btn--next" (click)="next()"><i class="bi bi-chevron-right"></i></button>
+  <div class="car1__dots">
+    <button *ngFor="let s of slides; let i = index" class="car1__dot" [class.active]="i === current" (click)="go(i)"></button>
+  </div>
+</div>

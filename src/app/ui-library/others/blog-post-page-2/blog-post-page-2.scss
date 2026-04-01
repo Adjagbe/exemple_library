@@ -1,0 +1,13 @@
+.bpp2 { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.bpp2__filters { display: flex; gap: .625rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.bpp2__cat { padding: .5rem 1.25rem; border: 1px solid #e5e7eb; border-radius: 9999px; background: #fff; font-size: .8rem; font-weight: 600; color: #6b7280; cursor: pointer; transition: all .15s; }
+.bpp2__cat.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.bpp2__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.bpp2__card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; overflow: hidden; transition: all .2s; }
+.bpp2__card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.bpp2__img { height: 180px; }
+.bpp2__body { padding: 1.25rem; }
+.bpp2__badge { display: inline-block; padding: .2rem .75rem; background: #eef2ff; color: #4f46e5; border-radius: 9999px; font-size: .7rem; font-weight: 700; margin-bottom: .75rem; }
+.bpp2__body h3 { font-size: .95rem; font-weight: 700; color: #111827; margin: 0 0 .75rem; line-height: 1.4; }
+.bpp2__meta { font-size: .75rem; color: #9ca3af; }
+@media (max-width:768px) { .bpp2__grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,18 @@
+<div class="checkbox-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Feature Selection</h3>
+    <p class="section-subtitle">{{ getSelectedCount() }} of {{ featureCheckboxes.length }} selected</p>
+    <div class="checkbox-cards">
+      <label class="checkbox-card" *ngFor="let feature of featureCheckboxes" [class.checked]="feature.checked">
+        <input type="checkbox" [(ngModel)]="feature.checked">
+        <div class="card-checkbox">
+          <i class="bi bi-check"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">{{ feature.label }}</span>
+          <span class="card-description">{{ feature.description }}</span>
+        </div>
+      </label>
+    </div>
+  </section>
+</div>

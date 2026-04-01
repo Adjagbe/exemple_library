@@ -1,0 +1,24 @@
+<div class="demo-page">
+    <div class="section section--light">
+        <div class="section-header">
+        <span class="section-badge"><i class="bi bi-chat-quote"></i> Témoignages</span>
+        <h2>Ce que disent nos clients</h2>
+        <p>Découvrez les avis de ceux qui utilisent notre plateforme au quotidien.</p>
+        </div>
+        <div class="testimonials-grid">
+        <div *ngFor="let t of testimonials" class="testimonial-card">
+            <div class="testimonial-stars">
+            <i *ngFor="let star of getStars(t.stars)" class="bi" [ngClass]="star"></i>
+            </div>
+            <p class="testimonial-text">"{{ t.text }}"</p>
+            <div class="testimonial-author">
+            <div class="testimonial-avatar">{{ t.avatarInitials }}</div>
+            <div class="testimonial-info">
+                <p class="name">{{ t.name }}</p>
+                <p class="role">{{ t.role }}</p>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>    

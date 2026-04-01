@@ -1,0 +1,71 @@
+<div class="user-cards-showcase">
+  <h2 class="section-title">Cards Horizontales</h2>
+
+  <div class="horizontal-grid">
+    <!-- Horizontal Card -->
+    <div class="user-card user-card--horizontal">
+      <div class="avatar avatar--lg">
+        <span class="avatar-text">{{ horizontalUser.avatar }}</span>
+        <span class="status-indicator" [ngClass]="getStatusClass(horizontalUser.status)"></span>
+      </div>
+      <div class="card-main">
+        <div class="card-info">
+          <h3 class="user-name">{{ horizontalUser.firstName }} {{ horizontalUser.lastName }}</h3>
+          <p class="user-role">{{ horizontalUser.role }} • {{ horizontalUser.department }}</p>
+          <p class="user-location">
+            <i class="bi bi-geo-alt"></i>
+            {{ horizontalUser.location }}
+          </p>
+        </div>
+        <div class="card-stats" *ngIf="horizontalUser.stats">
+          <div class="stat">
+            <span class="stat-value">{{ horizontalUser.stats.projects }}</span>
+            <span class="stat-label">Projets</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ horizontalUser.stats.tasks }}</span>
+            <span class="stat-label">Tâches</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ horizontalUser.stats.reviews }}</span>
+            <span class="stat-label">Avis</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn--primary btn--sm" (click)="onViewProfile(horizontalUser)">
+          <i class="bi bi-eye"></i>
+          Profil
+        </button>
+        <button class="btn btn--outline btn--sm" (click)="onMessage(horizontalUser)">
+          <i class="bi bi-chat"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Team Member Card -->
+    <div class="user-card user-card--team">
+      <div class="team-badge">
+        <i class="bi bi-star-fill"></i>
+        Team Lead
+      </div>
+      <div class="avatar avatar--md">
+        <span class="avatar-text">{{ teamUser.avatar }}</span>
+        <span class="status-indicator" [ngClass]="getStatusClass(teamUser.status)"></span>
+      </div>
+      <div class="card-content">
+        <h3 class="user-name">{{ teamUser.firstName }} {{ teamUser.lastName }}</h3>
+        <p class="user-role">{{ teamUser.role }}</p>
+        <div class="contact-info">
+          <span><i class="bi bi-envelope"></i> {{ teamUser.email }}</span>
+          <span><i class="bi bi-telephone"></i> {{ teamUser.phone }}</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn--icon btn--primary" (click)="onMessage(teamUser)">
+          <i class="bi bi-chat-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

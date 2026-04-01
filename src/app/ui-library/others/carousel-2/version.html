@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carousel 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; padding: 4rem 2rem; display: flex; justify-content: center; }
+.car2 { max-width: 1000px; width: 100%; }
+.car2__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.75rem; }
+.car2__header h2 { font-size: 1.5rem; font-weight: 800; color: #111827; }
+.car2__controls { display: flex; gap: .625rem; }
+.car2__ctrl { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #e5e7eb; background: #fff; color: #374151; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+.car2__ctrl:disabled { opacity: .35; cursor: default; }
+.car2__ctrl:not(:disabled):hover { background: #f3f4f6; }
+.car2__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.car2__card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 2rem; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.05); }
+.car2__icon { width: 56px; height: 56px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; margin: 0 auto 1rem; }
+.car2__card h3 { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: .5rem; }
+.car2__card p { font-size: .8rem; color: #6b7280; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="car2">
+  <div class="car2__header">
+    <h2>Nos fonctionnalités</h2>
+    <div class="car2__controls">
+      <button class="car2__ctrl" id="prevBtn" onclick="prev()" disabled><i class="bi bi-chevron-left"></i></button>
+      <button class="car2__ctrl" id="nextBtn" onclick="next()"><i class="bi bi-chevron-right"></i></button>
+    </div>
+  </div>
+  <div class="car2__grid" id="carGrid"></div>
+</div>
+<script>
+(function() {
+  const cards = [
+    { color: '#7c3aed', icon: 'bi-rocket-takeoff', title: 'Déploiement rapide', desc: 'Mettez en production en un clic avec notre pipeline CI/CD intégré.' },
+    { color: '#0ea5e9', icon: 'bi-shield-check', title: 'Sécurité avancée', desc: 'Protection de vos données avec le chiffrement bout-en-bout.' },
+    { color: '#10b981', icon: 'bi-graph-up-arrow', title: 'Analytics temps réel', desc: 'Suivez vos métriques clés en temps réel depuis votre dashboard.' },
+    { color: '#f59e0b', icon: 'bi-people', title: 'Collaboration', desc: 'Invitez votre équipe et collaborez sans friction.' },
+    { color: '#ef4444', icon: 'bi-gear', title: 'Configuration avancée', desc: 'Personnalisez chaque aspect de votre espace de travail.' }
+  ];
+
+  let cur = 0;
+
+  function render() {
+    const visible = cards.slice(cur, cur + 3);
+    document.getElementById('carGrid').innerHTML = visible.map(c => `
+      <div class="car2__card">
+        <div class="car2__icon" style="background:${c.color};">
+          <i class="bi ${c.icon}"></i>
+        </div>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+      </div>
+    `).join('');
+
+    document.getElementById('prevBtn').disabled = cur === 0;
+    document.getElementById('nextBtn').disabled = cur >= cards.length - 3;
+  }
+
+  window.prev = function() {
+    cur = Math.max(0, cur - 1);
+    render();
+  };
+
+  window.next = function() {
+    cur = Math.min(cards.length - 3, cur + 1);
+    render();
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>

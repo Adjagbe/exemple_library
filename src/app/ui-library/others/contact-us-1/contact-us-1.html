@@ -1,0 +1,30 @@
+<div class="cu1">
+  <div class="cu1__hero">
+    <h2>Contactez-nous</h2>
+    <p>Notre équipe vous répond sous 24h ouvrées.</p>
+  </div>
+  <div class="cu1__body">
+    <div *ngIf="!sent" class="cu1__form">
+      <div class="cu1__row">
+        <div class="cu1__field"><label>Prénom</label><input type="text" [(ngModel)]="form.firstName" placeholder="Jean"></div>
+        <div class="cu1__field"><label>Nom</label><input type="text" [(ngModel)]="form.lastName" placeholder="Dupont"></div>
+      </div>
+      <div class="cu1__field"><label>Email</label><input type="email" [(ngModel)]="form.email" placeholder="jean@example.com"></div>
+      <div class="cu1__field"><label>Sujet</label><input type="text" [(ngModel)]="form.subject" placeholder="Comment pouvons-nous vous aider ?"></div>
+      <div class="cu1__field"><label>Message</label><textarea rows="5" [(ngModel)]="form.message" placeholder="Décrivez votre demande..."></textarea></div>
+      <button class="cu1__submit" (click)="submit()">Envoyer le message <i class="bi bi-send"></i></button>
+    </div>
+    <div *ngIf="sent" class="cu1__success">
+      <i class="bi bi-check-circle-fill"></i>
+      <h3>Message envoyé !</h3>
+      <p>Merci de nous avoir contactés. Nous reviendrons vers vous très prochainement.</p>
+      <button (click)="sent = false">Envoyer un autre message</button>
+    </div>
+    <div class="cu1__info">
+      <div class="cu1__card"><i class="bi bi-envelope-fill"></i><p>support&#64;example.com</p></div>
+      <div class="cu1__card"><i class="bi bi-telephone-fill"></i><p>+33 1 23 45 67 89</p></div>
+      <div class="cu1__card"><i class="bi bi-clock-fill"></i><p>Lun–Ven · 9h–18h</p></div>
+      <div class="cu1__card"><i class="bi bi-geo-alt-fill"></i><p>12 rue du Commerce, Paris</p></div>
+    </div>
+  </div>
+</div>

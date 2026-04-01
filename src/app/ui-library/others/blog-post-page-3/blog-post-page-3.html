@@ -1,0 +1,17 @@
+<div class="bpp3">
+  <div class="bpp3__trending">
+    <h3>🔥 Tendances</h3>
+    <div *ngFor="let p of trending" class="bpp3__trend">
+      <span class="bpp3__num">{{ p.num }}</span>
+      <div class="bpp3__trend-img" [style.background]="p.color"></div>
+      <div><h4>{{ p.title }}</h4><span><i class="bi bi-eye"></i> {{ p.reads }}</span></div>
+    </div>
+  </div>
+  <div class="bpp3__latest">
+    <h3>Derniers articles</h3>
+    <article *ngFor="let p of latest" class="bpp3__item">
+      <div class="bpp3__thumb" [style.background]="p.color"></div>
+      <div><span class="bpp3__cat">{{ p.category }}</span><h4>{{ p.title }}</h4><small>{{ p.date }}</small></div>
+    </article>
+  </div>
+</div>

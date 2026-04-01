@@ -1,0 +1,17 @@
+<div class="radio-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Shipping Method</h3>
+    <div class="selected-value">Selected: {{ selectedShipping }}</div>
+    <div class="radio-list">
+      <label class="radio-list-item" *ngFor="let option of shippingOptions" [class.selected]="selectedShipping === option.value">
+        <input type="radio" name="shipping" [value]="option.value" [(ngModel)]="selectedShipping">
+        <span class="radio-custom"></span>
+        <div class="item-content">
+          <span class="item-label">{{ option.label }}</span>
+          <span class="item-description">{{ option.description }}</span>
+        </div>
+        <span class="item-price" [class.free]="option.price === 'Free'">{{ option.price }}</span>
+      </label>
+    </div>
+  </section>
+</div>

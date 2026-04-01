@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Éditeur WYSIWYG - Premium UI Library</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f3f4f6; min-height: 100vh; padding: 2rem; }
+
+    .wysiwyg-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .page-title { font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0; }
+    .page-subtitle { color: #6b7280; margin: 0 0 2rem 0; }
+
+    /* EDITOR WRAPPER */
+    .editor-wrapper { border: 1px solid #e5e7eb; border-radius: 0.75rem; overflow: hidden; background: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+    /* TOOLBAR */
+    .editor-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem; padding: 0.75rem; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+    .toolbar-group { display: flex; align-items: center; gap: 0.125rem; }
+    .toolbar-divider { width: 1px; height: 24px; background: #d1d5db; margin: 0 0.5rem; }
+    .toolbar-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: none; border-radius: 0.375rem; color: #6b7280; cursor: pointer; transition: all 0.15s; }
+    .toolbar-btn:hover { background: #e5e7eb; color: #374151; }
+    .toolbar-btn.active { background: #4f46e5; color: white; }
+    .toolbar-btn i { font-size: 1rem; }
+    .toolbar-select { height: 32px; padding: 0 0.75rem; background: white; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.8125rem; color: #374151; cursor: pointer; transition: all 0.15s; }
+    .toolbar-select:hover { border-color: #9ca3af; }
+    .toolbar-select:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79,70,229,0.15); }
+
+    /* EDITOR CONTENT */
+    .editor-content { min-height: 400px; }
+    .editor-area { min-height: 400px; padding: 1.5rem; outline: none; font-size: 1rem; line-height: 1.75; color: #374151; }
+    .editor-area:focus { background: #fafafa; }
+    .editor-area h1, .editor-area h2, .editor-area h3, .editor-area h4 { margin: 1.5rem 0 0.75rem; color: #111827; font-weight: 600; }
+    .editor-area h1:first-child, .editor-area h2:first-child, .editor-area h3:first-child, .editor-area h4:first-child { margin-top: 0; }
+    .editor-area h1 { font-size: 2rem; }
+    .editor-area h2 { font-size: 1.5rem; }
+    .editor-area h3 { font-size: 1.25rem; }
+    .editor-area h4 { font-size: 1.125rem; }
+    .editor-area p { margin: 0 0 1rem 0; }
+    .editor-area ul, .editor-area ol { margin: 1rem 0; padding-left: 2rem; }
+    .editor-area li { margin-bottom: 0.5rem; }
+    .editor-area blockquote { margin: 1.5rem 0; padding: 1rem 1.5rem; background: #f3f4f6; border-left: 4px solid #4f46e5; border-radius: 0 0.375rem 0.375rem 0; font-style: italic; color: #4b5563; }
+    .editor-area blockquote p { margin: 0; }
+    .editor-area pre { margin: 1.5rem 0; padding: 1rem; background: #1f2937; border-radius: 0.5rem; color: #e5e7eb; font-family: 'Monaco','Menlo', monospace; font-size: 0.875rem; overflow-x: auto; }
+    .editor-area a { color: #4f46e5; text-decoration: underline; }
+    .editor-area a:hover { color: #4338ca; }
+    .editor-area img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1rem 0; }
+    .editor-area hr { margin: 2rem 0; border: none; border-top: 1px solid #e5e7eb; }
+
+    /* SOURCE CODE VIEW */
+    .source-content { min-height: 400px; display: none; }
+    .source-textarea { width: 100%; min-height: 400px; padding: 1rem; background: #1f2937; border: none; color: #e5e7eb; font-family: 'Monaco','Menlo', monospace; font-size: 0.8125rem; line-height: 1.6; resize: vertical; }
+    .source-textarea:focus { outline: none; }
+
+    /* FOOTER */
+    .editor-footer { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: #f9fafb; border-top: 1px solid #e5e7eb; }
+    .editor-stats { display: flex; gap: 1.5rem; font-size: 0.8125rem; color: #6b7280; }
+    .editor-stats strong { color: #374151; }
+    .editor-actions { display: flex; gap: 0.5rem; }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: none; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+    .btn--primary { background: #4f46e5; color: white; }
+    .btn--primary:hover { background: #4338ca; }
+    .btn--primary:disabled { background: #c7d2fe; cursor: not-allowed; }
+    .btn--secondary { background: white; color: #374151; border: 1px solid #d1d5db; }
+    .btn--secondary:hover { background: #f3f4f6; }
+
+    /* MODALS */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; animation: fadeIn 0.2s ease; }
+    .modal-overlay.hidden { display: none; }
+    .modal-content { width: 100%; max-width: 450px; background: white; border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: slideUp 0.2s ease; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid #e5e7eb; }
+    .modal-header h3 { display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 1.125rem; color: #111827; }
+    .modal-header h3 i { color: #4f46e5; }
+    .modal-close { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: none; border-radius: 0.375rem; color: #6b7280; cursor: pointer; transition: all 0.15s; }
+    .modal-close:hover { background: #f3f4f6; color: #111827; }
+    .modal-body { padding: 1.25rem; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 0.5rem; padding: 1rem 1.25rem; border-top: 1px solid #e5e7eb; }
+
+    /* FORM ELEMENTS */
+    .form-group { margin-bottom: 1rem; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label { display: block; margin-bottom: 0.375rem; font-size: 0.875rem; font-weight: 500; color: #374151; }
+    .form-input { width: 100%; padding: 0.625rem 0.875rem; background: white; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.9375rem; color: #111827; transition: all 0.15s; }
+    .form-input:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+    .form-input::placeholder { color: #9ca3af; }
+    .image-preview { margin-top: 1rem; padding: 0.5rem; background: #f3f4f6; border-radius: 0.5rem; text-align: center; display: none; }
+    .image-preview img { max-width: 100%; max-height: 200px; border-radius: 0.375rem; }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .wysiwyg-container { padding: 1rem; }
+      .editor-toolbar { padding: 0.5rem; }
+      .toolbar-divider { display: none; }
+      .toolbar-select { width: 100%; margin: 0.25rem 0; }
+      .editor-footer { flex-direction: column; gap: 1rem; }
+      .editor-actions { width: 100%; }
+      .editor-actions .btn { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wysiwyg-container">
+  <h1 class="page-title">Éditeur WYSIWYG</h1>
+  <p class="page-subtitle">Éditeur de texte riche avec outils de formatage</p>
+
+  <div class="editor-wrapper">
+    <!-- Toolbar -->
+    <div class="editor-toolbar">
+      <!-- Undo / Redo -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Annuler (Ctrl+Z)" id="btnUndo"><i class="bi bi-arrow-counterclockwise"></i></button>
+        <button class="toolbar-btn" title="Rétablir (Ctrl+Shift+Z)" id="btnRedo"><i class="bi bi-arrow-clockwise"></i></button>
+      </div>
+      <div class="toolbar-divider"></div>
+
+      <!-- Headings -->
+      <div class="toolbar-group">
+        <select class="toolbar-select" id="headingSelect">
+          <option value="p">Paragraphe</option>
+          <option value="h1">Titre 1</option>
+          <option value="h2">Titre 2</option>
+          <option value="h3">Titre 3</option>
+          <option value="h4">Titre 4</option>
+        </select>
+      </div>
+      <div class="toolbar-divider"></div>
+
+      <!-- Text formatting -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Gras (Ctrl+B)" data-cmd="bold"><i class="bi bi-type-bold"></i></button>
+        <button class="toolbar-btn" title="Italique (Ctrl+I)" data-cmd="italic"><i class="bi bi-type-italic"></i></button>
+        <button class="toolbar-btn" title="Souligné (Ctrl+U)" data-cmd="underline"><i class="bi bi-type-underline"></i></button>
+        <button class="toolbar-btn" title="Barré" data-cmd="strikeThrough"><i class="bi bi-type-strikethrough"></i></button>
+      </div>
+      <div class="toolbar-divider"></div>
+
+      <!-- Alignment -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Aligner à gauche" data-cmd="justifyLeft"><i class="bi bi-text-left"></i></button>
+        <button class="toolbar-btn" title="Centrer" data-cmd="justifyCenter"><i class="bi bi-text-center"></i></button>
+        <button class="toolbar-btn" title="Aligner à droite" data-cmd="justifyRight"><i class="bi bi-text-right"></i></button>
+        <button class="toolbar-btn" title="Justifier" data-cmd="justifyFull"><i class="bi bi-justify"></i></button>
+      </div>
+      <div class="toolbar-divider"></div>
+
+      <!-- Lists -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Liste à puces" data-cmd="insertUnorderedList"><i class="bi bi-list-ul"></i></button>
+        <button class="toolbar-btn" title="Liste numérotée" data-cmd="insertOrderedList"><i class="bi bi-list-ol"></i></button>
+        <button class="toolbar-btn" title="Diminuer le retrait" id="btnOutdent"><i class="bi bi-text-indent-left"></i></button>
+        <button class="toolbar-btn" title="Augmenter le retrait" id="btnIndent"><i class="bi bi-text-indent-right"></i></button>
+      </div>
+      <div class="toolbar-divider"></div>
+
+      <!-- Insert elements -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Insérer un lien" id="btnLink"><i class="bi bi-link-45deg"></i></button>
+        <button class="toolbar-btn" title="Insérer une image" id="btnImage"><i class="bi bi-image"></i></button>
+        <button class="toolbar-btn" title="Citation" id="btnQuote"><i class="bi bi-quote"></i></button>
+        <button class="toolbar-btn" title="Bloc de code" id="btnCode"><i class="bi bi-code-slash"></i></button>
+        <button class="toolbar-btn" title="Ligne horizontale" id="btnHr"><i class="bi bi-dash-lg"></i></button>
+      </div>
+      <div class="toolbar-divider"></div>
+
+      <!-- Clear & Source -->
+      <div class="toolbar-group">
+        <button class="toolbar-btn" title="Effacer le formatage" id="btnClear"><i class="bi bi-eraser"></i></button>
+        <button class="toolbar-btn" title="Code source" id="btnSource"><i class="bi bi-code"></i></button>
+      </div>
+    </div>
+
+    <!-- Editor Content -->
+    <div class="editor-content" id="editorContent">
+      <div class="editor-area" id="editor" contenteditable="true">
+        <h2>Bienvenue dans l'éditeur WYSIWYG</h2>
+        <p>Cet éditeur vous permet de créer du <strong>contenu riche</strong> avec de nombreuses options de formatage.</p>
+        <p>Voici quelques fonctionnalités :</p>
+        <ul>
+          <li><em>Formatage du texte</em> (gras, italique, souligné)</li>
+          <li>Listes à puces et numérotées</li>
+          <li>Liens et citations</li>
+          <li>Alignement du texte</li>
+        </ul>
+        <blockquote>Essayez de sélectionner du texte et d'utiliser la barre d'outils pour le formater.</blockquote>
+      </div>
+    </div>
+
+    <!-- Source Code View -->
+    <div class="source-content" id="sourceContent">
+      <textarea class="source-textarea" id="sourceTextarea" placeholder="Code HTML..."></textarea>
+    </div>
+
+    <!-- Footer -->
+    <div class="editor-footer">
+      <div class="editor-stats">
+        <span><strong id="wordCount">0</strong> mots</span>
+        <span><strong id="charCount">0</strong> caractères</span>
+      </div>
+      <div class="editor-actions">
+        <button class="btn btn--secondary">Annuler</button>
+        <button class="btn btn--primary">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link Modal -->
+  <div class="modal-overlay hidden" id="linkModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="bi bi-link-45deg"></i> Insérer un lien</h3>
+        <button class="modal-close" id="linkModalClose"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>URL du lien</label>
+          <input type="url" class="form-input" id="linkUrl" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Texte du lien (optionnel)</label>
+          <input type="text" class="form-input" id="linkText" placeholder="Texte affiché" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--secondary" id="linkCancelBtn">Annuler</button>
+        <button class="btn btn--primary" id="linkInsertBtn">Insérer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal-overlay hidden" id="imageModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="bi bi-image"></i> Insérer une image</h3>
+        <button class="modal-close" id="imageModalClose"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>URL de l'image</label>
+          <input type="url" class="form-input" id="imageUrlInput" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Texte alternatif</label>
+          <input type="text" class="form-input" id="imageAltInput" placeholder="Description de l'image" />
+        </div>
+        <div class="image-preview" id="imagePreview">
+          <img id="imagePreviewImg" src="" alt="" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn--secondary" id="imageCancelBtn">Annuler</button>
+        <button class="btn btn--primary" id="imageInsertBtn">Insérer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var editor = document.getElementById('editor');
+  var editorContent = document.getElementById('editorContent');
+  var sourceContent = document.getElementById('sourceContent');
+  var sourceTextarea = document.getElementById('sourceTextarea');
+  var wordCountEl = document.getElementById('wordCount');
+  var charCountEl = document.getElementById('charCount');
+  var headingSelect = document.getElementById('headingSelect');
+  var showSourceCode = false;
+
+  // ── Stats ──────────────────────────────────────────────────
+  function updateStats() {
+    var text = editor.innerText || '';
+    charCountEl.textContent = text.length;
+    wordCountEl.textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
+  }
+
+  // ── Formatting state ──────────────────────────────────────
+  function updateFormattingState() {
+    var cmdBtns = document.querySelectorAll('[data-cmd]');
+    cmdBtns.forEach(function(btn) {
+      var cmd = btn.getAttribute('data-cmd');
+      if (document.queryCommandState(cmd)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // ── Exec command ──────────────────────────────────────────
+  function execCommand(command, value) {
+    document.execCommand(command, false, value || undefined);
+    updateStats();
+    updateFormattingState();
+    editor.focus();
+  }
+
+  // ── Command buttons (data-cmd) ────────────────────────────
+  document.querySelectorAll('[data-cmd]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      execCommand(btn.getAttribute('data-cmd'));
+    });
+  });
+
+  // ── Heading select ────────────────────────────────────────
+  headingSelect.addEventListener('change', function() {
+    var val = headingSelect.value;
+    if (val === 'p') {
+      document.execCommand('formatBlock', false, '<p>');
+    } else {
+      document.execCommand('formatBlock', false, '<' + val + '>');
+    }
+    editor.focus();
+  });
+
+  // ── Undo / Redo ───────────────────────────────────────────
+  document.getElementById('btnUndo').addEventListener('click', function() {
+    document.execCommand('undo', false);
+    updateStats();
+  });
+  document.getElementById('btnRedo').addEventListener('click', function() {
+    document.execCommand('redo', false);
+    updateStats();
+  });
+
+  // ── Indent / Outdent ──────────────────────────────────────
+  document.getElementById('btnIndent').addEventListener('click', function() { execCommand('indent'); });
+  document.getElementById('btnOutdent').addEventListener('click', function() { execCommand('outdent'); });
+
+  // ── Quote / Code / HR ─────────────────────────────────────
+  document.getElementById('btnQuote').addEventListener('click', function() {
+    document.execCommand('formatBlock', false, '<blockquote>');
+    editor.focus();
+  });
+  document.getElementById('btnCode').addEventListener('click', function() {
+    document.execCommand('formatBlock', false, '<pre>');
+    editor.focus();
+  });
+  document.getElementById('btnHr').addEventListener('click', function() {
+    document.execCommand('insertHorizontalRule', false);
+    editor.focus();
+  });
+
+  // ── Clear formatting ──────────────────────────────────────
+  document.getElementById('btnClear').addEventListener('click', function() {
+    document.execCommand('removeFormat', false);
+    updateFormattingState();
+    editor.focus();
+  });
+
+  // ── Source code toggle ────────────────────────────────────
+  var btnSource = document.getElementById('btnSource');
+  btnSource.addEventListener('click', function() {
+    if (showSourceCode) {
+      // Apply source back to editor
+      editor.innerHTML = sourceTextarea.value;
+      sourceContent.style.display = 'none';
+      editorContent.style.display = '';
+      btnSource.classList.remove('active');
+    } else {
+      sourceTextarea.value = editor.innerHTML;
+      editorContent.style.display = 'none';
+      sourceContent.style.display = '';
+      btnSource.classList.add('active');
+    }
+    showSourceCode = !showSourceCode;
+    updateStats();
+  });
+
+  // ── Link modal ────────────────────────────────────────────
+  var linkModal = document.getElementById('linkModal');
+  var linkUrlInput = document.getElementById('linkUrl');
+  var linkTextInput = document.getElementById('linkText');
+  var savedSelection = null;
+
+  function saveSelection() {
+    var sel = window.getSelection();
+    if (sel.rangeCount > 0) {
+      savedSelection = sel.getRangeAt(0).cloneRange();
+    }
+  }
+
+  function restoreSelection() {
+    if (savedSelection) {
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(savedSelection);
+    }
+  }
+
+  document.getElementById('btnLink').addEventListener('click', function() {
+    saveSelection();
+    var sel = window.getSelection();
+    linkTextInput.value = sel ? sel.toString() : '';
+    linkUrlInput.value = '';
+    linkModal.classList.remove('hidden');
+  });
+
+  function closeLinkModal() {
+    linkModal.classList.add('hidden');
+    linkUrlInput.value = '';
+    linkTextInput.value = '';
+  }
+
+  document.getElementById('linkModalClose').addEventListener('click', closeLinkModal);
+  document.getElementById('linkCancelBtn').addEventListener('click', closeLinkModal);
+  linkModal.addEventListener('click', function(e) { if (e.target === linkModal) closeLinkModal(); });
+
+  document.getElementById('linkInsertBtn').addEventListener('click', function() {
+    var url = linkUrlInput.value.trim();
+    if (!url) return;
+    restoreSelection();
+    editor.focus();
+    var text = linkTextInput.value.trim();
+    if (text) {
+      var linkHtml = '<a href="' + url + '" target="_blank">' + text + '</a>';
+      document.execCommand('insertHTML', false, linkHtml);
+    } else {
+      document.execCommand('createLink', false, url);
+    }
+    closeLinkModal();
+  });
+
+  // ── Image modal ───────────────────────────────────────────
+  var imageModal = document.getElementById('imageModal');
+  var imageUrlInput = document.getElementById('imageUrlInput');
+  var imageAltInput = document.getElementById('imageAltInput');
+  var imagePreview = document.getElementById('imagePreview');
+  var imagePreviewImg = document.getElementById('imagePreviewImg');
+
+  document.getElementById('btnImage').addEventListener('click', function() {
+    saveSelection();
+    imageUrlInput.value = '';
+    imageAltInput.value = '';
+    imagePreview.style.display = 'none';
+    imageModal.classList.remove('hidden');
+  });
+
+  imageUrlInput.addEventListener('input', function() {
+    var url = imageUrlInput.value.trim();
+    if (url) {
+      imagePreviewImg.src = url;
+      imagePreviewImg.alt = imageAltInput.value || '';
+      imagePreview.style.display = 'block';
+    } else {
+      imagePreview.style.display = 'none';
+    }
+  });
+
+  function closeImageModal() {
+    imageModal.classList.add('hidden');
+    imageUrlInput.value = '';
+    imageAltInput.value = '';
+    imagePreview.style.display = 'none';
+  }
+
+  document.getElementById('imageModalClose').addEventListener('click', closeImageModal);
+  document.getElementById('imageCancelBtn').addEventListener('click', closeImageModal);
+  imageModal.addEventListener('click', function(e) { if (e.target === imageModal) closeImageModal(); });
+
+  document.getElementById('imageInsertBtn').addEventListener('click', function() {
+    var url = imageUrlInput.value.trim();
+    if (!url) return;
+    restoreSelection();
+    editor.focus();
+    var alt = imageAltInput.value.trim();
+    var imgHtml = '<img src="' + url + '" alt="' + alt + '" style="max-width: 100%; height: auto;">';
+    document.execCommand('insertHTML', false, imgHtml);
+    closeImageModal();
+  });
+
+  // ── Editor events ─────────────────────────────────────────
+  editor.addEventListener('input', function() {
+    updateStats();
+    updateFormattingState();
+  });
+
+  editor.addEventListener('mouseup', function() {
+    updateFormattingState();
+  });
+
+  // ── Keyboard shortcuts ────────────────────────────────────
+  editor.addEventListener('keydown', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+      switch (e.key.toLowerCase()) {
+        case 'b':
+          e.preventDefault();
+          execCommand('bold');
+          break;
+        case 'i':
+          e.preventDefault();
+          execCommand('italic');
+          break;
+        case 'u':
+          e.preventDefault();
+          execCommand('underline');
+          break;
+        case 'z':
+          if (e.shiftKey) {
+            e.preventDefault();
+            document.execCommand('redo', false);
+            updateStats();
+          }
+          break;
+      }
+    }
+  });
+
+  // ── Initial stats ─────────────────────────────────────────
+  updateStats();
+})();
+</script>
+</body>
+</html>

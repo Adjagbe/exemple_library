@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-// ONBOARDING COMPONENT - Premium UI Library
-// User onboarding and tutorial wizard
-// ═══════════════════════════════════════════════════════════════
-
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

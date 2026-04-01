@@ -1,0 +1,14 @@
+<div class="checkbox-showcase">
+  <section class="showcase-section">
+    <h3 class="section-title">Basic Checkboxes</h3>
+    <div class="checkbox-group">
+      <label class="checkbox-label" *ngFor="let item of basicCheckboxes" [class.disabled]="item.disabled">
+        <input type="checkbox" [(ngModel)]="item.checked" [disabled]="item.disabled || false">
+        <span class="checkbox-custom">
+          <i class="bi bi-check"></i>
+        </span>
+        <span class="checkbox-text">{{ item.label }}</span>
+      </label>
+    </div>
+  </section>
+</div>
