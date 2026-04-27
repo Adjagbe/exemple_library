@@ -1,0 +1,149 @@
+<section class="banner" [class.banner--loaded]="isLoaded">
+
+  <!-- Ambient Background Layers -->
+  <div class="banner__bg">
+    <div class="banner__bg-orb banner__bg-orb--1"></div>
+    <div class="banner__bg-orb banner__bg-orb--2"></div>
+    <div class="banner__bg-orb banner__bg-orb--3"></div>
+    <div class="banner__bg-grid"></div>
+    <div class="banner__bg-noise"></div>
+  </div>
+
+  <!-- Floating Tags -->
+  <div class="banner__tags">
+    <span class="banner__tag banner__tag--1">AI-Powered</span>
+    <span class="banner__tag banner__tag--2">Next-Gen</span>
+    <span class="banner__tag banner__tag--3">2026</span>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container-fluid banner__container">
+    <div class="row align-items-center banner__row">
+
+      <!-- Left: Text Content -->
+      <div class="col-lg-6 banner__content">
+
+        <div class="banner__eyebrow">
+          <span class="banner__eyebrow-dot"></span>
+          <span class="banner__eyebrow-text">New era of design</span>
+        </div>
+
+        <h1 class="banner__title">
+          <span class="banner__title-line banner__title-line--1">Design</span>
+          <span class="banner__title-line banner__title-line--2">
+            <span class="banner__title-outline">Beyond</span>
+          </span>
+          <span class="banner__title-line banner__title-line--3">
+            Limits
+            <span class="banner__title-accent">.</span>
+          </span>
+        </h1>
+
+        <p class="banner__description">
+          Crafted for those who refuse the ordinary. Experience interfaces
+          that breathe, think, and feel — where every pixel tells a story.
+        </p>
+
+        <div class="banner__actions">
+          <button class="banner__btn banner__btn--primary" (click)="onPrimary()">
+            <span class="banner__btn-text">Explore Now</span>
+            <span class="banner__btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+            <span class="banner__btn-glow"></span>
+          </button>
+          <button class="banner__btn banner__btn--ghost" (click)="onSecondary()">
+            <span class="banner__btn-text">Watch Demo</span>
+            <span class="banner__btn-play">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5,3 19,12 5,21"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <div class="banner__stats">
+          <div class="banner__stat" *ngFor="let stat of stats">
+            <span class="banner__stat-value">{{ stat.value }}</span>
+            <span class="banner__stat-label">{{ stat.label }}</span>
+          </div>
+          <div class="banner__stat-divider"></div>
+        </div>
+
+      </div>
+
+      <!-- Right: Visual Card -->
+      <div class="col-lg-6 banner__visual">
+
+        <div class="banner__card-wrapper">
+          <div class="banner__card" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+
+            <!-- Card Glow -->
+            <div class="banner__card-glow" [style.background]="cardGlow"></div>
+
+            <!-- Card Header -->
+            <div class="banner__card-header">
+              <div class="banner__card-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="banner__card-label">design.system</span>
+            </div>
+
+            <!-- Card Visual -->
+            <div class="banner__card-visual">
+              <div class="banner__canvas">
+                <div class="banner__shape banner__shape--ring"></div>
+                <div class="banner__shape banner__shape--cube"></div>
+                <div class="banner__shape banner__shape--sphere"></div>
+                <div class="banner__shape banner__shape--line"></div>
+                <div class="banner__shape banner__shape--dot-cluster">
+                  <span *ngFor="let d of dots"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="banner__card-footer">
+              <div class="banner__card-metric" *ngFor="let metric of metrics">
+                <span class="banner__card-metric-val">{{ metric.value }}</span>
+                <span class="banner__card-metric-name">{{ metric.name }}</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Floating Badges -->
+          <div class="banner__badge banner__badge--top">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span>Performanc</span>
+          </div>
+
+          <div class="banner__badge banner__badge--bottom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+            <span>Real-time</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="banner__bottom">
+    <div class="banner__scroll-hint">
+      <span class="banner__scroll-line"></span>
+      <span class="banner__scroll-text">Scroll to discover</span>
+    </div>
+    <div class="banner__logos">
+      <span *ngFor="let logo of logos" class="banner__logo-item">{{ logo }}</span>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:768px){body{grid-template-columns:1fr}}
+.fl2__left{background:linear-gradient(135deg,#1e1b4b,#312e81);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:3rem;gap:2rem}
+@media(max-width:768px){.fl2__left{display:none}}
+.fl2__brand{font-size:2.5rem;font-weight:900;color:#fff;letter-spacing:-.03em}
+.fl2__brand em{font-style:normal;color:#818cf8}
+.fl2__tagline{font-size:1.1rem;color:#a5b4fc;text-align:center;line-height:1.6;max-width:340px}
+.fl2__right{display:flex;align-items:center;justify-content:center;padding:3rem 2rem;background:#0f172a}
+.fl2__box{width:100%;max-width:400px}
+.fl2__title{font-size:1.75rem;font-weight:800;color:#f1f5f9;margin-bottom:.5rem}
+.fl2__sub{font-size:.9rem;color:#64748b;margin-bottom:2rem}
+.fl2__social{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem}
+.fl2__soc-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem;border-radius:.75rem;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#e2e8f0;font-size:.875rem;font-weight:600;cursor:pointer;transition:all .2s}
+.fl2__soc-btn:hover{background:rgba(255,255,255,.08)}
+.fl2__divider{display:flex;align-items:center;gap:.875rem;margin-bottom:1.5rem}
+.fl2__divider::before,.fl2__divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.fl2__divider span{font-size:.75rem;color:#475569}
+.fl2__field{margin-bottom:1rem}
+.fl2__label{display:block;font-size:.8125rem;font-weight:600;color:#94a3b8;margin-bottom:.5rem}
+.fl2__input{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:.75rem;color:#f1f5f9;font-size:.9375rem;font-family:inherit;outline:none;transition:border-color .2s}
+.fl2__input:focus{border-color:#6366f1}
+.fl2__row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.fl2__check{display:flex;align-items:center;gap:.5rem;font-size:.8125rem;color:#94a3b8;cursor:pointer}
+.fl2__check input{accent-color:#6366f1}
+.fl2__link{font-size:.8125rem;color:#818cf8;text-decoration:none}
+.fl2__submit{width:100%;padding:.9rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:700;font-size:.9375rem;border:none;border-radius:.875rem;cursor:pointer;transition:opacity .2s}
+.fl2__submit:hover{opacity:.85}
+</style></head>
+<body>
+<div class="fl2__left">
+  <div class="fl2__brand">Flux<em>UI</em></div>
+  <p class="fl2__tagline">The modern component library trusted by 50,000+ developers worldwide.</p>
+</div>
+<div class="fl2__right">
+  <div class="fl2__box">
+    <h1 class="fl2__title">Welcome back</h1>
+    <p class="fl2__sub">Sign in to continue to your workspace.</p>
+    <div class="fl2__social">
+      <button class="fl2__soc-btn">🔵 Google</button>
+      <button class="fl2__soc-btn">⬛ GitHub</button>
+    </div>
+    <div class="fl2__divider"><span>or continue with email</span></div>
+    <div class="fl2__field"><label class="fl2__label">Email</label><input class="fl2__input" type="email" placeholder="you@company.com"></div>
+    <div class="fl2__field"><label class="fl2__label">Password</label><input class="fl2__input" type="password" placeholder="••••••••"></div>
+    <div class="fl2__row"><label class="fl2__check"><input type="checkbox"> Remember me</label><a href="#" class="fl2__link">Forgot password?</a></div>
+    <button class="fl2__submit">Sign in</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

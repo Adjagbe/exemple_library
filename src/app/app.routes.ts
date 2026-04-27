@@ -193,10 +193,67 @@ import { Timeline3Component } from './ui-library/others/timeline-3/timeline-3';
 import { Widget1Component } from './ui-library/others/widget-1/widget-1';
 import { Widget2Component } from './ui-library/others/widget-2/widget-2';
 import { Widget3Component } from './ui-library/others/widget-3/widget-3';
+import { Banner } from './ui-library/banner/banner';
+import { Banner1 } from './ui-library/banners/banner-1/banner-1';
+import { Banner2 } from './ui-library/banners/banner-2/banner-2';
+import { Banner3 } from './ui-library/banners/banner-3/banner-3';
+import { Breadcrumb1 } from './ui-library/breadcrumbs/breadcrumb-1/breadcrumb-1';
+import { Breadcrumb2 } from './ui-library/breadcrumbs/breadcrumb-2/breadcrumb-2';
+import { CommandPalette1 } from './ui-library/command-palette/command-palette-1/command-palette-1';
+import { CookieBanner1 } from './ui-library/cookie-banners/cookie-banner-1/cookie-banner-1';
+import { DashboardCard1 } from './ui-library/dashboard-widgets/dashboard-card-1/dashboard-card-1';
+import { DashboardCard2 } from './ui-library/dashboard-widgets/dashboard-card-2/dashboard-card-2';
+import { DashboardCard3 } from './ui-library/dashboard-widgets/dashboard-card-3/dashboard-card-3';
+import { DataTable1 } from './ui-library/data-tables/data-table-1/data-table-1';
+import { DataTable2 } from './ui-library/data-tables/data-table-2/data-table-2';
+import { EmptyState1 } from './ui-library/empty-states/empty-state-1/empty-state-1';
+import { EmptyState2 } from './ui-library/empty-states/empty-state-2/empty-state-2';
+import { Feature1 } from './ui-library/features/feature-1/feature-1';
+import { TreeView1Component } from './ui-library/others/tree-view-1/tree-view-1';
+import { Feature2 } from './ui-library/features/feature-2/feature-2';
+import { Feature3 } from './ui-library/features/feature-3/feature-3';
+import { FormLogin1 } from './ui-library/forms-ui/form-login-1/form-login-1';
+import { FormLogin2 } from './ui-library/forms-ui/form-login-2/form-login-2';
+import { FormLogin3 } from './ui-library/forms-ui/form-login-3/form-login-3';
+import { FormRegister1 } from './ui-library/forms-ui/form-register-1/form-register-1';
+import { FormRegister2 } from './ui-library/forms-ui/form-register-2/form-register-2';
+import { FormReset1 } from './ui-library/forms-ui/form-reset-1/form-reset-1';
+import { FormReset2 } from './ui-library/forms-ui/form-reset-2/form-reset-2';
+import { Kanban1 } from './ui-library/kanban/kanban-1/kanban-1';
+import { Onboarding1 } from './ui-library/onboarding/onboarding-1/onboarding-1';
+import { PageNotFound1 } from './ui-library/pages/page-not-found-1/page-not-found-1';
+import { PageNotFound2 } from './ui-library/pages/page-not-found-2/page-not-found-2';
+import { PricingCard1 } from './ui-library/pricing-cards/pricing-card-1/pricing-card-1';
+import { PricingCard2 } from './ui-library/pricing-cards/pricing-card-2/pricing-card-2';
+import { ProfileCard1 } from './ui-library/profile-cards/profile-card-1/profile-card-1';
+import { ProfileCard2 } from './ui-library/profile-cards/profile-card-2/profile-card-2';
+import { Progress1 } from './ui-library/progress-bars/progress-1/progress-1';
+import { Progress2 } from './ui-library/progress-bars/progress-2/progress-2';
+import { SearchBar1 } from './ui-library/search-bars/search-bar-1/search-bar-1';
+import { SearchBar2 } from './ui-library/search-bars/search-bar-2/search-bar-2';
+import { SidebarNav1 } from './ui-library/sidebar-navs/sidebar-nav-1/sidebar-nav-1';
+import { SidebarNav2 } from './ui-library/sidebar-navs/sidebar-nav-2/sidebar-nav-2';
+import { Stats1 } from './ui-library/stats/stats-1/stats-1';
+import { Stats2 } from './ui-library/stats/stats-2/stats-2';
+import { Stepper1 } from './ui-library/steppers/stepper-1/stepper-1';
+import { Stepper2 } from './ui-library/steppers/stepper-2/stepper-2';
+import { Stepper3 } from './ui-library/steppers/stepper-3/stepper-3';
+import { Testimonial1 } from './ui-library/testimonials/testimonial-1/testimonial-1';
+import { Testimonial2 } from './ui-library/testimonials/testimonial-2/testimonial-2';
+import { Upload1 } from './ui-library/uploaders/upload-1/upload-1';
+import { Upload2 } from './ui-library/uploaders/upload-2/upload-2';
+import { Alert1 } from './ui-library/alerts/alert-1/alert-1';
+import { Alert2 } from './ui-library/alerts/alert-2/alert-2';
+import { Alert3 } from './ui-library/alerts/alert-3/alert-3';
+import { features } from 'process';
+import { LoginModerne } from './ui-library/moderne/login-moderne/login-moderne';
+import { RegisterModerne } from './ui-library/moderne/register-moderne/register-moderne';
+import { StepperRegister } from './ui-library/moderne/stepper-register/stepper-register';
+import { StepperLogin } from './ui-library/moderne/stepper-login/stepper-login';
 
 
 export const routes: Routes = [
     {
-        path: '', component:Widget3Component
+        path: '', component: StepperLogin
     }
 ];

@@ -1,0 +1,6 @@
+<div class="al2">
+  <div class="al2__toast" *ngFor="let t of toasts" [style.border-left-color]="t.accent">
+    <span class="al2__icon">{{ t.icon }}</span>
+    <p class="al2__msg">{{ t.msg }}</p>
+  </div>
+</div>

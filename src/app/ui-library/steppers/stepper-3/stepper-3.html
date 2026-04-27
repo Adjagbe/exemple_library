@@ -1,0 +1,20 @@
+<div class="stp3">
+  <div class="stp3__top">
+    <span class="stp3__count">Step {{ current }} of {{ total }}</span>
+    <span class="stp3__pct">{{ pct }}%</span>
+  </div>
+  <div class="stp3__bar"><div class="stp3__fill" [style.width]="pct + '%'"></div></div>
+  <div class="stp3__pills">
+    <span *ngFor="let l of labels; let i = index" class="stp3__pill"
+          [class.stp3__pill--done]="i+1 < current"
+          [class.stp3__pill--active]="i+1 === current">{{ l }}</span>
+  </div>
+  <div class="stp3__panel">
+    <h3>{{ labels[current - 1] }}</h3>
+    <p>Complete your {{ labels[current - 1].toLowerCase() }} information to continue.</p>
+  </div>
+  <div class="stp3__nav">
+    <button class="stp3__btn stp3__btn--ghost" (click)="prev()" [disabled]="current === 1">Back</button>
+    <button class="stp3__btn stp3__btn--primary" (click)="next()" [disabled]="current === total">{{ current === total ? '✓ Done' : 'Continue' }}</button>
+  </div>
+</div>

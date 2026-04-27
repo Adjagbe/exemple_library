@@ -1,0 +1,74 @@
+<div class="tv1">
+  <div class="tv1__panel">
+    <div class="tv1__panel-head">
+      <span class="tv1__panel-title">
+        <span class="tv1__panel-icon">📂</span>
+        Explorer
+      </span>
+      <div class="tv1__panel-actions">
+        <button class="tv1__action-btn" title="New file">＋</button>
+        <button class="tv1__action-btn" title="Collapse all">⊟</button>
+      </div>
+    </div>
+    <div class="tv1__tree">
+      <ng-container *ngFor="let node of tree">
+        <ng-container *ngTemplateOutlet="nodeTemplate; context: { node: node, depth: 0 }"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="tv1__preview">
+    <div class="tv1__preview-empty" *ngIf="!selectedNode">
+      <div class="tv1__preview-icon">🗂️</div>
+      <p class="tv1__preview-hint">Select a file or folder to see details</p>
+    </div>
+    <div class="tv1__preview-content" *ngIf="selectedNode">
+      <div class="tv1__preview-header">
+        <span class="tv1__preview-file-icon">{{ selectedNode.icon }}</span>
+        <div>
+          <div class="tv1__preview-name">{{ selectedNode.label }}</div>
+          <div class="tv1__preview-type">{{ selectedNode.type | titlecase }}</div>
+        </div>
+      </div>
+      <div class="tv1__preview-meta">
+        <div class="tv1__meta-row">
+          <span class="tv1__meta-key">Type</span>
+          <span class="tv1__meta-val">{{ selectedNode.type }}</span>
+        </div>
+        <div class="tv1__meta-row" *ngIf="selectedNode.type === 'folder'">
+          <span class="tv1__meta-key">Items</span>
+          <span class="tv1__meta-val">{{ selectedNode.children?.length ?? 0 }} children</span>
+        </div>
+        <div class="tv1__meta-row">
+          <span class="tv1__meta-key">ID</span>
+          <span class="tv1__meta-val">#{{ selectedNode.id }}</span>
+        </div>
+      </div>
+      <div class="tv1__preview-badge" [class.tv1__preview-badge--folder]="selectedNode.type === 'folder'"
+           [class.tv1__preview-badge--file]="selectedNode.type === 'file'">
+        {{ selectedNode.type === 'folder' ? '📁 Folder' : '📄 File' }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #nodeTemplate let-node="node" let-depth="depth">
+  <div
+    class="tv1__node"
+    [class.tv1__node--selected]="node.selected"
+    [class.tv1__node--folder]="node.type === 'folder'"
+    [style.padding-left.px]="16 + depth * 18"
+    (click)="select(node); toggle(node)">
+    <span class="tv1__node-chevron" *ngIf="node.type === 'folder'">
+      {{ node.expanded ? '▾' : '▸' }}
+    </span>
+    <span class="tv1__node-spacer" *ngIf="node.type === 'file'"></span>
+    <span class="tv1__node-icon">{{ node.icon }}</span>
+    <span class="tv1__node-label">{{ node.label }}</span>
+  </div>
+  <ng-container *ngIf="node.expanded && node.children">
+    <ng-container *ngFor="let child of node.children">
+      <ng-container *ngTemplateOutlet="nodeTemplate; context: { node: child, depth: depth + 1 }"></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>

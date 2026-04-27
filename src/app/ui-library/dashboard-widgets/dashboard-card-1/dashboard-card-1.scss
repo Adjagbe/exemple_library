@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+.dc1 {
+  font-family: 'Inter', sans-serif; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; padding: 2rem; background: #f8fafc; min-height: 100vh; align-content: start;
+  @media (max-width: 900px) { grid-template-columns: repeat(2,1fr); }
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+  &__card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.5rem; }
+  &__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  &__icon { font-size: 1.5rem; }
+  &__badge { font-size: .72rem; font-weight: 700; padding: .2rem .625rem; border-radius: 9999px; &--up { background: #dcfce7; color: #16a34a; } &--dn { background: #fee2e2; color: #dc2626; } }
+  &__val { font-size: 1.625rem; font-weight: 900; color: #0f172a; margin-bottom: .25rem; }
+  &__lbl { font-size: .8rem; color: #94a3b8; margin-bottom: 1rem; }
+  &__sparkline { height: 6px; background: #f1f5f9; border-radius: 9999px; }
+  &__spark-fill { height: 100%; border-radius: 9999px; background: #e5e7eb; transition: width .4s; &--up { background: linear-gradient(90deg, #6366f1, #8b5cf6); } }
+}

@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+.pc2 {
+  min-height: 100vh; background: #06060f; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; padding: 5rem 2rem;
+  &__bg { position: absolute; inset: 0; pointer-events: none; }
+  &__orb { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(99,102,241,.18) 0%, transparent 70%); top: 0; left: 50%; transform: translateX(-50%); filter: blur(80px); border-radius: 50%; }
+  &__inner { position: relative; z-index: 1; text-align: center; }
+  &__h { font-size: 2.5rem; font-weight: 900; color: #f9fafb; margin-bottom: .5rem; }
+  &__sub { color: rgba(249,250,251,.4); margin-bottom: 3rem; font-size: 1rem; }
+  &__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; @media (max-width: 800px) { grid-template-columns: 1fr; } }
+  &__card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 1.5rem; padding: 2rem; text-align: left; position: relative; transition: transform .2s; &:hover { transform: translateY(-4px); } &--hot { background: rgba(255,255,255,.07); border-color: rgba(139,92,246,.4); box-shadow: 0 0 40px rgba(139,92,246,.12); } }
+  &__hot { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #8b5cf6, #ec4899); color: #fff; font-size: .7rem; font-weight: 700; padding: .25rem .875rem; border-radius: 9999px; white-space: nowrap; }
+  &__name { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--accent, #6366f1); margin-bottom: .875rem; }
+  &__price { font-size: 2.5rem; font-weight: 900; color: #f9fafb; margin-bottom: 1.25rem; small { font-size: .9rem; color: rgba(249,250,251,.4); font-weight: 400; } }
+  &__feats { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.75rem; li { font-size: .875rem; color: rgba(249,250,251,.6); } }
+  &__cta { width: 100%; padding: .875rem; border-radius: .875rem; font-size: .875rem; font-weight: 700; cursor: pointer; background: rgba(255,255,255,.07); color: #e2e8f0; border: 1px solid rgba(255,255,255,.1); transition: all .2s; &:hover { background: rgba(255,255,255,.12); } &--hot { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; border: none; box-shadow: 0 4px 20px rgba(139,92,246,.4); &:hover { opacity: .9; } } }
+}

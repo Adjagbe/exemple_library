@@ -1,0 +1,17 @@
+<div class="frst1">
+  <div class="frst1__card">
+    <div class="frst1__icon" *ngIf="!sent">🔑</div>
+    <div class="frst1__icon" *ngIf="sent">✉️</div>
+    <h2 class="frst1__h">{{ sent ? 'Check your email' : 'Forgot password?' }}</h2>
+    <p class="frst1__p" *ngIf="!sent">Enter your email and we'll send you a link to reset your password.</p>
+    <p class="frst1__p" *ngIf="sent">We sent a reset link to <strong>{{ email }}</strong>. Check your inbox.</p>
+    <form *ngIf="!sent" class="frst1__form" (ngSubmit)="send()">
+      <div class="frst1__field">
+        <label>Email address</label>
+        <input type="email" [(ngModel)]="email" name="e" placeholder="you@example.com" required>
+      </div>
+      <button class="frst1__btn" type="submit">Send reset link</button>
+    </form>
+    <a href="#" class="frst1__back">← Back to sign in</a>
+  </div>
+</div>

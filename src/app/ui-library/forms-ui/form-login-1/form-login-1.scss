@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.fl1 {
+  min-height: 100vh; background: #f1f5f9; display: flex; align-items: center; justify-content: center; padding: 2rem; font-family: 'Inter', sans-serif;
+  &__card { background: #fff; border-radius: 1.5rem; padding: 2.5rem; width: 100%; max-width: 420px; box-shadow: 0 4px 32px rgba(0,0,0,.08); }
+  &__logo { font-size: 2.5rem; text-align: center; margin-bottom: 1.25rem; }
+  &__title { font-size: 1.5rem; font-weight: 800; color: #0f172a; text-align: center; margin-bottom: .25rem; }
+  &__sub { font-size: .875rem; color: #94a3b8; text-align: center; margin-bottom: 2rem; }
+  &__form { display: flex; flex-direction: column; gap: 1.25rem; }
+  &__field { display: flex; flex-direction: column; gap: .5rem; label { font-size: .8125rem; font-weight: 600; color: #374151; display: flex; justify-content: space-between; } input { padding: .75rem 1rem; border: 1.5px solid #e5e7eb; border-radius: .75rem; font-size: .9rem; outline: none; transition: border-color .15s; font-family: inherit; &:focus { border-color: #6366f1; } } }
+  &__forgot { font-size: .78rem; color: #6366f1; text-decoration: none; }
+  &__pwd { position: relative; input { width: 100%; padding-right: 2.75rem; } }
+  &__eye { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1rem; }
+  &__submit { background: #6366f1; color: #fff; border: none; padding: .875rem; border-radius: .75rem; font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: .25rem; &:hover:not(:disabled) { background: #4f46e5; } &:disabled { opacity: .6; cursor: default; } }
+  &__spin { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: inline-block; }
+  &__signup { text-align: center; font-size: .8125rem; color: #94a3b8; margin-top: 1.5rem; a { color: #6366f1; text-decoration: none; font-weight: 600; } }
+}
+@keyframes spin { to { transform: rotate(360deg); } }

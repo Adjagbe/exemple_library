@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.dt1 {
+  font-family: 'Inter', sans-serif; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; overflow: hidden; max-width: 900px; margin: 2rem auto;
+  &__head { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 1.75rem; border-bottom: 1px solid #f1f5f9; h3 { font-size: .9375rem; font-weight: 800; color: #0f172a; } }
+  &__add { padding: .5rem 1.25rem; background: #6366f1; color: #fff; border: none; border-radius: .75rem; font-size: .8125rem; font-weight: 700; cursor: pointer; transition: opacity .2s; &:hover { opacity: .87; } }
+  &__wrap { overflow-x: auto; }
+  &__table { width: 100%; border-collapse: collapse; font-size: .8125rem; th { text-align: left; padding: .875rem 1rem; color: #9ca3af; font-weight: 600; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #f1f5f9; } td { padding: .875rem 1rem; border-bottom: 1px solid #f9fafb; color: #374151; } tr:last-child td { border-bottom: none; } tr:hover td { background: #f9fafb; } }
+  &__name-cell { display: flex; align-items: center; gap: .75rem; font-weight: 600; color: #0f172a; }
+  &__av { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  &__dim { color: #9ca3af; }
+  &__badge { padding: .2rem .6rem; border-radius: 999px; font-size: .7rem; font-weight: 700; &--active { background: #d1fae5; color: #065f46; } &--inactive { background: #f1f5f9; color: #6b7280; } &--pending { background: #fef3c7; color: #92400e; } }
+  &__action { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 1.1rem; padding: 0; &:hover { color: #374151; } }
+}

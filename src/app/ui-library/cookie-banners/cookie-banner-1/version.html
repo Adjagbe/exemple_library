@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cookie Banner 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:700px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:1.5rem}
+.cb1-demo-lbl{font-size:.875rem;color:#94a3b8;font-weight:500}
+.cb1-btn-show{padding:.75rem 1.5rem;background:#4f46e5;color:#fff;font-weight:700;font-size:.875rem;border:none;border-radius:.875rem;cursor:pointer;transition:background .2s}
+.cb1-btn-show:hover{background:#4338ca}
+/* Banner */
+.cb1{position:fixed;bottom:1.5rem;left:1.5rem;right:1.5rem;max-width:700px;margin:0 auto;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:1.25rem;padding:1.5rem;box-shadow:0 16px 48px rgba(0,0,0,.25);display:none;z-index:9999;animation:slideUp .35s ease}
+.cb1.show{display:block}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.cb1__head{display:flex;align-items:center;gap:.75rem;margin-bottom:.875rem}
+.cb1__ico{font-size:1.5rem}
+.cb1__title{font-size:1rem;font-weight:800;color:#f1f5f9}
+.cb1__text{font-size:.8125rem;color:#94a3b8;line-height:1.65;margin-bottom:1.25rem}
+.cb1__text a{color:#818cf8;text-decoration:none}
+.cb1__toggles{display:flex;flex-direction:column;gap:.625rem;margin-bottom:1.25rem}
+.cb1__row{display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:rgba(255,255,255,.04);border-radius:.75rem}
+.cb1__row-info{font-size:.8125rem;color:#94a3b8}
+.cb1__row-label{font-weight:600;color:#e2e8f0;margin-right:.375rem}
+.cb1__switch{position:relative;width:2.75rem;height:1.5rem;flex-shrink:0}
+.cb1__switch input{opacity:0;width:0;height:0}
+.cb1__slider{position:absolute;cursor:pointer;inset:0;background:#334155;border-radius:999px;transition:.3s}
+.cb1__slider::before{content:'';position:absolute;height:1.1rem;width:1.1rem;left:.2rem;top:.2rem;background:#fff;border-radius:50%;transition:.3s}
+input:checked+.cb1__slider{background:#6366f1}
+input:checked+.cb1__slider::before{transform:translateX(1.25rem)}
+input:disabled+.cb1__slider{opacity:.5;cursor:not-allowed}
+.cb1__actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.cb1__btn-all{flex:1;padding:.7rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:700;font-size:.875rem;border:none;border-radius:.875rem;cursor:pointer;transition:opacity .2s}
+.cb1__btn-all:hover{opacity:.85}
+.cb1__btn-sel{flex:1;padding:.7rem;background:rgba(255,255,255,.06);color:#94a3b8;font-weight:600;font-size:.875rem;border:1px solid rgba(255,255,255,.08);border-radius:.875rem;cursor:pointer;transition:all .2s}
+.cb1__btn-sel:hover{background:rgba(255,255,255,.1)}
+.cb1__btn-rej{padding:.7rem 1.25rem;background:none;color:#475569;font-weight:600;font-size:.875rem;border:none;cursor:pointer;font-family:inherit;transition:color .2s}
+.cb1__btn-rej:hover{color:#94a3b8}
+</style></head>
+<body>
+<p class="cb1-demo-lbl">Cookie banner demo</p>
+<button class="cb1-btn-show" onclick="window.cbShow()">Show cookie banner</button>
+<div class="cb1" id="cb1">
+  <div class="cb1__head"><span class="cb1__ico">
+     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" 
+      xmlns:xlink="http://www.w3.org/1999/xlink" width="30" 
+      height="30" x="0" y="0" viewBox="0 0 64 64" style="enable-background:new 0 0 512 512; color: white;" 
+      xml:space="preserve" class=""><g><path d="M31.982 64c-.234 0-.469-.002-.704-.007-8.796-.188-16.927-3.868-22.894-10.363-11.114-12.1-11.137-31.073-.05-43.195A32.016 32.016
+         0 0 1 36.929.383c1.303.202 2.248 1.379 2.15 2.677a7.445 7.445 0 0 0 4.338 7.334 2.625 2.625 0 0 1 1.539 2.112 7.3 7.3 0 0 0 2.125 4.395 7.467 7.467 0 0 0 4.401 2.125 
+         2.62 2.62 0 0 1 2.104 1.536c.365.81.872 1.54 1.504 2.174a7.502 7.502 0 0 0 5.82 2.157c1.337-.096 2.474.848 2.678 2.15 1.568 10.07-1.793 20.38-8.993 27.582C48.533 60.687
+          40.525 64 31.982 64zm-.099-61.504c-8.23 0-16.093 3.434-21.732 9.6-10.233 11.188-10.213 28.702.046 39.87 5.508 5.995 13.013 9.392 21.133 9.565 8.166.188 15.777-2.899 21.525-8.647
+           6.647-6.649 9.75-16.166 8.3-25.46-2.959.119-5.766-.91-7.805-2.948a9.785 9.785 0 0 1-2.007-2.9c-2.349-.36-4.428-1.364-6.003-2.934a9.878 9.878 0 0 1-2.831-5.86c-1.18-.63-2.16-1.308-3.013-2.16a9.913 
+           9.913 0 0 1-2.875-7.746 29.833 29.833 0 0 0-4.738-.38zm21.842 51.259h.024zm-8.851-3.594a5.225 5.225 0 0 1-5.219-5.22c0-2.879 2.341-5.22 5.219-5.22s5.219 2.341 5.219 5.22a5.225 5.225 0 0 1-5.219 
+           5.22zm0-7.979a2.762 2.762 0 0 0-2.757 2.76c0 1.52 1.238 2.757 2.757 2.757s2.757-1.238 2.757-2.757a2.762 2.762 0 0 0-2.757-2.76zm-23.458 5.373c-3.883 0-7.041-3.159-7.041-7.041s3.158-7.041 7.04-7.041c3.884
+            0 7.043 3.159 7.043 7.041s-3.159 7.041-7.042 7.041zm0-11.62c-2.526 0-4.58 2.055-4.58 4.579s2.054 4.58 4.58 4.58 4.58-2.056 4.58-4.58-2.055-4.58-4.58-4.58zm15.727-4.997c-2.851 0-5.17-2.32-5.17-5.17s2.319-5.171 
+            5.17-5.171 5.17 2.32 5.17 5.17-2.319 5.171-5.17 5.171zm0-7.88c-1.493 0-2.71 1.215-2.71 2.71s1.217 2.708 2.71 2.708 2.71-1.215 2.71-2.709-1.217-2.709-2.71-2.709zm-18.956.136a4.353 4.353 0 0 1-4.347-4.349 4.353 4.353 0 0 1 4.347-4.347 4.353 4.353 0 0 1 4.349 4.347 4.354 4.354 0 0 1-4.349 4.349zm0-6.235c-1.04 0-1.886.847-1.886 1.886 0 1.041.846 1.887 1.886 1.887 1.041 0 1.887-.846 1.887-1.887 0-1.04-.846-1.886-1.887-1.886z" fill="#fff" opacity="1" data-original="#fff"></path></g></svg>
+  </span><span class="cb1__title">We value your privacy</span></div>
+  <p class="cb1__text">We use cookies to enhance your experience, analyze traffic, and personalize content. You can manage your preferences below. <a href="#">Learn more</a></p>
+  <div class="cb1__toggles">
+    <div class="cb1__row"><div class="cb1__row-info"><span class="cb1__row-label">Necessary</span>Required for the site to function</div><label class="cb1__switch"><input type="checkbox" checked disabled><span class="cb1__slider"></span></label></div>
+    <div class="cb1__row"><div class="cb1__row-info"><span class="cb1__row-label">Analytics</span>Help us improve our services</div><label class="cb1__switch"><input type="checkbox" id="cb1-analytics"><span class="cb1__slider"></span></label></div>
+    <div class="cb1__row"><div class="cb1__row-info"><span class="cb1__row-label">Marketing</span>Personalized ads & content</div><label class="cb1__switch"><input type="checkbox" id="cb1-marketing"><span class="cb1__slider"></span></label></div>
+  </div>
+  <div class="cb1__actions">
+    <button class="cb1__btn-all" onclick="window.cbAcceptAll()">Accept all</button>
+    <button class="cb1__btn-sel" onclick="window.cbSaveSelection()">Save preferences</button>
+    <button class="cb1__btn-rej" onclick="window.cbReject()">Reject all</button>
+  </div>
+</div>
+<script>(function(){
+  window.cbShow = function(){ document.getElementById('cb1').classList.add('show'); };
+  window.cbClose = function(){ document.getElementById('cb1').classList.remove('show'); };
+  window.cbAcceptAll = function(){ document.getElementById('cb1-analytics').checked=true; document.getElementById('cb1-marketing').checked=true; window.cbClose(); };
+  window.cbSaveSelection = function(){ window.cbClose(); };
+  window.cbReject = function(){ document.getElementById('cb1-analytics').checked=false; document.getElementById('cb1-marketing').checked=false; window.cbClose(); };
+  setTimeout(function(){ window.cbShow(); }, 800);
+})()</script>
+</body></html>

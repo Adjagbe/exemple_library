@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Feature 3 – Icon List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center}
+@media(max-width:768px){body{grid-template-columns:1fr}}
+.f3__left{padding:5rem 4rem}
+.f3__eyebrow{font-size:.8125rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6366f1;margin-bottom:1rem}
+.f3__h{font-size:clamp(1.875rem,3vw,2.75rem);font-weight:900;color:#0f172a;line-height:1.15;margin-bottom:1.25rem}
+.f3__p{font-size:1rem;color:#64748b;line-height:1.7;margin-bottom:2.5rem}
+.f3__btn{padding:.9rem 2.25rem;background:#4f46e5;color:#fff;font-weight:700;font-size:.9375rem;border:none;border-radius:.875rem;cursor:pointer;transition:background .2s}
+.f3__btn:hover{background:#4338ca}
+.f3__right{background:#f1f5f9;min-height:100vh;padding:4rem 3rem;display:flex;flex-direction:column;justify-content:center;gap:1.5rem}
+@media(max-width:768px){.f3__right{min-height:auto;padding:3rem 4rem 4rem}}
+.f3__item{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;background:#fff;border-radius:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.f3__ico{width:2.5rem;height:2.5rem;border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.f3__ico.a{background:#eef2ff} .f3__ico.b{background:#f0fdf4} .f3__ico.c{background:#fffbeb} .f3__ico.d{background:#fdf4ff}
+.f3__item-h{font-size:.9375rem;font-weight:700;color:#1e293b;margin-bottom:.25rem}
+.f3__item-p{font-size:.8125rem;color:#64748b;line-height:1.5}
+</style></head>
+<body>
+<div class="f3__left">
+  <div class="f3__eyebrow">Why choose us</div>
+  <h2 class="f3__h">Built for teams who move fast</h2>
+  <p class="f3__p">We've obsessed over every detail so your team can focus on what matters — building great products.</p>
+  <button class="f3__btn">See all features →</button>
+</div>
+<div class="f3__right">
+  <div class="f3__item"><div class="f3__ico a">⚡</div><div><div class="f3__item-h">Instant setup</div><div class="f3__item-p">Go from zero to production in under 5 minutes with our guided onboarding.</div></div></div>
+  <div class="f3__item"><div class="f3__ico b">🌱</div><div><div class="f3__item-h">Grows with you</div><div class="f3__item-p">From startup to enterprise — our platform scales automatically with your needs.</div></div></div>
+  <div class="f3__item"><div class="f3__ico c">🔧</div><div><div class="f3__item-h">Fully customizable</div><div class="f3__item-p">Extensive theming, plugin API, and open-source SDKs for every use case.</div></div></div>
+  <div class="f3__item"><div class="f3__ico d">💬</div><div><div class="f3__item-h">Expert support</div><div class="f3__item-p">Dedicated engineers available via Slack, email, or video call at any time.</div></div></div>
+</div>
+<script>(function(){})()</script>
+</body></html>

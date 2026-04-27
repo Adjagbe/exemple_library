@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.pc1 {
+  font-family: 'Inter', sans-serif; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; padding: 1.75rem; max-width: 420px; margin: 2rem auto;
+  &__header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  &__av { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  &__info { flex: 1; }
+  &__name { font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: .2rem; }
+  &__role { font-size: .8125rem; color: #6b7280; }
+  &__follow { padding: .5rem 1.25rem; background: #6366f1; color: #fff; border: none; border-radius: 999px; font-size: .8125rem; font-weight: 700; cursor: pointer; transition: opacity .2s; &:hover { opacity: .87; } }
+  &__stats { display: flex; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; padding: 1.1rem 0; margin-bottom: 1.25rem; }
+  &__stat { flex: 1; text-align: center; strong { display: block; font-size: 1.1rem; font-weight: 800; color: #0f172a; } span { font-size: .75rem; color: #9ca3af; } }
+  &__skills { display: flex; flex-wrap: wrap; gap: .5rem; }
+  &__skill { padding: .35rem .875rem; background: #f1f5f9; color: #374151; border-radius: 999px; font-size: .75rem; font-weight: 600; }
+}

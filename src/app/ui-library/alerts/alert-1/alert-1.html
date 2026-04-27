@@ -1,0 +1,7 @@
+<div class="al1">
+  <div class="al1__alert al1__alert--{{ a.type }}" *ngFor="let a of alerts; let i = index" [class.al1__alert--hidden]="dismissed.has(i)">
+    <span class="al1__icon">{{ a.icon }}</span>
+    <div class="al1__body"><strong>{{ a.title }}</strong> {{ a.msg }}</div>
+    <button class="al1__close" (click)="dismiss(i)">✕</button>
+  </div>
+</div>

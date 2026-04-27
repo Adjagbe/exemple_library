@@ -73,10 +73,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   </div>
 </div>
 <script>
-let rating = 0;
-function hover(n) { document.querySelectorAll('.rt1__star').forEach((s,i) => s.classList.toggle('hover', i < n)); }
-function resetHover() { document.querySelectorAll('.rt1__star').forEach((s,i) => { s.classList.remove('hover'); s.classList.toggle('active', i < rating); }); }
-function setRating(n) { rating = n; resetHover(); }
+(function() {
+  let rating = 0;
+  function hover(n) { document.querySelectorAll('.rt1__star').forEach((s,i) => s.classList.toggle('hover', i < n)); }
+  function resetHover() { document.querySelectorAll('.rt1__star').forEach((s,i) => { s.classList.remove('hover'); s.classList.toggle('active', i < rating); }); }
+  function setRating(n) { rating = n; resetHover(); }
+  window.hover = hover;
+  window.resetHover = resetHover;
+  window.setRating = setRating;
+})();
 </script>
 </body>
 </html>

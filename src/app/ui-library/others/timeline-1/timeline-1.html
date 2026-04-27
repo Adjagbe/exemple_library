@@ -2,7 +2,7 @@
   <div class="tl1__head"><h2>Notre histoire</h2><p>Retour sur les étapes clés qui ont façonné notre entreprise.</p></div>
   <div class="tl1__line">
     <div *ngFor="let item of items" class="tl1__item">
-      <div class="tl1__dot" [style.background]="item.color"></div>
+      <div class="tl1__dot" [style.background]="item.color">{{ item.year }}</div>
       <div class="tl1__content">
         <span class="tl1__year" [style.color]="item.color">{{ item.year }}</span>
         <h3>{{ item.title }}</h3>

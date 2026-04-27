@@ -1,0 +1,15 @@
+<div class="pr2">
+  <div class="pr2__steps">
+    <div class="pr2__step" *ngFor="let s of steps; let last = last" [class.pr2__step--done]="s.done">
+      <div class="pr2__dot">{{ s.done ? '✓' : '' }}</div>
+      <span class="pr2__slbl">{{ s.label }}</span>
+      <div class="pr2__line" *ngIf="!last" [class.pr2__line--done]="s.done"></div>
+    </div>
+  </div>
+  <div class="pr2__skills">
+    <div class="pr2__skill" *ngFor="let sk of skills">
+      <div class="pr2__skrow"><span class="pr2__sklbl">{{ sk.label }}</span><span class="pr2__skpct">{{ sk.pct }}%</span></div>
+      <div class="pr2__track"><div class="pr2__fill" [style.width]="sk.pct+'%'" [style.background]="sk.color"></div></div>
+    </div>
+  </div>
+</div>

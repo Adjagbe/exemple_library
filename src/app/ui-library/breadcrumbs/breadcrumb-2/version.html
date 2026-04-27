@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Breadcrumb 2 – Dark Collapsed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;padding:3rem 2rem}
+.bc4{display:flex;align-items:center;gap:.1rem;flex-wrap:wrap}
+.bc4__link{font-size:.875rem;color:#64748b;font-weight:500;cursor:pointer;padding:.3rem .5rem;border-radius:.5rem;transition:all .2s}
+.bc4__link:hover{color:#a5b4fc;background:rgba(99,102,241,.1)}
+.bc4__sep{font-size:.75rem;color:#334155;padding:0 .1rem}
+.bc4__current{font-size:.875rem;color:#f1f5f9;font-weight:700;padding:.3rem .5rem}
+.bc4__ellipsis{font-size:.875rem;color:#64748b;cursor:pointer;padding:.3rem .5rem;border-radius:.5rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:all .2s;line-height:1}
+.bc4__ellipsis:hover{background:rgba(255,255,255,.1)}
+.bc4__hidden{display:none}
+.bc4__hidden.show{display:contents}
+/* Breadcrumb with dropdown */
+.bc5{display:flex;align-items:center;gap:.25rem}
+.bc5__link{font-size:.875rem;color:#64748b;font-weight:500;cursor:pointer;padding:.3rem .5rem;border-radius:.5rem;transition:color .2s;display:flex;align-items:center;gap:.25rem}
+.bc5__link:hover{color:#a5b4fc}
+.bc5__sep{color:#334155;font-size:.75rem}
+.bc5__current{font-size:.875rem;color:#f1f5f9;font-weight:700;padding:.3rem .5rem}
+.bc5__drop-wrap{position:relative}
+.bc5__drop-btn{font-size:.875rem;color:#64748b;cursor:pointer;padding:.3rem .5rem;border-radius:.5rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:all .2s}
+.bc5__drop-btn:hover{background:rgba(255,255,255,.1)}
+.bc5__dropdown{position:absolute;top:calc(100% + .375rem);left:0;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:.875rem;box-shadow:0 8px 24px rgba(0,0,0,.3);min-width:160px;display:none;z-index:10;overflow:hidden}
+.bc5__dropdown.show{display:block}
+.bc5__dd-item{padding:.625rem 1rem;font-size:.8125rem;color:#94a3b8;cursor:pointer;transition:background .15s}
+.bc5__dd-item:hover{background:rgba(99,102,241,.1);color:#a5b4fc}
+</style></head>
+<body>
+<nav class="bc4" aria-label="breadcrumb">
+  <a class="bc4__link">🏠</a><span class="bc4__sep">/</span>
+  <button class="bc4__ellipsis" onclick="window.bc4Expand(this)">···</button>
+  <span class="bc4__hidden" id="bc4hidden">
+    <span class="bc4__sep">/</span><a class="bc4__link">Projects</a>
+    <span class="bc4__sep">/</span><a class="bc4__link">Atlas</a>
+    <span class="bc4__sep">/</span><a class="bc4__link">Releases</a>
+  </span>
+  <span class="bc4__sep">/</span>
+  <span class="bc4__current">v2.4.1</span>
+</nav>
+<nav class="bc5" aria-label="breadcrumb">
+  <a class="bc5__link">🏠 Home</a><span class="bc5__sep">/</span>
+  <div class="bc5__drop-wrap">
+    <button class="bc5__drop-btn" onclick="window.bc5Toggle()">More ▾</button>
+    <div class="bc5__dropdown" id="bc5dd">
+      <div class="bc5__dd-item">📦 Projects</div>
+      <div class="bc5__dd-item">📊 Analytics</div>
+      <div class="bc5__dd-item">👥 Team</div>
+    </div>
+  </div>
+  <span class="bc5__sep">/</span>
+  <span class="bc5__current">Settings</span>
+</nav>
+<script>(function(){
+  window.bc4Expand = function(btn){ btn.style.display='none'; document.getElementById('bc4hidden').classList.add('show'); };
+  window.bc5Toggle = function(){ document.getElementById('bc5dd').classList.toggle('show'); };
+  document.addEventListener('click', function(e){ if(!e.target.closest('.bc5__drop-wrap')) document.getElementById('bc5dd').classList.remove('show'); });
+})()</script>
+</body></html>

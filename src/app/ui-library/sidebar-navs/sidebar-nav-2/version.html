@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sidebar Nav 2 – Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0b0f1a;min-height:100vh;display:flex}
+.sn2{width:240px;background:#0f172a;border-right:1px solid rgba(255,255,255,.06);min-height:100vh;display:flex;flex-direction:column;padding:1.25rem .875rem;flex-shrink:0}
+.sn2__brand{display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;margin-bottom:2rem}
+.sn2__brand-ico{width:2rem;height:2rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:.5rem;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.875rem}
+.sn2__brand-name{font-size:.9375rem;font-weight:800;color:#f1f5f9}
+.sn2__item{display:flex;align-items:center;gap:.625rem;padding:.6rem .75rem;border-radius:.75rem;font-size:.875rem;font-weight:500;color:#475569;cursor:pointer;transition:all .2s;margin-bottom:.25rem}
+.sn2__item:hover{background:rgba(255,255,255,.04);color:#94a3b8}
+.sn2__item.active{background:rgba(99,102,241,.15);color:#a5b4fc}
+.sn2__item-ico{width:1.25rem;text-align:center;font-size:1rem}
+.sn2__sep{height:1px;background:rgba(255,255,255,.06);margin:.75rem 0}
+.sn2__footer{margin-top:auto}
+.sn2__user{display:flex;align-items:center;gap:.75rem;padding:.625rem .75rem;border-radius:.875rem;cursor:pointer}
+.sn2__user:hover{background:rgba(255,255,255,.04)}
+.sn2__user-av{width:2.25rem;height:2.25rem;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff}
+.sn2__user-name{font-size:.875rem;font-weight:700;color:#f1f5f9}
+.sn2__user-role{font-size:.75rem;color:#475569}
+.sn2__main{flex:1;padding:2.5rem;display:flex;align-items:flex-start}
+.sn2__main-content h2{font-size:1.5rem;font-weight:800;color:#f1f5f9;margin-bottom:.5rem}
+.sn2__main-content p{font-size:.9375rem;color:#64748b}
+</style></head>
+<body>
+<aside class="sn2">
+  <div class="sn2__brand"><div class="sn2__brand-ico">⚡</div><div class="sn2__brand-name">FluxUI</div></div>
+  <a class="sn2__item active" onclick="window.sn2Select(this,'Dashboard')"><span class="sn2__item-ico">📊</span> Dashboard</a>
+  <a class="sn2__item" onclick="window.sn2Select(this,'Analytics')"><span class="sn2__item-ico">📈</span> Analytics</a>
+  <a class="sn2__item" onclick="window.sn2Select(this,'Customers')"><span class="sn2__item-ico">👥</span> Customers</a>
+  <a class="sn2__item" onclick="window.sn2Select(this,'Products')"><span class="sn2__item-ico">📦</span> Products</a>
+  <a class="sn2__item" onclick="window.sn2Select(this,'Orders')"><span class="sn2__item-ico">🛒</span> Orders</a>
+  <div class="sn2__sep"></div>
+  <a class="sn2__item" onclick="window.sn2Select(this,'Settings')"><span class="sn2__item-ico">⚙️</span> Settings</a>
+  <a class="sn2__item" onclick="window.sn2Select(this,'Help')"><span class="sn2__item-ico">❓</span> Help</a>
+  <div class="sn2__footer">
+    <div class="sn2__user"><div class="sn2__user-av">JD</div><div><div class="sn2__user-name">Jane Doe</div><div class="sn2__user-role">Pro plan</div></div></div>
+  </div>
+</aside>
+<main class="sn2__main"><div class="sn2__main-content"><h2 id="sn2title">Dashboard</h2><p>Select a section from the sidebar.</p></div></main>
+<script>(function(){
+  window.sn2Select = function(el, title){
+    document.querySelectorAll('.sn2__item').forEach(function(i){i.classList.remove('active');});
+    el.classList.add('active');
+    document.getElementById('sn2title').textContent = title;
+  };
+})()</script>
+</body></html>

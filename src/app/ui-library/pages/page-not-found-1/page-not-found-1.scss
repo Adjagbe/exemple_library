@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+.pnf1 {
+  font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;
+  &__inner { max-width: 480px; }
+  &__num { font-size: clamp(6rem, 18vw, 10rem); font-weight: 900; background: linear-gradient(135deg, #e0e7ff, #c7d2fe, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: .5rem; }
+  &__h1 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: #0f172a; margin-bottom: 1rem; }
+  &__desc { color: #6b7280; font-size: .9375rem; line-height: 1.7; margin-bottom: 2.5rem; }
+  &__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  &__home { padding: .875rem 2rem; background: #6366f1; color: #fff; border: none; border-radius: .875rem; font-size: .9375rem; font-weight: 700; cursor: pointer; transition: opacity .2s; &:hover { opacity: .87; } }
+  &__support { padding: .875rem 2rem; background: none; border: 2px solid #e5e7eb; color: #374151; border-radius: .875rem; font-size: .9375rem; font-weight: 600; cursor: pointer; transition: all .2s; &:hover { border-color: #6366f1; color: #6366f1; } }
+}

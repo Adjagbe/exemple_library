@@ -1,0 +1,15 @@
+<div class="dc3">
+  <div class="dc3__header">
+    <h3>Recent Activity</h3>
+    <button class="dc3__see">See all</button>
+  </div>
+  <div class="dc3__list">
+    <div class="dc3__item" *ngFor="let a of activities">
+      <div class="dc3__dot" [style.background]="a.color">{{ a.icon }}</div>
+      <div class="dc3__body">
+        <p class="dc3__text">{{ a.text }}</p>
+        <span class="dc3__time">{{ a.time }}</span>
+      </div>
+    </div>
+  </div>
+</div>

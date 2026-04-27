@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.fl2 {
+  min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; font-family: 'Inter', sans-serif;
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+  &__left { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); display: flex; flex-direction: column; justify-content: center; padding: 4rem; @media (max-width: 768px) { display: none; } }
+  &__brand { font-size: 1.25rem; font-weight: 800; color: #a5b4fc; margin-bottom: 3rem; }
+  &__hl { font-size: 3rem; font-weight: 900; color: #f9fafb; line-height: 1.1; margin-bottom: 1.25rem; }
+  &__lp { color: rgba(249,250,251,.45); font-size: 1rem; line-height: 1.75; max-width: 360px; }
+  &__right { background: #fff; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  &__box { width: 100%; max-width: 400px; }
+  &__title { font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1.75rem; }
+  &__socials { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
+  &__social { display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .7rem; border: 1.5px solid #e5e7eb; border-radius: .75rem; background: #fff; font-size: .875rem; font-weight: 600; color: #374151; cursor: pointer; transition: all .15s; &:hover { border-color: #6366f1; color: #6366f1; } }
+  &__social-icon { font-size: 1rem; }
+  &__divider { position: relative; text-align: center; margin: 1.5rem 0; &::before { content:''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e5e7eb; } span { position: relative; background: #fff; padding: 0 .75rem; font-size: .75rem; color: #9ca3af; } }
+  &__form { display: flex; flex-direction: column; gap: 1rem; }
+  &__field { display: flex; flex-direction: column; gap: .4rem; label { font-size: .8rem; font-weight: 600; color: #374151; } input { padding: .75rem 1rem; border: 1.5px solid #e5e7eb; border-radius: .75rem; font-size: .9rem; outline: none; font-family: inherit; &:focus { border-color: #6366f1; } } }
+  &__pwd { position: relative; input { width: 100%; padding-right: 2.5rem; } button { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; } }
+  &__row { display: flex; justify-content: space-between; align-items: center; }
+  &__check { display: flex; align-items: center; gap: .4rem; font-size: .8rem; color: #6b7280; cursor: pointer; }
+  &__link { font-size: .8rem; color: #6366f1; text-decoration: none; font-weight: 600; }
+  &__submit { background: #0f172a; color: #fff; border: none; padding: .875rem; border-radius: .75rem; font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: .25rem; &:hover { background: #1e293b; transform: translateY(-1px); } }
+  &__footer { text-align: center; font-size: .8125rem; color: #9ca3af; margin-top: 1.5rem; a { color: #6366f1; text-decoration: none; font-weight: 600; } }
+}

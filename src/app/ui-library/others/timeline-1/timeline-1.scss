@@ -1,12 +1,82 @@
-.tl1 { max-width: 800px; margin: 0 auto; padding: 5rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.tl1__head { text-align: center; margin-bottom: 4rem; }
-.tl1__head h2 { font-size: 2.25rem; font-weight: 800; color: #111827; margin: 0 0 .875rem; }
-.tl1__head p { font-size: .95rem; color: #6b7280; margin: 0; }
-.tl1__line { position: relative; }
-.tl1__line::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e5e7eb; }
-.tl1__item { display: flex; gap: 2rem; padding-bottom: 2.5rem; position: relative; }
-.tl1__dot { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; box-shadow: 0 0 0 4px #fff, 0 0 0 6px currentColor; }
-.tl1__content { flex: 1; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.25rem; padding: 1.5rem; }
-.tl1__year { font-size: .8rem; font-weight: 800; letter-spacing: .06em; margin-bottom: .5rem; display: block; }
-.tl1__content h3 { font-size: 1rem; font-weight: 700; color: #111827; margin: 0 0 .625rem; }
-.tl1__content p { font-size: .875rem; color: #6b7280; line-height: 1.7; margin: 0; }
+.tl1 {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.tl1__head {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.tl1__head h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 0.875rem;
+}
+.tl1__head p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+.tl1__line {
+  position: relative;
+}
+.tl1__line::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+}
+.tl1__item {
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  position: relative;
+}
+.tl1__dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color:#fff;
+  box-shadow:
+    0 0 0 4px #fff,
+    0 0 0 6px currentColor;
+}
+.tl1__content {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+.tl1__year {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.tl1__content h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.625rem;
+}
+.tl1__content p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin: 0;
+}

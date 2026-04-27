@@ -1,0 +1,15 @@
+<nav class="sn2">
+  <div class="sn2__brand">◆ Nova</div>
+  <div class="sn2__body">
+    <div class="sn2__section" *ngFor="let s of sections">
+      <p class="sn2__title">{{ s.title }}</p>
+      <ul class="sn2__menu">
+        <li class="sn2__item" *ngFor="let l of s.links" [class.sn2__item--active]="active === l.label" (click)="go(l.label)">
+          <span class="sn2__ic">{{ l.icon }}</span>
+          <span class="sn2__lbl">{{ l.label }}</span>
+          <span class="sn2__badge" *ngIf="l.badge">{{ l.badge }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

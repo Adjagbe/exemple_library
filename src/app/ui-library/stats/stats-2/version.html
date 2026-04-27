@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stats 2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0f0a1e,#0f172a);padding:5rem 2rem}
+.st2__inner{max-width:1000px;margin:0 auto}
+.st2__row{display:grid;grid-template-columns:repeat(4,1fr)}
+@media(max-width:800px){.st2__row{grid-template-columns:repeat(2,1fr)}}
+.st2__item{text-align:center;padding:2.5rem 1.5rem;position:relative}
+.st2__item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,255,255,.08)}
+.st2__val{font-size:clamp(2rem,3vw,2.75rem);font-weight:900;color:#f1f5f9;line-height:1;margin-bottom:.5rem}
+.st2__lbl{font-size:.8125rem;color:#64748b;font-weight:500;margin-bottom:.5rem}
+.st2__trend{display:inline-block;font-size:.75rem;font-weight:700;color:#34d399;background:rgba(52,211,153,.1);padding:.2rem .6rem;border-radius:999px}
+</style></head>
+<body>
+<div class="st2__inner">
+  <div class="st2__row">
+    <div class="st2__item"><div class="st2__val">$2.4B</div><div class="st2__lbl">Revenue processed</div><span class="st2__trend">+12%</span></div>
+    <div class="st2__item"><div class="st2__val">150+</div><div class="st2__lbl">Countries supported</div><span class="st2__trend">+8 new</span></div>
+    <div class="st2__item"><div class="st2__val">4.9★</div><div class="st2__lbl">App store rating</div><span class="st2__trend">+0.1</span></div>
+    <div class="st2__item"><div class="st2__val">24/7</div><div class="st2__lbl">Support coverage</div><span class="st2__trend">365 days</span></div>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

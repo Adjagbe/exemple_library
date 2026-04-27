@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.frst2 {
+  min-height: 100vh; background: #06060f; display: flex; align-items: center; justify-content: center; padding: 2rem; font-family: 'Inter', sans-serif; position: relative; overflow: hidden;
+  &__bg { position: absolute; inset: 0; }
+  &__orb { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,.2) 0%, transparent 70%); top: -20%; left: 50%; transform: translateX(-50%); filter: blur(80px); }
+  &__card { position: relative; z-index: 1; background: rgba(255,255,255,.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.1); border-radius: 1.5rem; padding: 2.5rem; width: 100%; max-width: 420px; }
+  &__h { font-size: 1.5rem; font-weight: 800; color: #f9fafb; margin-bottom: .5rem; }
+  &__p { font-size: .875rem; color: rgba(249,250,251,.45); margin-bottom: 1.75rem; line-height: 1.6; }
+  &__form { display: flex; flex-direction: column; gap: 1.1rem; }
+  &__field { display: flex; flex-direction: column; gap: .4rem; label { font-size: .8rem; font-weight: 600; color: rgba(249,250,251,.6); } }
+  &__pwd { position: relative;
+    input { width: 100%; padding: .75rem 2.5rem .75rem 1rem; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: .75rem; color: #f9fafb; font-size: .875rem; outline: none; font-family: inherit; &::placeholder { color: rgba(249,250,251,.25); } &:focus { border-color: #6366f1; } }
+    button { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: rgba(249,250,251,.4); }
+  }
+  &__err { font-size: .75rem; color: #f87171; }
+  &__err-input { border-color: #ef4444 !important; }
+  &__btn { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: .875rem; border-radius: .75rem; font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .2s; &:hover:not(:disabled) { opacity: .9; } &:disabled { opacity: .45; cursor: default; } &--link { display: block; text-align: center; text-decoration: none; margin-top: 1.25rem; } }
+  &__success { text-align: center; }
+  &__ok { width: 64px; height: 64px; border-radius: 50%; background: rgba(16,185,129,.15); color: #10b981; font-size: 1.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+  &__success h2 { font-size: 1.4rem; font-weight: 800; color: #f9fafb; margin-bottom: .5rem; }
+  &__success p { font-size: .875rem; color: rgba(249,250,251,.5); }
+}

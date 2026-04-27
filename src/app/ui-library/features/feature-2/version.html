@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Feature 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 2rem}
+.f2__inner{max-width:1100px;width:100%}
+.f2__header{text-align:center;margin-bottom:4rem}
+.f2__label{font-size:.8125rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#818cf8;margin-bottom:1rem}
+.f2__h{font-size:clamp(1.75rem,3vw,2.75rem);font-weight:900;color:#f1f5f9;line-height:1.2;margin-bottom:1rem}
+.f2__sub{font-size:1rem;color:#64748b;max-width:540px;margin:0 auto;line-height:1.7}
+.f2__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:900px){.f2__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.f2__grid{grid-template-columns:1fr}}
+.f2__card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:1.25rem;padding:1.75rem;transition:all .25s}
+.f2__card:hover{border-color:rgba(129,140,248,.4);background:rgba(99,102,241,.06);transform:translateY(-2px)}
+.f2__ico-wrap{width:2.75rem;height:2.75rem;border-radius:.875rem;background:rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;font-size:1.375rem;margin-bottom:1rem}
+.f2__name{font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:.5rem}
+.f2__desc{font-size:.875rem;color:#64748b;line-height:1.6}
+</style></head>
+<body>
+<div class="f2__inner">
+  <div class="f2__header">
+    <div class="f2__label">Features</div>
+    <h2 class="f2__h">Everything you need to ship fast</h2>
+    <p class="f2__sub">A complete toolkit for modern development teams — from design to deployment.</p>
+  </div>
+  <div class="f2__grid">
+    <div class="f2__card"><div class="f2__ico-wrap">🔌</div><div class="f2__name">API-first</div><div class="f2__desc">Every feature is accessible via our REST and GraphQL APIs with detailed documentation.</div></div>
+    <div class="f2__card"><div class="f2__ico-wrap">🔒</div><div class="f2__name">Zero-trust security</div><div class="f2__desc">SOC 2 certified, end-to-end encryption, and granular RBAC for your entire team.</div></div>
+    <div class="f2__card"><div class="f2__ico-wrap">⚡</div><div class="f2__name">Edge delivery</div><div class="f2__desc">Serve your content from 20+ global edge locations with sub-50ms latency.</div></div>
+    <div class="f2__card"><div class="f2__ico-wrap">📊</div><div class="f2__name">Built-in analytics</div><div class="f2__desc">Real-time dashboards, custom metrics, and automated alerts out of the box.</div></div>
+    <div class="f2__card"><div class="f2__ico-wrap">��</div><div class="f2__name">AI-powered</div><div class="f2__desc">Smart suggestions, anomaly detection, and auto-scaling driven by ML models.</div></div>
+    <div class="f2__card"><div class="f2__ico-wrap">🔁</div><div class="f2__name">CI/CD native</div><div class="f2__desc">GitHub, GitLab, and Bitbucket integrations with one-click deploy pipelines.</div></div>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

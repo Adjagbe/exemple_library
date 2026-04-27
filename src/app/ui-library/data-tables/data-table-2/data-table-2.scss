@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.dt2 {
+  font-family: 'Inter', sans-serif; background: #0f172a; border: 1px solid rgba(255,255,255,.07); border-radius: 1.5rem; overflow: hidden; max-width: 700px; margin: 2rem auto;
+  &__head { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 1.75rem; border-bottom: 1px solid rgba(255,255,255,.06); h3 { font-size: .9375rem; font-weight: 800; color: #f1f5f9; margin: 0; } }
+  &__sub { font-size: .8125rem; color: #475569; }
+  &__wrap { overflow-x: auto; }
+  &__table { width: 100%; border-collapse: collapse; font-size: .8125rem; th { text-align: left; padding: .875rem 1.25rem; color: #475569; font-weight: 600; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid rgba(255,255,255,.06); } td { padding: .875rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,.04); color: #cbd5e1; } tr:last-child td { border-bottom: none; } tr:hover td { background: rgba(255,255,255,.025); } }
+  &__id { color: #94a3b8; font-weight: 600; }
+  &__amt { color: #f1f5f9; font-weight: 700; }
+  &__dim { color: #475569; }
+  &__badge { padding: .2rem .6rem; border-radius: 999px; font-size: .7rem; font-weight: 700;
+    &--shipped { background: rgba(99,102,241,.2); color: #a5b4fc; }
+    &--delivered { background: rgba(52,211,153,.15); color: #34d399; }
+    &--processing { background: rgba(251,191,36,.15); color: #fbbf24; }
+    &--refunded { background: rgba(248,113,113,.15); color: #f87171; }
+  }
+}

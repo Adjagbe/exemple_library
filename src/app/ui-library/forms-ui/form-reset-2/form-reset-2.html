@@ -1,0 +1,33 @@
+<div class="frst2">
+  <div class="frst2__bg"><div class="frst2__orb"></div></div>
+  <div class="frst2__card">
+    <div *ngIf="!done">
+      <h2 class="frst2__h">Set new password</h2>
+      <p class="frst2__p">Your new password must be at least 8 characters.</p>
+      <form class="frst2__form" (ngSubmit)="submit()">
+        <div class="frst2__field">
+          <label>New password</label>
+          <div class="frst2__pwd">
+            <input [type]="showP?'text':'password'" [(ngModel)]="password" name="p" placeholder="New password">
+            <button type="button" (click)="showP=!showP">{{ showP?'🙈':'👁' }}</button>
+          </div>
+        </div>
+        <div class="frst2__field">
+          <label>Confirm password</label>
+          <div class="frst2__pwd">
+            <input [type]="showC?'text':'password'" [(ngModel)]="confirm" name="c" placeholder="Confirm password" [class.frst2__err-input]="!match">
+            <button type="button" (click)="showC=!showC">{{ showC?'🙈':'👁' }}</button>
+          </div>
+          <span class="frst2__err" *ngIf="!match">Passwords do not match</span>
+        </div>
+        <button class="frst2__btn" type="submit" [disabled]="!match || !password">Reset password</button>
+      </form>
+    </div>
+    <div class="frst2__success" *ngIf="done">
+      <div class="frst2__ok">✓</div>
+      <h2>Password updated!</h2>
+      <p>Your password has been reset successfully.</p>
+      <a href="#" class="frst2__btn frst2__btn--link">Back to login</a>
+    </div>
+  </div>
+</div>

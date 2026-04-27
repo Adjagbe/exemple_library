@@ -1,0 +1,12 @@
+<div class="sb2">
+  <div class="sb2__bar">
+    <span class="sb2__icon">⌘</span>
+    <input class="sb2__input" type="text" placeholder="Type a command or search..." [(ngModel)]="query">
+  </div>
+  <div class="sb2__recents" *ngIf="show">
+    <p class="sb2__label">Recent</p>
+    <div class="sb2__item" *ngFor="let r of recents">
+      <span class="sb2__recent-ic">🕐</span> {{ r }}
+    </div>
+  </div>
+</div>

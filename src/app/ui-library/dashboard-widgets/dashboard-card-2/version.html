@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard Card 2 – Bar Chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.dc2{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:1.5rem;padding:1.75rem;width:100%;max-width:520px}
+.dc2__head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
+.dc2__title{font-size:1rem;font-weight:700;color:#f1f5f9}
+.dc2__sub{font-size:.75rem;color:#64748b;margin-top:.25rem}
+.dc2__val{font-size:2rem;font-weight:900;color:#f1f5f9;text-align:right}
+.dc2__delta{font-size:.8125rem;font-weight:600;color:#4ade80;text-align:right}
+.dc2__chart{display:flex;align-items:flex-end;gap:.375rem;height:120px;margin-bottom:.75rem}
+.dc2__bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:.375rem;height:100%}
+.dc2__bar{width:100%;border-radius:.375rem .375rem 0 0;background:rgba(99,102,241,.3);transition:background .2s;cursor:pointer;margin-top:auto}
+.dc2__bar:hover{background:#6366f1}
+.dc2__bar.hi{background:linear-gradient(to top,#6366f1,#a78bfa)}
+.dc2__day{font-size:.6875rem;color:#475569}
+.dc2__footer{display:flex;justify-content:space-between;padding-top:1rem;border-top:1px solid rgba(255,255,255,.06)}
+.dc2__fitem{text-align:center}
+.dc2__fval{font-size:.9375rem;font-weight:700;color:#f1f5f9}
+.dc2__flbl{font-size:.6875rem;color:#64748b;margin-top:.2rem}
+</style></head>
+<body>
+<div class="dc2">
+  <div class="dc2__head">
+    <div><div class="dc2__title">Weekly Revenue</div><div class="dc2__sub">Last 7 days vs previous period</div></div>
+    <div><div class="dc2__val">$24,850</div><div class="dc2__delta">↑ 18.4% vs last week</div></div>
+  </div>
+  <div class="dc2__chart" id="dc2chart"></div>
+  <div class="dc2__footer">
+    <div class="dc2__fitem"><div class="dc2__fval">$3,550</div><div class="dc2__flbl">Best day</div></div>
+    <div class="dc2__fitem"><div class="dc2__fval">$1,890</div><div class="dc2__flbl">Avg/day</div></div>
+    <div class="dc2__fitem"><div class="dc2__fval">248</div><div class="dc2__flbl">Orders</div></div>
+  </div>
+</div>
+<script>(function(){
+  var data = [{d:'Mon',v:65},{d:'Tue',v:78},{d:'Wed',v:55},{d:'Thu',v:90},{d:'Fri',v:82},{d:'Sat',v:100},{d:'Sun',v:72}];
+  var max = Math.max.apply(null, data.map(function(x){return x.v;}));
+  var c = document.getElementById('dc2chart');
+  data.forEach(function(item){
+    var w = document.createElement('div'); w.className='dc2__bar-wrap';
+    var b = document.createElement('div'); b.className='dc2__bar'+(item.v===max?' hi':'');
+    b.style.height = (item.v/max*100)+'%';
+    var lbl = document.createElement('div'); lbl.className='dc2__day'; lbl.textContent=item.d;
+    w.appendChild(b); w.appendChild(lbl); c.appendChild(w);
+  });
+})()</script>
+</body></html>

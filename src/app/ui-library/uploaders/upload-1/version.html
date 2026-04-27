@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Upload 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.up1{width:100%;max-width:500px}
+.up1__zone{border:2px dashed #cbd5e1;border-radius:1.25rem;padding:3rem 2rem;text-align:center;background:#fff;cursor:pointer;transition:all .2s}
+.up1__zone.drag{border-color:#6366f1;background:#eef2ff}
+.up1__zone:hover{border-color:#a5b4fc}
+.up1__ico{font-size:2.5rem;margin-bottom:1rem}
+.up1__title{font-size:1rem;font-weight:700;color:#1e293b;margin-bottom:.375rem}
+.up1__sub{font-size:.875rem;color:#94a3b8}
+.up1__sub span{color:#6366f1;font-weight:600}
+.up1__types{font-size:.75rem;color:#cbd5e1;margin-top:.75rem}
+input[type=file]{display:none}
+.up1__list{margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem}
+.up1__file{display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;background:#fff;border:1px solid #f1f5f9;border-radius:.875rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.up1__file-ico{font-size:1.375rem;flex-shrink:0}
+.up1__file-info{flex:1;min-width:0}
+.up1__file-name{font-size:.875rem;font-weight:600;color:#1e293b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.up1__file-size{font-size:.75rem;color:#94a3b8}
+.up1__progress-bar{height:4px;background:#f1f5f9;border-radius:999px;margin-top:.375rem;overflow:hidden}
+.up1__progress-fill{height:100%;background:linear-gradient(to right,#6366f1,#8b5cf6);border-radius:999px;transition:width .4s ease}
+.up1__rm{background:none;border:none;cursor:pointer;color:#cbd5e1;font-size:1.1rem;flex-shrink:0}
+.up1__rm:hover{color:#ef4444}
+</style></head>
+<body>
+<div class="up1">
+  <div class="up1__zone" id="up1zone" onclick="document.getElementById('up1input').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="window.up1Drop(event)">
+    <div class="up1__ico">☁️</div>
+    <div class="up1__title">Drop files here or click to upload</div>
+    <div class="up1__sub">Max 10 MB per file. <span>Browse files</span></div>
+    <div class="up1__types">PNG, JPG, PDF, ZIP accepted</div>
+  </div>
+  <input type="file" id="up1input" multiple onchange="window.up1Add(this.files)">
+  <div class="up1__list" id="up1list"></div>
+</div>
+<script>(function(){
+  var icons = {'image':'🖼️','pdf':'📄','zip':'🗜️','default':'📎'};
+  function getIco(name){
+    if(/\.(png|jpg|jpeg|gif|webp)$/i.test(name)) return icons.image;
+    if(/\.pdf$/i.test(name)) return icons.pdf;
+    if(/\.(zip|rar|gz)$/i.test(name)) return icons.zip;
+    return icons.default;
+  }
+  function fmtSize(b){if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';return(b/1048576).toFixed(1)+'MB';}
+  function addFile(file){
+    var list=document.getElementById('up1list');
+    var id='f'+Date.now()+Math.random();
+    var div=document.createElement('div'); div.className='up1__file'; div.id=id;
+    div.innerHTML='<span class="up1__file-ico">'+getIco(file.name)+'</span>'
+      +'<div class="up1__file-info"><div class="up1__file-name">'+file.name+'</div><div class="up1__file-size">'+fmtSize(file.size)+'</div>'
+      +'<div class="up1__progress-bar"><div class="up1__progress-fill" style="width:0%" id="pb-'+id+'"></div></div></div>'
+      +'<button class="up1__rm" onclick="document.getElementById(\''+id+'\').remove()">✕</button>';
+    list.appendChild(div);
+    var pct=0, pb=document.getElementById('pb-'+id);
+    var iv=setInterval(function(){pct+=Math.random()*20;if(pct>=100){pct=100;clearInterval(iv);}pb.style.width=Math.min(pct,100)+'%';},120);
+  }
+  window.up1Add=function(files){Array.from(files).forEach(addFile);};
+  window.up1Drop=function(e){e.preventDefault();document.getElementById('up1zone').classList.remove('drag');up1Add(e.dataTransfer.files);};
+})()</script>
+</body></html>

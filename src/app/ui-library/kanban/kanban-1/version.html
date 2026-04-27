@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kanban 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0b0f1a;min-height:100vh;padding:2.5rem 2rem;overflow-x:auto}
+.kb1__header{margin-bottom:2rem}
+.kb1__title{font-size:1.5rem;font-weight:800;color:#f1f5f9}
+.kb1__board{display:flex;gap:1.25rem;min-width:max-content}
+.kb1__col{width:280px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:1.25rem;padding:1.125rem;display:flex;flex-direction:column;gap:.875rem}
+.kb1__col-head{display:flex;align-items:center;justify-content:space-between}
+.kb1__col-name{display:flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:700}
+.kb1__col-dot{width:8px;height:8px;border-radius:50%}
+.kb1__col-name span{color:#f1f5f9}
+.kb1__col-count{font-size:.75rem;font-weight:700;color:#64748b;background:rgba(255,255,255,.06);padding:.15rem .5rem;border-radius:999px}
+.kb1__card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:.875rem;padding:1rem;cursor:grab;transition:all .2s;user-select:none}
+.kb1__card:hover{background:rgba(99,102,241,.07);border-color:rgba(99,102,241,.3);transform:translateY(-1px)}
+.kb1__card:active{cursor:grabbing}
+.kb1__card-tag{font-size:.6875rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;display:inline-block;margin-bottom:.5rem}
+.tag-feat{background:rgba(99,102,241,.15);color:#a5b4fc}
+.tag-bug{background:rgba(239,68,68,.15);color:#f87171}
+.tag-chore{background:rgba(100,116,139,.15);color:#94a3b8}
+.tag-design{background:rgba(236,72,153,.15);color:#f9a8d4}
+.kb1__card-title{font-size:.875rem;font-weight:600;color:#e2e8f0;line-height:1.4;margin-bottom:.625rem}
+.kb1__card-foot{display:flex;align-items:center;justify-content:space-between}
+.kb1__prio{font-size:.6875rem;font-weight:600;color:#64748b}
+.kb1__card-avatars{display:flex}
+.kb1__card-av{width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.5625rem;font-weight:800;color:#fff;border:2px solid rgba(11,15,26,.8);margin-left:-.25rem}
+.kb1__card-av:first-child{margin-left:0}
+.kb1__add{display:flex;align-items:center;gap:.5rem;padding:.6rem .5rem;font-size:.8125rem;font-weight:600;color:#475569;cursor:pointer;border-radius:.75rem;transition:all .2s;background:none;border:none;width:100%;font-family:inherit}
+.kb1__add:hover{background:rgba(255,255,255,.04);color:#94a3b8}
+</style></head>
+<body>
+<div class="kb1__header"><div class="kb1__title">🗂️ Sprint Board</div></div>
+<div class="kb1__board">
+  <div class="kb1__col">
+    <div class="kb1__col-head"><div class="kb1__col-name"><div class="kb1__col-dot" style="background:#64748b"></div><span>Backlog</span></div><span class="kb1__col-count">3</span></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-feat">Feature</div><div class="kb1__card-title">Implement SSO login with SAML</div><div class="kb1__card-foot"><span class="kb1__prio">🟡 Medium</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#6366f1">JD</div></div></div></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-chore">Chore</div><div class="kb1__card-title">Upgrade Node.js to v20 LTS</div><div class="kb1__card-foot"><span class="kb1__prio">🟢 Low</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#22c55e">AL</div></div></div></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-design">Design</div><div class="kb1__card-title">Redesign onboarding flow</div><div class="kb1__card-foot"><span class="kb1__prio">🔴 High</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#ec4899">MP</div></div></div></div>
+    <button class="kb1__add">＋ Add card</button>
+  </div>
+  <div class="kb1__col">
+    <div class="kb1__col-head"><div class="kb1__col-name"><div class="kb1__col-dot" style="background:#f59e0b"></div><span>In Progress</span></div><span class="kb1__col-count">2</span></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-feat">Feature</div><div class="kb1__card-title">Build notification center with real-time updates</div><div class="kb1__card-foot"><span class="kb1__prio">🔴 High</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#6366f1">TK</div><div class="kb1__card-av" style="background:#8b5cf6">SR</div></div></div></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-bug">Bug</div><div class="kb1__card-title">Fix memory leak in WebSocket connection handler</div><div class="kb1__card-foot"><span class="kb1__prio">🔴 Critical</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#ef4444">CD</div></div></div></div>
+    <button class="kb1__add">＋ Add card</button>
+  </div>
+  <div class="kb1__col">
+    <div class="kb1__col-head"><div class="kb1__col-name"><div class="kb1__col-dot" style="background:#6366f1"></div><span>Review</span></div><span class="kb1__col-count">2</span></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-feat">Feature</div><div class="kb1__card-title">Dark mode support for dashboard</div><div class="kb1__card-foot"><span class="kb1__prio">🟡 Medium</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#f59e0b">RN</div></div></div></div>
+    <div class="kb1__card"><div class="kb1__card-tag tag-bug">Bug</div><div class="kb1__card-title">CSV export includes wrong date format</div><div class="kb1__card-foot"><span class="kb1__prio">🟢 Low</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#22c55e">AL</div></div></div></div>
+    <button class="kb1__add">＋ Add card</button>
+  </div>
+  <div class="kb1__col">
+    <div class="kb1__col-head"><div class="kb1__col-name"><div class="kb1__col-dot" style="background:#22c55e"></div><span>Done</span></div><span class="kb1__col-count">3</span></div>
+    <div class="kb1__card" style="opacity:.5"><div class="kb1__card-tag tag-chore">Chore</div><div class="kb1__card-title">Set up CI/CD pipeline for staging</div><div class="kb1__card-foot"><span class="kb1__prio">✅ Done</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#6366f1">JD</div></div></div></div>
+    <div class="kb1__card" style="opacity:.5"><div class="kb1__card-tag tag-feat">Feature</div><div class="kb1__card-title">Add multi-language support (i18n)</div><div class="kb1__card-foot"><span class="kb1__prio">✅ Done</span><div class="kb1__card-avatars"><div class="kb1__card-av" style="background:#ec4899">MP</div></div></div></div>
+    <button class="kb1__add">＋ Add card</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

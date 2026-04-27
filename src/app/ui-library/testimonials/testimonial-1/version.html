@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Testimonial 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;padding:6rem 2rem}
+.ts1__inner{max-width:1100px;margin:0 auto}
+.ts1__eyebrow{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#6366f1;text-align:center;margin-bottom:.875rem}
+.ts1__h2{font-size:clamp(2rem,4vw,2.5rem);font-weight:900;color:#0f172a;text-align:center;margin-bottom:3.5rem}
+.ts1__hl{color:#6366f1}
+.ts1__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:900px){.ts1__grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.ts1__grid{grid-template-columns:1fr}}
+.ts1__card{background:#fff;border:1px solid #e5e7eb;border-radius:1.25rem;padding:1.75rem;display:flex;flex-direction:column;gap:1rem}
+.ts1__stars{color:#f59e0b;font-size:.875rem;letter-spacing:2px}
+.ts1__text{font-size:.9375rem;color:#374151;line-height:1.7;flex:1}
+.ts1__author{display:flex;align-items:center;gap:.875rem}
+.ts1__av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ts1__name{font-size:.875rem;font-weight:700;color:#0f172a}
+.ts1__role{font-size:.75rem;color:#9ca3af}
+</style></head>
+<body>
+<div class="ts1__inner">
+  <p class="ts1__eyebrow">Testimonials</p>
+  <h2 class="ts1__h2">Loved by <span class="ts1__hl">thousands</span> of developers</h2>
+  <div class="ts1__grid">
+    <div class="ts1__card"><div class="ts1__stars">★★★★★</div><p class="ts1__text">"Migrated our entire infra in a weekend. The DX is unmatched."</p><div class="ts1__author"><div class="ts1__av">SC</div><div><p class="ts1__name">Sarah Chen</p><span class="ts1__role">CTO, Vertiblock</span></div></div></div>
+    <div class="ts1__card"><div class="ts1__stars">★★★★★</div><p class="ts1__text">"We cut deployment time by 80%. The team can't stop talking about it."</p><div class="ts1__author"><div class="ts1__av">ML</div><div><p class="ts1__name">Marcus Lee</p><span class="ts1__role">Lead Dev, Nomads</span></div></div></div>
+    <div class="ts1__card"><div class="ts1__stars">★★★★★</div><p class="ts1__text">"Finally a platform that grows with you without surprise bills."</p><div class="ts1__author"><div class="ts1__av">PS</div><div><p class="ts1__name">Priya Sharma</p><span class="ts1__role">Founder, Lunarise</span></div></div></div>
+    <div class="ts1__card"><div class="ts1__stars">★★★★★</div><p class="ts1__text">"The support team is incredible. Issues resolved in under 15 minutes."</p><div class="ts1__author"><div class="ts1__av">TE</div><div><p class="ts1__name">Tomas Eriksson</p><span class="ts1__role">Eng Manager, Fintek</span></div></div></div>
+    <div class="ts1__card"><div class="ts1__stars">★★★★★</div><p class="ts1__text">"Auto-scaling saved us during a viral moment. Zero downtime."</p><div class="ts1__author"><div class="ts1__av">AS</div><div><p class="ts1__name">Ana Souza</p><span class="ts1__role">DevOps, Strati</span></div></div></div>
+    <div class="ts1__card"><div class="ts1__stars">★★★★★</div><p class="ts1__text">"Clean APIs, great docs. The integration took half a day."</p><div class="ts1__author"><div class="ts1__av">JO</div><div><p class="ts1__name">James Okafor</p><span class="ts1__role">Architect, Nuvana</span></div></div></div>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

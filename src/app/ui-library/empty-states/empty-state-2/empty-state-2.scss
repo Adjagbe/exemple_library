@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.es2 {
+  font-family: 'Inter', sans-serif; background: #0f172a; border: 1px solid rgba(255,255,255,.08); border-radius: 1.5rem; padding: 4rem 2rem; max-width: 420px; margin: 3rem auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
+  &__icon { font-size: 3rem; background: rgba(255,255,255,.05); width: 80px; height: 80px; border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; }
+  &__title { font-size: 1.25rem; font-weight: 800; color: #f1f5f9; margin: 0; }
+  &__desc { font-size: .875rem; color: #64748b; line-height: 1.7; max-width: 300px; margin: 0; }
+  &__actions { display: flex; gap: .75rem; }
+  &__clear { padding: .75rem 1.5rem; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: #cbd5e1; border-radius: .875rem; font-size: .875rem; font-weight: 600; cursor: pointer; transition: all .2s; &:hover { background: rgba(255,255,255,.12); } }
+  &__new { padding: .75rem 1.5rem; background: #6366f1; color: #fff; border: none; border-radius: .875rem; font-size: .875rem; font-weight: 700; cursor: pointer; transition: opacity .2s; &:hover { opacity: .87; } }
+}

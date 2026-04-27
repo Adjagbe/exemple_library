@@ -1,0 +1,21 @@
+<div class="dt1">
+  <div class="dt1__head">
+    <h3>Team Members</h3>
+    <button class="dt1__add">+ Invite member</button>
+  </div>
+  <div class="dt1__wrap">
+    <table class="dt1__table">
+      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th></th></tr></thead>
+      <tbody>
+        <tr *ngFor="let r of rows">
+          <td class="dt1__name-cell"><div class="dt1__av">{{ r.name[0] }}</div> {{ r.name }}</td>
+          <td class="dt1__dim">{{ r.email }}</td>
+          <td>{{ r.role }}</td>
+          <td><span class="dt1__badge dt1__badge--{{ r.status.toLowerCase() }}">{{ r.status }}</span></td>
+          <td class="dt1__dim">{{ r.joined }}</td>
+          <td><button class="dt1__action">···</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

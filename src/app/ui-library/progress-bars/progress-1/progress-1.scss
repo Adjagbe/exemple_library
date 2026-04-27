@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.pr1 {
+  font-family: 'Inter', sans-serif; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; padding: 1.75rem; max-width: 400px; margin: 2rem auto;
+  &__title { font-size: .9375rem; font-weight: 800; color: #0f172a; margin-bottom: 1.5rem; }
+  &__list { display: flex; flex-direction: column; gap: 1.25rem; }
+  &__meta { display: flex; justify-content: space-between; margin-bottom: .5rem; }
+  &__label { font-size: .8125rem; color: #374151; font-weight: 600; }
+  &__pct { font-size: .8125rem; color: #9ca3af; font-weight: 600; }
+  &__track { height: 8px; background: #f1f5f9; border-radius: 999px; overflow: hidden; }
+  &__fill { height: 100%; border-radius: 999px; transition: width .4s ease; }
+}

@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.al2 {
+  font-family: 'Inter', sans-serif; background: #0f172a; min-height: 180px; padding: 2rem; display: flex; flex-direction: column; gap: .875rem; max-width: 380px; margin: 0 auto; border-radius: 1.5rem;
+  &__toast { display: flex; align-items: center; gap: .875rem; padding: 1rem 1.25rem; background: rgba(255,255,255,.06); border-left: 3px solid; border-radius: .75rem; border-top-right-radius: .75rem; border-bottom-right-radius: .75rem; }
+  &__icon { font-size: 1.1rem; flex-shrink: 0; }
+  &__msg { font-size: .875rem; color: #e2e8f0; font-weight: 500; margin: 0; }
+}

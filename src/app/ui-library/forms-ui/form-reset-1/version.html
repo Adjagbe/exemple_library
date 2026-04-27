@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Form Reset 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.frst1{background:#fff;border:1px solid #e5e7eb;border-radius:1.5rem;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,.06);text-align:center}
+.frst1__state{display:none}
+.frst1__state.active{display:block}
+.frst1__ico{font-size:3rem;margin-bottom:1.25rem}
+.frst1__title{font-size:1.5rem;font-weight:900;color:#0f172a;margin-bottom:.5rem}
+.frst1__desc{font-size:.875rem;color:#9ca3af;line-height:1.65;margin-bottom:2rem}
+.frst1__field{margin-bottom:1.5rem;text-align:left}
+.frst1__label{display:block;font-size:.8125rem;font-weight:600;color:#374151;margin-bottom:.375rem}
+.frst1__input{width:100%;padding:.75rem 1rem;border:1.5px solid #e5e7eb;border-radius:.875rem;font-size:.875rem;font-family:inherit;outline:none;transition:border-color .2s}
+.frst1__input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.frst1__btn{width:100%;padding:.9375rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:1rem;font-size:.9375rem;font-weight:700;cursor:pointer;margin-bottom:1rem}
+.frst1__back{background:none;border:none;color:#9ca3af;font-size:.875rem;cursor:pointer;font-family:inherit}
+.frst1__success-ico{font-size:3.5rem;margin-bottom:1.25rem;display:block}
+</style></head>
+<body>
+<div class="frst1">
+  <div class="frst1__state active" id="frst1form">
+    <div class="frst1__ico">🔑</div>
+    <h2 class="frst1__title">Forgot password?</h2>
+    <p class="frst1__desc">No worries! Enter your email and we'll send you reset instructions.</p>
+    <div class="frst1__field"><label class="frst1__label">Email address</label><input class="frst1__input" type="email" placeholder="you@example.com"></div>
+    <button class="frst1__btn" onclick="(function(){document.getElementById('frst1form').classList.remove('active');document.getElementById('frst1sent').classList.add('active')})()">Send reset link</button>
+    <button class="frst1__back">← Back to sign in</button>
+  </div>
+  <div class="frst1__state" id="frst1sent">
+    <span class="frst1__success-ico">✅</span>
+    <h2 class="frst1__title">Check your email</h2>
+    <p class="frst1__desc">We sent a password reset link to your email address. Check your inbox.</p>
+    <button class="frst1__btn" onclick="(function(){document.getElementById('frst1sent').classList.remove('active');document.getElementById('frst1form').classList.add('active')})()">← Back to sign in</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

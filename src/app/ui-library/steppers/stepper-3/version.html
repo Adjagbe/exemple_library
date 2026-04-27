@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stepper 3 – Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.sp3{width:100%;max-width:640px;background:#fff;border-radius:1.5rem;box-shadow:0 8px 40px rgba(0,0,0,.08);padding:2.5rem}
+.sp3__top{margin-bottom:2rem}
+.sp3__meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:.875rem}
+.sp3__title{font-size:1.125rem;font-weight:700;color:#1e293b}
+.sp3__count{font-size:.875rem;font-weight:600;color:#6366f1}
+.sp3__bar-track{height:6px;background:#f1f5f9;border-radius:999px;overflow:hidden}
+.sp3__bar-fill{height:100%;background:linear-gradient(to right,#6366f1,#8b5cf6);border-radius:999px;transition:width .4s ease}
+.sp3__pills{display:flex;gap:.5rem;margin-top:1.25rem;flex-wrap:wrap}
+.sp3__pill{padding:.35rem .875rem;border-radius:999px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;border:1.5px solid #e2e8f0;color:#64748b;background:transparent}
+.sp3__pill.done{background:#f0fdf4;border-color:#86efac;color:#15803d}
+.sp3__pill.active{background:#eef2ff;border-color:#a5b4fc;color:#4f46e5}
+.sp3__content{background:#f8fafc;border-radius:1rem;padding:1.75rem;min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;margin-bottom:1.75rem}
+.sp3__content h3{font-size:1.25rem;font-weight:700;color:#1e293b;margin-bottom:.5rem}
+.sp3__content p{font-size:.875rem;color:#64748b;line-height:1.6}
+.sp3__actions{display:flex;justify-content:space-between;gap:.75rem}
+.sp3__btn{padding:.75rem 1.75rem;border-radius:.875rem;font-size:.875rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+.sp3__btn-prev{background:#f1f5f9;color:#374151}
+.sp3__btn-prev:hover{background:#e2e8f0}
+.sp3__btn-next{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.sp3__btn-next:hover{opacity:.85}
+</style></head>
+<body>
+<div class="sp3">
+  <div class="sp3__top">
+    <div class="sp3__meta"><span class="sp3__title">Getting started</span><span class="sp3__count" id="sp3count">Step 1 / 4</span></div>
+    <div class="sp3__bar-track"><div class="sp3__bar-fill" id="sp3bar" style="width:25%"></div></div>
+    <div class="sp3__pills" id="sp3pills"></div>
+  </div>
+  <div class="sp3__content" id="sp3content"></div>
+  <div class="sp3__actions">
+    <button class="sp3__btn sp3__btn-prev" onclick="window.sp3Prev()">← Back</button>
+    <button class="sp3__btn sp3__btn-next" id="sp3next" onclick="window.sp3Next()">Continue →</button>
+  </div>
+</div>
+<script>(function(){
+  var steps = [
+    {label:'Profile',title:'Set up your profile',desc:'Add a photo and fill in your name so teammates can recognize you.'},
+    {label:'Workspace',title:'Create a workspace',desc:'Workspaces help you organize projects and collaborate with your team.'},
+    {label:'Integrations',title:'Connect your tools',desc:'Link Slack, GitHub, Figma and more to supercharge your workflow.'},
+    {label:'Done',title:"You're all set! 🎉",desc:'Your workspace is ready. Start your first project now.'}
+  ];
+  var cur = 0;
+  function render(){
+    var pct = Math.round(((cur+1)/steps.length)*100);
+    document.getElementById('sp3bar').style.width = pct+'%';
+    document.getElementById('sp3count').textContent = 'Step '+(cur+1)+' / '+steps.length;
+    var c = document.getElementById('sp3content');
+    c.innerHTML = '<div><h3>'+steps[cur].title+'</h3><p>'+steps[cur].desc+'</p></div>';
+    var pills = document.getElementById('sp3pills');
+    pills.innerHTML = '';
+    steps.forEach(function(s,i){
+      var p = document.createElement('span');
+      p.className = 'sp3__pill'+(i<cur?' done':i===cur?' active':'');
+      p.textContent = s.label;
+      p.onclick = function(){ cur=i; render(); };
+      pills.appendChild(p);
+    });
+    var nb = document.getElementById('sp3next');
+    nb.textContent = cur===steps.length-1 ? 'Finish ✓' : 'Continue →';
+  }
+  window.sp3Prev = function(){ if(cur>0){cur--;render();} };
+  window.sp3Next = function(){ if(cur<steps.length-1){cur++;render();} };
+  render();
+})()</script>
+</body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stepper 2 – Vertical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.sp2{width:100%;max-width:500px}
+.sp2__step{display:flex;gap:1.25rem;cursor:pointer;padding-bottom:2rem;position:relative}
+.sp2__step:last-child{padding-bottom:0}
+.sp2__step:not(:last-child)::before{content:'';position:absolute;left:1.125rem;top:2.75rem;width:2px;bottom:0;background:rgba(255,255,255,.08);transform:translateX(-50%)}
+.sp2__step.active .sp2__track::before,.sp2__step.done .sp2__track::before{background:linear-gradient(to bottom,#6366f1,transparent)}
+.sp2__track{position:relative;display:flex;flex-direction:column;align-items:center}
+.sp2__circle{width:2.25rem;height:2.25rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8125rem;font-weight:700;border:2px solid rgba(255,255,255,.1);color:#64748b;background:#1e293b;transition:all .3s}
+.sp2__step.done .sp2__circle{background:#22c55e;border-color:#22c55e;color:#fff}
+.sp2__step.active .sp2__circle{background:#6366f1;border-color:#6366f1;color:#fff}
+.sp2__body{padding-top:.3rem}
+.sp2__label{font-size:.9375rem;font-weight:700;color:#64748b;transition:color .3s}
+.sp2__step.done .sp2__label,.sp2__step.active .sp2__label{color:#f1f5f9}
+.sp2__desc{font-size:.8125rem;color:#475569;margin-top:.25rem;line-height:1.5}
+.sp2__step.active .sp2__desc{color:#94a3b8}
+.sp2__nav{display:flex;gap:.75rem;margin-top:2.5rem;justify-content:flex-end}
+.sp2__btn{padding:.7rem 1.5rem;border-radius:.75rem;font-size:.875rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.sp2__btn--prev{background:rgba(255,255,255,.06);color:#94a3b8}
+.sp2__btn--next{background:#6366f1;color:#fff}
+.sp2__btn--next:hover{background:#4f46e5}
+</style></head>
+<body>
+<div class="sp2">
+  <div class="sp2__step done" onclick="window.sp2Go(0)">
+    <div class="sp2__track"><div class="sp2__circle">✓</div></div>
+    <div class="sp2__body"><div class="sp2__label">Account created</div><div class="sp2__desc">Your account is set up and ready.</div></div>
+  </div>
+  <div class="sp2__step active" onclick="window.sp2Go(1)">
+    <div class="sp2__track"><div class="sp2__circle">2</div></div>
+    <div class="sp2__body"><div class="sp2__label">Billing information</div><div class="sp2__desc">Add your payment method to activate your subscription.</div></div>
+  </div>
+  <div class="sp2__step" onclick="window.sp2Go(2)">
+    <div class="sp2__track"><div class="sp2__circle">3</div></div>
+    <div class="sp2__body"><div class="sp2__label">Team members</div><div class="sp2__desc">Invite your colleagues to collaborate on projects.</div></div>
+  </div>
+  <div class="sp2__step" onclick="window.sp2Go(3)">
+    <div class="sp2__track"><div class="sp2__circle">4</div></div>
+    <div class="sp2__body"><div class="sp2__label">Launch</div><div class="sp2__desc">Review everything and launch your workspace.</div></div>
+  </div>
+  <div class="sp2__nav">
+    <button class="sp2__btn sp2__btn--prev" onclick="window.sp2Prev()">Previous</button>
+    <button class="sp2__btn sp2__btn--next" onclick="window.sp2Next()">Next step →</button>
+  </div>
+</div>
+<script>(function(){
+  var cur = 1;
+  var steps = document.querySelectorAll('.sp2__step');
+  var circles = document.querySelectorAll('.sp2__circle');
+  function render(){
+    steps.forEach(function(s,i){
+      s.classList.remove('done','active');
+      if(i<cur) s.classList.add('done');
+      if(i===cur) s.classList.add('active');
+    });
+    for(var i=0;i<circles.length;i++){
+      if(i<cur) circles[i].textContent='✓'; else circles[i].textContent=i+1;
+    }
+  }
+  window.sp2Go = function(i){ cur=i; render(); };
+  window.sp2Prev = function(){ if(cur>0){cur--;render();} };
+  window.sp2Next = function(){ if(cur<steps.length-1){cur++;render();} };
+})()</script>
+</body></html>

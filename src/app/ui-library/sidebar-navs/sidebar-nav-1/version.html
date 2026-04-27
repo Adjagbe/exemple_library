@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sidebar Nav 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex}
+.sn1{width:260px;background:#fff;border-right:1px solid #f1f5f9;min-height:100vh;display:flex;flex-direction:column;padding:1.5rem 1rem;flex-shrink:0}
+.sn1__brand{display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;margin-bottom:1.75rem}
+.sn1__brand-ico{width:2rem;height:2rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:.875rem;color:#fff}
+.sn1__brand-name{font-size:1rem;font-weight:800;color:#1e293b}
+.sn1__section{margin-bottom:1.5rem}
+.sn1__section-lbl{font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;padding:0 .75rem;margin-bottom:.5rem}
+.sn1__item{display:flex;align-items:center;gap:.625rem;padding:.6rem .75rem;border-radius:.75rem;font-size:.875rem;font-weight:500;color:#64748b;cursor:pointer;transition:all .2s;text-decoration:none;position:relative}
+.sn1__item:hover{background:#f1f5f9;color:#1e293b}
+.sn1__item.active{background:#eef2ff;color:#4f46e5;font-weight:700}
+.sn1__item-ico{width:1.25rem;text-align:center;font-size:1rem;flex-shrink:0}
+.sn1__badge{margin-left:auto;background:#ef4444;color:#fff;font-size:.625rem;font-weight:800;padding:.1rem .4rem;border-radius:999px}
+.sn1__badge.green{background:#22c55e}
+.sn1__footer{margin-top:auto;border-top:1px solid #f1f5f9;padding-top:1rem}
+.sn1__user{display:flex;align-items:center;gap:.75rem;padding:.625rem .75rem;border-radius:.875rem;cursor:pointer}
+.sn1__user:hover{background:#f1f5f9}
+.sn1__user-av{width:2.25rem;height:2.25rem;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff;flex-shrink:0}
+.sn1__user-name{font-size:.875rem;font-weight:700;color:#1e293b}
+.sn1__user-role{font-size:.75rem;color:#94a3b8}
+.sn1__main{flex:1;padding:2rem;background:#f8fafc}
+.sn1__main h2{font-size:1.5rem;font-weight:800;color:#1e293b;margin-bottom:.5rem}
+.sn1__main p{font-size:.9375rem;color:#64748b}
+</style></head>
+<body>
+<aside class="sn1">
+  <div class="sn1__brand"><div class="sn1__brand-ico">⚡</div><div class="sn1__brand-name">FluxUI</div></div>
+  <nav class="sn1__section">
+    <div class="sn1__section-lbl">Main</div>
+    <a class="sn1__item active" onclick="window.sn1Select(this)"><span class="sn1__item-ico">📊</span> Dashboard</a>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">📦</span> Projects <span class="sn1__badge green">12</span></a>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">📋</span> Tasks <span class="sn1__badge">3</span></a>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">💬</span> Messages</a>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">📅</span> Calendar</a>
+  </nav>
+  <nav class="sn1__section">
+    <div class="sn1__section-lbl">Settings</div>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">👤</span> Profile</a>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">⚙️</span> Preferences</a>
+    <a class="sn1__item" onclick="window.sn1Select(this)"><span class="sn1__item-ico">🔒</span> Security</a>
+  </nav>
+  <div class="sn1__footer">
+    <div class="sn1__user"><div class="sn1__user-av">JD</div><div><div class="sn1__user-name">Jane Doe</div><div class="sn1__user-role">Admin</div></div></div>
+  </div>
+</aside>
+<main class="sn1__main"><h2>Dashboard</h2><p>Click any sidebar item to navigate.</p></main>
+<script>(function(){
+  window.sn1Select = function(el){
+    document.querySelectorAll('.sn1__item').forEach(function(i){i.classList.remove('active');});
+    el.classList.add('active');
+    document.querySelector('.sn1__main h2').textContent = el.textContent.replace(/\d+/g,'').trim();
+  };
+})()</script>
+</body></html>

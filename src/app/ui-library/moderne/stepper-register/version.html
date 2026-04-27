@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stepper Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; }
+
+    .sr-page {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: #e8f5f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .sr {
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 1.25rem;
+      box-shadow: 0 8px 48px rgba(0,0,0,.10);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+    }
+    @media (max-width: 768px) { .sr { grid-template-columns: 1fr; } }
+
+    /* ── Aside ────────────────────── */
+    .sr__aside {
+      background: #f0faf8;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #d4ede9;
+    }
+
+    .sr__logo {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #2bada0;
+      letter-spacing: .04em;
+      margin-bottom: 2rem;
+    }
+
+    .sr__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a2e2b;
+      margin-bottom: 2rem;
+    }
+
+    .sr__stepper { display: flex; flex-direction: column; }
+    .sr__step-wrap { display: flex; flex-direction: column; }
+
+    .sr__step {
+      display: flex;
+      align-items: center;
+      gap: .875rem;
+      padding: .25rem 0;
+    }
+
+    .sr__step-circle {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 2px solid #c8deda;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8125rem;
+      font-weight: 600;
+      color: #8aada8;
+      flex-shrink: 0;
+      transition: all .25s;
+    }
+    .sr__step-circle svg { width: 14px; height: 14px; }
+
+    .sr__step--done .sr__step-circle,
+    .sr__step--active .sr__step-circle {
+      background: #2bada0;
+      border-color: #2bada0;
+      color: #fff;
+    }
+
+    .sr__step-label {
+      font-size: .9rem;
+      color: #8aada8;
+      font-weight: 500;
+    }
+    .sr__step--active .sr__step-label { color: #1a2e2b; font-weight: 700; }
+    .sr__step--done .sr__step-label   { color: #2bada0; }
+
+    .sr__step-line {
+      width: 2px; height: 28px;
+      background: #c8deda;
+      margin-left: 16px;
+    }
+
+    /* ── Main ─────────────────────── */
+    .sr__main {
+      background: #fff;
+      padding: 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sr__section-label {
+      font-size: .6875rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: #8aada8;
+      text-transform: uppercase;
+      margin-bottom: .875rem;
+      margin-top: 1.25rem;
+    }
+    .sr__section-label:first-child { margin-top: 0; }
+
+    .sr__field { margin-bottom: 1rem; }
+
+    .sr__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+    .sr__row--3 { grid-template-columns: 1fr 1.4fr 1fr; }
+
+    .sr__field--highlighted {
+      border: 1.5px solid #2bada0;
+      border-radius: .5rem;
+      padding: .75rem 1rem .5rem;
+      background: #fff;
+      margin-bottom: 1.25rem;
+    }
+
+    .sr__float-label {
+      display: block;
+      font-size: .7rem;
+      color: #2bada0;
+      font-weight: 500;
+      margin-bottom: .25rem;
+    }
+
+    .sr__hint {
+      display: block;
+      font-size: .7rem;
+      color: #8aada8;
+      margin-top: .25rem;
+    }
+
+    .sr__input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: .9375rem;
+      color: #1a2e2b;
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+    }
+
+    .sr__input--plain {
+      background: #f7fafa;
+      border: 1px solid #dde9e7;
+      border-radius: .5rem;
+      padding: .65rem .875rem;
+      font-size: .875rem;
+      color: #1a2e2b;
+      width: 100%;
+    }
+    .sr__input--plain::placeholder { color: #9ab5b1; }
+    .sr__input--plain:focus { border-color: #2bada0; outline: none; background: #fff; }
+
+    .sr__select-wrap { position: relative; }
+    .sr__select {
+      width: 100%;
+      appearance: none;
+      background: #f7fafa;
+      border: 1px solid #dde9e7;
+      border-radius: .5rem;
+      padding: .65rem 2.25rem .65rem .875rem;
+      font-size: .875rem;
+      color: #1a2e2b;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+    .sr__select:focus { border-color: #2bada0; outline: none; }
+
+    .sr__select-arrow {
+      position: absolute;
+      right: .625rem; top: 50%;
+      transform: translateY(-50%);
+      width: 16px; height: 16px;
+      color: #8aada8;
+      pointer-events: none;
+    }
+
+    .sr__phone-wrap,
+    .sr__email-wrap {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: #f7fafa;
+      border: 1px solid #dde9e7;
+      border-radius: .5rem;
+      padding: .5rem .75rem;
+    }
+    .sr__phone-flag { font-size: .875rem; color: #1a2e2b; white-space: nowrap; }
+
+    .sr__input--phone {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: .875rem;
+      color: #1a2e2b;
+    }
+    .sr__input--phone::placeholder { color: #9ab5b1; }
+
+    .sr__help-btn {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid #2bada0;
+      background: transparent;
+      color: #2bada0;
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .sr__help-btn:hover { background: #e8f5f3; }
+
+    /* ── Summary ─────────────────── */
+    .sr__summary {
+      background: #f7fafa;
+      border: 1px solid #dde9e7;
+      border-radius: .75rem;
+      overflow: hidden;
+    }
+    .sr__summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .875rem 1.25rem;
+      font-size: .875rem;
+      color: #4a6b67;
+      border-bottom: 1px solid #dde9e7;
+    }
+    .sr__summary-row:last-child { border-bottom: none; }
+    .sr__summary-row strong { color: #1a2e2b; }
+
+    /* ── Receipt ─────────────────── */
+    .sr__receipt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      text-align: center;
+      padding: 3rem 0;
+    }
+    .sr__receipt-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: #2bada0;
+      color: #fff;
+      font-size: 1.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sr__receipt h3 { font-size: 1.5rem; font-weight: 700; color: #1a2e2b; margin: 1rem 0 .5rem; }
+    .sr__receipt p  { color: #4a6b67; font-size: .9rem; }
+
+    /* ── Actions ─────────────────── */
+    .sr__actions { margin-top: auto; padding-top: 1.5rem; }
+    .sr__divider { border: none; border-top: 1px solid #e4eeed; margin-bottom: 1.25rem; }
+    .sr__actions-row { display: flex; justify-content: flex-end; gap: .75rem; }
+
+    .sr__btn {
+      padding: .65rem 2rem;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Inter', sans-serif;
+      border: none;
+    }
+    .sr__btn--next { background: #2bada0; color: #fff; }
+    .sr__btn--next:hover { background: #239991; }
+    .sr__btn--back { background: transparent; color: #4a6b67; border: 1px solid #c8deda; }
+    .sr__btn--back:hover { background: #f0faf8; }
+
+    /* ── Step panels ─────────────── */
+    .sr__panel { display: none; }
+    .sr__panel.active { display: block; }
+  </style>
+</head>
+<body>
+<div class="sr-page">
+<div class="sr">
+
+  <!-- ── Left: Stepper ─────────────── -->
+  <aside class="sr__aside">
+    <div class="sr__logo">DNB</div>
+    <h2 class="sr__title">Create account</h2>
+
+    <nav class="sr__stepper" id="stepper">
+      <div class="sr__step-wrap">
+        <div class="sr__step sr__step--active" id="step-btn-1">
+          <div class="sr__step-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:none" id="check-1"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="num-1">1</span>
+          </div>
+          <span class="sr__step-label">Personal Details</span>
+        </div>
+        <div class="sr__step-line"></div>
+      </div>
+      <div class="sr__step-wrap">
+        <div class="sr__step" id="step-btn-2">
+          <div class="sr__step-circle"><span id="num-2">2</span></div>
+          <span class="sr__step-label">Account Details</span>
+        </div>
+        <div class="sr__step-line"></div>
+      </div>
+      <div class="sr__step-wrap">
+        <div class="sr__step" id="step-btn-3">
+          <div class="sr__step-circle"><span id="num-3">3</span></div>
+          <span class="sr__step-label">Tax Details</span>
+        </div>
+        <div class="sr__step-line"></div>
+      </div>
+      <div class="sr__step-wrap">
+        <div class="sr__step" id="step-btn-4">
+          <div class="sr__step-circle"><span id="num-4">4</span></div>
+          <span class="sr__step-label">Summary</span>
+        </div>
+        <div class="sr__step-line"></div>
+      </div>
+      <div class="sr__step-wrap">
+        <div class="sr__step" id="step-btn-5">
+          <div class="sr__step-circle"><span id="num-5">5</span></div>
+          <span class="sr__step-label">Receipt</span>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ── Right: Form content ───────── -->
+  <main class="sr__main">
+
+    <!-- Step 1 -->
+    <div class="sr__panel active" id="panel-1">
+      <p class="sr__section-label" style="margin-top:0">YOUR PERSONAL DETAILS</p>
+
+      <div class="sr__field sr__field--highlighted">
+        <label class="sr__float-label">National Identity Number/D-number</label>
+        <input class="sr__input" type="text" id="nationalId" value="01010102302" />
+        <span class="sr__hint">This should be 11 digits long</span>
+      </div>
+
+      <div class="sr__row">
+        <div class="sr__field">
+          <input class="sr__input sr__input--plain" type="text" id="firstName" placeholder="First Name" />
+        </div>
+        <div class="sr__field">
+          <input class="sr__input sr__input--plain" type="text" id="lastName" placeholder="Last Name" />
+        </div>
+      </div>
+
+      <p class="sr__section-label">YOUR RESIDENTIAL ADDRESS</p>
+
+      <div class="sr__row">
+        <div class="sr__field">
+          <input class="sr__input sr__input--plain" type="text" id="street1" placeholder="Street Address" />
+        </div>
+        <div class="sr__field">
+          <input class="sr__input sr__input--plain" type="text" id="street2" placeholder="Street Address (optional)" />
+        </div>
+      </div>
+
+      <div class="sr__row sr__row--3">
+        <div class="sr__field">
+          <input class="sr__input sr__input--plain" type="text" id="postCode" placeholder="Post Code" />
+        </div>
+        <div class="sr__field">
+          <input class="sr__input sr__input--plain" type="text" id="city" placeholder="City" />
+        </div>
+        <div class="sr__field">
+          <div class="sr__select-wrap">
+            <select class="sr__select" id="country">
+              <option value="" disabled selected>Country</option>
+              <option>Norway</option>
+              <option>Sweden</option>
+              <option>Denmark</option>
+              <option>Finland</option>
+            </select>
+            <svg class="sr__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <p class="sr__section-label">CONTACT DETAILS</p>
+
+      <div class="sr__field">
+        <div class="sr__phone-wrap">
+          <span class="sr__phone-flag">🇳🇴 +47</span>
+          <input class="sr__input--phone" type="tel" id="phone" placeholder="Your Phone Number" />
+          <button class="sr__help-btn" type="button">?</button>
+        </div>
+      </div>
+
+      <div class="sr__field">
+        <div class="sr__email-wrap">
+          <input class="sr__input sr__input--plain" type="email" id="email" placeholder="Your Email Address" style="background:transparent;border:none;flex:1;padding:0" />
+          <button class="sr__help-btn" type="button">?</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="sr__panel" id="panel-2">
+      <p class="sr__section-label" style="margin-top:0">ACCOUNT DETAILS</p>
+      <div class="sr__field">
+        <input class="sr__input sr__input--plain" type="text" id="username" placeholder="Username" />
+      </div>
+      <div class="sr__field">
+        <div class="sr__select-wrap">
+          <select class="sr__select" id="accountType">
+            <option value="" disabled selected>Account Type</option>
+            <option>Personal</option>
+            <option>Business</option>
+          </select>
+          <svg class="sr__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="sr__panel" id="panel-3">
+      <p class="sr__section-label" style="margin-top:0">TAX DETAILS</p>
+      <div class="sr__field">
+        <input class="sr__input sr__input--plain" type="text" id="taxNumber" placeholder="Tax Identification Number" />
+      </div>
+      <div class="sr__field">
+        <div class="sr__select-wrap">
+          <select class="sr__select" id="taxCountry">
+            <option value="" disabled selected>Country of Tax Residence</option>
+            <option>Norway</option>
+            <option>Sweden</option>
+            <option>Denmark</option>
+          </select>
+          <svg class="sr__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="sr__panel" id="panel-4">
+      <p class="sr__section-label" style="margin-top:0">SUMMARY</p>
+      <div class="sr__summary">
+        <div class="sr__summary-row"><span>Name</span><strong id="sum-name">—</strong></div>
+        <div class="sr__summary-row"><span>Email</span><strong id="sum-email">—</strong></div>
+        <div class="sr__summary-row"><span>Phone</span><strong id="sum-phone">—</strong></div>
+        <div class="sr__summary-row"><span>City</span><strong id="sum-city">—</strong></div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="sr__panel" id="panel-5">
+      <div class="sr__receipt">
+        <div class="sr__receipt-icon">✓</div>
+        <h3>Account created!</h3>
+        <p>A confirmation has been sent to <strong id="receipt-email">your email</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="sr__actions">
+      <hr class="sr__divider" />
+      <div class="sr__actions-row">
+        <button class="sr__btn sr__btn--back" id="btn-back" onclick="srPrev()" style="display:none">Back</button>
+        <button class="sr__btn sr__btn--next" id="btn-next" onclick="srNext()">Next</button>
+      </div>
+    </div>
+
+  </main>
+</div><!-- .sr -->
+</div><!-- .sr-page -->
+
+<script>
+(function () {
+  var current = 1;
+  var total = 5;
+
+  function updateStepper() {
+    for (var i = 1; i <= total; i++) {
+      var stepEl = document.getElementById('step-btn-' + i);
+      var numEl  = document.getElementById('num-' + i);
+      var checkEl = document.getElementById('check-' + i);
+      stepEl.classList.remove('sr__step--active', 'sr__step--done');
+      if (i < current) {
+        stepEl.classList.add('sr__step--done');
+        if (checkEl) checkEl.style.display = 'block';
+        if (numEl)   numEl.style.display   = 'none';
+      } else if (i === current) {
+        stepEl.classList.add('sr__step--active');
+        if (checkEl) checkEl.style.display = 'none';
+        if (numEl)   numEl.style.display   = 'inline';
+      } else {
+        if (checkEl) checkEl.style.display = 'none';
+        if (numEl)   numEl.style.display   = 'inline';
+      }
+      var panel = document.getElementById('panel-' + i);
+      panel.classList.toggle('active', i === current);
+    }
+    document.getElementById('btn-back').style.display = current > 1 ? 'inline-flex' : 'none';
+    var btnNext = document.getElementById('btn-next');
+    btnNext.textContent = current === total ? 'Finish' : 'Next';
+  }
+
+  window.srNext = function () {
+    if (current === 4) {
+      document.getElementById('sum-name').textContent =
+        (document.getElementById('firstName').value || '—') + ' ' +
+        (document.getElementById('lastName').value  || '');
+      document.getElementById('sum-email').textContent = document.getElementById('email').value || '—';
+      document.getElementById('sum-phone').textContent = '+47 ' + (document.getElementById('phone').value || '—');
+      document.getElementById('sum-city').textContent  =
+        (document.getElementById('city').value || '—') + ', ' +
+        (document.getElementById('country').value || '—');
+    }
+    if (current === total) {
+      document.getElementById('receipt-email').textContent = document.getElementById('email').value || 'your email';
+      return;
+    }
+    current++;
+    updateStepper();
+  };
+
+  window.srPrev = function () {
+    if (current > 1) { current--; updateStepper(); }
+  };
+
+  updateStepper();
+})();
+</script>
+</body>
+</html>

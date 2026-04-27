@@ -1,0 +1,32 @@
+<div class="fr2">
+  <div class="fr2__left">
+    <div class="fr2__brand">◈ Nexus</div>
+    <div class="fr2__perks">
+      <div class="fr2__perk"><span>✓</span><p>Free forever plan</p></div>
+      <div class="fr2__perk"><span>✓</span><p>500+ ready-made components</p></div>
+      <div class="fr2__perk"><span>✓</span><p>No credit card required</p></div>
+      <div class="fr2__perk"><span>✓</span><p>Cancel anytime</p></div>
+    </div>
+  </div>
+  <div class="fr2__right">
+    <div class="fr2__box">
+      <h2 class="fr2__h">Create account</h2>
+      <form class="fr2__form">
+        <div class="fr2__row2">
+          <div class="fr2__field"><label>First name</label><input type="text" [(ngModel)]="fname" name="fn" placeholder="John"></div>
+          <div class="fr2__field"><label>Last name</label><input type="text" [(ngModel)]="lname" name="ln" placeholder="Doe"></div>
+        </div>
+        <div class="fr2__field"><label>Email address</label><input type="email" [(ngModel)]="email" name="em" placeholder="you@company.com"></div>
+        <div class="fr2__field"><label>Password</label><input type="password" [(ngModel)]="password" name="pw" placeholder="Min. 8 characters"></div>
+        <div class="fr2__field">
+          <label>I am a…</label>
+          <select [(ngModel)]="role" name="role">
+            <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+          </select>
+        </div>
+        <button class="fr2__submit" type="submit">Get started free</button>
+      </form>
+      <p class="fr2__footer">Already have an account? <a href="#">Sign in</a></p>
+    </div>
+  </div>
+</div>

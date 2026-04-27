@@ -1,0 +1,23 @@
+<div class="fl3">
+  <div class="fl3__bg"><div class="fl3__orb fl3__orb--1"></div><div class="fl3__orb fl3__orb--2"></div></div>
+  <div class="fl3__glass">
+    <p class="fl3__tag">◈ Platform</p>
+    <h2 class="fl3__h">Sign in</h2>
+    <form class="fl3__form">
+      <div class="fl3__field">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="e" placeholder="you@example.com">
+      </div>
+      <div class="fl3__field">
+        <label>Password</label>
+        <div class="fl3__pwd">
+          <input [type]="showPwd?'text':'password'" [(ngModel)]="password" name="p" placeholder="••••••••">
+          <button type="button" (click)="showPwd=!showPwd">{{ showPwd?'🙈':'👁' }}</button>
+        </div>
+      </div>
+      <a href="#" class="fl3__forgot">Forgot password?</a>
+      <button class="fl3__submit" type="submit">Continue</button>
+    </form>
+    <p class="fl3__footer">No account? <a href="#">Register</a></p>
+  </div>
+</div>

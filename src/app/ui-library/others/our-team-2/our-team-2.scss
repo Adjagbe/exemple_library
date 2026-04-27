@@ -1,12 +1,78 @@
-.ot2 { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.ot2__head { text-align: center; margin-bottom: 3.5rem; }
-.ot2__head h2 { font-size: 2.25rem; font-weight: 800; color: #111827; margin: 0 0 .875rem; }
-.ot2__head p { font-size: .95rem; color: #6b7280; margin: 0; }
-.ot2__dept { margin-bottom: 3rem; }
-.ot2__dept-name { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #4f46e5; margin: 0 0 1.5rem; padding-bottom: .875rem; border-bottom: 2px solid #eef2ff; }
-.ot2__row { display: flex; gap: 1.25rem; flex-wrap: wrap; }
-.ot2__card { display: flex; align-items: center; gap: 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.25rem 1.5rem; min-width: 220px; flex: 1; transition: all .2s; }
-.ot2__card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
-.ot2__avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800; color: #fff; flex-shrink: 0; }
-.ot2__name { font-size: .875rem; font-weight: 700; color: #111827; margin: 0 0 .2rem; }
-.ot2__role { font-size: .75rem; color: #6b7280; margin: 0; }
+.ot2 {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.ot2__head {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.ot2__head h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 0.875rem;
+}
+.ot2__head p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+.ot2__dept {
+  margin-bottom: 3rem;
+}
+.ot2__dept-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4f46e5;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 2px solid #eef2ff;
+}
+.ot2__row {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.ot2__card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  width: 220px;
+  flex: 1;
+  transition: all 0.2s;
+}
+.ot2__card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+.ot2__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.ot2__name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.2rem;
+}
+.ot2__role {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}

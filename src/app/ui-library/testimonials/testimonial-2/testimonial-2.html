@@ -1,0 +1,13 @@
+<section class="ts2">
+  <div class="ts2__inner">
+    <div class="ts2__quote-mark">"</div>
+    <p class="ts2__text">{{ quotes[active].text }}</p>
+    <div class="ts2__author">
+      <div class="ts2__av">{{ quotes[active].avatar }}</div>
+      <div><p class="ts2__name">{{ quotes[active].name }}</p><span class="ts2__role">{{ quotes[active].role }}</span></div>
+    </div>
+    <div class="ts2__dots">
+      <button class="ts2__dot" [class.ts2__dot--on]="active === i" *ngFor="let q of quotes; let i = index" (click)="go(i)"></button>
+    </div>
+  </div>
+</section>

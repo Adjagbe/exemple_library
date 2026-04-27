@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alert 2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;padding:3rem 2rem;display:flex;flex-direction:column;gap:1rem;max-width:700px;margin:0 auto}
+.al2{display:flex;align-items:center;gap:.875rem;padding:1rem 1.25rem;border-radius:.875rem;border:1px solid transparent;position:relative}
+.al2--info{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3)}
+.al2--success{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3)}
+.al2--warn{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3)}
+.al2--error{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3)}
+.al2__ico{font-size:1.25rem;flex-shrink:0}
+.al2__msg{flex:1;font-size:.875rem;color:#e2e8f0}
+.al2__actions{display:flex;gap:.5rem;flex-shrink:0}
+.al2__btn{background:none;border:1px solid currentColor;border-radius:.5rem;padding:.3rem .75rem;font-size:.75rem;font-weight:600;cursor:pointer}
+.al2--info .al2__btn{color:#60a5fa} .al2--success .al2__btn{color:#4ade80} .al2--warn .al2__btn{color:#fbbf24} .al2--error .al2__btn{color:#f87171}
+.al2__close{background:none;border:none;cursor:pointer;color:#475569;font-size:1rem;flex-shrink:0;line-height:1}
+.al2__close:hover{color:#94a3b8}
+</style></head>
+<body>
+<div class="al2 al2--info" id="b1"><span class="al2__ico">🔔</span><span class="al2__msg">System maintenance scheduled for tonight at 02:00 UTC.</span><div class="al2__actions"><button class="al2__btn">Details</button></div><button class="al2__close" onclick="window.closeAl2('b1')">✕</button></div>
+<div class="al2 al2--success" id="b2"><span class="al2__ico">🎉</span><span class="al2__msg">Deployment successful! v2.4.1 is now live.</span><div class="al2__actions"><button class="al2__btn">View</button></div><button class="al2__close" onclick="window.closeAl2('b2')">✕</button></div>
+<div class="al2 al2--warn" id="b3"><span class="al2__ico">⚠️</span><span class="al2__msg">Your API key expires in 3 days. Rotate it now to avoid disruptions.</span><div class="al2__actions"><button class="al2__btn">Rotate</button></div><button class="al2__close" onclick="window.closeAl2('b3')">✕</button></div>
+<div class="al2 al2--error" id="b4"><span class="al2__ico">💥</span><span class="al2__msg">Build failed on main. 3 tests are failing.</span><div class="al2__actions"><button class="al2__btn">View logs</button></div><button class="al2__close" onclick="window.closeAl2('b4')">✕</button></div>
+<script>(function(){
+  window.closeAl2 = function(id){ var el=document.getElementById(id); if(el) el.remove(); };
+})()</script>
+</body></html>

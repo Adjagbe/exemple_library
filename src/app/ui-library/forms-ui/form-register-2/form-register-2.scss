@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.fr2 {
+  min-height: 100vh; display: grid; grid-template-columns: 5fr 7fr; font-family: 'Inter', sans-serif;
+  @media (max-width: 800px) { grid-template-columns: 1fr; }
+  &__left { background: #0f172a; padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; @media (max-width: 800px) { display: none; } }
+  &__brand { font-size: 1.25rem; font-weight: 800; color: #818cf8; margin-bottom: 3rem; }
+  &__perks { display: flex; flex-direction: column; gap: 1.25rem; }
+  &__perk { display: flex; align-items: flex-start; gap: .75rem; span { color: #10b981; font-weight: 700; font-size: 1rem; margin-top: .1rem; } p { color: rgba(249,250,251,.7); font-size: .95rem; } }
+  &__right { background: #fff; display: flex; align-items: center; justify-content: center; padding: 3rem 2rem; }
+  &__box { width: 100%; max-width: 440px; }
+  &__h { font-size: 1.75rem; font-weight: 800; color: #0f172a; margin-bottom: 1.75rem; }
+  &__form { display: flex; flex-direction: column; gap: 1rem; }
+  &__row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  &__field { display: flex; flex-direction: column; gap: .4rem; label { font-size: .8rem; font-weight: 600; color: #374151; } input, select { padding: .75rem 1rem; border: 1.5px solid #e5e7eb; border-radius: .75rem; font-size: .875rem; outline: none; font-family: inherit; background: #fff; &:focus { border-color: #6366f1; } } }
+  &__submit { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: .875rem; border-radius: .75rem; font-size: .95rem; font-weight: 700; cursor: pointer; margin-top: .25rem; transition: all .2s; &:hover { opacity: .9; transform: translateY(-1px); } }
+  &__footer { text-align: center; font-size: .8125rem; color: #94a3b8; margin-top: 1.25rem; a { color: #6366f1; text-decoration: none; font-weight: 600; } }
+}

@@ -1,0 +1,23 @@
+<div class="stp1">
+  <div class="stp1__header">
+    <div class="stp1__step" *ngFor="let s of steps; let last = last"
+         [class.stp1__step--done]="s.n < current"
+         [class.stp1__step--active]="s.n === current">
+      <div class="stp1__circle">{{ s.n < current ? '✓' : s.n }}</div>
+      <div class="stp1__meta"><span class="stp1__label">{{ s.label }}</span><span class="stp1__desc">{{ s.desc }}</span></div>
+      <div class="stp1__line" *ngIf="!last" [class.stp1__line--done]="s.n < current"></div>
+    </div>
+  </div>
+  <div class="stp1__body">
+    <div *ngFor="let s of steps">
+      <div class="stp1__panel" *ngIf="s.n === current">
+        <h3>Step {{ s.n }}: {{ s.label }}</h3>
+        <p>Fill in your {{ s.label.toLowerCase() }} information here.</p>
+      </div>
+    </div>
+  </div>
+  <div class="stp1__footer">
+    <button class="stp1__btn stp1__btn--ghost" (click)="prev()" [disabled]="current === 1">← Back</button>
+    <button class="stp1__btn stp1__btn--primary" (click)="next()" [disabled]="current === steps.length">{{ current === steps.length - 1 ? 'Finish' : 'Next →' }}</button>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pricing 2 – Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#06060f,#0f0a1e);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem}
+.pc2__inner{max-width:1100px;width:100%}
+.pc2__header{text-align:center;margin-bottom:3rem}
+.pc2__h{font-size:clamp(1.75rem,3vw,2.75rem);font-weight:900;color:#f1f5f9}
+.pc2__sub{font-size:1rem;color:#64748b;margin-top:.75rem}
+.pc2__toggle{display:flex;align-items:center;justify-content:center;gap:.75rem;margin-top:1.5rem;font-size:.875rem;color:#94a3b8}
+.pc2__tog-switch{width:3rem;height:1.5rem;background:#334155;border-radius:999px;cursor:pointer;position:relative;border:none;transition:background .3s}
+.pc2__tog-switch.on{background:#6366f1}
+.pc2__tog-switch::after{content:'';position:absolute;top:.2rem;left:.2rem;width:1.1rem;height:1.1rem;background:#fff;border-radius:50%;transition:transform .3s}
+.pc2__tog-switch.on::after{transform:translateX(1.5rem)}
+.pc2__save{background:#22c55e;color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .5rem;border-radius:999px;margin-left:.25rem}
+.pc2__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:900px){.pc2__grid{grid-template-columns:1fr}}
+.pc2__card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:1.5rem;padding:2rem;display:flex;flex-direction:column;gap:1.25rem;transition:border-color .2s}
+.pc2__card:hover{border-color:rgba(99,102,241,.4)}
+.pc2__card.hot{background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.4);position:relative}
+.pc2__badge{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:.7rem;font-weight:800;padding:.3rem .9rem;border-radius:999px;white-space:nowrap}
+.pc2__plan{font-size:.8125rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#64748b}
+.pc2__card.hot .pc2__plan{color:#a5b4fc}
+.pc2__price{font-size:2.5rem;font-weight:900;color:#f1f5f9;line-height:1}
+.pc2__price span{font-size:1rem;font-weight:500;color:#64748b}
+.pc2__desc{font-size:.875rem;color:#64748b;line-height:1.5}
+.pc2__list{list-style:none;display:flex;flex-direction:column;gap:.625rem;flex:1}
+.pc2__li{font-size:.875rem;color:#94a3b8;display:flex;align-items:center;gap:.5rem}
+.pc2__li::before{content:'✓';color:#6366f1;font-weight:700;flex-shrink:0}
+.pc2__btn{padding:.875rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#e2e8f0;font-weight:700;font-size:.9375rem;border-radius:.875rem;cursor:pointer;transition:all .2s;text-align:center}
+.pc2__btn:hover{background:rgba(255,255,255,.1)}
+.pc2__card.hot .pc2__btn{background:linear-gradient(135deg,#4f46e5,#7c3aed);border:none;color:#fff}
+</style></head>
+<body>
+<div class="pc2__inner">
+  <div class="pc2__header">
+    <h2 class="pc2__h">Transparent pricing</h2>
+    <p class="pc2__sub">No surprises. Pick a plan that fits your team.</p>
+    <div class="pc2__toggle">
+      <span>Monthly</span>
+      <button class="pc2__tog-switch on" id="pc2tog" onclick="window.pc2Toggle()"></button>
+      <span>Annual <span class="pc2__save">Save 20%</span></span>
+    </div>
+  </div>
+  <div class="pc2__grid">
+    <div class="pc2__card">
+      <div class="pc2__plan">Starter</div>
+      <div class="pc2__price" id="p2a">$0<span>/mo</span></div>
+      <div class="pc2__desc">Perfect for side projects and early-stage products.</div>
+      <ul class="pc2__list"><li class="pc2__li">3 projects</li><li class="pc2__li">1 team member</li><li class="pc2__li">5 GB storage</li><li class="pc2__li">Community support</li></ul>
+      <button class="pc2__btn">Get started free</button>
+    </div>
+    <div class="pc2__card hot">
+      <div class="pc2__badge">⚡ Most popular</div>
+      <div class="pc2__plan">Pro</div>
+      <div class="pc2__price" id="p2b">$32<span>/mo</span></div>
+      <div class="pc2__desc">For growing teams who need more power and collaboration.</div>
+      <ul class="pc2__list"><li class="pc2__li">Unlimited projects</li><li class="pc2__li">Up to 20 members</li><li class="pc2__li">100 GB storage</li><li class="pc2__li">Priority support</li><li class="pc2__li">Advanced analytics</li></ul>
+      <button class="pc2__btn">Start Pro trial</button>
+    </div>
+    <div class="pc2__card">
+      <div class="pc2__plan">Enterprise</div>
+      <div class="pc2__price">Custom</div>
+      <div class="pc2__desc">Tailored for large organizations with custom needs.</div>
+      <ul class="pc2__list"><li class="pc2__li">Unlimited everything</li><li class="pc2__li">SSO & SAML</li><li class="pc2__li">SLA guarantee</li><li class="pc2__li">Dedicated manager</li></ul>
+      <button class="pc2__btn">Contact sales</button>
+    </div>
+  </div>
+</div>
+<script>(function(){
+  var annual = true;
+  window.pc2Toggle = function(){
+    annual = !annual;
+    var btn = document.getElementById('pc2tog');
+    btn.classList.toggle('on',annual);
+    document.getElementById('p2b').innerHTML = (annual?'$26':'$32')+'<span>/mo</span>';
+  };
+})()</script>
+</body></html>

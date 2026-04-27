@@ -1,0 +1,15 @@
+<div class="up1">
+  <div class="up1__zone" [class.up1__zone--over]="over" (drop)="onDrop($event)" (dragover)="onOver($event)" (dragleave)="onLeave()">
+    <div class="up1__ico">📤</div>
+    <p class="up1__main">Drag & drop files here</p>
+    <p class="up1__sub">or <label class="up1__browse" for="up1file">browse</label> from your computer</p>
+    <input id="up1file" type="file" multiple hidden>
+    <p class="up1__hint">PNG, JPG, PDF up to 10MB</p>
+  </div>
+  <ul class="up1__list" *ngIf="files.length">
+    <li class="up1__file" *ngFor="let f of files; let i = index">
+      <span class="up1__fname">📄 {{ f }}</span>
+      <button class="up1__rm" (click)="remove(i)">✕</button>
+    </li>
+  </ul>
+</div>

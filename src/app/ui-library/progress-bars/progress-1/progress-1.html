@@ -1,0 +1,9 @@
+<div class="pr1">
+  <h3 class="pr1__title">Resource Usage</h3>
+  <div class="pr1__list">
+    <div class="pr1__row" *ngFor="let b of bars">
+      <div class="pr1__meta"><span class="pr1__label">{{ b.label }}</span><span class="pr1__pct">{{ b.pct }}%</span></div>
+      <div class="pr1__track"><div class="pr1__fill" [style.width]="b.pct+'%'" [style.background]="b.color"></div></div>
+    </div>
+  </div>
+</div>

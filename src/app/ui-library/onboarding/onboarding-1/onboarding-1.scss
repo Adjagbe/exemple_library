@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+.ob1 {
+  font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f0f4ff, #faf5ff); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
+  &__card { background: #fff; border-radius: 1.75rem; padding: 2.5rem; max-width: 440px; width: 100%; box-shadow: 0 16px 48px rgba(99,102,241,.12); text-align: center; }
+  &__prog { height: 4px; background: #f1f5f9; border-radius: 999px; overflow: hidden; margin-bottom: 1.25rem; }
+  &__progfill { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 999px; transition: width .4s ease; }
+  &__step-lbl { font-size: .75rem; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2rem; }
+  &__icon { font-size: 3.5rem; margin-bottom: 1.25rem; }
+  &__title { font-size: 1.5rem; font-weight: 900; color: #0f172a; margin-bottom: .875rem; }
+  &__desc { font-size: .9375rem; color: #6b7280; line-height: 1.7; margin-bottom: 2rem; }
+  &__cta { width: 100%; padding: .9375rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; border-radius: 1rem; font-size: .9375rem; font-weight: 700; cursor: pointer; margin-bottom: .875rem; transition: opacity .2s; &:hover { opacity: .87; } }
+  &__skip { background: none; border: none; color: #9ca3af; font-size: .875rem; cursor: pointer; font-family: inherit; &:hover { color: #374151; } }
+  &__dots { display: flex; justify-content: center; gap: .5rem; margin-top: 1.5rem; }
+  &__dot { width: 8px; height: 8px; border-radius: 50%; background: #e5e7eb; &--on { background: #6366f1; } }
+}

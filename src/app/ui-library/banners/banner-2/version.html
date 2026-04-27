@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banner 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { font-family: 'Inter', sans-serif; }
+
+    .b2 {
+      min-height: 100vh;
+      background: #0a0a14;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: 5rem 5%;
+      font-family: 'Inter', sans-serif;
+      color: #f1f5f9;
+    }
+    @media (max-width: 900px) {
+      .b2 { grid-template-columns: 1fr; }
+    }
+
+    .b2__badge {
+      display: inline-block;
+      background: rgba(99,102,241,.15);
+      border: 1px solid rgba(99,102,241,.35);
+      color: #a5b4fc;
+      padding: .35rem 1rem;
+      border-radius: 9999px;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-bottom: 1.75rem;
+    }
+
+    .b2__h1 {
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      margin-bottom: 1.25rem;
+    }
+    .b2__h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #6366f1, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .b2__p {
+      color: rgba(241,245,249,.55);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .b2__actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .b2__btn {
+      padding: .75rem 1.75rem;
+      border-radius: .625rem;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .b2__btn--primary {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+    }
+    .b2__btn--primary:hover {
+      background: #4f46e5;
+      transform: translateY(-1px);
+    }
+    .b2__btn--outline {
+      background: transparent;
+      color: #c7d2fe;
+      border: 1px solid rgba(99,102,241,.4);
+    }
+    .b2__btn--outline:hover {
+      border-color: #6366f1;
+      background: rgba(99,102,241,.08);
+    }
+
+    .b2__stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .b2__stat strong {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #f9fafb;
+    }
+    .b2__stat span {
+      font-size: .8rem;
+      color: rgba(241,245,249,.45);
+    }
+
+    .b2__terminal {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .b2__t-bar {
+      display: flex;
+      gap: .4rem;
+      padding: .75rem 1rem;
+      background: #161b22;
+    }
+    .b2__t-bar span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #3f4448;
+    }
+    .b2__t-bar span:first-child  { background: #ff5f57; }
+    .b2__t-bar span:nth-child(2) { background: #febc2e; }
+    .b2__t-bar span:last-child   { background: #28c840; }
+
+    .b2__code {
+      padding: 1.25rem 1.5rem;
+      font-size: .85rem;
+      font-family: 'Fira Code', monospace;
+      color: #8b949e;
+      line-height: 2;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    .c-dim { color: #484f58; }
+    .c-grn { color: #3fb950; }
+    .c-blu { color: #58a6ff; }
+    .c-ylw { color: #e3b341; }
+  </style>
+</head>
+<body>
+
+<section class="b2">
+  <div class="b2__left">
+    <span class="b2__badge">🚀 Now in public beta</span>
+    <h1 class="b2__h1">The developer platform <em>built for scale.</em></h1>
+    <p class="b2__p">Deploy with confidence. Monitor with clarity. Scale without limits. Everything you need in one place.</p>
+    <div class="b2__actions">
+      <button class="b2__btn b2__btn--primary">Start for free</button>
+      <button class="b2__btn b2__btn--outline">See pricing</button>
+    </div>
+    <div class="b2__stats">
+      <div class="b2__stat"><strong>50K+</strong><span>Developers</span></div>
+      <div class="b2__stat"><strong>99.9%</strong><span>Uptime</span></div>
+      <div class="b2__stat"><strong>&lt; 100ms</strong><span>Response</span></div>
+    </div>
+  </div>
+  <div class="b2__right">
+    <div class="b2__terminal">
+      <div class="b2__t-bar"><span></span><span></span><span></span></div>
+      <pre class="b2__code"><span class="c-dim">$</span> npx create-app my-project
+<span class="c-grn">✔</span> Project created
+<span class="c-dim">$</span> cd my-project &amp;&amp; npm run dev
+<span class="c-blu">➜</span> Local: <span class="c-grn">http://localhost:3000</span>
+<span class="c-grn">✔</span> Ready in <span class="c-ylw">248ms</span></pre>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

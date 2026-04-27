@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stepper 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;padding:3rem 2rem}
+.stp1{max-width:700px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:1.5rem;padding:2.5rem}
+.stp1__track{display:flex;align-items:center;margin-bottom:2.5rem}
+.stp1__step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;cursor:pointer}
+.stp1__step:not(:last-child)::after{content:'';position:absolute;top:18px;left:50%;width:100%;height:2px;background:#e5e7eb;z-index:0}
+.stp1__step--done:not(:last-child)::after{background:#6366f1}
+.stp1__dot{width:36px;height:36px;border-radius:50%;background:#f1f5f9;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:.8125rem;font-weight:700;color:#9ca3af;position:relative;z-index:1;transition:all .2s}
+.stp1__step--done .stp1__dot{background:#6366f1;border-color:#6366f1;color:#fff}
+.stp1__step--active .stp1__dot{background:#fff;border-color:#6366f1;color:#6366f1;box-shadow:0 0 0 4px rgba(99,102,241,.15)}
+.stp1__label{font-size:.75rem;font-weight:600;color:#9ca3af;margin-top:.5rem;text-align:center}
+.stp1__step--active .stp1__label,.stp1__step--done .stp1__label{color:#0f172a}
+.stp1__panel{background:#f8fafc;border-radius:1rem;padding:2rem;margin-bottom:2rem;min-height:120px}
+.stp1__panel h3{font-size:1.1rem;font-weight:800;color:#0f172a;margin-bottom:.5rem}
+.stp1__panel p{font-size:.875rem;color:#6b7280;line-height:1.65}
+.stp1__nav{display:flex;gap:1rem;justify-content:flex-end}
+.stp1__prev{padding:.625rem 1.5rem;background:#fff;border:1.5px solid #e5e7eb;color:#374151;border-radius:.875rem;font-size:.875rem;font-weight:600;cursor:pointer}
+.stp1__next{padding:.625rem 1.5rem;background:#6366f1;color:#fff;border:none;border-radius:.875rem;font-size:.875rem;font-weight:700;cursor:pointer}
+</style></head>
+<body>
+<div class="stp1">
+  <div class="stp1__track" id="stp1track"></div>
+  <div class="stp1__panel" id="stp1panel"><h3></h3><p></p></div>
+  <div class="stp1__nav">
+    <button class="stp1__prev" onclick="stp1Move(-1)">← Back</button>
+    <button class="stp1__next" id="stp1nextbtn" onclick="stp1Move(1)">Next →</button>
+  </div>
+</div>
+<script>(function(){
+  var steps=[{n:1,label:'Account',desc:'Create your account credentials to access the platform.'},{n:2,label:'Profile',desc:'Complete your profile info so teammates can find you.'},{n:3,label:'Plan',desc:'Choose the plan that fits your team size.'},{n:4,label:'Launch',desc:'Review and finalize your workspace setup.'}];
+  var current=1;
+  function render(){
+    var track=document.getElementById('stp1track');
+    track.innerHTML='';
+    steps.forEach(function(s){
+      var el=document.createElement('div');
+      el.className='stp1__step'+(s.n<current?' stp1__step--done':s.n===current?' stp1__step--active':'');
+      el.innerHTML='<div class="stp1__dot">'+(s.n<current?'✓':s.n)+'</div><span class="stp1__label">'+s.label+'</span>';
+      track.appendChild(el);
+    });
+    var st=steps[current-1];
+    document.querySelector('#stp1panel h3').textContent='Step '+current+': '+st.label;
+    document.querySelector('#stp1panel p').textContent=st.desc;
+    document.getElementById('stp1nextbtn').textContent=current===steps.length?'Finish ✓':'Next →';
+  }
+  window.stp1Move=function(d){ current=Math.max(1,Math.min(steps.length,current+d)); render(); };
+  render();
+})()</script>
+</body></html>

@@ -1,0 +1,13 @@
+<div class="pc2">
+  <div class="pc2__cover"></div>
+  <div class="pc2__body">
+    <div class="pc2__av">{{ user.avatar }}</div>
+    <h2 class="pc2__name">{{ user.name }}</h2>
+    <p class="pc2__role">{{ user.role }}</p>
+    <p class="pc2__bio">{{ user.bio }}</p>
+    <div class="pc2__links">
+      <a class="pc2__link" *ngFor="let l of links" href="#">{{ l.icon }} {{ l.label }}</a>
+    </div>
+    <button class="pc2__cta">View Profile</button>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<section class="ft3">
+  <div class="ft3__inner">
+    <p class="ft3__eyebrow">Capabilities</p>
+    <h2 class="ft3__h2">The modern platform for<br><span class="ft3__grad">high-performance teams</span></h2>
+    <div class="ft3__grid">
+      <div class="ft3__card" *ngFor="let f of features">
+        <div class="ft3__top">
+          <div class="ft3__icon" [style.background]="f.accent + '22'" [style.color]="f.accent">{{ f.icon }}</div>
+          <span class="ft3__badge" *ngIf="f.badge" [style.background]="f.accent + '22'" [style.color]="f.accent">{{ f.badge }}</span>
+        </div>
+        <h3 class="ft3__title">{{ f.title }}</h3>
+        <p class="ft3__desc">{{ f.desc }}</p>
+        <a class="ft3__link" [style.color]="f.accent">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>

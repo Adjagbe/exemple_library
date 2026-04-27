@@ -1,0 +1,14 @@
+<nav class="sn1">
+  <div class="sn1__brand">⚡ Dashify</div>
+  <ul class="sn1__menu">
+    <li class="sn1__item" *ngFor="let l of links" [class.sn1__item--active]="active === l.label" (click)="go(l.label)">
+      <span class="sn1__ic">{{ l.icon }}</span>
+      <span class="sn1__lbl">{{ l.label }}</span>
+      <span class="sn1__badge" *ngIf="l.badge">{{ l.badge }}</span>
+    </li>
+  </ul>
+  <div class="sn1__footer">
+    <div class="sn1__av">JD</div>
+    <div><p class="sn1__uname">John Doe</p><span class="sn1__urole">Admin</span></div>
+  </div>
+</nav>

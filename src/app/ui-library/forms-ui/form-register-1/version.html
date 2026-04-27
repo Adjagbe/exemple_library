@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Form Register 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.fr1{background:#fff;border:1px solid #e5e7eb;border-radius:1.5rem;padding:2.5rem;width:100%;max-width:460px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.fr1__title{font-size:1.5rem;font-weight:900;color:#0f172a;text-align:center;margin-bottom:.375rem}
+.fr1__sub{font-size:.875rem;color:#9ca3af;text-align:center;margin-bottom:2rem}
+.fr1__row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fr1__field{margin-bottom:1.1rem}
+.fr1__label{display:block;font-size:.8125rem;font-weight:600;color:#374151;margin-bottom:.375rem}
+.fr1__input{width:100%;padding:.75rem 1rem;border:1.5px solid #e5e7eb;border-radius:.875rem;font-size:.875rem;font-family:inherit;outline:none;transition:border-color .2s}
+.fr1__input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.fr1__wrap{position:relative}
+.fr1__eye{position:absolute;right:.875rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af}
+.fr1__strength{margin-top:.5rem}
+.fr1__slabel{font-size:.75rem;color:#9ca3af;margin-bottom:.35rem}
+.fr1__bar{height:4px;background:#f1f5f9;border-radius:999px;overflow:hidden}
+.fr1__fill{height:100%;border-radius:999px;transition:width .3s,background .3s;width:0}
+.fr1__terms{display:flex;align-items:flex-start;gap:.5rem;font-size:.8125rem;color:#6b7280;margin-bottom:1.5rem;cursor:pointer}
+.fr1__terms a{color:#6366f1;font-weight:600;text-decoration:none}
+.fr1__btn{width:100%;padding:.9375rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:1rem;font-size:.9375rem;font-weight:700;cursor:pointer}
+.fr1__foot{text-align:center;font-size:.8125rem;color:#9ca3af;margin-top:1.25rem}
+.fr1__foot a{color:#6366f1;font-weight:600;text-decoration:none}
+</style></head>
+<body>
+<div class="fr1">
+  <h2 class="fr1__title">Create account</h2>
+  <p class="fr1__sub">Start your 14-day free trial</p>
+  <div class="fr1__row">
+    <div class="fr1__field"><label class="fr1__label">First name</label><input class="fr1__input" type="text" placeholder="John"></div>
+    <div class="fr1__field"><label class="fr1__label">Last name</label><input class="fr1__input" type="text" placeholder="Doe"></div>
+  </div>
+  <div class="fr1__field"><label class="fr1__label">Email</label><input class="fr1__input" type="email" placeholder="you@example.com"></div>
+  <div class="fr1__field">
+    <label class="fr1__label">Password</label>
+    <div class="fr1__wrap">
+      <input class="fr1__input" id="fr1pwd" type="password" placeholder="Min 8 characters" style="padding-right:2.5rem" oninput="fr1Strength(this.value)">
+      <button class="fr1__eye" onclick="(function(){var i=document.getElementById('fr1pwd');i.type=i.type==='password'?'text':'password'})()">👁</button>
+    </div>
+    <div class="fr1__strength"><p class="fr1__slabel" id="fr1slbl">Password strength</p><div class="fr1__bar"><div class="fr1__fill" id="fr1fill"></div></div></div>
+  </div>
+  <label class="fr1__terms"><input type="checkbox"> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+  <button class="fr1__btn">Create account</button>
+  <p class="fr1__foot">Already have an account? <a href="#">Sign in</a></p>
+</div>
+<script>(function(){
+  window.fr1Strength = function(v) {
+    var fill = document.getElementById('fr1fill');
+    var lbl = document.getElementById('fr1slbl');
+    var pct = 0, color = '#ef4444', text = 'Weak';
+    if(v.length >= 4){ pct = 33; color='#f59e0b'; text='Medium'; }
+    if(v.length >= 8){ pct = 66; color='#10b981'; text='Strong'; }
+    if(v.length >= 12){ pct = 100; color='#6366f1'; text='Very strong'; }
+    fill.style.width = pct+'%'; fill.style.background = color;
+    lbl.textContent = 'Strength: ' + text;
+  };
+})()</script>
+</body></html>

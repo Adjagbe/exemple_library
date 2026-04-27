@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.sb1 {
+  font-family: 'Inter', sans-serif; max-width: 480px; margin: 2rem auto; position: relative;
+  &__bar { display: flex; align-items: center; gap: .75rem; background: #fff; border: 1.5px solid #e5e7eb; border-radius: .875rem; padding: .75rem 1rem; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: border-color .2s; &:focus-within { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,.12); } }
+  &__icon { color: #9ca3af; font-size: 1rem; }
+  &__input { flex: 1; border: none; outline: none; font-size: .9375rem; color: #0f172a; background: transparent; font-family: inherit; &::placeholder { color: #9ca3af; } }
+  &__kbd { background: #f1f5f9; border: 1px solid #e5e7eb; border-radius: .4rem; padding: .15rem .5rem; font-size: .7rem; color: #6b7280; font-family: inherit; }
+  &__clear { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: .875rem; &:hover { color: #374151; } }
+  &__drop { position: absolute; top: calc(100% + .5rem); left: 0; right: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: .875rem; box-shadow: 0 12px 32px rgba(0,0,0,.1); list-style: none; padding: .5rem; margin: 0; z-index: 100; }
+  &__opt { padding: .625rem 1rem; border-radius: .625rem; font-size: .875rem; color: #374151; cursor: pointer; &:hover { background: #f1f5f9; color: #4f46e5; } }
+}

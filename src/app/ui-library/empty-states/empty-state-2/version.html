@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Empty State 2 – Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.es2{text-align:center;max-width:480px}
+.es2__circle{width:7rem;height:7rem;border-radius:50%;background:rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;font-size:2.75rem;margin:0 auto 1.75rem;position:relative}
+.es2__circle::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px dashed rgba(99,102,241,.3)}
+.es2__h{font-size:1.375rem;font-weight:800;color:#f1f5f9;margin-bottom:.625rem}
+.es2__p{font-size:.9375rem;color:#64748b;line-height:1.7;margin-bottom:2rem}
+.es2__actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.es2__btn-a{padding:.8rem 1.75rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;font-size:.875rem;border:none;border-radius:.875rem;cursor:pointer;transition:opacity .2s}
+.es2__btn-a:hover{opacity:.85}
+.es2__btn-b{padding:.8rem 1.75rem;background:rgba(255,255,255,.06);color:#94a3b8;font-weight:600;font-size:.875rem;border:1px solid rgba(255,255,255,.1);border-radius:.875rem;cursor:pointer;transition:all .2s}
+.es2__btn-b:hover{background:rgba(255,255,255,.1)}
+</style></head>
+<body>
+<div class="es2">
+  <div class="es2__circle">🔍</div>
+  <h2 class="es2__h">No results found</h2>
+  <p class="es2__p">We couldn't find anything matching your search. Try different keywords or clear the filters.</p>
+  <div class="es2__actions">
+    <button class="es2__btn-a">Clear search</button>
+    <button class="es2__btn-b">Browse all</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

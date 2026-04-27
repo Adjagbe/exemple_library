@@ -1,0 +1,23 @@
+<div class="cp1">
+  <div class="cp1__dialog">
+    <div class="cp1__search">
+      <span class="cp1__sico">⌘</span>
+      <input class="cp1__sinput" type="text" placeholder="Search commands..." [(ngModel)]="query" autofocus>
+      <kbd class="cp1__esc">Esc</kbd>
+    </div>
+    <div class="cp1__body">
+      <div class="cp1__group" *ngFor="let g of filtered">
+        <p class="cp1__glbl">{{ g.title }}</p>
+        <div class="cp1__item" *ngFor="let it of g.items">
+          <span class="cp1__ico">{{ it.icon }}</span>
+          <span class="cp1__lbl">{{ it.label }}</span>
+          <kbd class="cp1__kbd" *ngIf="it.kbd">{{ it.kbd }}</kbd>
+        </div>
+      </div>
+      <div class="cp1__empty" *ngIf="filtered.length === 0">No commands found for "{{ query }}"</div>
+    </div>
+    <div class="cp1__footer">
+      <span>↑↓ navigate</span><span>↵ select</span><span>Esc close</span>
+    </div>
+  </div>
+</div>

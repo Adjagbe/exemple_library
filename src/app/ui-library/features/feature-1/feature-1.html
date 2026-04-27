@@ -1,0 +1,16 @@
+<section class="ft1">
+  <div class="ft1__inner">
+    <p class="ft1__eyebrow">Why choose us</p>
+    <h2 class="ft1__h2">Everything you need to <br><span class="ft1__grad">build and grow</span></h2>
+    <p class="ft1__sub">A complete toolkit for modern development teams. From prototype to production without friction.</p>
+    <div class="ft1__grid">
+      <div class="ft1__card" *ngFor="let f of features">
+        <div class="ft1__icon" [style.background]="f.color + '1a'" [style.color]="f.color" >
+          <i class="bi bi-tags"></i>
+        </div>
+        <h3 class="ft1__title">{{ f.title }}</h3>
+        <p class="ft1__desc">{{ f.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>

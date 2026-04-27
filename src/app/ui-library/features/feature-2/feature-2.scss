@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+.ft2 {
+  font-family: 'Inter', sans-serif; background: #f8fafc; padding: 6rem 2rem;
+  &__inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; @media (max-width: 800px) { grid-template-columns: 1fr; gap: 3rem; } }
+  &__visual { position: relative; }
+  &__orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .35; &--1 { width: 200px; height: 200px; background: #6366f1; top: -30px; left: -30px; } &--2 { width: 150px; height: 150px; background: #8b5cf6; bottom: -20px; right: 20px; } }
+  &__window { background: #fff; border-radius: 1.25rem; border: 1px solid #e5e7eb; padding: 1.5rem; box-shadow: 0 16px 48px rgba(0,0,0,.07); position: relative; }
+  &__bar { display: flex; gap: .4rem; margin-bottom: 1.25rem; span { width: 12px; height: 12px; border-radius: 50%; background: #e5e7eb; &:first-child { background: #fc5753; } &:nth-child(2) { background: #fdbc2c; } &:last-child { background: #33c748; } } }
+  &__lines { display: flex; flex-direction: column; gap: .6rem; }
+  &__ln { height: 10px; border-radius: 6px; background: linear-gradient(90deg, #e0e7ff 0%, #f1f5f9 100%); }
+  &__eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #6366f1; margin-bottom: .875rem; }
+  &__h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 900; color: #0f172a; line-height: 1.15; margin-bottom: 1rem; }
+  &__hl { color: #6366f1; }
+  &__lead { color: #6b7280; font-size: .9375rem; line-height: 1.7; margin-bottom: 1.75rem; }
+  &__list { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; @media (max-width: 480px) { grid-template-columns: 1fr; } }
+  &__li { font-size: .875rem; color: #374151; font-weight: 500; display: flex; align-items: center; gap: .5rem; }
+  &__ck { color: #10b981; font-weight: 700; }
+  &__cta { padding: .875rem 2rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; border-radius: .875rem; font-size: .9375rem; font-weight: 700; cursor: pointer; transition: opacity .2s; &:hover { opacity: .87; } }
+}

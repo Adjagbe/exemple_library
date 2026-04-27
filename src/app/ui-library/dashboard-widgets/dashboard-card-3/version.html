@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard Card 3 – Activity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.dc3{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:1.5rem;padding:1.75rem;width:100%;max-width:440px}
+.dc3__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.dc3__title{font-size:1rem;font-weight:700;color:#f1f5f9}
+.dc3__link{font-size:.8125rem;color:#818cf8;cursor:pointer}
+.dc3__feed{display:flex;flex-direction:column;gap:0}
+.dc3__item{display:flex;gap:.875rem;padding:.875rem 0;border-bottom:1px solid rgba(255,255,255,.05);position:relative}
+.dc3__item:last-child{border-bottom:none}
+.dc3__avatar{width:2.25rem;height:2.25rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;font-weight:700}
+.dc3__body{flex:1;min-width:0}
+.dc3__name{font-size:.875rem;font-weight:600;color:#f1f5f9}
+.dc3__action{font-size:.8125rem;color:#64748b;line-height:1.5;margin-top:.1rem}
+.dc3__action strong{color:#94a3b8}
+.dc3__time{font-size:.75rem;color:#475569;flex-shrink:0;padding-top:.15rem}
+.dc3__badge{display:inline-block;font-size:.625rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;margin-left:.25rem}
+.dc3__badge.success{background:rgba(34,197,94,.15);color:#4ade80}
+.dc3__badge.warn{background:rgba(245,158,11,.15);color:#fbbf24}
+.dc3__badge.info{background:rgba(99,102,241,.15);color:#818cf8}
+</style></head>
+<body>
+<div class="dc3">
+  <div class="dc3__head"><div class="dc3__title">Recent Activity</div><div class="dc3__link">View all →</div></div>
+  <div class="dc3__feed">
+    <div class="dc3__item">
+      <div class="dc3__avatar" style="background:rgba(99,102,241,.2);color:#818cf8">JD</div>
+      <div class="dc3__body"><div class="dc3__name">Jane Doe</div><div class="dc3__action">Deployed <strong>v2.4.1</strong> to production<span class="dc3__badge success">success</span></div></div>
+      <div class="dc3__time">2m ago</div>
+    </div>
+    <div class="dc3__item">
+      <div class="dc3__avatar" style="background:rgba(245,158,11,.2);color:#fbbf24">TK</div>
+      <div class="dc3__body"><div class="dc3__name">Tom Kim</div><div class="dc3__action">Opened PR <strong>#142</strong> — Fix auth bug<span class="dc3__badge info">review</span></div></div>
+      <div class="dc3__time">18m ago</div>
+    </div>
+    <div class="dc3__item">
+      <div class="dc3__avatar" style="background:rgba(239,68,68,.2);color:#f87171">SR</div>
+      <div class="dc3__body"><div class="dc3__name">Sara Renz</div><div class="dc3__action">Pipeline failed on <strong>staging</strong><span class="dc3__badge warn">failed</span></div></div>
+      <div class="dc3__time">45m ago</div>
+    </div>
+    <div class="dc3__item">
+      <div class="dc3__avatar" style="background:rgba(34,197,94,.2);color:#4ade80">AL</div>
+      <div class="dc3__body"><div class="dc3__name">Alex Liu</div><div class="dc3__action">Invited <strong>3 new members</strong> to workspace</div></div>
+      <div class="dc3__time">1h ago</div>
+    </div>
+    <div class="dc3__item">
+      <div class="dc3__avatar" style="background:rgba(6,182,212,.2);color:#22d3ee">MP</div>
+      <div class="dc3__body"><div class="dc3__name">Mia Park</div><div class="dc3__action">Updated billing to <strong>Pro plan</strong><span class="dc3__badge success">upgraded</span></div></div>
+      <div class="dc3__time">3h ago</div>
+    </div>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

@@ -1,0 +1,11 @@
+<div class="sb1">
+  <div class="sb1__bar">
+    <span class="sb1__icon">🔍</span>
+    <input class="sb1__input" type="text" placeholder="Search anything..." [(ngModel)]="query">
+    <kbd class="sb1__kbd" *ngIf="!query">⌘K</kbd>
+    <button class="sb1__clear" *ngIf="query" (click)="query=''">✕</button>
+  </div>
+  <ul class="sb1__drop" *ngIf="filtered.length">
+    <li class="sb1__opt" *ngFor="let r of filtered" (click)="pick(r)">{{ r }}</li>
+  </ul>
+</div>

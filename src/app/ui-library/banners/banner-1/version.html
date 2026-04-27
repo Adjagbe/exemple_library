@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Banner 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif}
+.bn1{background:#030712;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem;text-align:center;position:relative;overflow:hidden}
+.bn1__orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.3}
+.bn1__orb--1{width:500px;height:500px;background:#6366f1;top:-150px;left:-150px}
+.bn1__orb--2{width:400px;height:400px;background:#8b5cf6;bottom:-100px;right:-100px}
+.bn1__inner{position:relative;z-index:1;max-width:700px}
+.bn1__pills{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.75rem}
+.bn1__pill{background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:999px;padding:.3rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em}
+.bn1__h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.08;margin-bottom:1.5rem}
+.bn1__grad{background:linear-gradient(135deg,#6366f1,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.bn1__plain{color:#f1f5f9;display:block}
+.bn1__sub{font-size:1.0625rem;color:#94a3b8;line-height:1.7;max-width:560px;margin:0 auto 2.5rem}
+.bn1__actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.bn1__primary{padding:.9375rem 2.25rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:1rem;font-size:.9375rem;font-weight:700;cursor:pointer}
+.bn1__ghost{padding:.9375rem 2.25rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);color:#f1f5f9;border-radius:1rem;font-size:.9375rem;font-weight:700;cursor:pointer}
+</style></head>
+<body>
+<div class="bn1">
+  <div class="bn1__orb bn1__orb--1"></div>
+  <div class="bn1__orb bn1__orb--2"></div>
+  <div class="bn1__inner">
+    <div class="bn1__pills"><span class="bn1__pill">New</span><span class="bn1__pill">v2.0 Released</span></div>
+    <h1 class="bn1__h1"><span class="bn1__grad">Build faster.</span><span class="bn1__plain">Ship smarter.</span></h1>
+    <p class="bn1__sub">The all-in-one platform for modern development teams. From prototype to production without friction.</p>
+    <div class="bn1__actions">
+      <button class="bn1__primary">Start for free →</button>
+      <button class="bn1__ghost">View demo</button>
+    </div>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

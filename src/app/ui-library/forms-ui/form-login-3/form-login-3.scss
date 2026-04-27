@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.fl3 {
+  min-height: 100vh; background: #06060f; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; padding: 2rem;
+  &__bg { position: absolute; inset: 0; pointer-events: none; }
+  &__orb { position: absolute; border-radius: 50%; filter: blur(100px);
+    &--1 { width: 500px; height: 500px; background: rgba(99,102,241,.25); top: -15%; right: -10%; }
+    &--2 { width: 400px; height: 400px; background: rgba(168,85,247,.2); bottom: -10%; left: -8%; }
+  }
+  &__glass { position: relative; z-index: 1; background: rgba(255,255,255,.05); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,.12); border-radius: 1.5rem; padding: 2.5rem; width: 100%; max-width: 400px; }
+  &__tag { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #818cf8; margin-bottom: 1rem; }
+  &__h { font-size: 2rem; font-weight: 800; color: #f9fafb; margin-bottom: 1.75rem; }
+  &__form { display: flex; flex-direction: column; gap: 1.1rem; }
+  &__field { display: flex; flex-direction: column; gap: .4rem;
+    label { font-size: .8rem; font-weight: 600; color: rgba(249,250,251,.6); }
+    input { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: .75rem; padding: .75rem 1rem; color: #f9fafb; font-size: .9rem; outline: none; font-family: inherit; &::placeholder { color: rgba(249,250,251,.25); } &:focus { border-color: #6366f1; background: rgba(99,102,241,.1); } }
+  }
+  &__pwd { position: relative; input { width: 100%; padding-right: 2.5rem; } button { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: rgba(249,250,251,.5); } }
+  &__forgot { font-size: .8rem; color: #818cf8; text-decoration: none; text-align: right; display: block; margin-top: -.25rem; }
+  &__submit { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: .875rem; border-radius: .75rem; font-size: .95rem; font-weight: 700; cursor: pointer; margin-top: .25rem; transition: all .2s; &:hover { opacity: .9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); } }
+  &__footer { text-align: center; font-size: .8rem; color: rgba(249,250,251,.4); margin-top: 1.5rem; a { color: #818cf8; text-decoration: none; font-weight: 600; } }
+}

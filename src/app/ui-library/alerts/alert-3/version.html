@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alert 3 – Toast</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;min-height:100vh;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.al3__demo{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-bottom:2rem}
+.al3__demo button{padding:.7rem 1.4rem;border-radius:.75rem;border:none;cursor:pointer;font-size:.875rem;font-weight:600;transition:opacity .2s}
+.al3__demo button:hover{opacity:.85}
+.al3__demo .btn-s{background:#22c55e;color:#fff} .al3__demo .btn-e{background:#ef4444;color:#fff} .al3__demo .btn-w{background:#f59e0b;color:#fff} .al3__demo .btn-i{background:#3b82f6;color:#fff}
+#al3__container{position:fixed;bottom:1.5rem;right:1.5rem;display:flex;flex-direction:column;gap:.625rem;z-index:9999;pointer-events:none}
+.al3__toast{display:flex;align-items:center;gap:.75rem;padding:.875rem 1.125rem;border-radius:.875rem;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.12);min-width:280px;max-width:360px;pointer-events:all;animation:slideIn .3s ease;border-left:4px solid transparent}
+.al3__toast.t-success{border-color:#22c55e} .al3__toast.t-error{border-color:#ef4444} .al3__toast.t-warn{border-color:#f59e0b} .al3__toast.t-info{border-color:#3b82f6}
+@keyframes slideIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
+.al3__t-ico{font-size:1.1rem;flex-shrink:0}
+.al3__t-body{flex:1}
+.al3__t-title{font-size:.8125rem;font-weight:700;color:#1e293b}
+.al3__t-msg{font-size:.75rem;color:#64748b;margin-top:.15rem}
+.al3__t-close{background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.9rem}
+</style></head>
+<body>
+<div class="al3__demo">
+  <button class="btn-s" onclick="window.showToast('success','Saved!','Your profile has been updated.')">Success</button>
+  <button class="btn-e" onclick="window.showToast('error','Error','Something went wrong. Please try again.')">Error</button>
+  <button class="btn-w" onclick="window.showToast('warn','Warning','Your session will expire soon.')">Warning</button>
+  <button class="btn-i" onclick="window.showToast('info','Info','New version available. Refresh to update.')">Info</button>
+</div>
+<div id="al3__container"></div>
+<script>(function(){
+  var icons = {success:'✅',error:'🚫',warn:'⚠️',info:'ℹ️'};
+  window.showToast = function(type, title, msg){
+    var c = document.getElementById('al3__container');
+    var t = document.createElement('div');
+    t.className = 'al3__toast t-'+type;
+    t.innerHTML = '<span class="al3__t-ico">'+icons[type]+'</span>'
+      +'<div class="al3__t-body"><div class="al3__t-title">'+title+'</div><div class="al3__t-msg">'+msg+'</div></div>'
+      +'<button class="al3__t-close" onclick="this.parentElement.remove()">✕</button>';
+    c.appendChild(t);
+    setTimeout(function(){ if(t.parentElement) t.remove(); }, 4000);
+  };
+})()</script>
+</body></html>

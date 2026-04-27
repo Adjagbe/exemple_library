@@ -1,0 +1,18 @@
+<section class="ts1">
+  <div class="ts1__inner">
+    <p class="ts1__eyebrow">Testimonials</p>
+    <h2 class="ts1__h2">Loved by <span class="ts1__hl">thousands</span> of developers</h2>
+    <div class="ts1__grid">
+      <div class="ts1__card" *ngFor="let r of reviews">
+        <div class="ts1__stars">
+          <span class="ts1__star" *ngFor="let s of stars">★</span>
+        </div>
+        <p class="ts1__text">"{{ r.text }}"</p>
+        <div class="ts1__author">
+          <div class="ts1__av">{{ r.avatar }}</div>
+          <div><p class="ts1__name">{{ r.name }}</p><span class="ts1__role">{{ r.role }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

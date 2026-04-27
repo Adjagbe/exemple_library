@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Search Bar 2 – Dark with Filters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:6rem 2rem}
+.sb2{width:100%;max-width:640px}
+.sb2__bar{display:flex;align-items:center;gap:0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:1rem;overflow:hidden}
+.sb2__select{padding:.85rem 1rem;background:transparent;border:none;border-right:1px solid rgba(255,255,255,.08);color:#94a3b8;font-size:.875rem;font-family:inherit;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;min-width:110px}
+.sb2__select option{background:#1e293b}
+.sb2__input{flex:1;padding:.85rem 1rem;background:transparent;border:none;font-size:.9375rem;font-family:inherit;color:#f1f5f9;outline:none}
+.sb2__input::placeholder{color:#475569}
+.sb2__btn{padding:.85rem 1.25rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:700;font-size:.875rem;border:none;cursor:pointer;transition:opacity .2s;white-space:nowrap}
+.sb2__btn:hover{opacity:.85}
+.sb2__filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.sb2__filter{display:flex;align-items:center;gap:.375rem;padding:.35rem .875rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:999px;font-size:.8125rem;color:#94a3b8;cursor:pointer;transition:all .2s}
+.sb2__filter:hover{background:rgba(99,102,241,.1);border-color:#6366f1;color:#a5b4fc}
+.sb2__filter.active{background:rgba(99,102,241,.2);border-color:#6366f1;color:#a5b4fc}
+.sb2__results{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem}
+.sb2__result{display:flex;align-items:center;gap:.875rem;padding:.9rem 1.125rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:.875rem;cursor:pointer;transition:all .2s}
+.sb2__result:hover{background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.2)}
+.sb2__r-ico{font-size:1.125rem;width:1.5rem;text-align:center;flex-shrink:0}
+.sb2__r-label{font-size:.9rem;font-weight:600;color:#e2e8f0}
+.sb2__r-sub{font-size:.75rem;color:#64748b;margin-top:.1rem}
+.sb2__r-type{margin-left:auto;font-size:.6875rem;font-weight:700;padding:.2rem .5rem;border-radius:999px;background:rgba(99,102,241,.15);color:#818cf8;white-space:nowrap}
+</style></head>
+<body>
+<div class="sb2">
+  <div class="sb2__bar">
+    <select class="sb2__select"><option>All</option><option>Docs</option><option>Users</option><option>Projects</option></select>
+    <input class="sb2__input" placeholder="Search across everything..." id="sb2input" oninput="window.sb2Go()">
+    <button class="sb2__btn">Search</button>
+  </div>
+  <div class="sb2__filters">
+    <div class="sb2__filter active" onclick="window.sb2Filter(this)">�� Recent</div>
+    <div class="sb2__filter" onclick="window.sb2Filter(this)">⭐ Starred</div>
+    <div class="sb2__filter" onclick="window.sb2Filter(this)">📁 Projects</div>
+    <div class="sb2__filter" onclick="window.sb2Filter(this)">👤 People</div>
+    <div class="sb2__filter" onclick="window.sb2Filter(this)">📄 Docs</div>
+  </div>
+  <div class="sb2__results">
+    <div class="sb2__result"><span class="sb2__r-ico">📊</span><div><div class="sb2__r-label">Dashboard overview</div><div class="sb2__r-sub">Updated 2 days ago</div></div><span class="sb2__r-type">Page</span></div>
+    <div class="sb2__result"><span class="sb2__r-ico">📦</span><div><div class="sb2__r-label">Project Atlas</div><div class="sb2__r-sub">12 members · In progress</div></div><span class="sb2__r-type">Project</span></div>
+    <div class="sb2__result"><span class="sb2__r-ico">👤</span><div><div class="sb2__r-label">Jane Doe</div><div class="sb2__r-sub">Senior Designer · Design team</div></div><span class="sb2__r-type">User</span></div>
+  </div>
+</div>
+<script>(function(){
+  window.sb2Filter = function(el){ el.classList.toggle('active'); };
+  window.sb2Go = function(){ /* live search */ };
+})()</script>
+</body></html>

@@ -1,0 +1,10 @@
+<nav class="bc2">
+  <ol class="bc2__list">
+    <li class="bc2__item" *ngFor="let c of crumbs; let last = last">
+      <a class="bc2__link" [class.bc2__link--active]="last" href="#">
+        <span>{{ c.icon }}</span> {{ c.label }}
+      </a>
+      <span class="bc2__sep" *ngIf="!last">›</span>
+    </li>
+  </ol>
+</nav>

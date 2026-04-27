@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.es1 {
+  font-family: 'Inter', sans-serif; background: #fff; border: 2px dashed #e5e7eb; border-radius: 1.5rem; padding: 4rem 2rem; max-width: 420px; margin: 3rem auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  &__icon { font-size: 3.5rem; background: #f1f5f9; width: 80px; height: 80px; border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; }
+  &__title { font-size: 1.25rem; font-weight: 800; color: #0f172a; margin: 0; }
+  &__desc { font-size: .875rem; color: #9ca3af; line-height: 1.7; max-width: 300px; margin: 0; }
+  &__cta { padding: .75rem 1.75rem; background: #6366f1; color: #fff; border: none; border-radius: .875rem; font-size: .875rem; font-weight: 700; cursor: pointer; transition: opacity .2s; &:hover { opacity: .87; } }
+}

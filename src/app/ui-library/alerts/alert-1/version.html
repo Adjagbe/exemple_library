@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alert 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;padding:3rem 2rem;display:flex;flex-direction:column;gap:1rem;max-width:700px;margin:0 auto}
+.al1{display:flex;align-items:flex-start;gap:.875rem;padding:1rem 1.25rem;border-radius:.875rem;border-left:4px solid transparent;position:relative}
+.al1--info{background:#eff6ff;border-color:#3b82f6}
+.al1--success{background:#f0fdf4;border-color:#22c55e}
+.al1--warn{background:#fffbeb;border-color:#f59e0b}
+.al1--error{background:#fef2f2;border-color:#ef4444}
+.al1__ico{font-size:1.25rem;flex-shrink:0;margin-top:.05rem}
+.al1__body{flex:1}
+.al1__title{font-size:.875rem;font-weight:700;margin-bottom:.25rem}
+.al1--info .al1__title{color:#1d4ed8}
+.al1--success .al1__title{color:#15803d}
+.al1--warn .al1__title{color:#b45309}
+.al1--error .al1__title{color:#dc2626}
+.al1__msg{font-size:.8125rem;line-height:1.5;color:#374151}
+.al1__close{background:none;border:none;cursor:pointer;font-size:1.1rem;color:#9ca3af;position:absolute;top:.75rem;right:.875rem;line-height:1;padding:0}
+.al1__close:hover{color:#374151}
+</style></head>
+<body>
+<div class="al1 al1--info" id="a1">
+  <span class="al1__ico">ℹ️</span>
+  <div class="al1__body"><div class="al1__title">Information</div><div class="al1__msg">Your account plan renews on August 1st. No action needed.</div></div>
+  <button class="al1__close" onclick="window.closeAlert('a1')">✕</button>
+</div>
+<div class="al1 al1--success" id="a2">
+  <span class="al1__ico">✅</span>
+  <div class="al1__body"><div class="al1__title">Success</div><div class="al1__msg">Your changes have been saved successfully.</div></div>
+  <button class="al1__close" onclick="window.closeAlert('a2')">✕</button>
+</div>
+<div class="al1 al1--warn" id="a3">
+  <span class="al1__ico">⚠️</span>
+  <div class="al1__body"><div class="al1__title">Warning</div><div class="al1__msg">You are approaching your storage limit. Upgrade to avoid service interruption.</div></div>
+  <button class="al1__close" onclick="window.closeAlert('a3')">✕</button>
+</div>
+<div class="al1 al1--error" id="a4">
+  <span class="al1__ico">🚫</span>
+  <div class="al1__body"><div class="al1__title">Error</div><div class="al1__msg">Failed to process payment. Please update your payment method.</div></div>
+  <button class="al1__close" onclick="window.closeAlert('a4')">✕</button>
+</div>
+<script>(function(){
+  window.closeAlert = function(id){ var el = document.getElementById(id); if(el) el.remove(); };
+})()</script>
+</body></html>

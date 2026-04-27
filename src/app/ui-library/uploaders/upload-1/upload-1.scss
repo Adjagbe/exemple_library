@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.up1 {
+  font-family: 'Inter', sans-serif; max-width: 500px; margin: 2rem auto;
+  &__zone { border: 2px dashed #cbd5e1; border-radius: 1.25rem; padding: 3rem 2rem; text-align: center; background: #f8fafc; cursor: pointer; transition: all .2s; &--over { border-color: #6366f1; background: #eef2ff; } }
+  &__ico { font-size: 2.5rem; margin-bottom: .875rem; }
+  &__main { font-size: .9375rem; font-weight: 600; color: #0f172a; margin-bottom: .4rem; }
+  &__sub { font-size: .875rem; color: #6b7280; margin-bottom: .4rem; }
+  &__browse { color: #6366f1; cursor: pointer; font-weight: 700; }
+  &__hint { font-size: .75rem; color: #9ca3af; margin: 0; }
+  &__list { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
+  &__file { display: flex; align-items: center; padding: .75rem 1rem; background: #fff; border: 1px solid #e5e7eb; border-radius: .875rem; }
+  &__fname { flex: 1; font-size: .8125rem; color: #374151; font-weight: 500; }
+  &__rm { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: .875rem; &:hover { color: #ef4444; } }
+}

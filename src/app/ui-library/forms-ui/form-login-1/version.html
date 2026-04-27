@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Form Login 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.fl1{background:#fff;border:1px solid #e5e7eb;border-radius:1.5rem;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.fl1__logo{font-size:1.5rem;font-weight:900;color:#0f172a;margin-bottom:2rem;text-align:center}
+.fl1__logo span{color:#6366f1}
+.fl1__title{font-size:1.5rem;font-weight:900;color:#0f172a;margin-bottom:.375rem;text-align:center}
+.fl1__sub{font-size:.875rem;color:#9ca3af;text-align:center;margin-bottom:2rem}
+.fl1__field{margin-bottom:1.25rem}
+.fl1__label{display:block;font-size:.8125rem;font-weight:600;color:#374151;margin-bottom:.4rem}
+.fl1__input-wrap{position:relative}
+.fl1__input{width:100%;padding:.75rem 1rem;border:1.5px solid #e5e7eb;border-radius:.875rem;font-size:.9375rem;color:#0f172a;font-family:inherit;outline:none;transition:border-color .2s}
+.fl1__input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.fl1__eye{position:absolute;right:.875rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;font-size:.875rem}
+.fl1__extras{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.75rem}
+.fl1__check{display:flex;align-items:center;gap:.4rem;font-size:.8125rem;color:#374151;cursor:pointer}
+.fl1__forgot{font-size:.8125rem;color:#6366f1;font-weight:600;text-decoration:none}
+.fl1__btn{width:100%;padding:.9375rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:1rem;font-size:.9375rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.fl1__btn:hover{opacity:.87}
+.fl1__divider{display:flex;align-items:center;gap:.875rem;margin:1.5rem 0;color:#d1d5db;font-size:.75rem}
+.fl1__divider::before,.fl1__divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
+.fl1__footer{text-align:center;font-size:.8125rem;color:#9ca3af;margin-top:1.5rem}
+.fl1__footer a{color:#6366f1;font-weight:600;text-decoration:none}
+</style></head>
+<body>
+<div class="fl1">
+  <div class="fl1__logo">⚡ <span>Nova</span></div>
+  <h2 class="fl1__title">Welcome back</h2>
+  <p class="fl1__sub">Sign in to your account</p>
+  <div class="fl1__field">
+    <label class="fl1__label">Email address</label>
+    <input class="fl1__input" type="email" placeholder="you@example.com">
+  </div>
+  <div class="fl1__field">
+    <label class="fl1__label">Password</label>
+    <div class="fl1__input-wrap">
+      <input class="fl1__input" id="fl1pwd" type="password" placeholder="Enter your password" style="padding-right:2.5rem">
+      <button class="fl1__eye" onclick="(function(){var i=document.getElementById('fl1pwd');i.type=i.type==='password'?'text':'password'})()">👁</button>
+    </div>
+  </div>
+  <div class="fl1__extras">
+    <label class="fl1__check"><input type="checkbox"> Remember me</label>
+    <a class="fl1__forgot" href="#">Forgot password?</a>
+  </div>
+  <button class="fl1__btn">Sign in</button>
+  <p class="fl1__footer">Don't have an account? <a href="#">Sign up</a></p>
+</div>
+<script>(function(){})()</script>
+</body></html>

@@ -49,31 +49,33 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   </div>
 </div>
 <script>
-const ratings = [0,0,0,0];
-const hovers = [0,0,0,0];
-function render() {
-  for(let c=0;c<4;c++) {
-    const el = document.getElementById('cat'+c);
-    el.innerHTML = '';
-    for(let s=1;s<=5;s++) {
-      const span = document.createElement('span');
-      span.className = 'rt2__star' + ((s <= (hovers[c]||ratings[c])) ? ' on' : '');
-      span.textContent = '★';
-      span.onmouseover = () => { hovers[c]=s; render(); };
-      span.onmouseout = () => { hovers[c]=0; render(); };
-      span.onclick = () => { ratings[c]=s; updateAvg(); render(); };
-      el.appendChild(span);
+(function() {
+  const ratings = [0,0,0,0];
+  const hovers = [0,0,0,0];
+  function render() {
+    for(let c=0;c<4;c++) {
+      const el = document.getElementById('cat'+c);
+      el.innerHTML = '';
+      for(let s=1;s<=5;s++) {
+        const span = document.createElement('span');
+        span.className = 'rt2__star' + ((s <= (hovers[c]||ratings[c])) ? ' on' : '');
+        span.textContent = '★';
+        span.onmouseover = () => { hovers[c]=s; render(); };
+        span.onmouseout = () => { hovers[c]=0; render(); };
+        span.onclick = () => { ratings[c]=s; updateAvg(); render(); };
+        el.appendChild(span);
+      }
     }
   }
-}
-function updateAvg() {
-  const set = ratings.filter(r=>r>0);
-  if(!set.length) return;
-  const avg = (set.reduce((a,b)=>a+b,0)/set.length).toFixed(1);
-  document.getElementById('avgVal').textContent = avg;
-  document.getElementById('avgBadge').classList.add('visible');
-}
-render();
+  function updateAvg() {
+    const set = ratings.filter(r=>r>0);
+    if(!set.length) return;
+    const avg = (set.reduce((a,b)=>a+b,0)/set.length).toFixed(1);
+    document.getElementById('avgVal').textContent = avg;
+    document.getElementById('avgBadge').classList.add('visible');
+  }
+  render();
+})();
 </script>
 </body>
 </html>

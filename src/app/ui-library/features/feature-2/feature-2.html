@@ -1,0 +1,21 @@
+<section class="ft2">
+  <div class="ft2__inner">
+    <div class="ft2__visual">
+      <div class="ft2__orb ft2__orb--1"></div>
+      <div class="ft2__orb ft2__orb--2"></div>
+      <div class="ft2__window">
+        <div class="ft2__bar"><span></span><span></span><span></span></div>
+        <div class="ft2__lines"><div class="ft2__ln" *ngFor="let i of [1,2,3,4,5,6]" [style.width]="(55 + i*7) % 90 + '%'"></div></div>
+      </div>
+    </div>
+    <div class="ft2__content">
+      <p class="ft2__eyebrow">Platform Overview</p>
+      <h2 class="ft2__h2">Ship products at the <span class="ft2__hl">speed of thought</span></h2>
+      <p class="ft2__lead">Everything your team needs to go from idea to production in record time. No DevOps headaches. No vendor lock-in.</p>
+      <ul class="ft2__list">
+        <li class="ft2__li" *ngFor="let it of items"><span class="ft2__ck">✓</span> {{ it }}</li>
+      </ul>
+      <button class="ft2__cta">Start building free →</button>
+    </div>
+  </div>
+</section>

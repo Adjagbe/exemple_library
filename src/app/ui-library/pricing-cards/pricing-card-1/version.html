@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pricing Card 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;padding:4rem 2rem}
+.pc1__head{text-align:center;margin-bottom:3rem}
+.pc1__h2{font-size:2rem;font-weight:900;color:#0f172a;margin-bottom:1rem}
+.pc1__toggle{display:flex;align-items:center;justify-content:center;gap:.875rem}
+.pc1__tl{font-size:.875rem;font-weight:600;color:#374151}
+.pc1__sw{width:48px;height:26px;background:#e5e7eb;border-radius:999px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.pc1__sw.on{background:#6366f1}
+.pc1__sw::after{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.pc1__sw.on::after{transform:translateX(22px)}
+.pc1__save{background:#dcfce7;color:#166534;font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:999px;margin-left:.5rem}
+.pc1__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:960px;margin:0 auto}
+@media(max-width:800px){.pc1__grid{grid-template-columns:1fr;max-width:360px}}
+.pc1__card{background:#fff;border:2px solid #e5e7eb;border-radius:1.5rem;padding:2rem;position:relative;transition:all .2s}
+.pc1__card.pop{border-color:#6366f1;transform:scale(1.03);box-shadow:0 12px 40px rgba(99,102,241,.15)}
+.pc1__hot{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:.7rem;font-weight:700;padding:.3rem 1rem;border-radius:999px;white-space:nowrap}
+.pc1__name{font-size:.875rem;font-weight:700;margin-bottom:.75rem}
+.pc1__price{font-size:2.5rem;font-weight:900;color:#0f172a;margin-bottom:.25rem}
+.pc1__period{font-size:.8125rem;color:#9ca3af}
+.pc1__desc{font-size:.8125rem;color:#6b7280;margin:.75rem 0 1.25rem;line-height:1.5}
+.pc1__divider{height:1px;background:#f1f5f9;margin-bottom:1.25rem}
+.pc1__feature{display:flex;align-items:center;gap:.625rem;font-size:.8125rem;color:#374151;margin-bottom:.625rem}
+.pc1__ck{color:#10b981;font-weight:700}
+.pc1__btn{width:100%;padding:.8125rem;border-radius:.875rem;font-size:.875rem;font-weight:700;cursor:pointer;margin-top:1.5rem;border:2px solid #e5e7eb;background:#fff;color:#374151;transition:all .2s}
+.pc1__card.pop .pc1__btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none}
+</style></head>
+<body>
+<div>
+  <div class="pc1__head">
+    <h2 class="pc1__h2">Simple, transparent pricing</h2>
+    <div class="pc1__toggle">
+      <span class="pc1__tl">Monthly</span>
+      <button class="pc1__sw" id="pc1sw" onclick="pc1Toggle()"></button>
+      <span class="pc1__tl">Annual <span class="pc1__save">Save 20%</span></span>
+    </div>
+  </div>
+  <div class="pc1__grid" id="pc1grid"></div>
+</div>
+<script>(function(){
+  var annual=false;
+  var plans=[
+    {name:'Starter',monthly:9,annual:7,color:'#10b981',features:['5 projects','10GB storage','Email support'],cta:'Get started',pop:false},
+    {name:'Pro',monthly:29,annual:23,color:'#6366f1',features:['Unlimited projects','100GB storage','Priority support','Custom domains'],cta:'Start free trial',pop:true},
+    {name:'Enterprise',monthly:79,annual:63,color:'#8b5cf6',features:['Unlimited everything','1TB storage','Dedicated manager','SLA guarantee'],cta:'Contact sales',pop:false}
+  ];
+  function render(){
+    var g=document.getElementById('pc1grid');
+    g.innerHTML='';
+    plans.forEach(function(p){
+      var price=annual?p.annual:p.monthly;
+      var el=document.createElement('div');
+      el.className='pc1__card'+(p.pop?' pop':'');
+      var feats=p.features.map(function(f){return '<div class="pc1__feature"><span class="pc1__ck">✓</span>'+f+'</div>';}).join('');
+      el.innerHTML=(p.pop?'<div class="pc1__hot">Most popular</div>':'')+'<div class="pc1__name" style="color:'+p.color+'">'+p.name+'</div><div class="pc1__price">$'+price+'</div><div class="pc1__period">per month'+(annual?' (billed annually)':'')+'</div><div class="pc1__divider"></div>'+feats+'<button class="pc1__btn">'+p.cta+'</button>';
+      g.appendChild(el);
+    });
+  }
+  window.pc1Toggle=function(){annual=!annual;var sw=document.getElementById('pc1sw');sw.classList.toggle('on',annual);render();};
+  render();
+})()</script>
+</body></html>

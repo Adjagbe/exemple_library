@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stats 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#fff;padding:5rem 2rem}
+.st1__inner{max-width:1000px;margin:0 auto}
+.st1__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+@media(max-width:800px){.st1__grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.st1__grid{grid-template-columns:1fr}}
+.st1__card{text-align:center;padding:2rem 1rem;border-radius:1.25rem;border:1px solid #f1f5f9;transition:all .2s}
+.st1__card:hover{box-shadow:0 8px 24px rgba(99,102,241,.1);border-color:#e0e7ff}
+.st1__icon{font-size:2rem;margin-bottom:.75rem}
+.st1__val{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#4f46e5,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.5rem}
+.st1__lbl{font-size:.875rem;color:#6b7280;font-weight:500}
+</style></head>
+<body>
+<div class="st1__inner">
+  <div class="st1__grid">
+    <div class="st1__card"><div class="st1__icon">👨‍💻</div><div class="st1__val">50K+</div><div class="st1__lbl">Developers</div></div>
+    <div class="st1__card"><div class="st1__icon">⚡</div><div class="st1__val">99.9%</div><div class="st1__lbl">Uptime SLA</div></div>
+    <div class="st1__card"><div class="st1__icon">🌐</div><div class="st1__val">2.4B</div><div class="st1__lbl">API requests / mo</div></div>
+    <div class="st1__card"><div class="st1__icon">⏱️</div><div class="st1__val">&lt;50ms</div><div class="st1__lbl">Avg latency</div></div>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

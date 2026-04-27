@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.stp2 {
+  font-family: 'Inter', sans-serif; max-width: 400px; margin: 4rem auto; padding: 0 1.5rem;
+  &__track { display: flex; flex-direction: column; position: relative;
+    &::before { content: ''; position: absolute; left: 17px; top: 0; bottom: 0; width: 2px; background: #e5e7eb; z-index: 0; }
+  }
+  &__item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0; position: relative; z-index: 1; cursor: pointer;
+    &--active .stp2__dot { background: #6366f1; border-color: #6366f1; color: #fff; box-shadow: 0 0 0 4px rgba(99,102,241,.15); }
+    &--done .stp2__dot { background: #10b981; border-color: #10b981; color: #fff; }
+  }
+  &__dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #e5e7eb; background: #fff; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; color: #9ca3af; flex-shrink: 0; transition: all .2s; }
+  &__info { padding-top: .4rem; }
+  &__name { font-size: .875rem; font-weight: 700; color: #0f172a; margin-bottom: .25rem; }
+  &__body { font-size: .8rem; color: #6b7280; line-height: 1.5; }
+}

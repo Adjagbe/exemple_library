@@ -1,0 +1,11 @@
+<section class="st2">
+  <div class="st2__inner">
+    <div class="st2__row">
+      <div class="st2__item" *ngFor="let s of stats; let last = last">
+        <div class="st2__val">{{ s.value }}</div>
+        <div class="st2__lbl">{{ s.label }}</div>
+        <div class="st2__trend">{{ s.trend }}</div>
+      </div>
+    </div>
+  </div>
+</section>

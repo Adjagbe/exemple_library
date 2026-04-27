@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>404 – Page Not Found 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+.pnf2__code{font-size:9rem;font-weight:900;line-height:1;color:#e2e8f0;letter-spacing:-.05em;user-select:none;position:relative}
+.pnf2__code::after{content:'404';position:absolute;inset:0;background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;clip-path:polygon(0 50%,100% 30%,100% 70%,0 90%);animation:sweep 4s ease-in-out infinite alternate}
+@keyframes sweep{0%{clip-path:polygon(0 50%,100% 30%,100% 70%,0 90%)}100%{clip-path:polygon(0 10%,100% 50%,100% 90%,0 50%)}}
+.pnf2__h{font-size:1.75rem;font-weight:800;color:#1e293b;margin-top:1.5rem;margin-bottom:.75rem}
+.pnf2__p{font-size:1rem;color:#64748b;max-width:380px;line-height:1.7;margin-bottom:2.5rem}
+.pnf2__actions{display:flex;gap:.875rem;flex-wrap:wrap;justify-content:center}
+.pnf2__btn-primary{padding:.85rem 2rem;background:#4f46e5;color:#fff;font-weight:700;font-size:.9375rem;border:none;border-radius:.875rem;cursor:pointer;transition:background .2s}
+.pnf2__btn-primary:hover{background:#4338ca}
+.pnf2__btn-ghost{padding:.85rem 2rem;background:#fff;color:#374151;font-weight:600;font-size:.9375rem;border:1.5px solid #e2e8f0;border-radius:.875rem;cursor:pointer;transition:all .2s}
+.pnf2__btn-ghost:hover{border-color:#6366f1;color:#6366f1}
+</style></head>
+<body>
+<div class="pnf2__code">404</div>
+<h1 class="pnf2__h">Oops! Page not found</h1>
+<p class="pnf2__p">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+<div class="pnf2__actions">
+  <button class="pnf2__btn-primary" onclick="history.back()">← Go back</button>
+  <button class="pnf2__btn-ghost" onclick="location.href='/'">🏠 Home</button>
+</div>
+<script>(function(){})()</script>
+</body></html>

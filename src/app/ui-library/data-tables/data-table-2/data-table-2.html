@@ -1,0 +1,17 @@
+<div class="dt2">
+  <div class="dt2__head"><h3>Recent Orders</h3><span class="dt2__sub">{{ orders.length }} entries</span></div>
+  <div class="dt2__wrap">
+    <table class="dt2__table">
+      <thead><tr><th>Order</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let o of orders">
+          <td class="dt2__id">{{ o.id }}</td>
+          <td>{{ o.customer }}</td>
+          <td class="dt2__amt">{{ o.amount }}</td>
+          <td><span class="dt2__badge dt2__badge--{{ o.status.toLowerCase() }}">{{ o.status }}</span></td>
+          <td class="dt2__dim">{{ o.date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

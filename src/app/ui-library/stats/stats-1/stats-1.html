@@ -1,0 +1,11 @@
+<section class="st1">
+  <div class="st1__inner">
+    <div class="st1__grid">
+      <div class="st1__card" *ngFor="let s of stats">
+        <div class="st1__icon">{{ s.icon }}</div>
+        <div class="st1__val">{{ s.value }}</div>
+        <div class="st1__lbl">{{ s.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>

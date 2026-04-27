@@ -1,0 +1,18 @@
+<div class="pc1">
+  <div class="pc1__header">
+    <div class="pc1__av">{{ user.avatar }}</div>
+    <div class="pc1__info">
+      <h2 class="pc1__name">{{ user.name }}</h2>
+      <p class="pc1__role">{{ user.role }} · {{ user.company }}</p>
+    </div>
+    <button class="pc1__follow">Follow</button>
+  </div>
+  <div class="pc1__stats">
+    <div class="pc1__stat"><strong>{{ user.followers | number }}</strong><span>Followers</span></div>
+    <div class="pc1__stat"><strong>{{ user.following }}</strong><span>Following</span></div>
+    <div class="pc1__stat"><strong>{{ user.posts }}</strong><span>Posts</span></div>
+  </div>
+  <div class="pc1__skills">
+    <span class="pc1__skill" *ngFor="let s of skills">{{ s }}</span>
+  </div>
+</div>

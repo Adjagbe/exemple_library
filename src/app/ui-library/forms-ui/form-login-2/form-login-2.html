@@ -1,0 +1,37 @@
+<div class="fl2">
+  <div class="fl2__left">
+    <div class="fl2__brand">◈ Nexus</div>
+    <h2 class="fl2__hl">Your dashboard<br>awaits.</h2>
+    <p class="fl2__lp">Trusted by 50,000+ teams worldwide to build, deploy and scale their products.</p>
+  </div>
+  <div class="fl2__right">
+    <div class="fl2__box">
+      <h3 class="fl2__title">Sign in</h3>
+      <div class="fl2__socials">
+        <button class="fl2__social" *ngFor="let s of socials">
+          <span class="fl2__social-icon">{{ s.icon }}</span>{{ s.label }}
+        </button>
+      </div>
+      <div class="fl2__divider"><span>or continue with email</span></div>
+      <form class="fl2__form">
+        <div class="fl2__field">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="email" name="e" placeholder="you@company.com">
+        </div>
+        <div class="fl2__field">
+          <label>Password</label>
+          <div class="fl2__pwd">
+            <input [type]="showPwd?'text':'password'" [(ngModel)]="password" name="p" placeholder="••••••••">
+            <button type="button" (click)="showPwd=!showPwd">{{ showPwd?'🙈':'👁' }}</button>
+          </div>
+        </div>
+        <div class="fl2__row">
+          <label class="fl2__check"><input type="checkbox" [(ngModel)]="remember" name="r"> Remember me</label>
+          <a href="#" class="fl2__link">Forgot password?</a>
+        </div>
+        <button class="fl2__submit">Sign in</button>
+      </form>
+      <p class="fl2__footer">New here? <a href="#">Create account</a></p>
+    </div>
+  </div>
+</div>

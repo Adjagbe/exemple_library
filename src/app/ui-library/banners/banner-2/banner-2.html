@@ -1,0 +1,26 @@
+<section class="b2">
+  <div class="b2__left">
+    <span class="b2__badge">{{ badge }}</span>
+    <h1 class="b2__h1">The developer platform <em>built for scale.</em></h1>
+    <p class="b2__p">Deploy with confidence. Monitor with clarity. Scale without limits. Everything you need in one place.</p>
+    <div class="b2__actions">
+      <button class="b2__btn b2__btn--primary">Start for free</button>
+      <button class="b2__btn b2__btn--outline">See pricing</button>
+    </div>
+    <div class="b2__stats">
+      <div class="b2__stat" *ngFor="let s of stats">
+        <strong>{{ s.v }}</strong><span>{{ s.l }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="b2__right">
+    <div class="b2__terminal">
+      <div class="b2__t-bar"><span></span><span></span><span></span></div>
+      <pre class="b2__code"><span class="c-dim">$</span> npx create-app my-project
+<span class="c-grn">✔</span> Project created
+<span class="c-dim">$</span> cd my-project &amp;&amp; npm run dev
+<span class="c-blu">➜</span> Local: <span class="c-grn">http://localhost:3000</span>
+<span class="c-grn">✔</span> Ready in <span class="c-ylw">248ms</span></pre>
+    </div>
+  </div>
+</section>

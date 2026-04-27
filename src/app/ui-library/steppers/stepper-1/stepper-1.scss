@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.stp1 {
+  font-family: 'Inter', sans-serif; max-width: 720px; margin: 4rem auto; padding: 0 1.5rem;
+  &__header { display: flex; align-items: flex-start; margin-bottom: 2.5rem; }
+  &__step { display: flex; align-items: center; gap: .75rem; flex: 1; position: relative;
+    &--active .stp1__circle { background: #6366f1; color: #fff; border-color: #6366f1; }
+    &--done .stp1__circle { background: #10b981; color: #fff; border-color: #10b981; }
+  }
+  &__circle { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; color: #9ca3af; background: #fff; flex-shrink: 0; transition: all .2s; }
+  &__meta { display: flex; flex-direction: column; }
+  &__label { font-size: .8125rem; font-weight: 700; color: #0f172a; }
+  &__desc { font-size: .72rem; color: #9ca3af; }
+  &__line { flex: 1; height: 2px; background: #e5e7eb; margin: 0 .5rem; margin-top: -1rem; align-self: flex-start; margin-top: 1.1rem;
+    &--done { background: #10b981; }
+  }
+  &__body { background: #f8fafc; border-radius: 1.25rem; padding: 2rem; min-height: 160px; margin-bottom: 1.5rem; h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: .5rem; } p { color: #6b7280; font-size: .9rem; } }
+  &__footer { display: flex; justify-content: space-between; }
+  &__btn { padding: .75rem 1.75rem; border-radius: .75rem; font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s;
+    &--primary { background: #6366f1; color: #fff; border: none; &:hover:not(:disabled) { background: #4f46e5; } &:disabled { opacity: .4; cursor: default; } }
+    &--ghost { background: #fff; color: #374151; border: 1.5px solid #e5e7eb; &:hover:not(:disabled) { border-color: #6366f1; color: #6366f1; } &:disabled { opacity: .4; cursor: default; } }
+  }
+}

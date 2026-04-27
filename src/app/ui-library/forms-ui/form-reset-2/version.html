@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reset 2 Glassmorphism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;min-height:100vh;background:#06060f;display:flex;align-items:center;justify-content:center;padding:2rem;overflow:hidden;position:relative}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3}
+.orb-a{width:400px;height:400px;background:#6366f1;top:-120px;right:-80px}
+.orb-b{width:320px;height:320px;background:#ec4899;bottom:-80px;left:-60px}
+.frs2__card{position:relative;width:100%;max-width:420px;background:rgba(255,255,255,.05);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:1.75rem;padding:2.5rem}
+.frs2__success{display:none;text-align:center;padding:1rem 0}
+.frs2__success .ico{font-size:3rem;margin-bottom:1rem}
+.frs2__success h2{font-size:1.5rem;font-weight:800;color:#4ade80;margin-bottom:.75rem}
+.frs2__success p{font-size:.875rem;color:#94a3b8;line-height:1.6}
+.frs2__title{font-size:1.625rem;font-weight:800;color:#f1f5f9;margin-bottom:.5rem}
+.frs2__sub{font-size:.875rem;color:#94a3b8;margin-bottom:1.75rem;line-height:1.5}
+.frs2__field{margin-bottom:1rem}
+.frs2__label{display:block;font-size:.8125rem;font-weight:600;color:#cbd5e1;margin-bottom:.4rem}
+.frs2__input{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:.875rem;color:#f1f5f9;font-size:.9375rem;font-family:inherit;outline:none;transition:border-color .2s}
+.frs2__input:focus{border-color:#818cf8}
+.frs2__input::placeholder{color:#475569}
+.frs2__hint{font-size:.75rem;color:#64748b;margin-top:.375rem}
+.frs2__btn{width:100%;padding:.875rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;font-size:.9375rem;border:none;border-radius:1rem;cursor:pointer;transition:opacity .2s;margin-top:.5rem}
+.frs2__btn:hover{opacity:.85}
+.frs2__back{text-align:center;margin-top:1.25rem;font-size:.8125rem;color:#64748b}
+.frs2__back a{color:#a78bfa;text-decoration:none}
+</style></head>
+<body>
+<div class="orb orb-a"></div>
+<div class="orb orb-b"></div>
+<div class="frs2__card">
+  <div id="frs2-form">
+    <h1 class="frs2__title">Set new password</h1>
+    <p class="frs2__sub">Choose a strong password and don't reuse it for other accounts.</p>
+    <div class="frs2__field"><label class="frs2__label">New password</label><input class="frs2__input" type="password" placeholder="At least 8 characters"><div class="frs2__hint">Use letters, numbers, and special characters.</div></div>
+    <div class="frs2__field"><label class="frs2__label">Confirm new password</label><input class="frs2__input" type="password" placeholder="Repeat password"></div>
+    <button class="frs2__btn" onclick="window.frs2Submit()">Update password</button>
+    <div class="frs2__back"><a href="#">← Back to sign in</a></div>
+  </div>
+  <div class="frs2__success" id="frs2-success">
+    <div class="ico">🔐</div>
+    <h2>Password updated!</h2>
+    <p>Your password has been changed successfully. You can now sign in with your new credentials.</p>
+  </div>
+</div>
+<script>(function(){
+  window.frs2Submit = function(){
+    document.getElementById('frs2-form').style.display = 'none';
+    document.getElementById('frs2-success').style.display = 'block';
+  };
+})()</script>
+</body></html>

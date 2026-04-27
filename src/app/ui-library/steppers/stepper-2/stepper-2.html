@@ -1,0 +1,17 @@
+<div class="stp2">
+  <div class="stp2__track">
+    <div class="stp2__item" *ngFor="let s of steps"
+         [class.stp2__item--done]="s.n < current"
+         [class.stp2__item--active]="s.n === current"
+         (click)="go(s.n)">
+      <div class="stp2__dot">
+        <span *ngIf="s.n < current">✓</span>
+        <span *ngIf="s.n >= current">{{ s.n }}</span>
+      </div>
+      <div class="stp2__info">
+        <p class="stp2__name">{{ s.label }}</p>
+        <p class="stp2__body" *ngIf="s.n === current">{{ s.body }}</p>
+      </div>
+    </div>
+  </div>
+</div>

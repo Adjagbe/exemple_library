@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login 3 Glassmorphism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;min-height:100vh;background:#0b0818;display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden}
+.fl3__orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35}
+.fl3__orb--1{width:450px;height:450px;background:#6366f1;top:-150px;left:-100px}
+.fl3__orb--2{width:350px;height:350px;background:#ec4899;bottom:-100px;right:-80px}
+.fl3__orb--3{width:280px;height:280px;background:#06b6d4;top:40%;left:55%}
+.fl3__card{position:relative;width:100%;max-width:420px;background:rgba(255,255,255,.06);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.12);border-radius:1.75rem;padding:2.5rem}
+.fl3__title{font-size:1.75rem;font-weight:800;color:#f1f5f9;margin-bottom:.5rem}
+.fl3__sub{font-size:.875rem;color:#94a3b8;margin-bottom:2rem}
+.fl3__field{margin-bottom:1.125rem}
+.fl3__label{display:block;font-size:.8125rem;font-weight:600;color:#cbd5e1;margin-bottom:.5rem}
+.fl3__input{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:.875rem;color:#f1f5f9;font-size:.9375rem;font-family:inherit;outline:none;transition:border-color .2s}
+.fl3__input:focus{border-color:#818cf8;background:rgba(129,140,248,.08)}
+.fl3__input::placeholder{color:#475569}
+.fl3__meta{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
+.fl3__link{font-size:.8125rem;color:#a78bfa;text-decoration:none}
+.fl3__btn{width:100%;padding:.9rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;font-size:.9375rem;border:none;border-radius:1rem;cursor:pointer;transition:opacity .2s;margin-bottom:1.25rem}
+.fl3__btn:hover{opacity:.85}
+.fl3__divider{display:flex;align-items:center;gap:.875rem;margin-bottom:1.25rem}
+.fl3__divider::before,.fl3__divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.fl3__divider span{font-size:.75rem;color:#475569}
+.fl3__socials{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.fl3__soc{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem;border-radius:.875rem;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#e2e8f0;font-size:.875rem;font-weight:600;cursor:pointer;transition:all .2s}
+.fl3__soc:hover{background:rgba(255,255,255,.1)}
+</style></head>
+<body>
+<div class="fl3__orb fl3__orb--1"></div>
+<div class="fl3__orb fl3__orb--2"></div>
+<div class="fl3__orb fl3__orb--3"></div>
+<div class="fl3__card">
+  <h1 class="fl3__title">Sign in</h1>
+  <p class="fl3__sub">Enter your credentials to access your dashboard.</p>
+  <div class="fl3__field"><label class="fl3__label">Email address</label><input class="fl3__input" type="email" placeholder="you@example.com"></div>
+  <div class="fl3__field"><label class="fl3__label">Password</label><input class="fl3__input" type="password" placeholder="••••••••"></div>
+  <div class="fl3__meta"><a href="#" class="fl3__link">Forgot password?</a></div>
+  <button class="fl3__btn">Continue →</button>
+  <div class="fl3__divider"><span>or</span></div>
+  <div class="fl3__socials">
+    <button class="fl3__soc">🔵 Google</button>
+    <button class="fl3__soc">⬛ GitHub</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

@@ -45,19 +45,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   </div>
 </div>
 <script>
-const labels = {1:'Très mauvais',2:'Mauvais',3:'Moyen',4:'Bien',5:'Excellent !'};
-let rating = 0, hoverVal = 0;
-function hover(n) { hoverVal = n; renderStars(); document.getElementById('ratingLabel').textContent = labels[n] || ''; }
-function resetHover() { hoverVal = 0; renderStars(); document.getElementById('ratingLabel').textContent = rating ? labels[rating] : ''; }
-function setRating(n) { rating = n; resetHover(); }
-function renderStars() {
-  const active = hoverVal || rating;
-  document.querySelectorAll('.rt3__star').forEach((s,i) => s.classList.toggle('on', i < active));
-}
-function submit() {
-  document.getElementById('form').classList.add('hidden');
-  document.getElementById('thanks').classList.remove('hidden');
-}
+(function() {
+  const labels = {1:'Très mauvais',2:'Mauvais',3:'Moyen',4:'Bien',5:'Excellent !'};
+  var rating = 0, hoverVal = 0;
+  function hover(n) { hoverVal = n; renderStars(); document.getElementById('ratingLabel').textContent = labels[n] || ''; }
+  function resetHover() { hoverVal = 0; renderStars(); document.getElementById('ratingLabel').textContent = rating ? labels[rating] : ''; }
+  function setRating(n) { rating = n; resetHover(); }
+  function renderStars() {
+    const active = hoverVal || rating;
+    document.querySelectorAll('.rt3__star').forEach((s,i) => s.classList.toggle('on', i < active));
+  }
+  function submit() {
+    document.getElementById('form').classList.add('hidden');
+    document.getElementById('thanks').classList.remove('hidden');
+  }
+  window.hover = hover;
+  window.resetHover = resetHover;
+  window.setRating = setRating;
+  window.submit = submit;
+})();
 </script>
 </body>
 </html>

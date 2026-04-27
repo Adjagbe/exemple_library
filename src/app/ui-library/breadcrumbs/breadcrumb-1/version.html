@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Breadcrumb 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;padding:3rem 2rem}
+
+/* Variant 2 – pill style */
+.bc2{display:flex;align-items:center;flex-wrap:wrap;gap:.25rem}
+.bc2__link{font-size:.8125rem;color:#64748b;font-weight:600;cursor:pointer;padding:.35rem .75rem;border-radius:999px;text-decoration:none;transition:all .2s}
+.bc2__link:hover{background:#eef2ff;color:#4f46e5}
+.bc2__sep{color:#cbd5e1;font-size:.7rem;margin:0 .1rem}
+.bc2__current{font-size:.8125rem;font-weight:700;color:#000000;padding:.35rem .75rem;border-radius:999px}
+/* Variant 3 – slash */
+
+</style></head>
+<body>
+
+<nav class="bc2" aria-label="breadcrumb">
+  <a class="bc2__link">Home</a><span class="bc2__sep">›</span>
+  <a class="bc2__link">Dashboard</a><span class="bc2__sep">›</span>
+  <a class="bc2__link">Settings</a><span class="bc2__sep">›</span>
+  <span class="bc2__current">Profile</span>
+</nav>
+
+<script>(function(){})()</script>
+</body></html>

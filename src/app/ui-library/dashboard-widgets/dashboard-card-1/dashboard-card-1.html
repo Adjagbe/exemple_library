@@ -1,0 +1,13 @@
+<div class="dc1">
+  <div class="dc1__card" *ngFor="let k of kpis">
+    <div class="dc1__top">
+      <span class="dc1__icon">{{ k.icon }}</span>
+      <span class="dc1__badge" [class.dc1__badge--up]="k.up" [class.dc1__badge--dn]="!k.up">
+        {{ k.up ? '▲' : '▼' }} {{ k.change }}
+      </span>
+    </div>
+    <p class="dc1__val">{{ k.value }}</p>
+    <p class="dc1__lbl">{{ k.label }}</p>
+    <div class="dc1__sparkline"><div class="dc1__spark-fill" [style.width]="k.up ? '72%' : '38%'" [class.dc1__spark-fill--up]="k.up"></div></div>
+  </div>
+</div>

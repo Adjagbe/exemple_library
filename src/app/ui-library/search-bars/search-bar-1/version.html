@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Search Bar 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:6rem 2rem}
+.sb1{width:100%;max-width:560px;position:relative}
+.sb1__input-wrap{position:relative}
+.sb1__ico{position:absolute;left:1rem;top:50%;transform:translateY(-50%);font-size:1.125rem;pointer-events:none}
+.sb1__input{width:100%;padding:.9rem 1rem .9rem 3rem;background:#fff;border:1.5px solid #e2e8f0;border-radius:1rem;font-size:1rem;font-family:inherit;color:#1e293b;outline:none;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .2s}
+.sb1__input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.sb1__input::placeholder{color:#94a3b8}
+.sb1__kbd{position:absolute;right:1rem;top:50%;transform:translateY(-50%);display:flex;gap:.25rem}
+.sb1__kbd kbd{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:.375rem;padding:.15rem .4rem;font-size:.6875rem;color:#94a3b8;font-family:inherit}
+.sb1__results{position:absolute;left:0;right:0;top:calc(100% + .5rem);background:#fff;border:1px solid #e2e8f0;border-radius:1rem;box-shadow:0 8px 32px rgba(0,0,0,.1);overflow:hidden;display:none;z-index:10}
+.sb1__results.show{display:block}
+.sb1__group-lbl{font-size:.6875rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#94a3b8;padding:.75rem 1rem .375rem}
+.sb1__result{display:flex;align-items:center;gap:.75rem;padding:.7rem 1rem;cursor:pointer;transition:background .15s}
+.sb1__result:hover{background:#f8fafc}
+.sb1__result-ico{font-size:1rem;width:1.5rem;text-align:center;flex-shrink:0}
+.sb1__result-label{font-size:.9rem;font-weight:500;color:#1e293b}
+.sb1__result-sub{font-size:.75rem;color:#94a3b8}
+.sb1__result-badge{margin-left:auto;font-size:.6875rem;font-weight:700;padding:.15rem .5rem;background:#eef2ff;color:#6366f1;border-radius:999px}
+</style></head>
+<body>
+<div class="sb1">
+  <div class="sb1__input-wrap">
+    <span class="sb1__ico">🔍</span>
+    <input class="sb1__input" placeholder="Search anything..." id="sb1input" oninput="window.sb1Search(this.value)" onfocus="window.sb1Open()" onblur="setTimeout(function(){window.sb1Close()},200)">
+    <div class="sb1__kbd"><kbd>⌘</kbd><kbd>K</kbd></div>
+  </div>
+  <div class="sb1__results" id="sb1results">
+    <div class="sb1__group-lbl">Pages</div>
+    <div class="sb1__result"><span class="sb1__result-ico">📄</span><div><div class="sb1__result-label">Dashboard</div><div class="sb1__result-sub">Overview & analytics</div></div></div>
+    <div class="sb1__result"><span class="sb1__result-ico">👥</span><div><div class="sb1__result-label">Team settings</div><div class="sb1__result-sub">Manage members & roles</div></div></div>
+    <div class="sb1__group-lbl">Recent</div>
+    <div class="sb1__result"><span class="sb1__result-ico">📦</span><div><div class="sb1__result-label">Project Alpha</div></div><span class="sb1__result-badge">Active</span></div>
+    <div class="sb1__result"><span class="sb1__result-ico">🔧</span><div><div class="sb1__result-label">API settings</div></div></div>
+  </div>
+</div>
+<script>(function(){
+  window.sb1Open = function(){ document.getElementById('sb1results').classList.add('show'); };
+  window.sb1Close = function(){ document.getElementById('sb1results').classList.remove('show'); };
+  window.sb1Search = function(v){ if(v) window.sb1Open(); else window.sb1Close(); };
+})()</script>
+</body></html>

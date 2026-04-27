@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Testimonial 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0f0a1e,#0f172a);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 2rem}
+.t2__inner{max-width:880px;width:100%;text-align:center}
+.t2__tag{font-size:.8125rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#818cf8;margin-bottom:1rem}
+.t2__h{font-size:clamp(1.75rem,3vw,2.5rem);font-weight:900;color:#f1f5f9;margin-bottom:3rem;line-height:1.2}
+.t2__slider{position:relative;overflow:hidden}
+.t2__track{display:flex;transition:transform .5s ease}
+.t2__slide{min-width:100%;display:flex;justify-content:center;padding:0 1rem}
+.t2__card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:1.5rem;padding:2.5rem;max-width:680px;width:100%;text-align:left}
+.t2__stars{font-size:1.125rem;margin-bottom:1.25rem;letter-spacing:.05em}
+.t2__quote{font-size:1.0625rem;color:#e2e8f0;line-height:1.75;margin-bottom:1.75rem;font-style:italic}
+.t2__author{display:flex;align-items:center;gap:.875rem}
+.t2__av{width:2.75rem;height:2.75rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;flex-shrink:0}
+.t2__name{font-size:.9375rem;font-weight:700;color:#f1f5f9}
+.t2__role{font-size:.8125rem;color:#64748b}
+.t2__controls{display:flex;align-items:center;justify-content:center;gap:1.25rem;margin-top:2rem}
+.t2__btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:2.5rem;height:2.5rem;color:#e2e8f0;font-size:1.125rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.t2__btn:hover{background:rgba(99,102,241,.3);border-color:#6366f1}
+.t2__dots{display:flex;gap:.5rem}
+.t2__dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .2s}
+.t2__dot.active{background:#6366f1;width:20px;border-radius:999px}
+</style></head>
+<body>
+<div class="t2__inner">
+  <div class="t2__tag">Testimonials</div>
+  <h2 class="t2__h">Loved by teams everywhere</h2>
+  <div class="t2__slider">
+    <div class="t2__track" id="t2track">
+      <div class="t2__slide"><div class="t2__card">
+        <div class="t2__stars">⭐⭐⭐⭐⭐</div>
+        <p class="t2__quote">"We cut our time-to-deploy by 60% in the first month. The DX is unmatched — everything just works out of the box."</p>
+        <div class="t2__author"><div class="t2__av" style="background:rgba(99,102,241,.3);color:#a5b4fc">JW</div><div><div class="t2__name">Jordan Walsh</div><div class="t2__role">CTO at Stackflow</div></div></div>
+      </div></div>
+      <div class="t2__slide"><div class="t2__card">
+        <div class="t2__stars">⭐⭐⭐⭐⭐</div>
+        <p class="t2__quote">"The component library is stunning. Our design-dev handoff is now seamless — designers love it as much as engineers."</p>
+        <div class="t2__author"><div class="t2__av" style="background:rgba(236,72,153,.3);color:#f9a8d4">AM</div><div><div class="t2__name">Aisha Morgan</div><div class="t2__role">Lead Designer at Prismic</div></div></div>
+      </div></div>
+      <div class="t2__slide"><div class="t2__card">
+        <div class="t2__stars">⭐⭐⭐⭐⭐</div>
+        <p class="t2__quote">"Support team is incredible. They helped us migrate our entire codebase in 2 days with zero downtime."</p>
+        <div class="t2__author"><div class="t2__av" style="background:rgba(34,197,94,.3);color:#86efac">RN</div><div><div class="t2__name">Ravi Nair</div><div class="t2__role">VP Engineering at Linktree</div></div></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="t2__controls">
+    <button class="t2__btn" onclick="window.t2Prev()">←</button>
+    <div class="t2__dots" id="t2dots"></div>
+    <button class="t2__btn" onclick="window.t2Next()">→</button>
+  </div>
+</div>
+<script>(function(){
+  var cur=0, total=3;
+  var track=document.getElementById('t2track');
+  var dotsEl=document.getElementById('t2dots');
+  for(var i=0;i<total;i++){var d=document.createElement('div');d.className='t2__dot'+(i===0?' active':'');(function(idx){d.onclick=function(){cur=idx;render();};})(i);dotsEl.appendChild(d);}
+  function render(){
+    track.style.transform='translateX(-'+cur*100+'%)';
+    var ds=dotsEl.querySelectorAll('.t2__dot');
+    ds.forEach(function(d,i){d.classList.toggle('active',i===cur);});
+  }
+  window.t2Prev=function(){cur=(cur-1+total)%total;render();};
+  window.t2Next=function(){cur=(cur+1)%total;render();};
+})()</script>
+</body></html>

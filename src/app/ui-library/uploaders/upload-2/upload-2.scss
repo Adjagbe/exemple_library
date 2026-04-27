@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.up2 {
+  font-family: 'Inter', sans-serif; background: #0f172a; border: 1px solid rgba(255,255,255,.07); border-radius: 1.5rem; padding: 1.75rem; max-width: 420px; margin: 2rem auto;
+  &__title { font-size: .9375rem; font-weight: 800; color: #f1f5f9; margin-bottom: 1.5rem; }
+  &__list { display: flex; flex-direction: column; gap: 1.1rem; }
+  &__item { display: flex; gap: .875rem; align-items: flex-start; }
+  &__icon { font-size: 1.25rem; margin-top: .1rem; flex-shrink: 0; }
+  &__body { flex: 1; }
+  &__row { display: flex; justify-content: space-between; margin-bottom: .5rem; }
+  &__name { font-size: .8125rem; font-weight: 600; color: #e2e8f0; }
+  &__size { font-size: .75rem; color: #475569; }
+  &__track { height: 6px; background: rgba(255,255,255,.08); border-radius: 999px; overflow: hidden; }
+  &__fill { height: 100%; border-radius: 999px; transition: width .4s ease; &--done { background: #34d399; } &--uploading { background: linear-gradient(90deg, #6366f1, #a78bfa); } &--queued { background: rgba(255,255,255,.15); } }
+}

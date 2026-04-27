@@ -1,0 +1,17 @@
+<div class="kb1">
+  <div class="kb1__col" *ngFor="let col of columns">
+    <div class="kb1__colhead">
+      <span class="kb1__dot" [style.background]="col.color"></span>
+      <span class="kb1__coltitle">{{ col.title }}</span>
+      <span class="kb1__count">{{ col.cards.length }}</span>
+    </div>
+    <div class="kb1__cards">
+      <div class="kb1__card" *ngFor="let c of col.cards">
+        <div class="kb1__tag">{{ c.tag }}</div>
+        <p class="kb1__cardtitle">{{ c.title }}</p>
+        <div class="kb1__av">{{ c.avatar }}</div>
+      </div>
+      <button class="kb1__add">+ Add card</button>
+    </div>
+  </div>
+</div>

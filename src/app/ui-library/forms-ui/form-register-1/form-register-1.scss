@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.fr1 {
+  min-height: 100vh; background: #f8fafc; display: flex; align-items: center; justify-content: center; padding: 2rem; font-family: 'Inter', sans-serif;
+  &__card { background: #fff; border-radius: 1.5rem; padding: 2.5rem; width: 100%; max-width: 480px; box-shadow: 0 4px 32px rgba(0,0,0,.08); }
+  &__title { font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: .25rem; }
+  &__sub { font-size: .875rem; color: #94a3b8; margin-bottom: 2rem; }
+  &__form { display: flex; flex-direction: column; gap: 1.1rem; }
+  &__row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; @media (max-width: 480px) { grid-template-columns: 1fr; } }
+  &__field { display: flex; flex-direction: column; gap: .4rem; label { font-size: .8rem; font-weight: 600; color: #374151; } input { padding: .75rem 1rem; border: 1.5px solid #e5e7eb; border-radius: .75rem; font-size: .875rem; outline: none; font-family: inherit; &:focus { border-color: #6366f1; } } }
+  &__pwd { position: relative; input { width: 100%; padding-right: 2.5rem; } button { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; } }
+  &__strength { margin-top: .4rem; height: 4px; background: #f1f5f9; border-radius: 9999px; overflow: hidden; }
+  &__bar { height: 100%; border-radius: 9999px; transition: width .3s, background .3s; width: 0; &--weak { width: 33%; background: #ef4444; } &--medium { width: 66%; background: #f59e0b; } &--strong { width: 100%; background: #10b981; } }
+  &__agree { display: flex; align-items: center; gap: .5rem; font-size: .8125rem; color: #6b7280; cursor: pointer; a { color: #6366f1; text-decoration: none; } }
+  &__submit { background: #6366f1; color: #fff; border: none; padding: .875rem; border-radius: .75rem; font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .2s; &:hover:not(:disabled) { background: #4f46e5; } &:disabled { opacity: .5; cursor: default; } }
+  &__login { text-align: center; font-size: .8125rem; color: #94a3b8; margin-top: 1.25rem; a { color: #6366f1; text-decoration: none; font-weight: 600; } }
+}

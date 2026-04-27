@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.dc2 {
+  font-family: 'Inter', sans-serif; background: #fff; border: 1px solid #e5e7eb; border-radius: 1.5rem; padding: 2rem; max-width: 600px; margin: 2rem auto;
+  &__hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
+  &__title { font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: .2rem; }
+  &__sub { font-size: .78rem; color: #94a3b8; }
+  &__total { font-size: 1.25rem; font-weight: 800; color: #0f172a; display: flex; flex-direction: column; align-items: flex-end; gap: .2rem; }
+  &__up { font-size: .75rem; font-weight: 700; color: #16a34a; }
+  &__chart { display: flex; align-items: flex-end; gap: .75rem; height: 160px; padding-bottom: 1.5rem; position: relative; border-bottom: 1px solid #f1f5f9; }
+  &__bar-wrap { display: flex; flex-direction: column; align-items: center; gap: .4rem; flex: 1; height: 100%; justify-content: flex-end; }
+  &__bar { width: 100%; max-width: 32px; background: linear-gradient(180deg, #6366f1, #8b5cf6); border-radius: .375rem .375rem 0 0; transition: height .4s ease; min-height: 4px; cursor: pointer; &:hover { background: linear-gradient(180deg, #4f46e5, #7c3aed); } }
+  &__month { font-size: .68rem; color: #94a3b8; font-weight: 600; }
+}

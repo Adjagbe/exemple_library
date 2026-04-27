@@ -1,0 +1,16 @@
+<div class="ob1">
+  <div class="ob1__card">
+    <div class="ob1__prog">
+      <div class="ob1__progfill" [style.width]="pct+'%'"></div>
+    </div>
+    <p class="ob1__step-lbl">Step {{ step + 1 }} of {{ steps.length }}</p>
+    <div class="ob1__icon">{{ current.icon }}</div>
+    <h2 class="ob1__title">{{ current.title }}</h2>
+    <p class="ob1__desc">{{ current.desc }}</p>
+    <button class="ob1__cta" (click)="next()">{{ current.cta }}</button>
+    <button class="ob1__skip" *ngIf="step < steps.length - 1" (click)="skip()">Skip for now</button>
+    <div class="ob1__dots">
+      <span class="ob1__dot" *ngFor="let s of steps; let i = index" [class.ob1__dot--on]="step === i"></span>
+    </div>
+  </div>
+</div>

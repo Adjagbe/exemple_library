@@ -1,0 +1,22 @@
+<div class="pc1">
+  <div class="pc1__header">
+    <h2 class="pc1__h2">Simple, transparent pricing</h2>
+    <div class="pc1__toggle">
+      <span [class.pc1__t-active]="!annual">Monthly</span>
+      <button class="pc1__switch" (click)="annual=!annual" [class.pc1__switch--on]="annual"><span></span></button>
+      <span [class.pc1__t-active]="annual">Annual <em>–35%</em></span>
+    </div>
+  </div>
+  <div class="pc1__grid">
+    <div class="pc1__card" *ngFor="let p of plans" [class.pc1__card--popular]="p.popular">
+      <div class="pc1__badge" *ngIf="p.popular">Most Popular</div>
+      <p class="pc1__name" [style.color]="p.color">{{ p.name }}</p>
+      <div class="pc1__price"><sup>€</sup>{{ price(p) }}<sub>/mo</sub></div>
+      <p class="pc1__desc">{{ p.desc }}</p>
+      <ul class="pc1__feats">
+        <li *ngFor="let f of p.features"><span class="pc1__check" [style.color]="p.color">✓</span>{{ f }}</li>
+      </ul>
+      <button class="pc1__cta" [style.background]="p.popular ? p.color : 'transparent'" [style.color]="p.popular ? '#fff' : p.color" [style.borderColor]="p.color">{{ p.cta }}</button>
+    </div>
+  </div>
+</div>

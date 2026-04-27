@@ -1,0 +1,21 @@
+<section class="b1">
+  <div class="b1__bg">
+    <div class="b1__orb b1__orb--a"></div>
+    <div class="b1__orb b1__orb--b"></div>
+    <div class="b1__grid"></div>
+  </div>
+  <div class="b1__inner">
+    <div class="b1__pills">
+      <span class="b1__pill b1__pill--new">{{ pills[0] }}</span>
+      <span class="b1__pill">{{ pills[1] }}</span>
+    </div>
+    <h1 class="b1__headline">
+      <span *ngFor="let h of headline" class="b1__hline">{{ h }}</span>
+    </h1>
+    <p class="b1__sub">{{ sub }}</p>
+    <div class="b1__actions">
+      <button class="b1__btn b1__btn--primary">Get Started <span>→</span></button>
+      <button class="b1__btn b1__btn--ghost">View Docs</button>
+    </div>
+  </div>
+</section>

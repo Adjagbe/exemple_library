@@ -1,0 +1,12 @@
+<div class="up2">
+  <div class="up2__title">Uploading files</div>
+  <div class="up2__list">
+    <div class="up2__item" *ngFor="let f of files">
+      <div class="up2__icon">{{ f.status === 'done' ? '✅' : f.status === 'uploading' ? '⏳' : '🕐' }}</div>
+      <div class="up2__body">
+        <div class="up2__row"><span class="up2__name">{{ f.name }}</span><span class="up2__size">{{ f.size }}</span></div>
+        <div class="up2__track"><div class="up2__fill up2__fill--{{ f.status }}" [style.width]="f.pct + '%'"></div></div>
+      </div>
+    </div>
+  </div>
+</div>

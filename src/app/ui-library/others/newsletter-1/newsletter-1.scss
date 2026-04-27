@@ -1,11 +1,88 @@
-.nl1 { background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 6rem 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-.nl1__inner { max-width: 600px; margin: 0 auto; text-align: center; }
-.nl1__badge { display: inline-flex; align-items: center; gap: .5rem; padding: .375rem 1.25rem; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 9999px; font-size: .8rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; }
-.nl1__inner h2 { font-size: 2.5rem; font-weight: 800; color: #fff; margin: 0 0 1rem; line-height: 1.2; }
-.nl1__inner > p { font-size: .95rem; color: rgba(255,255,255,.8); margin: 0 0 2.5rem; line-height: 1.8; }
-.nl1__form { display: flex; background: rgba(255,255,255,.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.25); border-radius: .875rem; padding: .375rem .375rem .375rem 1.25rem; gap: .375rem; margin-bottom: 1.25rem; }
-.nl1__form input { flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: .875rem; }
-.nl1__form input::placeholder { color: rgba(255,255,255,.55); }
-.nl1__form button { padding: .75rem 1.5rem; background: #fff; color: #4f46e5; border: none; border-radius: .625rem; font-weight: 700; font-size: .875rem; cursor: pointer; display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
-.nl1__thanks { padding: .875rem 1.5rem; background: rgba(255,255,255,.15); border-radius: .875rem; color: #fff; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: .75rem; margin-bottom: 1.25rem; }
-.nl1__note { font-size: .75rem; color: rgba(255,255,255,.55); margin: 0; }
+.nl1 {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  padding: 6rem 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.nl1__inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.nl1__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 1.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+.nl1__inner h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+.nl1__inner > p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 2.5rem;
+  line-height: 1.8;
+}
+.nl1__form {
+  display: flex;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.875rem;
+  padding: 0.375rem 0.375rem 0.375rem 1.25rem;
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+}
+.nl1__form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 0.875rem;
+}
+.nl1__form input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+.nl1__form button {
+  padding: 0.75rem 1.5rem;
+  background: #fff;
+  color: #4f46e5;
+  border: none;
+  border-radius: 0.625rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+.nl1__thanks {
+  padding: 0.875rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0.875rem;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.nl1__note {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+}

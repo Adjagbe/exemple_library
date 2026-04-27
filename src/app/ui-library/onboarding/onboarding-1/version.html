@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Onboarding 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#06060f,#0f172a);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;overflow:hidden;position:relative}
+.ob1__bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.ob1__glow{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15}
+.ob1__glow--a{width:500px;height:500px;background:#6366f1;top:-150px;left:-100px}
+.ob1__glow--b{width:400px;height:400px;background:#8b5cf6;bottom:-120px;right:-80px}
+.ob1__card{position:relative;width:100%;max-width:520px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:1.75rem;overflow:hidden}
+.ob1__progress{height:4px;background:rgba(255,255,255,.06)}
+.ob1__progress-fill{height:100%;background:linear-gradient(to right,#6366f1,#8b5cf6);transition:width .4s ease}
+.ob1__body{padding:2.5rem}
+.ob1__step-lbl{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6366f1;margin-bottom:.875rem}
+.ob1__slide{display:none}
+.ob1__slide.active{display:block}
+.ob1__ico{font-size:3rem;margin-bottom:1.25rem}
+.ob1__h{font-size:1.5rem;font-weight:900;color:#f1f5f9;line-height:1.2;margin-bottom:.75rem}
+.ob1__p{font-size:.9375rem;color:#94a3b8;line-height:1.7;margin-bottom:2rem}
+.ob1__input{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:.875rem;color:#f1f5f9;font-size:.9375rem;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:1rem}
+.ob1__input:focus{border-color:#6366f1}
+.ob1__input::placeholder{color:#475569}
+.ob1__options{display:flex;flex-direction:column;gap:.625rem;margin-bottom:2rem}
+.ob1__opt{display:flex;align-items:center;gap:.875rem;padding:.875rem 1rem;border:1.5px solid rgba(255,255,255,.08);border-radius:.875rem;cursor:pointer;transition:all .2s}
+.ob1__opt:hover{border-color:rgba(99,102,241,.4);background:rgba(99,102,241,.06)}
+.ob1__opt.selected{border-color:#6366f1;background:rgba(99,102,241,.12)}
+.ob1__opt-ico{font-size:1.375rem;flex-shrink:0}
+.ob1__opt-label{font-size:.9rem;font-weight:600;color:#e2e8f0}
+.ob1__opt-sub{font-size:.75rem;color:#64748b;margin-top:.1rem}
+.ob1__footer{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;border-top:1px solid rgba(255,255,255,.06)}
+.ob1__dots{display:flex;gap:.4rem}
+.ob1__dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .2s}
+.ob1__dot.active{background:#6366f1;width:20px;border-radius:999px}
+.ob1__actions{display:flex;gap:.75rem}
+.ob1__btn-skip{background:none;border:none;font-size:.875rem;color:#475569;cursor:pointer;font-family:inherit}
+.ob1__btn-skip:hover{color:#94a3b8}
+.ob1__btn-next{padding:.75rem 1.75rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:700;font-size:.875rem;border:none;border-radius:.875rem;cursor:pointer;transition:opacity .2s}
+.ob1__btn-next:hover{opacity:.85}
+</style></head>
+<body>
+<div class="ob1__bg"><div class="ob1__glow ob1__glow--a"></div><div class="ob1__glow ob1__glow--b"></div></div>
+<div class="ob1__card">
+  <div class="ob1__progress"><div class="ob1__progress-fill" id="ob1prog" style="width:25%"></div></div>
+  <div class="ob1__body">
+    <div class="ob1__step-lbl" id="ob1lbl">Step 1 of 4</div>
+    <div class="ob1__slide active" id="ob1s0">
+      <div class="ob1__ico">👋</div>
+      <h1 class="ob1__h">Welcome! Let's get you set up.</h1>
+      <p class="ob1__p">This quick setup takes about 2 minutes. We'll personalize your experience along the way.</p>
+      <input class="ob1__input" type="text" placeholder="What should we call you?">
+      <input class="ob1__input" type="text" placeholder="Your company name (optional)">
+    </div>
+    <div class="ob1__slide" id="ob1s1">
+      <div class="ob1__ico">🛠️</div>
+      <h1 class="ob1__h">What's your main focus?</h1>
+      <p class="ob1__p">We'll tailor the experience based on your role.</p>
+      <div class="ob1__options">
+        <div class="ob1__opt" onclick="window.ob1Select(this)"><span class="ob1__opt-ico">💻</span><div><div class="ob1__opt-label">Frontend Development</div><div class="ob1__opt-sub">UI components, design systems</div></div></div>
+        <div class="ob1__opt" onclick="window.ob1Select(this)"><span class="ob1__opt-ico">⚙️</span><div><div class="ob1__opt-label">Backend Development</div><div class="ob1__opt-sub">APIs, databases, infrastructure</div></div></div>
+        <div class="ob1__opt" onclick="window.ob1Select(this)"><span class="ob1__opt-ico">🚀</span><div><div class="ob1__opt-label">Full-Stack</div><div class="ob1__opt-sub">End-to-end product development</div></div></div>
+      </div>
+    </div>
+    <div class="ob1__slide" id="ob1s2">
+      <div class="ob1__ico">��</div>
+      <h1 class="ob1__h">Connect your tools</h1>
+      <p class="ob1__p">Link your existing workflow tools to unlock integrations.</p>
+      <div class="ob1__options">
+        <div class="ob1__opt" onclick="window.ob1Select(this)"><span class="ob1__opt-ico">🐙</span><div><div class="ob1__opt-label">GitHub</div><div class="ob1__opt-sub">Sync repos and deploy on push</div></div></div>
+        <div class="ob1__opt" onclick="window.ob1Select(this)"><span class="ob1__opt-ico">💬</span><div><div class="ob1__opt-label">Slack</div><div class="ob1__opt-sub">Get alerts in your channels</div></div></div>
+      </div>
+    </div>
+    <div class="ob1__slide" id="ob1s3">
+      <div class="ob1__ico">🎉</div>
+      <h1 class="ob1__h">You're all set!</h1>
+      <p class="ob1__p">Your workspace is ready. Start exploring the dashboard or create your first project now.</p>
+    </div>
+  </div>
+  <div class="ob1__footer">
+    <div class="ob1__dots" id="ob1dots">
+      <div class="ob1__dot active"></div><div class="ob1__dot"></div><div class="ob1__dot"></div><div class="ob1__dot"></div>
+    </div>
+    <div class="ob1__actions">
+      <button class="ob1__btn-skip" onclick="window.ob1Skip()">Skip</button>
+      <button class="ob1__btn-next" id="ob1next" onclick="window.ob1Next()">Continue →</button>
+    </div>
+  </div>
+</div>
+<script>(function(){
+  var cur=0, total=4;
+  function render(){
+    for(var i=0;i<total;i++) document.getElementById('ob1s'+i).classList.toggle('active',i===cur);
+    document.getElementById('ob1prog').style.width=((cur+1)/total*100)+'%';
+    document.getElementById('ob1lbl').textContent='Step '+(cur+1)+' of '+total;
+    var dots=document.querySelectorAll('.ob1__dot');
+    dots.forEach(function(d,i){d.classList.toggle('active',i===cur);});
+    var btn=document.getElementById('ob1next');
+    btn.textContent = cur===total-1 ? 'Go to Dashboard ✓' : 'Continue →';
+  }
+  window.ob1Select = function(el){ var parent=el.closest('.ob1__options'); parent.querySelectorAll('.ob1__opt').forEach(function(o){o.classList.remove('selected');}); el.classList.add('selected'); };
+  window.ob1Next = function(){ if(cur<total-1){cur++;render();} };
+  window.ob1Skip = function(){ if(cur<total-1){cur++;render();} };
+})()</script>
+</body></html>

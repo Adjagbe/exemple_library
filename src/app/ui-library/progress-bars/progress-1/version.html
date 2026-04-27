@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Progress 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.pg1{width:100%;max-width:500px;background:#fff;border-radius:1.5rem;box-shadow:0 4px 16px rgba(0,0,0,.06);padding:2.5rem;display:flex;flex-direction:column;gap:1.75rem}
+.pg1__item{}
+.pg1__meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:.625rem}
+.pg1__label{font-size:.875rem;font-weight:700;color:#1e293b}
+.pg1__pct{font-size:.875rem;font-weight:700;color:#64748b}
+.pg1__track{height:8px;background:#f1f5f9;border-radius:999px;overflow:hidden}
+.pg1__fill{height:100%;border-radius:999px;transition:width 1s ease}
+.pg1__fill.indigo{background:linear-gradient(to right,#6366f1,#a78bfa)}
+.pg1__fill.green{background:linear-gradient(to right,#22c55e,#4ade80)}
+.pg1__fill.amber{background:linear-gradient(to right,#f59e0b,#fbbf24)}
+.pg1__fill.red{background:linear-gradient(to right,#ef4444,#f87171)}
+/* Striped animated */
+.pg1__fill.striped{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.15) 0,rgba(255,255,255,.15) 1rem,transparent 0,transparent 2rem);background-size:2rem 100%;animation:stripe .8s linear infinite;background-color:#6366f1}
+@keyframes stripe{to{background-position:2rem 0}}
+</style></head>
+<body>
+<div class="pg1">
+  <div class="pg1__item"><div class="pg1__meta"><span class="pg1__label">Storage used</span><span class="pg1__pct">72%</span></div><div class="pg1__track"><div class="pg1__fill indigo" style="width:72%"></div></div></div>
+  <div class="pg1__item"><div class="pg1__meta"><span class="pg1__label">Project completion</span><span class="pg1__pct">58%</span></div><div class="pg1__track"><div class="pg1__fill green" style="width:58%"></div></div></div>
+  <div class="pg1__item"><div class="pg1__meta"><span class="pg1__label">API quota</span><span class="pg1__pct">85%</span></div><div class="pg1__track"><div class="pg1__fill amber" style="width:85%"></div></div></div>
+  <div class="pg1__item"><div class="pg1__meta"><span class="pg1__label">Error rate</span><span class="pg1__pct">12%</span></div><div class="pg1__track"><div class="pg1__fill red" style="width:12%"></div></div></div>
+  <div class="pg1__item"><div class="pg1__meta"><span class="pg1__label">Upload in progress</span><span class="pg1__pct" id="pg1pct">0%</span></div><div class="pg1__track" style="height:12px"><div class="pg1__fill striped" id="pg1live" style="width:0%"></div></div></div>
+</div>
+<script>(function(){
+  var v=0;
+  var iv=setInterval(function(){v+=1.5;if(v>=100){v=100;clearInterval(iv);}document.getElementById('pg1live').style.width=v+'%';document.getElementById('pg1pct').textContent=Math.round(v)+'%';},80);
+})()</script>
+</body></html>

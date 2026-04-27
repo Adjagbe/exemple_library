@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+.st2 {
+  font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f0a1e, #0f172a); padding: 5rem 2rem;
+  &__inner { max-width: 1000px; margin: 0 auto; }
+  &__row { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; @media (max-width: 800px) { grid-template-columns: repeat(2,1fr); gap: 2px; } }
+  &__item { text-align: center; padding: 2.5rem 1.5rem; position: relative; &:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px; background: rgba(255,255,255,.08); } }
+  &__val { font-size: clamp(2rem, 3vw, 2.75rem); font-weight: 900; color: #f1f5f9; line-height: 1; margin-bottom: .5rem; }
+  &__lbl { font-size: .8125rem; color: #64748b; font-weight: 500; margin-bottom: .5rem; }
+  &__trend { display: inline-block; font-size: .75rem; font-weight: 700; color: #34d399; background: rgba(52,211,153,.1); padding: .2rem .6rem; border-radius: 999px; }
+}

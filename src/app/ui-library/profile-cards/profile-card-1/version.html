@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Profile Card 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f1f5f9;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.pc1{background:#fff;border-radius:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,.08);overflow:hidden;width:100%;max-width:340px;text-align:center}
+.pc1__cover{height:5rem;background:linear-gradient(135deg,#4f46e5,#8b5cf6)}
+.pc1__avatar-wrap{margin-top:-2.25rem;display:flex;justify-content:center;margin-bottom:1rem}
+.pc1__avatar{width:4.5rem;height:4.5rem;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:1.75rem;font-weight:800;color:#fff;border:3px solid #fff}
+.pc1__name{font-size:1.125rem;font-weight:800;color:#1e293b}
+.pc1__role{font-size:.8125rem;color:#64748b;margin-top:.25rem}
+.pc1__badge{display:inline-flex;align-items:center;gap:.35rem;margin-top:.625rem;background:#f0fdf4;color:#15803d;font-size:.75rem;font-weight:700;padding:.2rem .625rem;border-radius:999px}
+.pc1__badge::before{content:'●';font-size:.5rem}
+.pc1__stats{display:flex;border-top:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9;margin:1.25rem 0}
+.pc1__stat{flex:1;padding:1rem .5rem;text-align:center}
+.pc1__stat-val{font-size:1.25rem;font-weight:800;color:#1e293b}
+.pc1__stat-lbl{font-size:.6875rem;color:#94a3b8;margin-top:.15rem}
+.pc1__stat:not(:last-child){border-right:1px solid #f1f5f9}
+.pc1__actions{display:flex;gap:.75rem;padding:0 1.5rem 1.5rem;justify-content:center}
+.pc1__btn-f{flex:1;padding:.7rem;background:#4f46e5;color:#fff;font-weight:700;font-size:.8125rem;border:none;border-radius:.75rem;cursor:pointer;transition:background .2s}
+.pc1__btn-f:hover{background:#4338ca}
+.pc1__btn-m{flex:1;padding:.7rem;background:#f1f5f9;color:#374151;font-weight:600;font-size:.8125rem;border:none;border-radius:.75rem;cursor:pointer;transition:background .2s}
+.pc1__btn-m:hover{background:#e2e8f0}
+</style></head>
+<body>
+<div class="pc1">
+  <div class="pc1__cover"></div>
+  <div class="pc1__avatar-wrap"><div class="pc1__avatar">JD</div></div>
+  <div class="pc1__name">Jane Doe</div>
+  <div class="pc1__role">Senior Product Designer</div>
+  <div class="pc1__badge">Available for hire</div>
+  <div class="pc1__stats">
+    <div class="pc1__stat"><div class="pc1__stat-val">248</div><div class="pc1__stat-lbl">Projects</div></div>
+    <div class="pc1__stat"><div class="pc1__stat-val">12K</div><div class="pc1__stat-lbl">Followers</div></div>
+    <div class="pc1__stat"><div class="pc1__stat-val">4.9★</div><div class="pc1__stat-lbl">Rating</div></div>
+  </div>
+  <div class="pc1__actions">
+    <button class="pc1__btn-f">Follow</button>
+    <button class="pc1__btn-m">Message</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>

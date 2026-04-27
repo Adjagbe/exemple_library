@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Register 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:768px){body{grid-template-columns:1fr}}
+.fr2__left{background:linear-gradient(160deg,#0f0a1e,#1e1b4b);color:#fff;padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;gap:2rem}
+@media(max-width:768px){.fr2__left{display:none}}
+.fr2__brand{font-size:1.75rem;font-weight:900;letter-spacing:-.03em}
+.fr2__brand em{font-style:normal;color:#818cf8}
+.fr2__perks{list-style:none;display:flex;flex-direction:column;gap:1.125rem}
+.fr2__perk{display:flex;align-items:flex-start;gap:.875rem;font-size:.9375rem;color:#cbd5e1;line-height:1.5}
+.fr2__perk-ico{background:rgba(99,102,241,.2);border-radius:.5rem;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
+.fr2__right{background:#f8fafc;display:flex;align-items:center;justify-content:center;padding:3rem 2rem}
+.fr2__form{width:100%;max-width:420px}
+.fr2__title{font-size:1.75rem;font-weight:800;color:#0f172a;margin-bottom:.375rem}
+.fr2__sub{font-size:.875rem;color:#64748b;margin-bottom:2rem}
+.fr2__row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.fr2__field{margin-bottom:1rem}
+.fr2__label{display:block;font-size:.8125rem;font-weight:600;color:#374151;margin-bottom:.4rem}
+.fr2__input,.fr2__select{width:100%;padding:.75rem 1rem;background:#fff;border:1.5px solid #e2e8f0;border-radius:.75rem;color:#1e293b;font-size:.9375rem;font-family:inherit;outline:none;transition:border-color .2s}
+.fr2__input:focus,.fr2__select:focus{border-color:#6366f1}
+.fr2__input::placeholder{color:#94a3b8}
+.fr2__terms{display:flex;align-items:flex-start;gap:.625rem;font-size:.8125rem;color:#64748b;margin-bottom:1.5rem}
+.fr2__terms a{color:#6366f1;text-decoration:none}
+.fr2__submit{width:100%;padding:.9rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:700;font-size:.9375rem;border:none;border-radius:.875rem;cursor:pointer;transition:opacity .2s}
+.fr2__submit:hover{opacity:.85}
+</style></head>
+<body>
+<div class="fr2__left">
+  <div class="fr2__brand">Flux<em>UI</em></div>
+  <ul class="fr2__perks">
+    <li class="fr2__perk"><span class="fr2__perk-ico">🚀</span><span>Deploy your first project in under 5 minutes with our quick-start templates.</span></li>
+    <li class="fr2__perk"><span class="fr2__perk-ico">🔒</span><span>Enterprise-grade security with SOC 2 Type II certification and SSO support.</span></li>
+    <li class="fr2__perk"><span class="fr2__perk-ico">🌍</span><span>Global CDN with 20+ edge locations for ultra-low latency worldwide.</span></li>
+    <li class="fr2__perk"><span class="fr2__perk-ico">🤝</span><span>Dedicated support team available 24/7 via chat, email, and phone.</span></li>
+  </ul>
+</div>
+<div class="fr2__right">
+  <div class="fr2__form">
+    <h1 class="fr2__title">Create account</h1>
+    <p class="fr2__sub">Start your 14-day free trial — no credit card required.</p>
+    <div class="fr2__row">
+      <div class="fr2__field"><label class="fr2__label">First name</label><input class="fr2__input" type="text" placeholder="Jane"></div>
+      <div class="fr2__field"><label class="fr2__label">Last name</label><input class="fr2__input" type="text" placeholder="Doe"></div>
+    </div>
+    <div class="fr2__field"><label class="fr2__label">Work email</label><input class="fr2__input" type="email" placeholder="jane@company.com"></div>
+    <div class="fr2__field"><label class="fr2__label">I am a...</label>
+      <select class="fr2__select"><option>Frontend developer</option><option>Backend developer</option><option>Full-stack developer</option><option>Designer</option><option>Product manager</option></select>
+    </div>
+    <div class="fr2__field"><label class="fr2__label">Password</label><input class="fr2__input" type="password" placeholder="Min. 8 characters"></div>
+    <div class="fr2__terms"><input type="checkbox" style="margin-top:.1rem;accent-color:#6366f1"><span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span></div>
+    <button class="fr2__submit">Create my account →</button>
+  </div>
+</div>
+<script>(function(){})()</script>
+</body></html>
